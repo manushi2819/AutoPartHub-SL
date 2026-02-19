@@ -12,20 +12,26 @@
                     <h2>Login to your account</h2>
                 </div>
                 <div class="form-inner">
-                    <form method="post" action="login.html">
+                    <form method="POST" action="{{ route('Frontend.login.authenticate') }}">
+                        @csrf
+
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" name="email" required>
+                            <input type="email" name="email" value="{{ old('email') }}" required>
                         </div>
+
                         <div class="form-group">
                             <label>Password</label>
                             <input type="password" name="password" required>
                         </div>
+
                         <div class="form-group message-btn">
-                            <button type="submit" class="theme-btn">Log In<span></span><span></span><span></span><span></span></button>
+                            <button type="submit" class="theme-btn">
+                                Log In<span></span><span></span><span></span><span></span>
+                            </button>
                         </div>
-                     
                     </form>
+
                     <div class="other-option">
                         <div class="check-box">
                             <input class="check" type="checkbox" id="checkbox1">

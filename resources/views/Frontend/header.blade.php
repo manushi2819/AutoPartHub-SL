@@ -1,3 +1,71 @@
+  <style>
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.user-toggle {
+    cursor: pointer;
+}
+
+.user-initials-circle {
+    width: 35px;
+    height: 35px;
+    background: linear-gradient(95deg, #ff0000, #000000); 
+    color: #fff;
+    border: 1px solid white;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.user-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    list-style: none;
+    margin: 5px 0 0 0;
+    padding: 0;
+    min-width: 150px;
+    z-index: 100;
+     color: black !important;
+}
+
+.user-menu li {
+    padding: 8px 12px;
+     color: black !important;
+    font-size:15px !important;
+}
+
+.user-menu li:hover {
+    background-color: #f0f0f0;
+}
+
+.logout-btn {
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    color: black !important;
+    font-size:15px !important;
+}
+
+/* Show dropdown on hover */
+.user-dropdown:hover .user-menu {
+    display: block;
+}
+
+</style>
+
   <!-- main header -->
         <header class="main-header header-style-five dark-header">
             <!-- header-top -->
@@ -46,10 +114,40 @@
                             </div>
                         </div>
                         <ul class="option-list">
-                            <li><a href="shop.html"><i class="icon-1"></i></a></li>
                             <li><button type="button"><i class="icon-7"></i></button></li>
                             <li><a href="shop.html"><i class="icon-6"></i><span>2</span></a></li>
-                            <li><a href="{{ route('Frontend.login') }}"><i class="icon-25"></i></a></li>
+                          
+                       @if(Auth::guard('customer')->check())
+                                @php
+                                    $customer = Auth::guard('customer')->user();
+                                    // Use first_name and last_name for initials
+                                    $initials = strtoupper(substr($customer->first_name, 0, 1) . substr($customer->last_name, 0, 1));
+                                @endphp
+
+                                <li class="nav-item user-dropdown">
+                                    <!-- Toggle -->
+                                    <div class="user-toggle">
+                                        <span class="user-initials-circle">{{ $initials }}</span>
+                                    </div>
+
+                                    <!-- Dropdown menu -->
+                                    <ul class="user-menu">
+                                        <li><a href="{{ route('customer.dashboard') }}" style=" color: black !important;
+                                        font-size:15px !important;">Dashboard</a></li>
+                                        <li>
+                                            <form method="POST" action="{{ route('Frontend.logout') }}">
+                                                @csrf
+                                                <button type="submit" class="logout-btn">Logout</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @else
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('Frontend.login') }}"><i class="icon-25"></i></a>
+                                </li>
+                            @endif
+
                         </ul>
                     </div>
                 </div>

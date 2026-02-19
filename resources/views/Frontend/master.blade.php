@@ -48,8 +48,90 @@
 <link href="{{ asset('frontend/assets/css/module-css/footer.css') }}" rel="stylesheet">
 <link href="{{ asset('frontend/assets/css/responsive.css') }}" rel="stylesheet">
 <link href="{{ asset('frontend/assets/css/module-css/sign.css') }}" rel="stylesheet">
+<link href="{{ asset('frontend/assets/css/module-css/account.css') }}" rel="stylesheet">
+<!-- Bootstrap JS bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+<style>
+/* Flash message container */
+#flash-messages {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 320px; /* adjust width as needed */
+}
 
+/* Base style for all flash messages */
+.flash-message {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.5s ease;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Fade-out animation */
+.flash-message.fade-out {
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+/* Success */
+.flash-message.alert-success {
+    background-color: #e6f9f0;
+    color: #2f855a;
+    border-left: 5px solid #2f855a;
+}
+
+/* Warning */
+.flash-message.alert-warning {
+    background-color: #fff7e6;
+    color: #d69e2e;
+    border-left: 5px solid #d69e2e;
+}
+
+/* Error / Danger */
+.flash-message.alert-danger {
+    background-color: #ffe6e6;
+    color: #e53e3e;
+    border-left: 5px solid #e53e3e;
+}
+
+/* Icon inside flash */
+.flash-message .icon {
+    font-size: 20px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+/* Close button */
+.flash-message .btn-close {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: inherit;
+    padding: 0;
+}
+
+/* Content wrapper */
+.flash-message .message-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+</style>
 </head>
 
 
@@ -74,6 +156,40 @@
         </div>
         <!-- Scroll to top end -->
         
+        
+        {{-- Notifications --}}
+      <div id="flash-messages">
+            @if(session('success'))
+            <div class="flash-message alert-success">
+                <div class="message-content">
+                    <iconify-icon icon="bi:patch-check" class="icon"></iconify-icon>
+                    <div>{{ session('success') }}</div>
+                </div>
+                <button type="button" class="btn-close remove-button" aria-label="Close">&times;</button>
+            </div>
+            @endif
+
+            @if(session('warning'))
+            <div class="flash-message alert-warning">
+                <div class="message-content">
+                    <iconify-icon icon="mdi:clock-outline" class="icon"></iconify-icon>
+                    <div>{{ session('warning') }}</div>
+                </div>
+                <button type="button" class="btn-close remove-button" aria-label="Close">&times;</button>
+            </div>
+            @endif
+
+            @if(session('error') || session('danger'))
+            <div class="flash-message alert-danger">
+                <div class="message-content">
+                    <iconify-icon icon="mingcute:delete-2-line" class="icon"></iconify-icon>
+                    <div>{{ session('error') ?? session('danger') }}</div>
+                </div>
+                <button type="button" class="btn-close remove-button" aria-label="Close">&times;</button>
+            </div>
+            @endif
+        </div>
+
     </div>
 
     @include('Frontend.footer')
@@ -98,6 +214,25 @@
 <!-- main-js -->
 <script src="{{ asset('frontend/assets/js/script.js') }}"></script>
 
+ <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const flashMessages = document.querySelectorAll('#flash-messages .flash-message');
+
+        flashMessages.forEach(msg => {
+            // Auto hide after 3 seconds
+            setTimeout(() => {
+                msg.classList.add('fade-out');
+                setTimeout(() => msg.remove(), 500); // remove after fade-out
+            }, 2000);
+
+            // Manual close button
+            const btn = msg.querySelector('.remove-button');
+            if(btn){
+                btn.addEventListener('click', () => msg.remove());
+            }
+        });
+    });
+</script>
 
 </body><!-- End of .page_wrapper -->
 </html>
