@@ -1,0 +1,193 @@
+@extends('AdminDashboard.master')
+@section('title', isset($product) ? 'Edit Product' : 'Create Product')
+
+@section('content')
+<div class="d-flex justify-content-between mb-24">
+    <h6 class="fw-semibold">{{ isset($product) ? 'Edit Product' : 'Create Product' }}</h6>
+    <a href="{{ route('admin.products.index') }}" class="btn btn-secondary btn-sm">Back</a>
+</div>
+
+<div class="card mb-24">
+    <div class="card-body">
+        <form action="{{ isset($product) ? route('admin.products.update', $product->id) : route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @if(isset($product))
+                @method('PUT')
+            @endif
+
+            <div class="row g-3">
+                {{-- Product Details --}}
+                <div class="col-md-6">
+                    <label class="form-label">Product Name <i class="text-danger">*</i></label>
+                    <input type="text" name="name" class="form-control" value="{{ $product->name ?? old('name') }}" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Category <i class="text-danger">*</i></label>
+                    <select name="category_id" class="form-control" required>
+                        <option value="">Select Category</option>
+                        @foreach($categories as $main)
+                            <option value="{{ $main->id }}" {{ isset($product) && $product->category_id == $main->id ? 'selected' : '' }}>
+                                {{ $main->name }}
+                            </option>
+                            @foreach($main->children as $sub)
+                                <option value="{{ $sub->id }}" {{ isset($product) && $product->category_id == $sub->id ? 'selected' : '' }}>
+                                    — {{ $sub->name }}
+                                </option>
+                            @endforeach
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">SKU</label>
+                    <input type="text" name="sku" class="form-control" value="{{ $product->sku ?? 'AUTO-GENERATED' }}" readonly>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Brand <i class="text-danger">*</i></label>
+                    <input type="text" name="brand" class="form-control" value="{{ $product->brand ?? old('brand') }}">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Price <i class="text-danger">*</i></label>
+                    <input type="number" name="price" class="form-control" step="0.01" value="{{ $product->price ?? old('price') }}" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Cost Price</label>
+                    <input type="number" name="cost_price" class="form-control" step="0.01" value="{{ $product->cost_price ?? old('cost_price') }}">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Stock Quantity <i class="text-danger">*</i></label>
+                    <input type="number" name="stock_quantity" class="form-control" value="{{ $product->stock_quantity ?? old('stock_quantity') }}" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Status <i class="text-danger">*</i></label>
+                    <select name="status" class="form-control">
+                        <option value="1" {{ isset($product) && $product->status ? 'selected' : '' }}>Active</option>
+                        <option value="0" {{ isset($product) && !$product->status ? 'selected' : '' }}>Inactive</option>
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" rows="3">{{ $product->description ?? old('description') }}</textarea>
+                </div>
+
+
+                <hr>
+                 <h6 class="fw-semibold">Vehicle Compatibility</h6>
+                {{-- Single Compatibility --}}
+
+                <div class="col-md-6">
+                    <label class="form-label">Model</label>
+                    <input type="text" name="compatibility_model" class="form-control" 
+                        value="{{ $product->compatibility->model ?? '' }}" placeholder="e.g., Corolla">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Year From</label>
+                    <input type="number" name="compatibility_year_from" class="form-control" 
+                        value="{{ $product->compatibility->year_from ?? '' }}" placeholder="e.g., 2010">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Year To</label>
+                    <input type="number" name="compatibility_year_to" class="form-control" 
+                        value="{{ $product->compatibility->year_to ?? '' }}" placeholder="e.g., 2015">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Engine Type</label>
+                    <input type="text" name="engine_type" class="form-control" 
+                        value="{{ $product->compatibility->engine_type ?? '' }}" placeholder="e.g., V6">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Engine CC</label>
+                    <input type="number" name="engine_cc" class="form-control" 
+                        value="{{ $product->compatibility->engine_cc ?? '' }}" placeholder="e.g., 2000">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Fuel Type</label>
+                    <input type="text" name="fuel_type" class="form-control" 
+                        value="{{ $product->compatibility->fuel_type ?? '' }}" placeholder="e.g., Petrol">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Transmission</label>
+                    <input type="text" name="transmission" class="form-control" 
+                        value="{{ $product->compatibility->transmission ?? '' }}" placeholder="e.g., Automatic">
+                </div>
+
+            </div>
+
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary">{{ isset($product) ? 'Update Product' : 'Add Product' }}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if(isset($product))
+<div class="card mb-24">
+    <div class="card-body">
+        <h6 class="mb-3">Product Images</h6>
+
+        {{-- Upload Form --}}
+        <form action="{{ route('admin.products.images.upload', $product->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="mb-3">
+                <label class="form-label">Upload Images</label>
+                <input type="file" name="images[]" multiple class="form-control" accept="image/*">
+            </div>
+            <button class="btn btn-primary mt-2">Upload</button>
+        </form>
+
+        {{-- Display Images --}}
+        <div class="mb-3 d-flex flex-wrap gap-2 mt-3">
+            @foreach($product->images as $img)
+                <div class="position-relative">
+                    <img src="{{ asset('uploads/' . $img->image_url) }}" alt="" width="100" class="border rounded">
+
+                    {{-- Delete Button --}}
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-danger position-absolute top-0 end-0" 
+                        onclick="deleteImage('{{ route('admin.products.images.delete', $img->id) }}')">
+                        ×
+                    </button>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+
+<script>
+function deleteImage(url) {
+    if(!confirm('Are you sure you want to delete this image?')) return;
+
+    fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+        },
+    })
+    .then(res => {
+        if(res.ok) {
+            location.reload(); // reload page after delete
+        } else {
+            alert('Failed to delete image.');
+        }
+    })
+}
+</script>
+@endif
+
+
+@endsection

@@ -23,7 +23,6 @@ Route::prefix('customer')->name('customer.')->middleware('auth:customer')->group
         return view('Frontend.account');
     })->name('dashboard');
 
-
 });
 
 
@@ -41,6 +40,8 @@ Route::prefix('customer')->name('customer.')->middleware('auth:customer')->group
 
 // admin login
 use App\Http\Controllers\Admin\AdminLoginController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Middleware\AdminAuth;
 
 Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
@@ -53,6 +54,14 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
     Route::get('/', function () {
         return view('AdminDashboard.index');
     })->name('dashboard');
+
+    //categories
+    Route::resource('categories', CategoryController::class);
+
+   // Product 
+    Route::resource('products', ProductController::class);
+    Route::post('products/{product}/images', [ProductController::class, 'uploadImages'])->name('products.images.upload');
+    Route::delete('products/images/{image}', [ProductController::class, 'deleteImage'])->name('products.images.delete');
 
 
 });

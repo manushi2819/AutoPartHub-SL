@@ -24,26 +24,21 @@
             <li class="sidebar-menu-group-title">Application</li>
 
 
-            <li class="dropdown">
-                <a href="javascript:void(0)">
-                    <iconify-icon icon="mdi:sitemap-outline" class="menu-icon"></iconify-icon>
-                    <span>Branches & Departments</span>
+             <li>
+                <a href="{{ route('admin.categories.index') }}">
+                <iconify-icon icon="mdi:view-grid-outline" class="menu-icon"></iconify-icon>
+                    <span>Categories</span>
                 </a>
-                <ul class="sidebar-submenu">
-                    <li>
-                        <a href="">
-                            <i class="ri-circle-fill circle-icon text-danger-600 w-auto"></i> Branches
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('admin.dashboard') }}">
-                            <i class="ri-circle-fill circle-icon text-success-600 w-auto"></i> Departments
-                        </a>
-                    </li>
-                </ul>
+    
             </li>
 
+              <li>
+                <a href="{{ route('admin.products.index') }}">
+                <iconify-icon icon="mdi:view-grid-outline" class="menu-icon"></iconify-icon>
+                    <span>Products</span>
+                </a>
+    
+            </li>
 
 
 
