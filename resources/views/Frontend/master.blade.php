@@ -49,6 +49,9 @@
 <link href="{{ asset('frontend/assets/css/responsive.css') }}" rel="stylesheet">
 <link href="{{ asset('frontend/assets/css/module-css/sign.css') }}" rel="stylesheet">
 <link href="{{ asset('frontend/assets/css/module-css/account.css') }}" rel="stylesheet">
+<link href="{{ asset('frontend/assets/css/module-css/cart.css') }}" rel="stylesheet">
+<link href="{{ asset('frontend/assets/css/module-css/checkout.css') }}" rel="stylesheet">
+
 <!-- Bootstrap JS bundle (includes Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 

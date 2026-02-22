@@ -34,8 +34,16 @@
 
               <li>
                 <a href="{{ route('admin.products.index') }}">
-                <iconify-icon icon="mdi:view-grid-outline" class="menu-icon"></iconify-icon>
+                <iconify-icon icon="mdi:package-variant-closed" class="menu-icon"></iconify-icon>
                     <span>Products</span>
+                </a>
+    
+            </li>
+
+            <li>
+                <a href="{{ route('admin.contact') }}">
+                <iconify-icon icon="mdi:email-outline" class="menu-icon"></iconify-icon>
+                    <span>Contact messages</span>
                 </a>
     
             </li>

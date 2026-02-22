@@ -25,9 +25,9 @@
         <section class="cta-style-two pb_0">
             <div class="auto-container">
                 <div class="inner-container">
-                    <figure class="image-layer"><img src="frontend/assets/images/resource/cta-1.png" alt=""></figure>
+                    <figure class="image-layer"><img src="frontend/assets/images/cta-1.png" alt=""></figure>
                     <div class="content-box">
-                        <span class="text">Engine Oil</span>
+                        <span class="text"></span>
                         <h2>Elevate Your Drive Authenticity. Get <span>Original Car Parts</span></h2>
                         <p>Fulfill your automotive fantasies without breaking the bank.</p>
                         <a href="index-4.html" class="theme-btn">Get All Deals <span></span><span></span><span></span><span></span></a>

@@ -75,7 +75,7 @@
                         <ul class="info-list">
                             <li><i class="icon-2"></i>Open Hours: <span>Mon - Sat 8am - 6pm</span></li>
                             <li><i class="icon-4"></i>Call: <span>+94 71 631 6143</span></li>
-                            <li><i class="icon-47"></i>Location: <span>Kurunegala</span></li>
+                            <li><i class="icon-47"></i>Location: <span>Ridigama, Kurunegala</span></li>
                         </ul>
                         <div class="right-column">
                             <div class="text mr_30">
@@ -115,9 +115,9 @@
                         </div>
                         <ul class="option-list">
                             <li><button type="button"><i class="icon-7"></i></button></li>
-                            <li><a href="shop.html"><i class="icon-6"></i><span>2</span></a></li>
+                            <li><a href="{{ route('Frontend.cart') }}"><i class="icon-6"></i><span>0</span></a></li>
                           
-                       @if(Auth::guard('customer')->check())
+                             @if(Auth::guard('customer')->check())
                                 @php
                                     $customer = Auth::guard('customer')->user();
                                     // Use first_name and last_name for initials

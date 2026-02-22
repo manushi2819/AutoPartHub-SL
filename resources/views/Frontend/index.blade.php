@@ -12,11 +12,11 @@
                 <div class="row clearfix">
                     <div class="col-lg-9 col-md-12 col-sm-12 content-block">
                         <div class="content-one content-box">
-                            <div class="bg-layer" style="background-image: url(frontend/assets/images/banner/banner-4.jpg);"></div>
+                            <div class="bg-layer" style="background-image: url({{ asset('frontend/assets/images/banner/banner-img-4.png') }});"></div>
                             <div class="inner-box">
                                 <span class="popular-product">Engine</span>
                                 <h2>Get All Original Parts for Your Car</h2>
-                                <h3>From <span>$83.99</span></h3>
+                                <h3>From <span>LKR 5000</span></h3>
                                 <a href="contact.html" class="theme-btn">Get in Touch<span></span><span></span><span></span><span></span></a>
                             </div>
                         </div>
@@ -141,7 +141,7 @@
         </section>
         <!-- highlights-section end -->
 
-        <!-- brand-section -->
+        <!-- brand-section 
         <section class="brand-section pb_90">
             <div class="pattern-layer">
                 <div class="pattern-1" style="background-image: url(frontend/assets/images/shape/shape-2.png);"></div>
@@ -278,10 +278,10 @@
                 </div>
             </div>
         </section>
-        <!-- brand-section end -->
+         brand-section end -->
 
 
-        <!-- highlights-style-two -->
+        <!-- highlights-style-two
         <section class="highlights-style-two centred pb_55">
             <div class="auto-container">
                 <div class="row clearfix">
@@ -315,10 +315,10 @@
                 </div>
             </div>
         </section>
-        <!-- highlights-style-two end -->
+       highlights-style-two end -->
 
 
-        <!-- shop-style-two -->
+        <!-- shop-style-two
         <section class="shop-style-two pb_100">
             <div class="auto-container">
                 <div class="sec-title mb_35">
@@ -466,10 +466,10 @@
                 </div>
             </div>
         </section>
-        <!-- shop-style-two end -->
+        shop-style-two end -->
 
 
-        <!-- category-style-two -->
+        <!-- category-style-two
         <section class="category-style-two pb_70">
             <div class="auto-container">
                 <div class="sec-title mb_30">
@@ -551,10 +551,10 @@
                 </div>
             </div>
         </section>
-        <!-- category-style-two end -->
+        category-style-two end -->
 
 
-        <!-- shop-style-two -->
+        <!-- shop-style-two
         <section class="shop-style-two pt_110 pb_70">
             <div class="bg-layer" style="background-image: url(frontend/assets/images/background/shop-bg.png);"></div>
             <div class="pattern-layer">
@@ -808,10 +808,10 @@
                 </div>
             </div>
         </section>
-        <!-- shop-style-two end -->
+        shop-style-two end -->
 
 
-        <!-- flash-sales-section -->
+        <!-- flash-sales-section 
         <section class="flash-sales-section pt_90 pb_70">
             <div class="auto-container">
                 <div class="sec-title mb_30">
@@ -1044,10 +1044,10 @@
                 </div>
             </div>
         </section>
-        <!-- flash-sales-section -->
+         flash-sales-section -->
 
 
-        <!-- cta-section -->
+        <!-- cta-section 
         <section class="cta-section pb_100">
             <div class="auto-container">
                 <div class="inner-container">
@@ -1060,10 +1060,10 @@
                 </div>
             </div>
         </section>
-        <!-- cta-section end -->
+         cta-section end -->
 
 
-        <!-- shop-section -->
+        <!-- shop-section 
         <section class="shop-section home-2 pb_100">
             <div class="auto-container">
                 <div class="sec-title mb_35">
@@ -1193,10 +1193,10 @@
                 </div>
             </div>
         </section>
-        <!-- shop-section end -->
+         shop-section end -->
 
 
-        <!-- testimonial-section -->
+        <!-- testimonial-section 
         <section class="testimonial-section pb_100">
             <div class="auto-container">
                 <div class="sec-title centred mb_30">
@@ -1410,6 +1410,6 @@
                 </div>
             </div>
         </section>
-        <!-- testimonial-section end -->
+         testimonial-section end -->
 
  @endsection
