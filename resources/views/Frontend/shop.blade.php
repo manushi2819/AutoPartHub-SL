@@ -277,10 +277,9 @@
                                     <div class="row clearfix">
                                         @foreach($products as $product)
                                         <div class="col-lg-3 col-md-6 col-sm-12 shop-block">
-                                        
                                             <div class="shop-block-one">
                                                 <div class="inner-box">
-                                                    <div class="image-box" style="height: 200px; overflow: hidden;">
+                                                   <div class="image-box" style="height: 200px; overflow: hidden;">
                                                         @php
                                                             $mainImage = $product->images->where('is_main', 1)->first();
                                                         @endphp
@@ -290,6 +289,7 @@
                                                                 style="height: 100%; width: 100%; object-fit: cover;">
                                                         </figure>
                                                     </div>
+
                                                     <div class="lower-content">
                                                         <h4 class="product-name">{{ $product->name }}</h4>
                                                         <h5>LKR {{ number_format($product->price, 2) }}</h5>
@@ -301,8 +301,9 @@
                                                             <li><i class="icon-41"></i></li>
                                                             <li><span>(5)</span></li>
                                                         </ul>
+
                                                         @if($product->stock_quantity > 0)
-                                                                <span class="product-stock"><i class="icon-39"></i>
+                                                             <span class="product-stock"><i class="icon-39"></i>
                                                                 In Stock
                                                             </span>
                                                         @else
@@ -310,7 +311,12 @@
                                                                 Out of Stock
                                                             </span>
                                                         @endif
-                                                        <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
+                                                        <div class="overlay-content">
+                                                            <ul class="feature-list clearfix">
+                                                                <li>{{ \Illuminate\Support\Str::limit($product->description, 80) }}</li>
+                                                            </ul>
+                                                            <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
