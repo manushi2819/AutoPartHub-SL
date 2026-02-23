@@ -84,7 +84,7 @@
     
 
     {{-- Notifications --}}
-    <div id="flash-messages" class="position-fixed top-0 end-0 p-3" style="top: 60px !important; z-index: 1050;">
+    <div id="flash-messages" class="position-fixed top-0 end-0 p-3" style="top: 20px !important; z-index: 1050;">
         @if(session('success'))
            <div class="alert flash-message alert-success bg-success-100 text-success-600 border-success-600 border-start-width-4-px border-top-0 border-end-0 border-bottom-0 px-24 py-13 mb-0 fw-semibold text-lg radius-4 d-flex align-items-center justify-content-between" role="alert">
                 <div class="d-flex align-items-start justify-content-between text-lg">

@@ -22,22 +22,31 @@
                     <input type="text" name="name" class="form-control" value="{{ $product->name ?? old('name') }}" required>
                 </div>
 
-                <div class="col-md-6">
+              <div class="col-md-6">
                     <label class="form-label">Category <i class="text-danger">*</i></label>
-                    <select name="category_id" class="form-control" required>
+                    <select name="category_id" class="form-control select2" required>
                         <option value="">Select Category</option>
                         @foreach($categories as $main)
                             <option value="{{ $main->id }}" {{ isset($product) && $product->category_id == $main->id ? 'selected' : '' }}>
                                 {{ $main->name }}
                             </option>
+
                             @foreach($main->children as $sub)
                                 <option value="{{ $sub->id }}" {{ isset($product) && $product->category_id == $sub->id ? 'selected' : '' }}>
                                     — {{ $sub->name }}
                                 </option>
+
+                                @foreach($sub->children as $subsub)
+                                    <option value="{{ $subsub->id }}" {{ isset($product) && $product->category_id == $subsub->id ? 'selected' : '' }}>
+                                        —— {{ $subsub->name }}
+                                    </option>
+                                @endforeach
                             @endforeach
                         @endforeach
                     </select>
                 </div>
+
+
 
                 <div class="col-md-6">
                     <label class="form-label">SKU</label>
@@ -190,4 +199,16 @@ function deleteImage(url) {
 @endif
 
 
+{{-- Include jQuery and Select2 --}}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+    $('.select2').select2({
+        placeholder: "Select Category",
+        allowClear: true
+    });
+});
+</script>
 @endsection

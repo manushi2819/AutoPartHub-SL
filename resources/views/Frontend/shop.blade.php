@@ -4,7 +4,18 @@
 
 @section('content')
 
-      
+<style>
+    .product-name {
+        display: -webkit-box;
+        -webkit-line-clamp: 2; 
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-height: 2.5em; /* ensures even short names occupy 2 lines height */
+        line-height: 1.2em; /* adjust based on your font size */
+    }
+
+</style> 
 
 
         <!-- page-title -->
@@ -44,343 +55,244 @@
                 <div class="row clearfix">
                     <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side">
                         <div class="shop-sidebar">
+
+                            {{-- =========================
+                                Vehicle Search Filter
+                            ========================== --}}
                             <div class="search-widget sidebar-widget pb_40 mb_40">
                                 <div class="widget-title mb_30">
                                     <h3>Select Vehicle</h3>
                                 </div>
                                 <div class="search-inner">
-                                    <form method="post" action="shop.html">
+                                    <form method="GET" action="{{ route('Frontend.shop') }}">
+                                        @csrf
+
+                                        {{-- YEAR --}}
                                         <div class="form-group">
                                             <div class="select-box">
-                                                <select class="wide">
-                                                   <option data-display="Select Year">Select Year</option>
-                                                   <option value="1">2021</option>
-                                                   <option value="2">2022</option>
-                                                   <option value="3">2023</option>
-                                                   <option value="4">2024</option>
+                                                <select name="year" class="wide">
+                                                    <option value="">Select Year</option>
+                                                    @foreach($years as $year)
+                                                        <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
+                                                            {{ $year }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
+
+                                        {{-- BRAND --}}
                                         <div class="form-group">
                                             <div class="select-box">
-                                                <select class="wide">
-                                                   <option data-display="Select Brand">Select Brand</option>
-                                                   <option value="1">Audi</option>
-                                                   <option value="2">BMW</option>
-                                                   <option value="3">Mercedes Benz</option>
-                                                   <option value="4">Tesla Motors</option>
-                                                   <option value="5">Volkswagen</option>
-                                                   <option value="6">Porsche</option>
-                                                   <option value="7">Hyundai</option>
+                                                <select name="brand" class="wide">
+                                                    <option value="">Select Brand</option>
+                                                    @foreach($brands as $brand)
+                                                        <option value="{{ $brand }}" {{ request('brand') == $brand ? 'selected' : '' }}>
+                                                            {{ $brand }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
+
+                                        {{-- MODEL --}}
                                         <div class="form-group">
                                             <div class="select-box">
-                                                <select class="wide">
-                                                   <option data-display="Car Model">Car Model</option>
-                                                   <option value="1">2021</option>
-                                                   <option value="2">2022</option>
-                                                   <option value="3">2023</option>
-                                                   <option value="4">2024</option>
+                                                <select name="model" class="wide">
+                                                    <option value="">Select Model</option>
+                                                    @foreach($models as $model)
+                                                        <option value="{{ $model }}" {{ request('model') == $model ? 'selected' : '' }}>
+                                                            {{ $model }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
+
+                                        {{-- ENGINE CC --}}
                                         <div class="form-group">
                                             <div class="select-box">
-                                                <select class="wide">
-                                                   <option data-display="Select Engine">Select Engine</option>
-                                                   <option value="1">1000 cc</option>
-                                                   <option value="2">1500 cc</option>
-                                                   <option value="3">2000 cc</option>
-                                                   <option value="4">3000 cc</option>
+                                                <select name="engine_cc" class="wide">
+                                                    <option value="">Select Engine</option>
+                                                    @foreach($engines as $engine)
+                                                        <option value="{{ $engine }}" {{ request('engine_cc') == $engine ? 'selected' : '' }}>
+                                                            {{ $engine }} cc
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
+
+                                        {{-- FUEL TYPE --}}
                                         <div class="form-group">
                                             <div class="select-box">
-                                                <select class="wide">
-                                                   <option data-display="Fuel Type">Fuel Type</option>
-                                                   <option value="1">Diesel</option>
-                                                   <option value="2">Biodiesel</option>
-                                                   <option value="3">Gasoline</option>
-                                                   <option value="4">Ethanol</option>
-                                                   <option value="5">Natural gas</option>
-                                                   <option value="6">Octane gasoline</option>
-                                                   <option value="7">Lpg</option>
+                                                <select name="fuel_type" class="wide">
+                                                    <option value="">Fuel Type</option>
+                                                    @foreach($fuelTypes as $fuel)
+                                                        <option value="{{ $fuel }}" {{ request('fuel_type') == $fuel ? 'selected' : '' }}>
+                                                            {{ $fuel }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
+
+                                        {{-- ENGINE TYPE --}}
                                         <div class="form-group">
                                             <div class="select-box">
-                                                <select class="wide">
-                                                   <option data-display="Engine Type">Engine Type</option>
-                                                   <option value="1">Diesel</option>
-                                                   <option value="2">Biodiesel</option>
-                                                   <option value="3">Gasoline</option>
-                                                   <option value="4">Ethanol</option>
-                                                   <option value="5">Natural gas</option>
-                                                   <option value="6">Octane gasoline</option>
-                                                   <option value="7">Lpg</option>
+                                                <select name="engine_type" class="wide">
+                                                    <option value="">Engine Type</option>
+                                                    @foreach($engineTypes as $type)
+                                                        <option value="{{ $type }}" {{ request('engine_type') == $type ? 'selected' : '' }}>
+                                                            {{ $type }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
+
+                                        {{-- SEARCH BUTTON --}}
                                         <div class="message-btn">
-                                            <button type="submit" class="theme-btn">Search Part<span></span><span></span><span></span><span></span></button>
+                                            <button type="submit" class="theme-btn">
+                                                Search Part
+                                                <span></span><span></span><span></span><span></span>
+                                            </button>
+                                        </div>
+                                        <div class="btn-box">
+                                            <a href="{{ route('Frontend.shop') }}" class="clear-btn">Clear</a>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                            <div class="category-widget sidebar-widget pb_40 mb_40">
-                                <div class="widget-title mb_30">
-                                    <h3>Categories</h3>
-                                </div>
-                                <div class="widget-content">
-                                    <ul class="accordion-box">
-                                        <li class="accordion block active-block">
-                                            <div class="acc-btn active"><div class="icon-box"></div>Light & Optics</div>
-                                            <div class="acc-content current">
-                                                <ul class="category-list clearfix">
-                                                    <li>
-                                                        <div class="check-box">
-                                                            <input class="check" type="checkbox" id="checkbox1">
-                                                            <label for="checkbox1">LED Light</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="check-box">
-                                                            <input class="check" type="checkbox" id="checkbox2">
-                                                            <label for="checkbox2">Tail Light</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="check-box">
-                                                            <input class="check" type="checkbox" id="checkbox3">
-                                                            <label for="checkbox3">Halogen Light</label>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
+
+                    <div class="category-widget sidebar-widget pb_40 mb_40">
+                        <div class="widget-title mb_30">
+                            <h3>Categories</h3>
+                        </div>
+                        <div class="widget-content">
+                            <form method="GET" action="{{ route('Frontend.shop') }}">
+                                <ul class="accordion-box">
+                                    @foreach($categories as $category)
+                                        @php
+                                            $childSelected = $category->children->pluck('id')->intersect(request('category', []))->count() > 0;
+                                            $parentSelected = in_array($category->id, request('category', [])) || $childSelected;
+                                        @endphp
+
                                         <li class="accordion block">
-                                            <div class="acc-btn"><div class="icon-box"></div>Braking System</div>
-                                            <div class="acc-content">
-                                                <ul class="category-list clearfix">
-                                                    <li>
-                                                        <div class="check-box">
-                                                            <input class="check" type="checkbox" id="checkbox4">
-                                                            <label for="checkbox4">ABS Brake</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="check-box">
-                                                            <input class="check" type="checkbox" id="checkbox5">
-                                                            <label for="checkbox5">Hydralic Brake</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="check-box">
-                                                            <input class="check" type="checkbox" id="checkbox6">
-                                                            <label for="checkbox6">Anti- lock Brake</label>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
+
+                                            {{-- Parent Category Name --}}
+                                            <div class="acc-btn">{{ $category->name }}</div>
+
+                                            {{-- Child Categories --}}
+                                            @if($category->children->count())
+                                                <div class="acc-content" style="{{ $childSelected ? 'display:block;' : 'display:none;' }}">
+                                                    <ul class="category-list clearfix">
+                                                        @foreach($category->children as $child)
+                                                            <li>
+                                                                <div class="check-box">
+                                                                    <input type="checkbox" name="category[]"
+                                                                        value="{{ $child->id }}"
+                                                                        id="cat-{{ $child->id }}"
+                                                                        {{ in_array($child->id, request('category', [])) ? 'checked' : '' }}>
+                                                                    <label for="cat-{{ $child->id }}">{{ $child->name }}</label>
+                                                                </div>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+
                                         </li>
-                                        <li class="accordion block">
-                                            <div class="acc-btn"><div class="icon-box"></div>Exhaust System</div>
-                                            <div class="acc-content">
-                                                <ul class="category-list clearfix">
-                                                    <li>
-                                                        <div class="check-box">
-                                                            <input class="check" type="checkbox" id="checkbox7">
-                                                            <label for="checkbox7">Deep Dish Exhaust</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="check-box">
-                                                            <input class="check" type="checkbox" id="checkbox8">
-                                                            <label for="checkbox8">Mesh Pattern Exhaust</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="check-box">
-                                                            <input class="check" type="checkbox" id="checkbox9">
-                                                            <label for="checkbox9">Split-Spoke Exhaust</label>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <ul class="category-list clearfix">
-                                        <li>
-                                            <div class="check-box">
-                                                <input class="check" type="checkbox" id="checkbox10">
-                                                <label for="checkbox10">Cooling System</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="check-box">
-                                                <input class="check" type="checkbox" id="checkbox11">
-                                                <label for="checkbox11">Car Wheels</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="check-box">
-                                                <input class="check" type="checkbox" id="checkbox12">
-                                                <label for="checkbox12">Exterior Parts</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="check-box">
-                                                <input class="check" type="checkbox" id="checkbox13">
-                                                <label for="checkbox13">Oil Filters</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="check-box">
-                                                <input class="check" type="checkbox" id="checkbox14">
-                                                <label for="checkbox14">Wheel Rims</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="check-box">
-                                                <input class="check" type="checkbox" id="checkbox15">
-                                                <label for="checkbox15">Steel Rim</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="check-box">
-                                                <input class="check" type="checkbox" id="checkbox16">
-                                                <label for="checkbox16">Piston Rod</label>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    @endforeach
+                                </ul>
+
+                                <div class="btn-box mt-3">
+                                    <button type="submit" class="theme-btn filter-btn">
+                                        Filter Categories
+                                        <span></span><span></span><span></span><span></span>
+                                    </button>
                                 </div>
-                            </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <script>
+                    $(document).ready(function(){
+                        // Accordion toggle on click
+                        $(".acc-btn").click(function(){
+                            $(this).next(".acc-content").slideToggle();
+                        });
+                    });
+                    </script>
+           
+                            {{-- =========================
+                                Price Filter
+                            ========================== --}}
                             <div class="filter-widget sidebar-widget pb_50 mb_40">
                                 <div class="widget-title mb_30">
                                     <h3>Filter by Price</h3>
                                 </div>
-                                <div class="price-range-slider">
-                                    <div id="slider-range" class="range-bar"></div>
-                                    <p class="range-value">
-                                        <span>Price:</span>
-                                        <input type="text" id="amount" readonly>
-                                    </p>
-                                    <div class="btn-box">
-                                        <button type="button" class="clear-btn">Clear</button>
-                                        <button type="button" class="theme-btn filter-btn">Apply<span></span><span></span><span></span><span></span></button>
+                            <form method="GET" action="{{ route('Frontend.shop') }}">
+                                    <div class="price-range-slider">
+                                        <div id="slider-range" class="range-bar"></div>
+                                        <p class="range-value">
+                                            <span>Price:</span>
+                                            <input type="text" id="amount" readonly
+                                                value="{{ request('min_price') ?? 0 }} - {{ request('max_price') ?? 100000 }}">
+                                        </p>
+
+                                        {{-- Hidden inputs for controller --}}
+                                        <input type="hidden" name="min_price" id="min_price" value="{{ request('min_price') ?? 0 }}">
+                                        <input type="hidden" name="max_price" id="max_price" value="{{ request('max_price') ?? 100000 }}">
+
+                                        <div class="btn-box">
+                                            <button type="submit" class="theme-btn filter-btn">Apply<span></span><span></span><span></span><span></span></button>
+                                            <a href="{{ route('Frontend.shop') }}" class="clear-btn">Clear</a>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
-                           
-                           
-                            <div class="review-widget sidebar-widget">
-                                <div class="widget-title mb_25">
-                                    <h3>Reviews</h3>
-                                </div>
-                                <div class="widget-content">
-                                    <ul class="category-list clearfix">
-                                        <li>
-                                            <div class="check-box">
-                                                <input class="check" type="checkbox" id="checkbox29">
-                                                <label for="checkbox29"><i class="icon-29"></i><i class="icon-29"></i><i class="icon-29"></i><i class="icon-29"></i><i class="icon-29"></i></label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="check-box">
-                                                <input class="check" type="checkbox" id="checkbox30">
-                                                <label for="checkbox30"><i class="icon-29"></i><i class="icon-29"></i><i class="icon-29"></i><i class="icon-29"></i><i class="icon-29 light"></i></label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="check-box">
-                                                <input class="check" type="checkbox" id="checkbox31">
-                                                <label for="checkbox31"><i class="icon-29"></i><i class="icon-29"></i><i class="icon-29"></i><i class="icon-29 light"></i><i class="icon-29 light"></i></label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="check-box">
-                                                <input class="check" type="checkbox" id="checkbox32">
-                                                <label for="checkbox32"><i class="icon-29"></i><i class="icon-29"></i><i class="icon-29 light"></i><i class="icon-29 light"></i><i class="icon-29 light"></i></label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="check-box">
-                                                <input class="check" type="checkbox" id="checkbox33">
-                                                <label for="checkbox33"><i class="icon-29"></i><i class="icon-29 light"></i><i class="icon-29 light"></i><i class="icon-29 light"></i><i class="icon-29 light"></i></label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
+
+
+
+
                     <div class="col-lg-9 col-md-12 col-sm-12 content-side">
                         <div class="our-shop">
-                            <div class="item-shorting">
+                           <div class="item-shorting">
                                 <div class="left-column">
-                                    <div class="text"><p>Showing <span>1–30</span> of <span>160</span> results</p></div>
+                                    <div class="text">
+                                        <p>
+                                            Showing 
+                                            <span>{{ $products->firstItem() ?? 0 }}</span>–<span>{{ $products->lastItem() ?? 0 }}</span> 
+                                            of <span>{{ $products->total() ?? 0 }}</span> results
+                                        </p>
+                                    </div>
                                 </div>
-                                
                             </div>
                             <div class="wrapper grid">
                                 <div class="shop-grid-content">
                                     <div class="row clearfix">
+                                        @foreach($products as $product)
                                         <div class="col-lg-3 col-md-6 col-sm-12 shop-block">
+                                        
                                             <div class="shop-block-one">
                                                 <div class="inner-box">
-                                                    <div class="image-box">
-                                                        <ul class="option-list-two">
-                                                            
-                                                            <li><button type="button"><i class="icon-7"></i></button></li>
-                                                        </ul>
-                                                        <figure class="image"><img src="frontend/assets/images/shop/shop-88.png" alt=""></figure>
+                                                    <div class="image-box" style="height: 200px; overflow: hidden;">
+                                                        @php
+                                                            $mainImage = $product->images->where('is_main', 1)->first();
+                                                        @endphp
+
+                                                        <figure class="image" style="height: 100%; margin: 0;">
+                                                            <img src="{{ $mainImage ? asset('uploads/' . $mainImage->image_url) : asset('no-image.png') }}"
+                                                                style="height: 100%; width: 100%; object-fit: cover;">
+                                                        </figure>
                                                     </div>
                                                     <div class="lower-content">
-                                                        <span class="text">Interior</span>
-                                                        <h4><a href="shop-details.html">Fuel Filter Nitro Engine Parts</a></h4>
-                                                        <h5><del>$70.99</del> $66.99</h5>
-                                                        <ul class="rating"> 
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><span>(4)</span></li>
-                                                        </ul>
-                                                        <span class="product-stock"><i class="icon-39"></i>In Stock</span>
-                                                        <div class="overlay-content">
-                                                            <ul class="feature-list clearfix">
-                                                                <li>Fully tested, & Functional</li>
-                                                                <li>Up to 200MB/s Speed</li>
-                                                                <li>With Bluetooth Full Touch</li>
-                                                            </ul>
-                                                            <div class="cart-btn">
-                                                                <button type="button" class="theme-btn">Add to Cart
-                                                                    <span></span><span></span><span></span><span></span></button></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6 col-sm-12 shop-block">
-                                            <div class="shop-block-one">
-                                                <div class="inner-box">
-                                                    <div class="image-box">
-                                                        <div class="discount-product">6% Off</div>
-                                                        <ul class="option-list-two">
-                                                           
-                                                            <li><button type="button"><i class="icon-7"></i></button></li>
-                                                        </ul>
-                                                        <figure class="image"><img src="frontend/assets/images/shop/shop-89.png" alt=""></figure>
-                                                    </div>
-                                                    <div class="lower-content">
-                                                        <span class="text">Interior</span>
-                                                        <h4><a href="shop-details.html">Starting a car with a manual transmission</a></h4>
-                                                        <h5><del>$56.99</del> $55.99</h5>
+                                                        <h4 class="product-name">{{ $product->name }}</h4>
+                                                        <h5>LKR {{ number_format($product->price, 2) }}</h5>
                                                         <ul class="rating"> 
                                                             <li><i class="icon-41"></i></li>
                                                             <li><i class="icon-41"></i></li>
@@ -389,101 +301,47 @@
                                                             <li><i class="icon-41"></i></li>
                                                             <li><span>(5)</span></li>
                                                         </ul>
-                                                        <span class="product-stock"><i class="icon-39"></i>In Stock</span>
-                                                        <div class="overlay-content">
-                                                            <ul class="feature-list clearfix">
-                                                                <li>Fully tested, & Functional</li>
-                                                                <li>Up to 200MB/s Speed</li>
-                                                                <li>With Bluetooth Full Touch</li>
-                                                            </ul>
-                                                            <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
-                                                        </div>
+                                                        @if($product->stock_quantity > 0)
+                                                                <span class="product-stock"><i class="icon-39"></i>
+                                                                In Stock
+                                                            </span>
+                                                        @else
+                                                            <span class="product-stock text-danger"><i class="icon-39"></i>
+                                                                Out of Stock
+                                                            </span>
+                                                        @endif
+                                                        <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-md-6 col-sm-12 shop-block">
-                                            <div class="shop-block-one">
-                                                <div class="inner-box">
-                                                    <div class="image-box">
-                                                        <div class="discount-product">6% Off</div>
-                                                        <ul class="option-list-two">
-                                                          
-                                                            <li><button type="button"><i class="icon-7"></i></button></li>
-                                                        </ul>
-                                                        <figure class="image"><img src="frontend/assets/images/shop/shop-90.png" alt=""></figure>
-                                                    </div>
-                                                    <div class="lower-content">
-                                                        <span class="text">Interior</span>
-                                                        <h4><a href="shop-details.html">Advance 10w30 full synthetic fuel</a></h4>
-                                                        <h5><del>$90.99</del> $85.99</h5>
-                                                        <ul class="rating"> 
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><span>(5)</span></li>
-                                                        </ul>
-                                                        <span class="product-stock"><i class="icon-39"></i>In Stock</span>
-                                                        <div class="overlay-content">
-                                                            <ul class="feature-list clearfix">
-                                                                <li>Fully tested, & Functional</li>
-                                                                <li>Up to 200MB/s Speed</li>
-                                                                <li>With Bluetooth Full Touch</li>
-                                                            </ul>
-                                                            <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6 col-sm-12 shop-block">
-                                            <div class="shop-block-one">
-                                                <div class="inner-box">
-                                                    <div class="image-box">
-                                                        <span class="discount-product">6% Off</span>
-                                                        <ul class="option-list-two">
-                                                          
-                                                            <li><button type="button"><i class="icon-7"></i></button></li>
-                                                        </ul>
-                                                        <figure class="image"><img src="frontend/assets/images/shop/shop-85.png" alt=""></figure>
-                                                    </div>
-                                                    <div class="lower-content">
-                                                        <span class="text">Interior</span>
-                                                        <h4><a href="shop-details.html">Steering a car with a manual Wheel</a></h4>
-                                                        <h5><del>$92.99</del>$83.99</h5>
-                                                        <ul class="rating"> 
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><span>(5)</span></li>
-                                                        </ul>
-                                                        <span class="product-stock"><i class="icon-39"></i>In Stock</span>
-                                                        <div class="overlay-content">
-                                                            <ul class="feature-list clearfix">
-                                                                <li>Fully tested, & Functional</li>
-                                                                <li>Up to 200MB/s Speed</li>
-                                                                <li>With Bluetooth Full Touch</li>
-                                                            </ul>
-                                                            <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                       
+                                        @endforeach
                                 </div>
                             </div>
-                            <div class="pagination-wrapper centred pt_20">
+                           <div class="pagination-wrapper centred pt_20">
                                 <ul class="pagination clearfix">
-                                    <li><a href="shop.html"><i class="fal fa-angle-left"></i></a></li>
-                                    <li><a href="shop.html" class="current">1</a></li>
-                                    <li><a href="shop.html">2</a></li>
-                                    <li><a href="shop.html">3</a></li>
-                                    <li><a href="shop.html"><i class="fal fa-angle-right"></i></a></li>
+                                    {{-- Previous Page Link --}}
+                                    @if ($products->onFirstPage())
+                                        <li class="disabled"><span><i class="fal fa-angle-left"></i></span></li>
+                                    @else
+                                        <li><a href="{{ $products->previousPageUrl() }}"><i class="fal fa-angle-left"></i></a></li>
+                                    @endif
+
+                                    {{-- Pagination Elements --}}
+                                    @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+                                        @if ($page == $products->currentPage())
+                                            <li><a href="{{ $url }}" class="current">{{ $page }}</a></li>
+                                        @else
+                                            <li><a href="{{ $url }}">{{ $page }}</a></li>
+                                        @endif
+                                    @endforeach
+
+                                    {{-- Next Page Link --}}
+                                    @if ($products->hasMorePages())
+                                        <li><a href="{{ $products->nextPageUrl() }}"><i class="fal fa-angle-right"></i></a></li>
+                                    @else
+                                        <li class="disabled"><span><i class="fal fa-angle-right"></i></span></li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
@@ -493,8 +351,39 @@
         </section>
         <!-- shop-page-section end -->
 
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+$(document).ready(function () {
+    var min = 0;
+    var max = 100000;
 
+    $("#slider-range").slider({
+        range: true,
+        min: min,
+        max: max,
+        values: [min, max],
+        slide: function (event, ui) {
+            $("#amount").val("LKR " + ui.values[0].toLocaleString() +
+                " - LKR " + ui.values[1].toLocaleString());
+
+            // Update hidden inputs
+            $("#min_price").val(ui.values[0]);
+            $("#max_price").val(ui.values[1]);
+        }
+    });
+
+    // Set initial value display
+    $("#amount").val(
+        "LKR " + $("#slider-range").slider("values", 0).toLocaleString() +
+        " - LKR " + $("#slider-range").slider("values", 1).toLocaleString()
+    );
+
+    $("#min_price").val($("#slider-range").slider("values", 0));
+    $("#max_price").val($("#slider-range").slider("values", 1));
+});
+</script>
  
 
  @endsection
