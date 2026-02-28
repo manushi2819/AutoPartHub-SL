@@ -24,15 +24,16 @@ Route::get('/register', [LoginController::class, 'register'])->name('Frontend.re
 Route::post('/register', [LoginController::class, 'store'])->name('Frontend.register.store');
 Route::post('/customer/logout', [LoginController::class, 'logout'])->name('Frontend.logout');
 
+
+use App\Http\Controllers\Frontend\CustomerProfileController;
+
 Route::prefix('customer')->name('customer.')->middleware('auth:customer')->group(function () {
 
-    Route::get('dashboard', function () {
-        return view('Frontend.account');
-    })->name('dashboard');
+    Route::get('/dashboard', [CustomerProfileController::class, 'index'])->name('dashboard');
+    Route::post('/profile/update', [CustomerProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/password', [CustomerProfileController::class, 'updatePassword'])->name('profile.password');
 
 });
-
-
 
 
 

@@ -41,6 +41,9 @@
   <!-- main css -->
   <link rel="stylesheet" href="{{ asset('dashboard/assets/css/style.css') }}">
 
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
+
   <style>
     /* simple fade out effect */
     .flash-message {
@@ -122,6 +125,9 @@
         @endif
     </div>
 
+
+
+
 </div>
 
   @include('AdminDashboard.footer')
@@ -159,6 +165,7 @@
   <script src="{{ asset('dashboard/assets/js/homeOneChart.js') }}"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
 
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
       $(document).ready(function () {
           $('#dataTable').DataTable({
@@ -188,6 +195,39 @@
 </script>
 
 
+<!-- Small Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content border-0 shadow-sm">
+      <div class="modal-header text-white py-3 px-3">
+        <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body py-3 px-3 text-center">
+        <p class="mb-0">Are you sure you want to delete?</p>
+        <small class="text-muted">This action cannot be undone.</small>
+      </div>
+      <div class="modal-footer justify-content-center py-2 px-3">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+        <form id="deleteForm" method="POST" action="" class="d-inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger btn-sm">Yes, Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('.open-delete-modal').click(function() {
+        var url = $(this).data('url');
+        $('#deleteForm').attr('action', url); // set form action dynamically
+        var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        deleteModal.show(); // show modal
+    });
+});
+</script>
 
 </body>
 </html>

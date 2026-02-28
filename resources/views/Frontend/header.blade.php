@@ -93,7 +93,7 @@
                         <figure class="logo-box"  style="height:70px">
                             <a href="{{ route('Frontend.index') }}"><img src="{{ asset('logo4.png') }}" alt=""  style="height:100%"></a></figure>
                         <div class="search-area">
-                          @php
+                            @php
                                 $parentCategories = \App\Models\Category::whereNull('parent_id')
                                                     ->where('status', 1)
                                                     ->orderBy('name')
@@ -102,22 +102,22 @@
 
                             <div class="category-box">
                                 <div class="select-box">
-                                    <select class="wide" name="category">
-                                        <option data-display="Select Category">Select Category</option>
-
-                                        @foreach($parentCategories as $category)
-                                            <option value="{{ $category->id }}">
-                                                {{ $category->name }}
-                                            </option>
-                                        @endforeach
-
-                                    </select>
+                                    <form method="GET" action="{{ route('Frontend.shop') }}">
+                                        <select class="wide" name="category[]">
+                                            <option value="">Select Category</option>
+                                            @foreach($parentCategories as $category)
+                                                <option value="{{ $category->id }}"
+                                                    {{ in_array($category->id, (array) request()->input('category')) ? 'selected' : '' }}>
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                 </div>
                             </div>
+
                             <div class="search-box">
-                                <form method="post" action="shop.html">
                                     <div class="form-group">
-                                        <input type="search" name="search-field" placeholder="Search Products" required>
+                                        <input type="search" name="search" value="{{ request('search') }}" placeholder="Search Products">
                                         <button type="submit"><i class="icon-9"></i></button>
                                     </div>
                                 </form>
@@ -180,7 +180,7 @@
                                 @foreach($categories as $category)
                                     <li class="{{ $category->children->count() ? 'category-dropdown' : '' }}">
                                         
-                                        <a href="#">
+                                        <a href="{{ route('Frontend.shop', ['category[]' => $category->id]) }}">
                                             {{ $category->name }}
                                         </a>
 
@@ -190,13 +190,18 @@
 
                                                 @foreach($category->children as $child)
                                                     <div class="single-column">
-                                                        <p>{{ $child->name }}</p>
+                                                        <p>
+                                                            <a href="{{ route('Frontend.shop', ['category[]' => $child->id]) }}"
+                                                            style="color:black">
+                                                                {{ $child->name }}
+                                                            </a>
+                                                        </p>
 
                                                         @if($child->children->count())
                                                         <ul>
                                                             @foreach($child->children as $subChild)
                                                                 <li>
-                                                                    <a href="#">
+                                                                    <a href="{{ route('Frontend.shop', ['category[]' => $subChild->id]) }}">
                                                                         {{ $subChild->name }}
                                                                     </a>
                                                                 </li>

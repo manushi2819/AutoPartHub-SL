@@ -60,15 +60,11 @@
                                 <a href="{{ route('admin.products.edit', $product->id) }}" class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center">
                                     <iconify-icon icon="lucide:edit"></iconify-icon>
                                 </a>
-
-                                <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" class="m-0 p-0">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center"
-                                            onclick="return confirm('Are you sure you want to delete this product?');">
-                                        <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
-                                    </button>
-                                </form>
+                                
+                                <button type="button" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center open-delete-modal" 
+                                        data-url="{{ route('admin.products.destroy', $product->id) }}">
+                                    <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
+                                </button>
                             </div>
                         </td>
                     </tr>

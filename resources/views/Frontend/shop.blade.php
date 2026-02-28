@@ -152,49 +152,100 @@
                                         </div>
 
                                         {{-- SEARCH BUTTON --}}
-                                        <div class="message-btn">
-                                            <button type="submit" class="theme-btn">
+                               
+                                        <div class="btn-box" style="display:flex; gap:12px; margin-top:15px;">
+
+                                            <button type="submit"  class="theme-btn"
+                                                style="
+                                                    flex:1;
+                                                    padding:10px 18px;
+                                                    background:linear-gradient(135deg, #000000, #000000);
+                                                    border:none;
+                                                    border-radius:6px;
+                                                    color:#fff;
+                                                    font-weight:600;
+                                                    font-size:14px;
+                                                    cursor:pointer;
+                                                    transition:all 0.3s ease;
+                                                    box-shadow:0 4px 10px rgba(0,0,0,0.15);
+                                                "
+                                            >
                                                 Search Part
-                                                <span></span><span></span><span></span><span></span>
                                             </button>
-                                        </div>
-                                        <div class="btn-box">
-                                            <a href="{{ route('Frontend.shop') }}" class="clear-btn">Clear</a>
+
+                                            <a href="{{ route('Frontend.shop') }}" 
+                                                style="
+                                                    flex:1;
+                                                    text-align:center;
+                                                    padding:10px 18px;
+                                                    background:#f5f5f5;
+                                                    border:1px solid #ddd;
+                                                    border-radius:6px;
+                                                    color:#333;
+                                                    font-weight:600;
+                                                    font-size:14px;
+                                                    text-decoration:none;
+                                                    transition:all 0.3s ease;
+                                                "
+                                            >
+                                                Clear
+                                            </a>
+
                                         </div>
                                     </form>
                                 </div>
                             </div>
 
-                    <div class="category-widget sidebar-widget pb_40 mb_40">
-                        <div class="widget-title mb_30">
-                            <h3>Categories</h3>
-                        </div>
-                        <div class="widget-content">
-                            <form method="GET" action="{{ route('Frontend.shop') }}">
+                   <form method="GET" action="{{ route('Frontend.shop') }}">
+                        {{-- =========================
+                            Categories
+                        ========================== --}}
+                        <div class="category-widget sidebar-widget pb_40 mb_40">
+                            <div class="widget-title mb_30">
+                                <h3>Categories</h3>
+                            </div>
+                            <div class="widget-content">
                                 <ul class="accordion-box">
                                     @foreach($categories as $category)
-                                        @php
-                                            $childSelected = $category->children->pluck('id')->intersect(request('category', []))->count() > 0;
-                                            $parentSelected = in_array($category->id, request('category', [])) || $childSelected;
-                                        @endphp
-
                                         <li class="accordion block">
 
-                                            {{-- Parent Category Name --}}
-                                            <div class="acc-btn">{{ $category->name }}</div>
+                                            {{-- Parent Row --}}
+                                            <div class="parent-row d-flex align-items-center justify-content-between">
 
-                                            {{-- Child Categories --}}
+                                                {{-- Checkbox --}}
+                                                <div class="check-box">
+                                                    <input type="checkbox"
+                                                        name="category[]"
+                                                        value="{{ $category->id }}"
+                                                        id="cat-{{ $category->id }}"
+                                                        {{ in_array($category->id, request()->input('category', [])) ? 'checked' : '' }}>
+                                                    <label for="cat-{{ $category->id }}">
+                                                        <strong>{{ $category->name }}</strong>
+                                                    </label>
+                                                </div>
+
+                                                {{-- Toggle Button --}}
+                                                @if($category->children->count())
+                                                    <span class="acc-toggle" style="cursor:pointer;">+</span>
+                                                @endif
+
+                                            </div>
+
+                                            {{-- Children --}}
                                             @if($category->children->count())
-                                                <div class="acc-content" style="{{ $childSelected ? 'display:block;' : 'display:none;' }}">
+                                                <div class="acc-content" style="display:none;">
                                                     <ul class="category-list clearfix">
                                                         @foreach($category->children as $child)
                                                             <li>
                                                                 <div class="check-box">
-                                                                    <input type="checkbox" name="category[]"
+                                                                    <input type="checkbox"
+                                                                        name="category[]"
                                                                         value="{{ $child->id }}"
                                                                         id="cat-{{ $child->id }}"
-                                                                        {{ in_array($child->id, request('category', [])) ? 'checked' : '' }}>
-                                                                    <label for="cat-{{ $child->id }}">{{ $child->name }}</label>
+                                                                        {{ in_array($child->id, request()->input('category', [])) ? 'checked' : '' }}>
+                                                                    <label for="cat-{{ $child->id }}">
+                                                                        {{ $child->name }}
+                                                                    </label>
                                                                 </div>
                                                             </li>
                                                         @endforeach
@@ -203,56 +254,78 @@
                                             @endif
 
                                         </li>
-                                    @endforeach
+                                        @endforeach
                                 </ul>
-
-                                <div class="btn-box mt-3">
-                                    <button type="submit" class="theme-btn filter-btn">
-                                        Filter Categories
-                                        <span></span><span></span><span></span><span></span>
-                                    </button>
-                                </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
 
-                    <script>
-                    $(document).ready(function(){
-                        // Accordion toggle on click
-                        $(".acc-btn").click(function(){
-                            $(this).next(".acc-content").slideToggle();
-                        });
-                    });
-                    </script>
-           
-                            {{-- =========================
-                                Price Filter
-                            ========================== --}}
-                            <div class="filter-widget sidebar-widget pb_50 mb_40">
-                                <div class="widget-title mb_30">
-                                    <h3>Filter by Price</h3>
-                                </div>
-                            <form method="GET" action="{{ route('Frontend.shop') }}">
-                                    <div class="price-range-slider">
-                                        <div id="slider-range" class="range-bar"></div>
-                                        <p class="range-value">
-                                            <span>Price:</span>
-                                            <input type="text" id="amount" readonly
-                                                value="{{ request('min_price') ?? 0 }} - {{ request('max_price') ?? 100000 }}">
-                                        </p>
-
-                                        {{-- Hidden inputs for controller --}}
-                                        <input type="hidden" name="min_price" id="min_price" value="{{ request('min_price') ?? 0 }}">
-                                        <input type="hidden" name="max_price" id="max_price" value="{{ request('max_price') ?? 100000 }}">
-
-                                        <div class="btn-box">
-                                            <button type="submit" class="theme-btn filter-btn">Apply<span></span><span></span><span></span><span></span></button>
-                                            <a href="{{ route('Frontend.shop') }}" class="clear-btn">Clear</a>
-                                        </div>
-                                    </div>
-                                </form>
+                        {{-- =========================
+                            Price Filter
+                        ========================== --}}
+                        <div class="filter-widget sidebar-widget  mb_40">
+                            <div class="widget-title mb_30">
+                                <h3>Filter by Price</h3>
                             </div>
 
+                            <div class="price-range-slider">
+                                <div id="slider-range" class="range-bar"></div>
+
+                                <p class="range-value">
+                                    <span>Price:</span>
+                                    <input type="text" id="amount" readonly
+                                        value="{{ request('min_price') ?? 0 }} - {{ request('max_price') ?? 100000 }}">
+                                </p>
+
+                                <input type="hidden" name="min_price" id="min_price"
+                                    value="{{ request('min_price') ?? 0 }}">
+
+                                <input type="hidden" name="max_price" id="max_price"
+                                    value="{{ request('max_price') ?? 100000 }}">
+                            </div>
+                        </div>
+
+    
+                        <div class="btn-box" style="display:flex; gap:12px; margin-top:15px;">
+
+                            <button type="submit"  class="theme-btn"
+                                style="
+                                    flex:1;
+                                    padding:10px 18px;
+                                    background:linear-gradient(135deg, #000000, #000000);
+                                    border:none;
+                                    border-radius:6px;
+                                    color:#fff;
+                                    font-weight:600;
+                                    font-size:14px;
+                                    cursor:pointer;
+                                    transition:all 0.3s ease;
+                                    box-shadow:0 4px 10px rgba(0,0,0,0.15);
+                                "
+                            >
+                                Apply Filters
+                            </button>
+
+                            <a href="{{ route('Frontend.shop') }}" 
+                                style="
+                                    flex:1;
+                                    text-align:center;
+                                    padding:10px 18px;
+                                    background:#f5f5f5;
+                                    border:1px solid #ddd;
+                                    border-radius:6px;
+                                    color:#333;
+                                    font-weight:600;
+                                    font-size:14px;
+                                    text-decoration:none;
+                                    transition:all 0.3s ease;
+                                "
+                            >
+                                Clear
+                            </a>
+
+                        </div>
+
+                    </form>
                         </div>
                     </div>
 
@@ -391,5 +464,11 @@ $(document).ready(function () {
 });
 </script>
  
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).on("click", ".acc-toggle", function(e){
+    e.stopPropagation();
+    $(this).closest("li").children(".acc-content").slideToggle();
+});
+</script>
  @endsection

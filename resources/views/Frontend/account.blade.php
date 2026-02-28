@@ -4,6 +4,10 @@
 
 @section('content')
 
+<style>
+ 
+</style>
+
         <!-- page-title -->
         <section class="page-title-two centred">
             <div class="auto-container">
@@ -37,35 +41,81 @@
                         </div>
                         <div class="tabs-content">
                             <div class="tab active-tab" id="tab-1">
-                                <div class="personal-info">
-                                    <h3>Personal Information</h3>
-                                    <p>Manage your personal information, including phone numbers and email adress where you can be contacted</p>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-4 col-md-6 col-sm-12 single-column">
-                                            <div class="single-item">
-                                                <h6>Name</h6>
-                                                <span>{{ $customer->first_name}} {{ $customer->last_name}}</span>
-                                                <button type="button">Edit</button>
-                                            </div>
-                                        </div>
+                            <section class="contact-section">
+                                <div class="auto-container">
+                                    <div class="sec-title mb_10">
+                                        <h3>Personal Information</h3>
+                                        <p>Manage your personal information, including phone numbers, email, and address where you can be contacted</p>
+                                    </div>
+                                    <div class="form-inner">
+                                         <form method="POST" action="{{ route('customer.profile.update') }}" id="contact-form">
+                                            @csrf
+                                            <div class="row clearfix">
+                                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                    <input type="text" name="first_name" value="{{ $customer->first_name }}" placeholder="First Name" required>
+                                                </div>
 
-                                         <div class="col-lg-4 col-md-6 col-sm-12 single-column">
-                                            <div class="single-item">
-                                                <h6>Email</h6>
-                                                <span>{{ $customer->email}} </span>
-                                                <button type="button">Edit</button>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                    <input type="text" name="last_name" value="{{ $customer->last_name }}" placeholder="Last Name" required>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                    <input type="email" name="email" value="{{ $customer->email }}" placeholder="E-mail" required>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                    <input type="text" name="phone" value="{{ $customer->phone }}" placeholder="Phone">
+                                                </div>
+
+                                                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                                    <textarea name="address" placeholder="Address" rows="0">{{ $customer->address }}</textarea>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
+                                                    <button type="submit" class="theme-btn" name="submit-form">
+                                                        Update Profile
+                                                        <span></span><span></span><span></span><span></span>
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    
-                                        <div class="col-lg-4 col-md-6 col-sm-12 single-column">
-                                            <div class="single-item">
-                                                <h6>Contact Number</h6>
-                                                <span><a href="tel:{{ $customer->phone}}">{{ $customer->phone}}</a></span>
-                                                <button type="button">Edit</button>
-                                            </div>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
+                            </section>
+   
+                           <section class="contact-section mt-5">
+                                <div class="auto-container">
+                                    <div class="sec-title mb_10">
+                                        <h3>Update Password</h3>
+                                        <p>Change your account password securely</p>
+                                    </div>
+                                    <div class="form-inner">
+                                        <form method="POST" action="{{ route('customer.profile.password') }}" id="password-form">
+                                            @csrf
+                                            <div class="row clearfix">
+
+                                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                    <input type="password" name="current_password" placeholder="Current Password" class="form-control" required>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                    <input type="password" name="password" placeholder="New Password" class="form-control" required>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                    <input type="password" name="password_confirmation" placeholder="Confirm New Password" class="form-control" required>
+                                                </div>
+
+                                                <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
+                                                    <button type="submit" class="theme-btn" name="submit-form">
+                                                        Update Password
+                                                        <span></span><span></span><span></span><span></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </section>
                             </div>
                             
                             <div class="tab" id="tab-3">

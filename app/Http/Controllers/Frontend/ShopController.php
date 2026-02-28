@@ -53,31 +53,42 @@ class ShopController extends Controller
         // Vehicle Filters (OR)
         // -------------------------
         $products->when($request->filled('year'), function($q) use ($request) {
-            $q->orWhereHas('compatibility', function($q2) use ($request){
+            $q->whereHas('compatibility', function($q2) use ($request){
                 $q2->where('year_from', '<=', $request->year)
-                   ->where('year_to', '>=', $request->year);
+                ->where('year_to', '>=', $request->year);
             });
         });
 
         $products->when($request->filled('brand'), function($q) use ($request) {
-            $q->orWhereHas('compatibility', fn($q2)=> $q2->where('brand', $request->brand));
+            $q->whereHas('compatibility', fn($q2) => $q2->where('brand', $request->brand));
         });
 
         $products->when($request->filled('model'), function($q) use ($request) {
-            $q->orWhereHas('compatibility', fn($q2)=> $q2->where('model', $request->model));
+            $q->whereHas('compatibility', fn($q2) => $q2->where('model', $request->model));
         });
 
         $products->when($request->filled('engine_cc'), function($q) use ($request) {
-            $q->orWhereHas('compatibility', fn($q2)=> $q2->where('engine_cc', $request->engine_cc));
+            $q->whereHas('compatibility', fn($q2) => $q2->where('engine_cc', $request->engine_cc));
         });
 
         $products->when($request->filled('fuel_type'), function($q) use ($request) {
-            $q->orWhereHas('compatibility', fn($q2)=> $q2->where('fuel_type', $request->fuel_type));
+            $q->whereHas('compatibility', fn($q2) => $q2->where('fuel_type', $request->fuel_type));
         });
 
         $products->when($request->filled('engine_type'), function($q) use ($request) {
-            $q->orWhereHas('compatibility', fn($q2)=> $q2->where('engine_type', $request->engine_type));
+            $q->whereHas('compatibility', fn($q2) => $q2->where('engine_type', $request->engine_type));
         });
+
+        // -------------------------
+        // Category Filter
+        // -------------------------
+        if ($request->filled('category')) {
+            $selected = array_filter((array) $request->category); // remove empty values
+            if (!empty($selected)) {
+                $categoryIds = \App\Models\Category::getAllDescendantIds($selected);
+                $products->whereIn('category_id', $categoryIds);
+            }
+        }
 
         // -------------------------
         // Price Filter
@@ -87,14 +98,14 @@ class ShopController extends Controller
         }
 
         // -------------------------
-        // Category Filter (include parent/child)
+        // Search Filter
         // -------------------------
-        if ($request->filled('category')) {
-            $products->whereIn('category_id', function($query) use ($request) {
-                $query->select('id')
-                      ->from('categories')
-                      ->whereIn('id', $request->category)
-                      ->orWhereIn('parent_id', $request->category);
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $products->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                ->orWhere('brand', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
             });
         }
 
@@ -119,4 +130,9 @@ class ShopController extends Controller
             'categories'
         ));
     }
+
+
+
+
+
 }

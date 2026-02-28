@@ -134,6 +134,21 @@
     gap: 8px;
     flex: 1;
 }
+
+
+.form-control  {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+}
+
+
 </style>
 </head>
 

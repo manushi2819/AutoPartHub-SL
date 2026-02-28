@@ -23,79 +23,89 @@
                     </div>
                     <div class="col-lg-3 col-md-12 col-sm-12 search-column">
                         <div class="search-inner">
-                            <form method="post" action="shop.html" class="clearfix">
+                            <form method="GET" action="{{ route('Frontend.shop') }}">
+                                @csrf
+
+                                {{-- YEAR --}}
                                 <div class="form-group">
                                     <div class="select-box">
-                                        <select class="wide">
-                                           <option data-display="Select Year">Select Year</option>
-                                           <option value="1">2021</option>
-                                           <option value="2">2022</option>
-                                           <option value="3">2023</option>
-                                           <option value="4">2024</option>
+                                        <select name="year" class="wide">
+                                            <option value="">Select Year</option>
+                                            @foreach($years as $year)
+                                                <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
+                                                    {{ $year }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
+
+                                {{-- BRAND --}}
                                 <div class="form-group">
                                     <div class="select-box">
-                                        <select class="wide">
-                                           <option data-display="Select Brand">Select Brand</option>
-                                           <option value="1">Audi</option>
-                                           <option value="2">BMW</option>
-                                           <option value="3">Mercedes Benz</option>
-                                           <option value="4">Tesla Motors</option>
-                                           <option value="5">Volkswagen</option>
-                                           <option value="6">Porsche</option>
-                                           <option value="7">Hyundai</option>
+                                        <select name="brand" class="wide">
+                                            <option value="">Select Brand</option>
+                                            @foreach($brands as $brand)
+                                                <option value="{{ $brand }}" {{ request('brand') == $brand ? 'selected' : '' }}>
+                                                    {{ $brand }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
+
+                                {{-- MODEL --}}
                                 <div class="form-group">
                                     <div class="select-box">
-                                        <select class="wide">
-                                           <option data-display="Car Model">Car Model</option>
-                                           <option value="1">2021</option>
-                                           <option value="2">2022</option>
-                                           <option value="3">2023</option>
-                                           <option value="4">2024</option>
+                                        <select name="model" class="wide">
+                                            <option value="">Select Model</option>
+                                            @foreach($models as $model)
+                                                <option value="{{ $model }}" {{ request('model') == $model ? 'selected' : '' }}>
+                                                    {{ $model }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
+
+                                {{-- ENGINE CC --}}
                                 <div class="form-group">
                                     <div class="select-box">
-                                        <select class="wide">
-                                           <option data-display="Select Engine">Select Engine</option>
-                                           <option value="1">1000 cc</option>
-                                           <option value="2">1500 cc</option>
-                                           <option value="3">2000 cc</option>
-                                           <option value="4">3000 cc</option>
+                                        <select name="engine_cc" class="wide">
+                                            <option value="">Select Engine</option>
+                                            @foreach($engines as $engine)
+                                                <option value="{{ $engine }}" {{ request('engine_cc') == $engine ? 'selected' : '' }}>
+                                                    {{ $engine }} cc
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
+
+                                {{-- FUEL TYPE --}}
                                 <div class="form-group">
                                     <div class="select-box">
-                                        <select class="wide">
-                                           <option data-display="Fuel Type">Fuel Type</option>
-                                           <option value="1">Diesel</option>
-                                           <option value="2">Biodiesel</option>
-                                           <option value="3">Gasoline</option>
-                                           <option value="4">Ethanol</option>
-                                           <option value="5">Natural gas</option>
-                                           <option value="6">Octane gasoline</option>
-                                           <option value="7">Lpg</option>
+                                        <select name="fuel_type" class="wide">
+                                            <option value="">Fuel Type</option>
+                                            @foreach($fuelTypes as $fuel)
+                                                <option value="{{ $fuel }}" {{ request('fuel_type') == $fuel ? 'selected' : '' }}>
+                                                    {{ $fuel }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
+
+                                {{-- ENGINE TYPE --}}
                                 <div class="form-group">
                                     <div class="select-box">
-                                        <select class="wide">
-                                           <option data-display="Engine Type">Engine Type</option>
-                                           <option value="1">Diesel</option>
-                                           <option value="2">Biodiesel</option>
-                                           <option value="3">Gasoline</option>
-                                           <option value="4">Ethanol</option>
-                                           <option value="5">Natural gas</option>
-                                           <option value="6">Octane gasoline</option>
-                                           <option value="7">Lpg</option>
+                                        <select name="engine_type" class="wide">
+                                            <option value="">Engine Type</option>
+                                            @foreach($engineTypes as $type)
+                                                <option value="{{ $type }}" {{ request('engine_type') == $type ? 'selected' : '' }}>
+                                                    {{ $type }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
