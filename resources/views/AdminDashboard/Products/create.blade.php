@@ -9,7 +9,8 @@
 
 <div class="card mb-24">
     <div class="card-body">
-        <form action="{{ isset($product) ? route('admin.products.update', $product->id) : route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ isset($product) ? route('admin.products.update', $product->id) : route('admin.products.store') }}" 
+        method="POST" enctype="multipart/form-data" id="productForm">
             @csrf
             @if(isset($product))
                 @method('PUT')
@@ -82,10 +83,20 @@
                 </div>
 
                 <div class="col-12">
-                    <label class="form-label">Description</label>
-                    <textarea name="description" class="form-control" rows="3">{{ $product->description ?? old('description') }}</textarea>
+                    <label class="form-label">Small Description</label>
+                    <textarea name="small_description" class="form-control" rows="3">{{ $product->small_description ?? old('small_description') }}</textarea>
                 </div>
 
+                <div class="col-md-12">
+                    <label class="form-label">Description</label>
+                    <div class="quill-wrapper">
+                        {{-- Display existing description if editing, otherwise old input --}}
+                        <div id="editor">{!! $product->description ?? old('description') !!}</div>
+                    </div>
+
+                    {{-- Hidden input to submit Quill HTML --}}
+                    <input type="hidden" name="description" id="description">
+                </div>
 
                 <hr>
                  <h6 class="fw-semibold">Vehicle Compatibility</h6>
@@ -208,6 +219,41 @@ $(document).ready(function() {
     $('.select2').select2({
         placeholder: "Select Category",
         allowClear: true
+    });
+});
+</script>
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const editor = document.getElementById('editor');
+    const hiddenInput = document.getElementById('description'); // use correct ID
+    const form = document.querySelector('#productForm'); // your product form
+
+    if (!editor || !hiddenInput || !form) return;
+
+    // Initialize Quill
+    const quill = new Quill(editor, {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ 'header': [1, 2, 3, false] }],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                [{ 'script': 'sub' }, { 'script': 'super' }],
+                [{ 'indent': '-1' }, { 'indent': '+1' }],
+                [{ 'align': [] }],
+                ['link', 'image'],
+                ['clean']
+            ]
+        }
+    });
+
+    // On form submit, save editor content to hidden input
+    form.addEventListener('submit', function () {
+        hiddenInput.value = quill.root.innerHTML;
     });
 });
 </script>

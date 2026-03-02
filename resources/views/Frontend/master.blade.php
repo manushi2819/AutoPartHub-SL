@@ -51,6 +51,8 @@
 <link href="{{ asset('frontend/assets/css/module-css/account.css') }}" rel="stylesheet">
 <link href="{{ asset('frontend/assets/css/module-css/cart.css') }}" rel="stylesheet">
 <link href="{{ asset('frontend/assets/css/module-css/checkout.css') }}" rel="stylesheet">
+<link href="{{ asset('frontend/assets/css/module-css/shop-details.css') }}" rel="stylesheet">
+
 
 <!-- Bootstrap JS bundle (includes Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -228,6 +230,13 @@
 <script src="{{ asset('frontend/assets/js/jquery-ui.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/lenis.min.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/aos.js') }}"></script>
+
+<script src="{{ asset('frontend/assets/js/product-filter.js') }}"></script>
+<script src="{{ asset('frontend/assets/js/jquery.bootstrap-touchspin.js') }}"></script>
+<script src="{{ asset('frontend/assets/js/bxslider.js') }}"></script>
+
+
+
 
 <!-- main-js -->
 <script src="{{ asset('frontend/assets/js/script.js') }}"></script>

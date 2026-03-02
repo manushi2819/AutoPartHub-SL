@@ -23,7 +23,7 @@
             <div class="auto-container">
                 <div class="content-box">
                     <ul class="bread-crumb">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="{{ route('Frontend.index') }}">Home</a></li>
                         <li>Shop</li>
                     </ul>
                 </div>
@@ -351,6 +351,7 @@
                                         @foreach($products as $product)
                                         <div class="col-lg-3 col-md-6 col-sm-12 shop-block">
                                             <div class="shop-block-one">
+                                                <a href="{{ route('Frontend.parts-details', ['id' => $product->id]) }}">
                                                 <div class="inner-box">
                                                    <div class="image-box" style="height: 200px; overflow: hidden;">
                                                         @php
@@ -384,14 +385,10 @@
                                                                 Out of Stock
                                                             </span>
                                                         @endif
-                                                        <div class="overlay-content">
-                                                            <ul class="feature-list clearfix">
-                                                                <li>{{ \Illuminate\Support\Str::limit($product->description, 80) }}</li>
-                                                            </ul>
-                                                            <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
-                                                        </div>
+                                                       
                                                     </div>
                                                 </div>
+                                                </a>
                                             </div>
                                         </div>
                                         @endforeach

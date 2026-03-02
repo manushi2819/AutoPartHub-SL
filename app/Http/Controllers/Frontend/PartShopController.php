@@ -8,7 +8,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductVehicleCompatibility;
 
-class ShopController extends Controller
+class PartShopController extends Controller
 {
     public function index(Request $request)
     {

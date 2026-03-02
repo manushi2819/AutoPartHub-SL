@@ -52,4 +52,31 @@ class Category extends Model
         $collectIds($categories);
         return array_unique($allIds);
     }
+
+
+    public static function getCategoryTreeIds($categoryId)
+    {
+        $allIds = [];
+
+        $category = self::with('parent')->find($categoryId);
+        if (!$category) return $allIds;
+
+        // 1️⃣ Add current category
+        $allIds[] = $category->id;
+
+        // 2️⃣ Add all descendants
+        $allIds = array_merge($allIds, self::getAllDescendantIds([$category->id]));
+
+        // 3️⃣ Add siblings (other categories under same parent)
+        if ($category->parent_id) {
+            $siblings = self::where('parent_id', $category->parent_id)
+                            ->where('id', '!=', $category->id)
+                            ->pluck('id')
+                            ->toArray();
+            $allIds = array_merge($allIds, $siblings);
+        }
+
+        return array_unique($allIds);
+    }
+    
 }

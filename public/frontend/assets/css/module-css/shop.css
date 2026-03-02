@@ -828,9 +828,7 @@
   transition: all 500ms ease;
 }
 
-.shop-style-two .shop-block-one .inner-box:hover .lower-content{
-  padding-bottom: 183px;
-}
+
 
 .shop-block-one .inner-box .image-box .option-list-two{
   position: absolute;

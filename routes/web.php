@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Frontend\ShopController;
+use App\Http\Controllers\Frontend\PartShopController;
+use App\Http\Controllers\Frontend\PartDetailsController;
 use App\Http\Controllers\Frontend\LoginController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Frontend\WishlistController;
 
 Route::get('/', [HomeController::class, 'index'])->name('Frontend.index');
 Route::get('/about-us', [HomeController::class, 'about'])->name('Frontend.about');
@@ -13,9 +15,18 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('Frontend.conta
 
 Route::post('/contact-submit', [ContactController::class, 'store'])->name('contact.submit');
 
-Route::get('/shop', [ShopController::class, 'index'])->name('Frontend.shop');
+Route::get('/parts-shop', [PartShopController::class, 'index'])->name('Frontend.shop');
+Route::get('/parts-details/{id}', [PartDetailsController::class, 'index'])->name('Frontend.parts-details');
 
 Route::get('/cart', [CartController::class, 'index'])->name('Frontend.cart');
+Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/delete', [CartController::class, 'delete'])->name('cart.delete');
+
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('Frontend.wishlist');
+Route::post('wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
+
+
 Route::get('/checkout', [CartController::class, 'checkout'])->name('Frontend.checkout');
 
 Route::get('/login', [LoginController::class, 'login'])->name('Frontend.login');

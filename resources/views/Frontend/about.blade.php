@@ -10,7 +10,7 @@
                 <div class="content-box">
                     <div class="border-line"></div>
                     <ul class="bread-crumb">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="{{ route('Frontend.index') }}">Home</a></li>
                         <li>About Us</li>
                     </ul>
                 </div>

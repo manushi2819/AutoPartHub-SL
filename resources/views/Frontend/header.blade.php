@@ -123,9 +123,22 @@
                                 </form>
                             </div>
                         </div>
+
+                        @php
+                            $customer = Auth::guard('customer')->user();
+                            $sessionId = session()->getId();
+
+                            if ($customer) {
+                                $cartCount = \App\Models\Cart::where('customer_id', $customer->id)
+                                                ->sum('quantity');
+                            } else {
+                                $cartCount = \App\Models\Cart::where('session_id', $sessionId)
+                                                ->sum('quantity');
+                            }
+                        @endphp
                         <ul class="option-list">
-                            <li><button type="button"><i class="icon-7"></i></button></li>
-                            <li><a href="{{ route('Frontend.cart') }}"><i class="icon-6"></i><span>0</span></a></li>
+                            <li><a href="{{ route('Frontend.wishlist') }}"><i class="icon-7"></i></a></li>
+                            <li><a href="{{ route('Frontend.cart') }}"><i class="icon-6"></i><span>{{ $cartCount }}</span></a></li>
                           
                              @if(Auth::guard('customer')->check())
                                 @php
