@@ -32,10 +32,26 @@
     
             </li>
 
-              <li>
+            <li>
                 <a href="{{ route('admin.products.index') }}">
                 <iconify-icon icon="mdi:package-variant-closed" class="menu-icon"></iconify-icon>
                     <span>Products</span>
+                </a>
+    
+            </li>
+
+            <li>
+                <a href="{{ route('admin.orders.index') }}">
+                <iconify-icon icon="mdi:cart-outline" class="menu-icon"></iconify-icon>
+                    <span>Orders</span>
+                </a>
+    
+            </li>
+
+             <li>
+                <a href="{{ route('admin.reviews.index') }}">
+                <iconify-icon icon="mdi:star-outline" class="menu-icon"></iconify-icon>
+                    <span>Reviews</span>
                 </a>
     
             </li>

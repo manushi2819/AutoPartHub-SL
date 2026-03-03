@@ -5,7 +5,7 @@
 
 <div class="d-flex justify-content-between mb-24">
     <h6 class="fw-semibold">Create Category</h6>
-    <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary btn-sm">
+      <a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm">
         Back
     </a>
 </div>

@@ -13,7 +13,7 @@ class PartDetailsController extends Controller
 
     public function index($id)
     {
-        $product = Product::with(['images', 'category', 'compatibility'])->findOrFail($id);
+        $product = Product::with(['images', 'category', 'compatibility', 'reviews.images'])->findOrFail($id);
 
         $brand = $product->brand;
         $model = $product->compatibility->model ?? '';

@@ -117,7 +117,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-discription mb_70">
+                <div class="product-discription mb_70 card1">
                     <div class="tabs-box">
                         <div class="tab-btn-box">
                             <ul class="tab-btns tab-buttons clearfix">
@@ -134,89 +134,97 @@
                                 </div>
                             </div>
 
-                            <!-- Reviews Tab (keep as-is) -->
-                        <div class="tab" id="tab-2">
+                           <!-- Reviews Tab -->
+                            <div class="tab" id="tab-2">
                                 <div class="review-content pt_40">
-                                    
-                                    <div class="single-review">
-                                        <div class="upper-box">
-                                            <div class="info-box">
-                                                <figure class="image"><img src="assets/images/resource/review-3.png" alt=""></figure>
-                                                <div class="inner">
-                                                    <h4>Dania Monjur</h4>
-                                                    <span class="date">June 08, 2023</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <ul class="rating">
-                                            <li><i class="icon-41"></i></li>
-                                            <li><i class="icon-41"></i></li>
-                                            <li><i class="icon-41"></i></li>
-                                            <li><i class="icon-41"></i></li>
-                                            <li><i class="icon-41"></i></li>
-                                        </ul>
-                                        <p>Good rims- purchased as a replacement for our vintage Corolla that’s still rolling. Satisfied with them, not sure what else to say other than if you’re looking for a replacement. A car rim, also known as a wheel rim or simply a wheel, is a crucial component of a vehicle that supports the tire and provides a mounting surface for it.</p>
-                                        <ul class="image-list">
-                                            <li><img src="assets/images/resource/review-img-5.jpg" alt=""></li>
-                                            <li><img src="assets/images/resource/review-img-6.jpg" alt=""></li>
-                                        </ul>
-                                    </div>
-                                    <div class="customer-review">
-                                        <h3>Write Your Rating</h3>
-                                        <div class="rating-box mb_25">
-                                            <p>Your Rating <span>*</span></p>
-                                            <div class="rating-inner">
-                                                <ul class="rating-list">
-                                                    <li><button><i class="icon-41"></i></button></li>
-                                                </ul>
-                                                <ul class="rating-list">
-                                                    <li><button><i class="icon-41"></i></button></li>
-                                                    <li><button><i class="icon-41"></i></button></li>
-                                                </ul>
-                                                <ul class="rating-list">
-                                                    <li><button><i class="icon-41"></i></button></li>
-                                                    <li><button><i class="icon-41"></i></button></li>
-                                                    <li><button><i class="icon-41"></i></button></li>
-                                                </ul>
-                                                <ul class="rating-list">
-                                                    <li><button><i class="icon-41"></i></button></li>
-                                                    <li><button><i class="icon-41"></i></button></li>
-                                                    <li><button><i class="icon-41"></i></button></li>
-                                                    <li><button><i class="icon-41"></i></button></li>
-                                                </ul>
-                                                <ul class="rating-list">
-                                                    <li><button><i class="icon-41"></i></button></li>
-                                                    <li><button><i class="icon-41"></i></button></li>
-                                                    <li><button><i class="icon-41"></i></button></li>
-                                                    <li><button><i class="icon-41"></i></button></li>
-                                                    <li><button><i class="icon-41"></i></button></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="form-inner">
-                                            <form method="post" action="shop-details.html">
-                                                <div class="form-group">
-                                                    <label>Write Your Review <span>*</span></label>
-                                                    <textarea name="message"></textarea>
-                                                </div>
-                                                <div class="form-group upload-field">
-                                                    <label>Add Photos and Video</label>
-                                                    <div class="upload-box">
-                                                        <input name="files[]" id="filer_input2" multiple="multiple" type="file">
-                                                        <div class="upload-content">
-                                                            <i class="icon-36"></i>
-                                                            <span>Upload Image</span>
-                                                        </div>
+
+                                    {{-- Existing Reviews --}}
+                                    @forelse($product->reviews as $review)
+                                        <div class="single-review" style="margin-bottom:20px; border-bottom:1px solid #ddd; padding-bottom:15px;">
+                                            <div class="upper-box">
+                                                <div class="info-box" style="display:flex; align-items:center;">
+                                                    <figure class="image" style="margin-right:10px;">
+                                                        <img src="{{ asset('user1.png') }}" alt="" style="width:50px; height:50px; object-fit:cover; border-radius:50%;">
+                                                    </figure>
+                                                    <div class="inner">
+                                                        <h4>{{ $review->name }}</h4>
+                                                        <span class="date">{{ $review->created_at->format('M d, Y') }}</span>
                                                     </div>
                                                 </div>
+                                            </div>
+
+                                            {{-- Rating Stars --}}
+                                            <ul class="rating" style="list-style:none; padding:0; display:flex;">
+                                                @for($i=1; $i<=5; $i++)
+                                                    <li>
+                                                        <i class="icon-41" style="color:{{ $i <= $review->rating ? '#FFD700' : '#ccc' }}"></i>
+                                                    </li>
+                                                @endfor
+                                            </ul>
+
+                                            <p>{{ $review->message }}</p>
+
+                                            {{-- Review Images --}}
+                                            @if($review->images->count())
+                                                <ul class="image-list" style="display:flex; gap:5px; flex-wrap:wrap;">
+                                                    @foreach($review->images as $img)
+                                                        <li><img src="{{ asset('uploads/'.$img->image) }}" alt="" style="width:80px; height:80px; object-fit:cover; border-radius:5px;"></li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </div>
+                                    @empty
+                                        <div class="single-review">No Reviews Yet</div>
+                                    @endforelse
+
+                                    {{-- Customer Review Form --}}
+                                    <div class="customer-review" style="margin-top:30px;">
+                                        <h3>Write Your Rating</h3>
+                                        
+                                        <div class="rating-box mb_25">
+                                            <p>Your Rating <span>*</span></p>
+                                            <div class="rating-inner" id="star-rating">
+                                                {{-- Use JS to capture selected rating --}}
+                                                <ul class="rating-list" style="display:flex; gap:3px;">
+                                                    @for($i=1; $i<=5; $i++)
+                                                        <li>
+                                                            <button type="button" class="star-btn" data-value="{{ $i }}">
+                                                                <i class="icon-41"></i>
+                                                            </button>
+                                                        </li>
+                                                    @endfor
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-inner">
+                                            <form method="POST" action="{{ route('product.review.store', $product->id) }}" enctype="multipart/form-data">
+                                                @csrf
+
                                                 <div class="form-group">
-                                                    <label>Your Name <span>*</span></label>
-                                                    <input type="text" name="name">
+                                                    <label>Write Your Review <span>*</span></label>
+                                                    <textarea name="message" required></textarea>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Email Address <span>*</span></label>
-                                                    <input type="email" name="email">
+
+                                                <div class="form-group upload-field">
+                                                    <label>Add Photos</label>
+                                                    <input name="files[]" type="file" multiple>
                                                 </div>
+
+                                                <div class="row">
+                                                    <div class="form-group col-6">
+                                                        <label>Your Name <span>*</span></label>
+                                                        <input type="text" name="name" required>
+                                                    </div>
+                                                    <div class="form-group col-6">
+                                                        <label>Email Address <span>*</span></label>
+                                                        <input type="email" name="email" required>
+                                                    </div>
+                                                </div>
+
+                                                {{-- Hidden input for rating --}}
+                                                <input type="hidden" name="rating" id="rating-value" value="5">
+
                                                 <div class="message-btn">
                                                     <button type="submit" class="theme-btn">Submit Review<span></span><span></span><span></span><span></span></button>
                                                 </div>
@@ -225,6 +233,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                         
                             <!-- Compatibility Tab -->
                             <div class="tab" id="tab-3">
                                 <div class="specification-content pt_40">
@@ -374,4 +384,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 </script>
- @endsection
+
+
+<script>
+document.querySelectorAll('.star-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        let value = this.dataset.value;
+        document.getElementById('rating-value').value = value;
+
+        // Highlight stars
+        document.querySelectorAll('.star-btn i').forEach((star, index) => {
+            if(index < value) {
+                star.style.color = '#FFD700';
+            } else {
+                star.style.color = '#ccc';
+            }
+        });
+    });
+});
+</script>
+@endsection

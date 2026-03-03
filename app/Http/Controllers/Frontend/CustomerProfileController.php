@@ -15,7 +15,9 @@ class CustomerProfileController extends Controller
     public function index(Request $request)
     {
         $customer = auth()->guard('customer')->user();
-        return view('Frontend.account', compact('customer'));
+        $orders = $customer->orders()->with('items.product')->orderBy('created_at', 'desc')->get();
+
+        return view('Frontend.account', compact('customer', 'orders'));
     }
 
 

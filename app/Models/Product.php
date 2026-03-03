@@ -36,4 +36,13 @@ class Product extends Model
     {
         return $this->hasOne(ProductVehicleCompatibility::class);
     }
+
+
+    public function reviews()
+    {
+        return $this->hasMany(\App\Models\Review::class)->where('status', 'approved')->with('images');
+    }
+
 }
+
+

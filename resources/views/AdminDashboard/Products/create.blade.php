@@ -4,7 +4,9 @@
 @section('content')
 <div class="d-flex justify-content-between mb-24">
     <h6 class="fw-semibold">{{ isset($product) ? 'Edit Product' : 'Create Product' }}</h6>
-    <a href="{{ route('admin.products.index') }}" class="btn btn-secondary btn-sm">Back</a>
+     <a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm">
+        Back
+    </a>
 </div>
 
 <div class="card mb-24">

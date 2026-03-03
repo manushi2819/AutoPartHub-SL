@@ -29,6 +29,13 @@
                             </div>
                         </div>
                       
+                           @php
+                            $parentCategories = \App\Models\Category::whereNull('parent_id')
+                                                ->where('status', 1)
+                                                ->orderBy('name')
+                                                ->take(5)
+                                                ->get();
+                            @endphp
                         <div class="col-lg-2 col-md-6 col-sm-12 footer-column">
                             <div class="footer-widget links-widget" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1000">
                                 <div class="widget-title">
@@ -36,11 +43,9 @@
                                 </div>
                                 <div class="widget-content">
                                     <ul class="links-list clearfix">
-                                        <li><a href="{{ route('Frontend.index') }}">Best Seller</a></li>
-                                        <li><a href="{{ route('Frontend.index') }}">Top Sold Items</a></li>
-                                        <li><a href="{{ route('Frontend.index') }}">New Arrivals</a></li>
-                                        <li><a href="{{ route('Frontend.index') }}">Flash Sale</a></li>
-                                        <li><a href="{{ route('Frontend.index') }}">Discount Products</a></li>
+                                        @foreach($parentCategories as $category)
+                                        <li><a href="{{ route('Frontend.shop', ['category[]' => $category->id]) }}">{{ $category->name }}</a></li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
