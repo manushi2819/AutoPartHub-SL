@@ -63,7 +63,24 @@
 .user-dropdown:hover .user-menu {
     display: block;
 }
+.live-badge {
+    background: #ffcc00;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 20px;
+    margin-left: 6px;
+    line-height: 1;
+    animation: pulseLive 1.5s infinite;
+}
 
+/* Optional small pulse animation */
+@keyframes pulseLive {
+    0% { box-shadow: 0 0 0 0 rgba(255, 200, 0, 0.6); }
+    70% { box-shadow: 0 0 0 6px rgba(255, 0, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+}
 </style>
 
   <!-- main header -->
@@ -269,8 +286,11 @@
                                             <a href="{{ route('Frontend.about') }}">Vehicles</a>
                                         </li> 
 
-                                         <li class="{{ request()->routeIs('Frontend.about') ? 'current' : '' }}">
-                                            <a href="{{ route('Frontend.about') }}">Auctions</a>
+                                       <li class="{{ request()->routeIs('Frontend.about') ? 'current' : '' }}">
+                                            <a href="{{ route('Frontend.about') }}" class="d-flex align-items-center">
+                                                Auctions
+                                                <span class="live-badge">LIVE</span>
+                                            </a>
                                         </li> 
 
                                         <li class="{{ request()->routeIs('Frontend.about') ? 'current' : '' }}">

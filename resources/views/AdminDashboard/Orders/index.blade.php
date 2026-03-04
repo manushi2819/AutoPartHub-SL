@@ -8,6 +8,44 @@
     <h6>Orders</h6>
 </div>
 
+<form method="GET" action="{{ route('admin.orders.index') }}" class="row g-2 mb-3">
+
+    <div class="col-md-3">
+        <input type="text" name="order_number" class="form-control"
+               placeholder="Order Number"
+               value="{{ request('order_number') }}">
+    </div>
+
+    <div class="col-md-3">
+        <input type="text" name="customer_name" class="form-control"
+               placeholder="Customer Name"
+               value="{{ request('customer_name') }}">
+    </div>
+
+    <div class="col-md-2">
+        <select name="payment_method" class="form-select">
+            <option value="">Payment Method</option>
+            <option value="cod" {{ request('payment_method')=='cod' ? 'selected' : '' }}>COD</option>
+            <option value="card" {{ request('payment_method')=='card' ? 'selected' : '' }}>Card</option>
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <select name="payment_status" class="form-select">
+            <option value="">Payment Status</option>
+            <option value="pending" {{ request('payment_status')=='pending' ? 'selected' : '' }}>Pending</option>
+            <option value="paid" {{ request('payment_status')=='paid' ? 'selected' : '' }}>Paid</option>
+            <option value="failed" {{ request('payment_status')=='failed' ? 'selected' : '' }}>Failed</option>
+        </select>
+    </div>
+
+    <div class="col-md-2 d-flex gap-2">
+        <button type="submit" class="btn btn-primary w-100">Filter</button>
+        <a href="{{ route('admin.orders.index') }}" class="btn btn-secondary w-100">Reset</a>
+    </div>
+
+</form>
+
 <div class="card basic-data-table">
     <div class="card-body">
         <div class="table-responsive">

@@ -62,7 +62,7 @@
                 <div class="sec-title centred mb_50">
                     <h2>Send a Message</h2>
                 </div>
-                <div class="form-inner">
+                <div class="form-inner card1">
                     <form method="post"  action="{{ route('contact.submit') }}" id="contact-form">
                          @csrf 
                         <div class="row clearfix">

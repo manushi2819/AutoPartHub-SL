@@ -46,7 +46,7 @@
     </ul>
     </div>
 
-    <div class="row row-cols-xxxl-5 row-cols-lg-3 row-cols-sm-2 row-cols-1 gy-4">
+    <!--<div class="row row-cols-xxxl-5 row-cols-lg-3 row-cols-sm-2 row-cols-1 gy-4">
       <div class="col">
         <div class="card shadow-none border bg-gradient-start-1 h-100">
           <div class="card-body p-20">
@@ -64,7 +64,7 @@
               Last 30 days users
             </p>
           </div>
-        </div><!-- card end -->
+        </div>
       </div>
       <div class="col">
         <div class="card shadow-none border bg-gradient-start-2 h-100">
@@ -83,7 +83,7 @@
               Last 30 days subscription
             </p>
           </div>
-        </div><!-- card end -->
+        </div>
       </div>
       <div class="col">
         <div class="card shadow-none border bg-gradient-start-3 h-100">
@@ -102,7 +102,7 @@
               Last 30 days users
             </p>
           </div>
-        </div><!-- card end -->
+        </div>
       </div>
       <div class="col">
         <div class="card shadow-none border bg-gradient-start-4 h-100">
@@ -121,7 +121,7 @@
               Last 30 days income
             </p>
           </div>
-        </div><!-- card end -->
+        </div>
       </div>
       <div class="col">
         <div class="card shadow-none border bg-gradient-start-5 h-100">
@@ -140,7 +140,7 @@
               Last 30 days expense
             </p>
           </div>
-        </div><!-- card end -->
+        </div>
       </div>
     </div>
 
@@ -701,6 +701,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
 
 @endsection

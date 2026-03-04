@@ -9,7 +9,7 @@
         <section class="sign-section pt_70 pb_80">
             <div class="auto-container">
                 <div class="sec-title mb_50 centred">
-                    <h2>Login to your account</h2>
+                    <h2>Login to your Account</h2>
                 </div>
                 <div class="form-inner">
                     <form method="POST" action="{{ route('Frontend.login.authenticate') }}">

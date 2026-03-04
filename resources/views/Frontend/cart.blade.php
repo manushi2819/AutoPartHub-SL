@@ -18,7 +18,7 @@
         <!-- cart section -->
         <section class="cart-section pb_80">
             <div class="auto-container">
-                <div class="table-outer mb_30">
+                <div class="table-outer card1 mb_30">
                     <table class="cart-table">
                         <thead class="cart-header">
                             <tr>
@@ -88,7 +88,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12 col-sm-12 cart-column">
-                            <div class="total-cart">
+                            <div class="total-cart card1">
                                 @php
                                     $subtotal = $cartItems->sum(fn($i) => $i->price * $i->quantity);
                                     $discount = 0; // calculate if needed

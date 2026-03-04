@@ -7,9 +7,9 @@
     </button>
     <div>
         <a href="{{ route('admin.dashboard') }}" class="sidebar-logo">
-        <img src="{{ asset('logo.png') }}" alt="DSA logo" class="light-logo" style="width:130px">
-        <img src="{{ asset('logo.png') }}" alt="DSA logo" class="dark-logo" style="width:130px">
-        <img src="{{ asset('icon.png') }}" alt="DSA logo" class="logo-icon">
+        <img src="{{ asset('logo1.png') }}" alt="DSA logo" class="light-logo" style="width:150px">
+        <img src="{{ asset('logo.png') }}" alt="DSA logo" class="dark-logo" style="width:150px">
+        <img src="{{ asset('icon.png') }}" alt="DSA logo" class="logo-icon" style="width:50px">
         </a>
     </div>
     <div class="sidebar-menu-area">

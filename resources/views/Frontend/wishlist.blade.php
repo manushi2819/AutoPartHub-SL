@@ -19,7 +19,7 @@
 <section class="cart-section pb_80">
     <div class="auto-container">
 
-        <div class="table-outer mb_30">
+        <div class="table-outer card1 mb_30">
             <table class="cart-table">
                 <thead class="cart-header">
                     <tr>

@@ -70,7 +70,7 @@
         <!-- about-section end -->
 
 
-        <!-- video-section -->
+        <!-- video-section 
         <section class="video-section centred">
             <div class="bg-layer parallax-bg" data-parallax='{"y": 100}' style="background-image: url(frontend/assets/images/background/video-bg.jpg);"></div>
             <div class="auto-container">
@@ -83,12 +83,11 @@
                     </a>
                 </div>
             </div>
-        </section>
-        <!-- video-section end -->
+        </section>-->
 
 
        <!-- highlights-style-two -->
-        <section class="highlights-style-two centred pt_80 pb_45">
+        <section class="highlights-style-two centred pt_80 pb_45" style="background: #fff7e1;">
             <div class="auto-container">
                 <div class="row clearfix">
                     <!-- Fast & Reliable Delivery -->

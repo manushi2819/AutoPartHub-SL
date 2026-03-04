@@ -142,6 +142,7 @@
   right: 0px;
   bottom: 0px;
   transition: all 15s ease;
+  background: #fff0c1;
 }
 
 .cta-style-two .inner-container:hover .image-layer{
