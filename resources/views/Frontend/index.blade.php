@@ -4,6 +4,17 @@
 
 @section('content')
 
+
+<style>
+
+.content-one .inner-box h2,
+.content-one .inner-box h3 {
+    margin-bottom: 38px; 
+}
+
+
+</style>
+
       
         <!-- banner-style-two -->
         <section class="banner-style-two home-5 pt_30 pb_10 p_relative">
@@ -14,10 +25,10 @@
                         <div class="content-one content-box">
                             <div class="bg-layer" style="background-image: url({{ asset('frontend/assets/images/banner/banner-img-4.png') }});"></div>
                             <div class="inner-box">
-                                <span class="popular-product">Engine</span>
-                                <h2>Get All Original Parts for Your Car</h2>
-                                <h3>From <span>LKR 5000</span></h3>
-                                <a href="contact.html" class="theme-btn">Get in Touch<span></span><span></span><span></span><span></span></a>
+                                <span class="popular-product">The Best Place for Auto Parts</span>
+                                <h2>Premium Parts for Every Vehicle</h2>
+                                <h3 style="font-size:16px; color: #5a5a5a">Join our live auctions for exclusive deals on <br>vintage and performance parts.</span></h3>
+                                <a href="{{ route('Frontend.shop') }}" class="theme-btn mt-0">SHOP NOW<span></span><span></span><span></span><span></span></a>
                             </div>
                         </div>
                     </div>

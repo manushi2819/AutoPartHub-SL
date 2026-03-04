@@ -90,8 +90,9 @@
             <div class="header-upper">
                 <div class="large-container">
                     <div class="upper-inner">
-                        <figure class="logo-box"  style="height:70px">
-                            <a href="{{ route('Frontend.index') }}"><img src="{{ asset('logo4.png') }}" alt=""  style="height:100%"></a></figure>
+                        <figure class="logo-box"  style="height:50px">
+                            <a href="{{ route('Frontend.index') }}"><img src="{{ asset('logo.png') }}" alt=""  
+                            style="height:100%"></a></figure>
                         <div class="search-area">
                             @php
                                 $parentCategories = \App\Models\Category::whereNull('parent_id')
@@ -259,9 +260,17 @@
                                         <li class="{{ request()->routeIs('Frontend.index') ? 'current' : '' }}">
                                             <a href="{{ route('Frontend.index') }}">Home</a>
                                         </li> 
-
+                                        
                                         <li class="{{ request()->routeIs('Frontend.shop') ? 'current' : '' }}">
-                                            <a href="{{ route('Frontend.shop') }}">Shop</a>
+                                            <a href="{{ route('Frontend.shop') }}">Spare Parts</a>
+                                        </li> 
+
+                                        <li class="{{ request()->routeIs('Frontend.about') ? 'current' : '' }}">
+                                            <a href="{{ route('Frontend.about') }}">Vehicles</a>
+                                        </li> 
+
+                                         <li class="{{ request()->routeIs('Frontend.about') ? 'current' : '' }}">
+                                            <a href="{{ route('Frontend.about') }}">Auctions</a>
                                         </li> 
 
                                         <li class="{{ request()->routeIs('Frontend.about') ? 'current' : '' }}">

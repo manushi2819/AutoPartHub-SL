@@ -7,8 +7,8 @@
     </button>
     <div>
         <a href="{{ route('admin.dashboard') }}" class="sidebar-logo">
-        <img src="{{ asset('logo3.png') }}" alt="DSA logo" class="light-logo" style="width:130px">
-        <img src="{{ asset('logo4.png') }}" alt="DSA logo" class="dark-logo" style="width:130px">
+        <img src="{{ asset('logo.png') }}" alt="DSA logo" class="light-logo" style="width:130px">
+        <img src="{{ asset('logo.png') }}" alt="DSA logo" class="dark-logo" style="width:130px">
         <img src="{{ asset('icon.png') }}" alt="DSA logo" class="logo-icon">
         </a>
     </div>

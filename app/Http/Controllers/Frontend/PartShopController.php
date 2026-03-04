@@ -112,7 +112,7 @@ class PartShopController extends Controller
         // -------------------------
         // Pagination
         // -------------------------
-        $products = $products->paginate(12)->withQueryString();
+        $products = $products->paginate(16)->withQueryString();
 
         // -------------------------
         // Categories for sidebar
