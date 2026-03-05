@@ -10,7 +10,7 @@
     </a>
 </div>
 
-<form action="{{ route('admin.categories.update', $category->id) }}" method="POST">
+<form action="{{ route('admin.categories.update', $category->id) }}" method="POST" enctype="multipart/form-data">
 @csrf
 @method('PUT')
 
@@ -67,6 +67,18 @@
 
     </div>
 
+    <div class="mb-3 col-6" id="imageField">
+        <label class="form-label">Category Image (Parent Only)</label>
+
+        <input type="file" name="image" class="form-control">
+
+        @if($category->image)
+            <div class="mt-2">
+                <img src="{{ asset($category->image) }}" width="120">
+            </div>
+        @endif
+    </div>
+
    <div class="mb-3 col-6">
         <label class="form-label">Status</label>
         <select name="status" class="form-control">
@@ -83,4 +95,23 @@
 
 </form>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const parentSelect = document.querySelector("select[name='parent_id']");
+    const imageField = document.getElementById("imageField");
+
+    function toggleImage(){
+        if(parentSelect.value === ""){
+            imageField.style.display = "block";
+        }else{
+            imageField.style.display = "none";
+        }
+    }
+
+    toggleImage();
+    parentSelect.addEventListener("change", toggleImage);
+
+});
+</script>
 @endsection

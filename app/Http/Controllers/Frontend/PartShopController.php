@@ -112,7 +112,10 @@ class PartShopController extends Controller
         // -------------------------
         // Pagination
         // -------------------------
-        $products = $products->paginate(16)->withQueryString();
+        $products = Product::with(['images', 'category', 'reviews'])
+        ->where('status', 1)
+        ->latest()
+        ->paginate(16);
 
         // -------------------------
         // Categories for sidebar

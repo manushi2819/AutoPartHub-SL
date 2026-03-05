@@ -368,12 +368,17 @@
                                                         <h4 class="product-name">{{ $product->name }}</h4>
                                                         <h5>LKR {{ number_format($product->price, 2) }}</h5>
                                                         <ul class="rating"> 
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><i class="icon-41"></i></li>
-                                                            <li><span>(5)</span></li>
+                                                            @php
+                                                                $avg = round($product->averageRating()); // Round to nearest whole number
+                                                                $total = $product->reviewsCount();
+                                                            @endphp
+
+                                                            @for ($i = 1; $i <= 5; $i++)
+                                                                <li>
+                                                                    <i class="icon-41" style="color: {{ $i <= $avg ? '#FFD700' : '#ccc' }}"></i>
+                                                                </li>
+                                                            @endfor
+                                                            <li><span>({{ $total }})</span></li>
                                                         </ul>
 
                                                         @if($product->stock_quantity > 0)

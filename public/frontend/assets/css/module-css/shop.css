@@ -659,7 +659,7 @@
   cursor: pointer;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(to right, #FF6B00, #FF6B00 50%, var(--title-color) 50%);
+  background-image: linear-gradient(to right, #d10505, #be0606 50%, var(--title-color) 50%);
   background-size: 200% 100%;
   background-position: -100%;
   transition: all 0.3s ease-in-out;

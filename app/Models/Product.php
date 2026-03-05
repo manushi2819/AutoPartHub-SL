@@ -43,6 +43,15 @@ class Product extends Model
         return $this->hasMany(\App\Models\Review::class)->where('status', 'approved')->with('images');
     }
 
+    public function averageRating()
+    {
+        return $this->reviews()->avg('rating') ?? 0; 
+    }
+
+    public function reviewsCount()
+    {
+        return $this->reviews()->count(); 
+    }
 }
 
 

@@ -76,11 +76,17 @@
                                 <h3>Rs. {{ number_format($product->price, 2) }}</h3>
 
                                 <ul class="rating mb_25">
-                                    {{-- Static 5-star example --}}
-                                    @for($i = 0; $i < 5; $i++)
-                                        <li><i class="icon-41"></i></li>
-                                    @endfor
-                                    <li><span>(08)</span></li>
+                                        @php
+                                            $avg = round($product->averageRating()); // Round to nearest whole number
+                                            $total = $product->reviewsCount();
+                                        @endphp
+
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <li>
+                                                <i class="icon-41" style="color: {{ $i <= $avg ? '#FFD700' : '#ccc' }}"></i>
+                                            </li>
+                                        @endfor
+                                        <li><span>({{ $total }})</span></li>
                                 </ul>
 
                                 <div class="text-box mb_30">

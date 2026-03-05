@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
 {
@@ -31,13 +32,28 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10248'
         ]);
 
-        Category::create([
+        $data = [
             'name' => $request->name,
             'parent_id' => $request->parent_id,
             'status' => $request->status ?? true,
-        ]);
+        ];
+
+        // Only allow image for parent category
+        if(!$request->parent_id && $request->hasFile('image')){
+
+            $path = public_path('uploads/category_images');
+            File::ensureDirectoryExists($path);
+
+            $fileName = time().'_'.uniqid().'.'.$request->image->extension();
+            $request->image->move($path, $fileName);
+
+            $data['image'] = 'uploads/category_images/'.$fileName;
+        }
+
+        Category::create($data);
 
         return redirect()->route('admin.categories.index')
             ->with('success', 'Category created successfully.');
@@ -52,24 +68,53 @@ class CategoryController extends Controller
     }
 
 
-    // UPDATE
+
     public function update(Request $request, $id)
     {
         $category = Category::findOrFail($id);
 
         $request->validate([
             'name' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10248',
         ]);
 
-        $category->update([
+        $data = [
             'name' => $request->name,
             'parent_id' => $request->parent_id,
             'status' => $request->status ?? true,
-        ]);
+        ];
+        // Only allow image for parent category
+        if(!$request->parent_id){
 
+            if($request->hasFile('image')){
+
+                // delete old image
+                if($category->image && File::exists(public_path($category->image))){
+                    File::delete(public_path($category->image));
+                }
+
+                $path = public_path('uploads/category_images');
+                File::ensureDirectoryExists($path);
+
+                $fileName = time().'_'.uniqid().'.'.$request->image->extension();
+                $request->image->move($path,$fileName);
+
+                $data['image'] = 'uploads/category_images/'.$fileName;
+            }
+
+        } else {
+            // if converting to child category remove image
+            if($category->image && File::exists(public_path($category->image))){
+                File::delete(public_path($category->image));
+            }
+
+            $data['image'] = null;
+        }
+        $category->update($data);
         return redirect()->route('admin.categories.index')
-            ->with('success', 'Category updated successfully.');
+            ->with('success','Category updated successfully.');
     }
+
 
     // DELETE
     public function destroy($id)

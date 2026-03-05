@@ -331,7 +331,7 @@
   padding-bottom: 10px;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(to right, #ff0000, #ff0000 50%, #7C7C7C 50%);
+  background-image: linear-gradient(to right, #d00404, #af0404 50%, #7C7C7C 50%);
   background-size: 200% 100%;
   background-position: -100%;
   transition: all 0.3s ease-in-out;

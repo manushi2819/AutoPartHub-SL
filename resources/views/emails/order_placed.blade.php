@@ -33,7 +33,7 @@
         
         /* Header section */
         .email-header {
-            background: linear-gradient(135deg, #ea6666 0%, #b22929 100%);
+            background: linear-gradient(135deg, #f6f6f6 0%, #b6b6b6 100%);
             padding: 40px 30px;
             text-align: center;
         }

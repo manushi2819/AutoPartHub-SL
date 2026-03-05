@@ -247,12 +247,12 @@
 
                                             <!-- Keep Your Shop Block -->
                                             <div class="shop-block">
-                                                <span class="title">Only for this month</span>
-                                                <h2><a href="#">Special Offer</a></h2>
-                                                <h4>Best Deals Available</h4>
-                                                <a href="#" class="link">Shop now</a>
-                                                <figure class="image">
-                                                    <img src="{{ asset('assets/images/shop/shop-1.png') }}" alt="">
+                                                <span class="title">Featured Category</span>
+                                                <h4>Explore the Latest Products</h4>
+                                                <a href="{{ route('Frontend.shop', ['category[]' => $category->id]) }}" class="link">Shop now</a>
+                                                <figure class="image" style="height:150px;overflow:hidden">
+                                                    <img src="{{ asset($category->image ?? 'assets/images/about2.jpg') }}" 
+                                                    alt="{{ $category->name }}">
                                                 </figure>
                                             </div>
 

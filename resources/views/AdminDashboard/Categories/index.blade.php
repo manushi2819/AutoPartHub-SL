@@ -20,6 +20,7 @@
                 <tr>
                     <th>#</th>
                     <th>Name</th>
+                    <th>Image</th>
                     <th>Level</th>
                     <th>Status</th>
                     <th width="150">Action</th>
@@ -33,6 +34,13 @@
         <tr>
             <td>{{ $mainCounter }}</td>
             <td><strong>{{ $main->name }}</strong></td>
+            <td>
+                @if($main->image)
+                    <img src="{{ asset($main->image) }}" alt="{{ $main->name }}" width="50" height="50">
+                @else
+                    N/A
+                @endif
+            </td>
             <td>Main</td>
             <td>
                   <span class="px-24 py-4 rounded-pill fw-medium text-sm
@@ -65,6 +73,7 @@
         <tr>
             <td>{{ $mainCounter }}.{{ $subCounter }}</td>
             <td>— {{ $sub->name }}</td>
+            <td>—</td>
             <td>Sub</td>
             <td>
                 <span class="px-24 py-4 rounded-pill fw-medium text-sm
@@ -97,6 +106,7 @@
         <tr>
             <td>{{ $mainCounter }}.{{ $subCounter }}.{{ $subSubCounter }}</td>
             <td>—— {{ $subsub->name }}</td>
+            <td>—</td>
             <td>Sub-Sub</td>
             <td>
                     <span class="px-24 py-4 rounded-pill fw-medium text-sm
