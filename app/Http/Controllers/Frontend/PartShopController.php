@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Brand;
 use App\Models\ProductVehicleCompatibility;
 
 class PartShopController extends Controller
@@ -20,10 +21,7 @@ class PartShopController extends Controller
             ->orderBy('year_from', 'desc')
             ->pluck('year_from');
 
-        $brands = ProductVehicleCompatibility::select('brand')
-            ->distinct()
-            ->orderBy('brand')
-            ->pluck('brand');
+        $brands = Brand::where('status', 1)->get();
 
         $models = ProductVehicleCompatibility::select('model')
             ->distinct()

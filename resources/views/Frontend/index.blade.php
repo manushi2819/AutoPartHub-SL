@@ -57,8 +57,8 @@
                                         <select name="brand" class="wide">
                                             <option value="">Select Brand</option>
                                             @foreach($brands as $brand)
-                                                <option value="{{ $brand }}" {{ request('brand') == $brand ? 'selected' : '' }}>
-                                                    {{ $brand }}
+                                                <option value="{{ $brand->name }}" {{ request('brand') == $brand->name ? 'selected' : '' }}>
+                                                    {{ $brand->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -163,6 +163,7 @@
         <!-- highlights-section end -->
 
 
+        
 
         <!-- category-section -->
         <section class="category-section pt_60 pb_80">
@@ -193,6 +194,42 @@
             </div>
         </section>
         <!-- category-section end -->
+
+
+        <!-- brand-section -->
+        <section class="brand-section pt_0 pb_80">
+            <div class="pattern-layer">
+                <div class="pattern-1" style="background-image: url(frontend/assets/images/shape/shape-2.png);"></div>
+                <div class="pattern-2" style="background-image: url(frontend/assets/images/shape/shape-3.png);"></div>
+            </div>
+            <div class="auto-container">
+                <div class="sec-title mb_30">
+                    <h2>Shop by Brands</h2>
+                </div>
+                <div class="inner-container">
+                    <div class="row clearfix">
+                        @foreach($brands as $brand)
+                         <div class="col-lg-2 col-md-4 col-sm-12 brand-block">
+                            <div class="brand-block-one">
+                                <div class="inner-box text-center">
+                                <a href="{{ route('Frontend.shop', ['brand' => $brand->name]) }}">
+                                    <figure class="image">
+                                        <img src="{{ asset($brand->image ? 'uploads/' . $brand->image : 'assets/images/brands/brands-1.png') }}" 
+                                            alt="{{ $brand->name }}"
+                                            style="width: 100%; height: 50px; object-fit: contain;">
+                                    </figure>
+                                    <span>{{ $brand->name }}</span>
+                                </a>
+                            </div>
+                            </div>
+                        </div>
+                        @endforeach
+                                            
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- brand-section end -->
 
 
         <!-- shop-style-two -->

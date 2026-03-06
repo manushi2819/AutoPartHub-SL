@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Brand;
 use App\Models\ProductImage;
 use App\Models\ProductVehicleCompatibility;
 use Illuminate\Http\Request;
@@ -23,7 +24,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::with('children.children')->whereNull('parent_id')->get();
-        return view('AdminDashboard.Products.create', compact('categories'));
+        $brands = Brand::where('status', 1)->get();
+        return view('AdminDashboard.Products.create', compact('categories', 'brands'));
     }
 
     // ================= EDIT =================
@@ -31,7 +33,8 @@ class ProductController extends Controller
     {
         $product = Product::with(['images', 'compatibility'])->findOrFail($id);
         $categories = Category::with('children.children')->whereNull('parent_id')->get();
-        return view('AdminDashboard.Products.create', compact('product', 'categories'));
+        $brands = Brand::where('status', 1)->get();
+        return view('AdminDashboard.Products.create', compact('product', 'categories', 'brands'));
     }
 
 
@@ -93,7 +96,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'sku' => 'nullable|string|max:255',
-            'brand' => 'nullable|string|max:255',
+            'brand' => 'required|string|max:255',
             'price' => 'required|numeric',
             'cost_price' => 'nullable|numeric',
             'stock_quantity' => 'required|integer',

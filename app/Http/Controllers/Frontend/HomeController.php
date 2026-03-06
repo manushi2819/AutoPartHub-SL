@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductVehicleCompatibility;
+use App\Models\Brand;
 
 class HomeController extends Controller
 {
@@ -17,11 +18,11 @@ class HomeController extends Controller
 
         // dropdown filters (your existing code)
         $years = ProductVehicleCompatibility::select('year_from')->distinct()->orderBy('year_from','desc')->pluck('year_from');
-        $brands = ProductVehicleCompatibility::select('brand')->distinct()->orderBy('brand')->pluck('brand');
         $models = ProductVehicleCompatibility::select('model')->distinct()->orderBy('model')->pluck('model');
         $engines = ProductVehicleCompatibility::select('engine_cc')->distinct()->orderBy('engine_cc')->pluck('engine_cc');
         $fuelTypes = ProductVehicleCompatibility::select('fuel_type')->distinct()->pluck('fuel_type');
         $engineTypes = ProductVehicleCompatibility::select('engine_type')->distinct()->pluck('engine_type');
+        $brands = Brand::where('status', 1)->get();
 
         // Parent categories
         $parentCategories = Category::with('children.children')

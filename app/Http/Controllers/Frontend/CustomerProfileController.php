@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Customer;
+use App\Models\Order;
 
 class CustomerProfileController extends Controller
 {
@@ -58,4 +59,30 @@ class CustomerProfileController extends Controller
 
         return back()->with('success', 'Password updated successfully!');
     }
+
+
+    public function track($id)
+    {
+        $order = Order::with('items.product')->where('id', $id)
+                    ->where('customer_id', auth()->guard('customer')->id())
+                    ->firstOrFail();
+
+        return view('Frontend.track_order', compact('order'));
+    }
+
+
+    public function updateDeliveredStatus(Request $request, $id)
+    {
+        $order = Order::where('id', $id)
+                    ->where('customer_id', auth()->guard('customer')->id())
+                    ->firstOrFail();
+
+        if($order->status !== 'delivered') {
+            $order->status = 'delivered';
+            $order->save();
+        }
+
+        return redirect()->back()->with('success', 'Order marked as delivered.');
+    }
+
 }

@@ -32,6 +32,14 @@
     
             </li>
 
+             <li>
+                <a href="{{ route('admin.brands.index') }}">
+                <iconify-icon icon="mdi:tag-outline" class="menu-icon"></iconify-icon>
+                    <span>Brands</span>
+                </a>
+    
+            </li>
+
             <li>
                 <a href="{{ route('admin.products.index') }}">
                 <iconify-icon icon="mdi:package-variant-closed" class="menu-icon"></iconify-icon>

@@ -131,10 +131,12 @@
                                                 <p><strong>Status:</strong> 
                                                     @if($order->status == 'pending')
                                                         <span style="color:orange;">Pending</span>
-                                                    @elseif($order->status == 'completed')
-                                                        <span style="color:green;">Completed</span>
-                                                    @elseif($order->status == 'canceled')
-                                                        <span style="color:red;">Canceled</span>
+                                                    @elseif($order->status == 'confirmed')
+                                                        <span style="color:green;">Confirmed</span>
+                                                    @elseif($order->status == 'in_transit')
+                                                        <span style="color:blue;">In Transit</span>
+                                                    @elseif($order->status == 'cancelled')
+                                                        <span style="color:red;">Cancelled</span>
                                                     @endif
                                                 </p>
                                                 <p><strong>Total:</strong> Rs. {{ number_format($order->total,2) }}</p>
@@ -159,10 +161,7 @@
                                 @endforelse
                             </div>
                         </div>
-                            <div class="tab" id="tab-4">
-                                <h3>Wishlist</h3>
-                                <p>No Wishlist</p>
-                            </div>
+                          
                         </div>
                     </div>
                 </div>

@@ -87,8 +87,8 @@
                                                 <select name="brand" class="wide">
                                                     <option value="">Select Brand</option>
                                                     @foreach($brands as $brand)
-                                                        <option value="{{ $brand }}" {{ request('brand') == $brand ? 'selected' : '' }}>
-                                                            {{ $brand }}
+                                                        <option value="{{ $brand->name }}" {{ request('brand') == $brand->name ? 'selected' : '' }}>
+                                                            {{ $brand->name }}
                                                         </option>
                                                     @endforeach
                                                 </select>

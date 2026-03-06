@@ -50,9 +50,10 @@ Route::prefix('customer')->name('customer.')->middleware('auth:customer')->group
     Route::post('/profile/update', [CustomerProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/password', [CustomerProfileController::class, 'updatePassword'])->name('profile.password');
 
-    Route::get('/order/track/{order}', [OrderController::class, 'track'])->name('order.track');
+    Route::get('/order/track/{order}', [CustomerProfileController::class, 'track'])->name('order.track');
+    Route::put('/order/{order}/update-delivered', [CustomerProfileController::class, 'updateDeliveredStatus'])->name('order.updateStatus');
 
-});
+}); 
 
 
 
@@ -70,6 +71,7 @@ use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Middleware\AdminAuth;
 
 Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
@@ -105,6 +107,11 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
     // Orders
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::post('/orders/track/{order}', [OrderController::class, 'track'])->name('orders.track');
     Route::post('/orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+
+    // Brands
+    Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
+    Route::post('/brands', [BrandController::class, 'store'])->name('brands.store');
+    Route::put('/brands/{brand}', [BrandController::class, 'update'])->name('brands.update');
+    Route::delete('/brands/{brand}', [BrandController::class, 'destroy'])->name('brands.destroy');
 });

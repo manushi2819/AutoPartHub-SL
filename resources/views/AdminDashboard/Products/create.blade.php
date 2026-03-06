@@ -58,7 +58,14 @@
 
                 <div class="col-md-6">
                     <label class="form-label">Brand <i class="text-danger">*</i></label>
-                    <input type="text" name="brand" class="form-control" value="{{ $product->brand ?? old('brand') }}">
+                     <select name="brand" class="form-control" required>
+                        <option value="">Select Brand</option>
+                        @foreach($brands as $brand)
+                            <option value="{{ $brand->name }}" {{ isset($product) && $product->brand == $brand->name ? 'selected' : '' }}>
+                                {{ $brand->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="col-md-6">

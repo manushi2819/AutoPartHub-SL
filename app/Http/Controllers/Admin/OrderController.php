@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use App\Mail\OrderInTransitMail;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -49,5 +51,38 @@ class OrderController extends Controller
          return view('AdminDashboard.Orders.show', compact('order'));
     }
 
+
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'nullable|in:pending,confirmed,in_transit,delivered,cancelled',
+            'payment_status' => 'nullable|in:pending,paid',
+        ]);
+
+        $order = Order::findOrFail($id);
+
+        $statusChangedToInTransit = false;
+
+        if ($request->filled('status')) {
+            if ($request->status === 'in_transit' && $order->status !== 'in_transit') {
+                $statusChangedToInTransit = true;
+            }
+            $order->status = $request->status;
+        }
+
+        if ($request->filled('payment_status')) {
+            $order->payment_status = $request->payment_status;
+        }
+
+        $order->save();
+
+        // Send email if status changed to in_transit
+        if ($statusChangedToInTransit) {
+            Mail::to($order->email)->send(new OrderInTransitMail($order));
+        }
+
+        return redirect()->back()->with('success', 'Order updated successfully.');
+    }
 
 }
