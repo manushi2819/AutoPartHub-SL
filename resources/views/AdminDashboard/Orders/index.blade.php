@@ -76,10 +76,12 @@
                             <td>
                                 @if($order->status === 'pending')
                                     <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-warning-focus text-warning-main">Pending</span>
-                                @elseif($order->status === 'completed')
-                                    <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-success-focus text-success-main">Completed</span>
-                                @elseif($order->status === 'canceled')
-                                    <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-danger-focus text-danger-main">Canceled</span>
+                                @elseif($order->status === 'delivered')
+                                    <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-success-focus text-success-main">Delivered</span>
+                                @elseif($order->status === 'cancelled')
+                                    <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-danger-focus text-danger-main">Cancelled</span>
+                                @elseif($order->status === 'in_transit')
+                                    <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-info-focus text-info-main">In Transit</span>
                                 @endif
                             </td>
                             <td>{{ ucfirst($order->payment_method) }}</td>

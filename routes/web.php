@@ -68,6 +68,7 @@ Route::prefix('customer')->name('customer.')->middleware('auth:customer')->group
 
 // admin login
 use App\Http\Controllers\Admin\AdminLoginController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
@@ -81,9 +82,8 @@ Route::post('admin/logout', [AdminLoginController::class, 'logout'])->name('admi
 
 Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(function () {
 
-    Route::get('/', function () {
-        return view('AdminDashboard.index');
-    })->name('dashboard');
+
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     //categories
     Route::resource('categories', CategoryController::class);

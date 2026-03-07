@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductVehicleCompatibility;
+use App\Models\CustomerActivity;
 
 class PartDetailsController extends Controller
 {
@@ -60,6 +61,15 @@ class PartDetailsController extends Controller
 
         // Limit to 10
         $relatedProducts = $relatedProducts->take(10);
+
+        if(auth('customer')->check())
+        {
+            CustomerActivity::create([
+                'customer_id' => auth('customer')->id(),
+                'activity_type' => 'product_view',
+                'reference_id' => $product->id
+            ]);
+        }
 
         return view('Frontend.part-details', compact('product', 'relatedProducts'));
     }

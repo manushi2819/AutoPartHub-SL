@@ -26,7 +26,7 @@
                             <div class="bg-layer" style="background-image: url({{ asset('frontend/assets/images/banner/banner-img-4.png') }});"></div>
                             <div class="inner-box">
                                 <span class="popular-product">The Best Place for Auto Parts</span>
-                                <h2>Premium Parts for Every Vehicle</h2>
+                                <h2 style="font-size:56px;">Premium Parts for Every Vehicle</h2>
                                 <h3 style="font-size:16px; color: #5a5a5a">Join our live auctions for exclusive deals on <br>vintage and performance parts.</span></h3>
                                 <a href="{{ route('Frontend.shop') }}" class="theme-btn mt-0">SHOP NOW<span></span><span></span><span></span><span></span></a>
                             </div>

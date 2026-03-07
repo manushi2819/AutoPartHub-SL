@@ -126,7 +126,7 @@
     <!-- Right Column: Summary & Customer Info -->
     <div class="col-4">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header text-white" style="background-color: #48ff0060;">
+            <div class="card-header text-white" style="background-color: #007bff60;">
                 <h6 class="mb-0">Summary</h6>
             </div>
             <div class="card-body">

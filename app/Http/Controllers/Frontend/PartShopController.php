@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
 use App\Models\ProductVehicleCompatibility;
+use App\Models\CustomerActivity;
 
 class PartShopController extends Controller
 {
@@ -108,12 +109,48 @@ class PartShopController extends Controller
         }
 
         // -------------------------
+        // Track Customer Activity
+        // -------------------------
+        if(auth('customer')->check())
+        {
+            // Search tracking
+            if($request->filled('search')){
+                CustomerActivity::create([
+                    'customer_id' => auth('customer')->id(),
+                    'activity_type' => 'search',
+                    'value' => $request->search
+                ]);
+            }
+
+            // Category tracking
+            if($request->filled('category')){
+                foreach((array)$request->category as $cat){
+                    if($cat){
+                        CustomerActivity::create([
+                            'customer_id' => auth('customer')->id(),
+                            'activity_type' => 'category_view',
+                            'reference_id' => $cat
+                        ]);
+                    }
+                }
+            }
+
+            // Brand tracking
+            if($request->filled('brand')){
+                CustomerActivity::create([
+                    'customer_id' => auth('customer')->id(),
+                    'activity_type' => 'brand_view',
+                    'value' => $request->brand
+                ]);
+            }
+        }
+
+        // -------------------------
         // Pagination
         // -------------------------
-        $products = Product::with(['images', 'category', 'reviews'])
-        ->where('status', 1)
-        ->latest()
-        ->paginate(16);
+       $products = $products->with(['images','category','reviews'])
+            ->latest()
+            ->paginate(16);
 
         // -------------------------
         // Categories for sidebar
