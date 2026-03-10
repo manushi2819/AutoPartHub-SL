@@ -6,7 +6,11 @@
 
       
     <!-- sign-section -->
-        <section class="sign-section pt_70 pb_80">
+        <section class="sign-section pt_70 pb_80" style="background: linear-gradient(135deg, 
+            #e8f4ffd9 0%,  
+            #fff9dbaa 50%, 
+            #e8fff3 100% 
+        );">
             <div class="auto-container">
                 <div class="sec-title mb_50 centred">
                     <h2>Login to your Account</h2>

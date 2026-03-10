@@ -56,11 +56,18 @@
                                 <div class="widget-title">
                                     <h4>Help Center</h4>
                                 </div>
-                                <div class="widget-content">
+                              <div class="widget-content">
                                     <ul class="links-list clearfix">
-                                        <li><a href="{{ route('Frontend.index') }}">Your Orders</a></li>
-                                        <li><a href="{{ route('Frontend.index') }}">Your Account</a></li>
-                                        <li><a href="{{ route('Frontend.index') }}">Track Order</a></li>
+
+                                        @auth('customer')
+                                            <li><a href="{{ route('customer.dashboard') }}">Your Orders</a></li>
+                                            <li><a href="{{ route('customer.dashboard') }}">Your Account</a></li>
+                                            <li><a href="{{ route('customer.dashboard') }}">Track Order</a></li>
+                                        @else
+                                            <li><a href="javascript:void(0)" onclick="showLoginToast()">Your Orders</a></li>
+                                            <li><a href="javascript:void(0)" onclick="showLoginToast()">Your Account</a></li>
+                                            <li><a href="javascript:void(0)" onclick="showLoginToast()">Track Order</a></li>
+                                        @endauth
 
                                     </ul>
                                 </div>
@@ -105,3 +112,32 @@
             </div>
         </footer>
         <!-- main-footer end -->
+<div id="loginToast" class="toast-message">
+    Please login to access your account
+</div>
+
+<style>
+.toast-message{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ff4d4f;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 6px;
+    display: none;
+    z-index: 9999;
+    font-size: 14px;
+}
+</style>
+
+<script>
+function showLoginToast() {
+    let toast = document.getElementById("loginToast");
+    toast.style.display = "block";
+
+    setTimeout(() => {
+        toast.style.display = "none";
+    }, 3000);
+}
+</script>

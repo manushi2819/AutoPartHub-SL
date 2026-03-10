@@ -1,0 +1,173 @@
+@extends('Frontend.master')
+
+@section('title', 'Checkout')
+
+@section('content')
+
+<!-- page-title -->
+<section class="page-title-two centred">
+    <div class="auto-container">
+        <div class="content-box">
+            <h1>Checkout</h1>
+        </div>
+    </div>
+</section>
+<!-- page-title end -->
+
+<!-- checkout-section -->
+<section class="checkout-section pb_80">
+    <div class="auto-container">
+        <div class="row clearfix">
+
+            <!-- Billing Details -->
+            <div class="col-lg-7 col-md-12 col-sm-12 billing-column">
+                
+                <div class="billing-content order-info">
+                    <h3>Billing Details</h3>
+                    <div class="form-inner">
+                        <form method="POST" action="{{ route('Frontend.buyNowcheckout.process') }}">
+                            @csrf
+
+                            <!-- Hidden inputs -->
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="quantity" value="{{ $quantity }}">
+
+                           <div class="row clearfix">
+
+                                <div class="col-lg-6 col-md-6 col-sm-12 field-column">
+                                    <div class="form-group">
+                                        <label>First Name<span>*</span></label>
+                                        <input type="text" name="fname" value="{{ $customer->first_name ?? '' }}" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-12 field-column">
+                                    <div class="form-group">
+                                        <label>Last Name<span>*</span></label>
+                                        <input type="text" name="lname" value="{{ $customer->last_name ?? '' }}" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-12 field-column">
+                                    <div class="form-group">
+                                        <label>Email Address<span>*</span></label>
+                                        <input type="email" name="email" value="{{ $customer->email ?? '' }}" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-12 field-column">
+                                    <div class="form-group">
+                                        <label>Phone Number<span>*</span></label>
+                                        <input type="text" name="phone" value="{{ $customer->phone ?? '' }}" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 field-column">
+                                    <div class="form-group">
+                                        <label>Country<span>*</span></label>
+                                        <input type="hidden" name="country" value="Sri Lanka">
+                                        <input type="text" class="form-control" value="Sri Lanka" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 field-column">
+                                    <div class="form-group">
+                                        <label>Address<span>*</span></label>
+                                        <input type="text" name="address" value="{{ $customer->address ?? '' }}" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-12 field-column">
+                                    <div class="form-group">
+                                        <label>Town / City<span>*</span></label>
+                                        <input type="text" name="city" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-12 field-column">
+                                    <div class="form-group">
+                                        <label>Postcode / ZIP<span>*</span></label>
+                                        <input type="text" name="zip" required>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+           <div class="col-lg-5 col-md-12 col-sm-12 order-column">
+                    <div class="order-box order-info">
+                        <h3>Order Summary</h3>
+
+                        <div class="title-box">
+                            <span class="text">Product</span>
+                            <span class="text">Total</span>
+                        </div>
+
+                        <div class="order-product">
+                            <div class="single-item">
+                                <div class="product-box">
+                                    <figure class="image-box" style="width:60px;height:60px;">
+                                        <img src="{{ asset('uploads/' . ($product->images->first()->image_url ?? 'assets/images/shop/checkout-1.png')) }}" style="object-fit:cover">
+                                    </figure>
+                                    <h6>{{ $product->name }} <span>x {{ $quantity }}</span></h6>
+                                </div>
+                                <h6 style="color:black">Rs. {{ number_format($product->price * $quantity, 2) }}</h6>
+                            </div>
+                        </div>
+
+                        <ul class="cost-box">
+                            <li>
+                                <h4><span>Subtotal</span></h4>
+                                <h6 style="color:black">Rs. {{ number_format($subtotal,2) }}</h6>
+                            </li>
+                            <li>
+                                <h4><span>Discount</span></h4>
+                                <h6 style="color:black">Rs. 0</h6>
+                            </li>
+                        </ul>
+
+                        <div class="total-box">
+                            <h4><span>Total</span></h4>
+                            <h5 style="color:#1fad0f">Rs. {{ number_format($total,2) }}</h5>
+                        </div>
+
+                        <!-- Payment Options -->
+                        <div class="payment-option">
+                            <ul class="other-payment">
+                                <li>
+                                    <div class="check-box mb_12">
+                                        <input class="check" type="radio" id="cod" name="payment_method" value="cod" checked>
+                                        <label for="cod">Cash on Delivery</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="check-box mb_12">
+                                        <input class="check" type="radio" id="card" name="payment_method" value="card">
+                                        <label for="card">Credit/Debit Cards</label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="btn-box pt_30">
+                            <button type="submit" class="theme-btn">
+                                Place the Order
+                                <span></span><span></span><span></span><span></span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End Order Summary -->
+            </form>
+
+        </div>
+    </div>
+</section>
+<!-- checkout-section end -->
+
+@endsection

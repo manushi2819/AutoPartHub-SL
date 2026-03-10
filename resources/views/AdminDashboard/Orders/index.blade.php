@@ -82,6 +82,8 @@
                                     <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-danger-focus text-danger-main">Cancelled</span>
                                 @elseif($order->status === 'in_transit')
                                     <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-info-focus text-info-main">In Transit</span>
+                                @elseif($order->status === 'confirmed')
+                                    <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-info-focus text-info-main">Confirmed</span>
                                 @endif
                             </td>
                             <td>{{ ucfirst($order->payment_method) }}</td>

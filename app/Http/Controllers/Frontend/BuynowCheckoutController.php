@@ -12,50 +12,15 @@ use App\Mail\OrderPlaced;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Product;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
-class CheckoutController extends Controller
+
+class BuynowCheckoutController extends Controller
 {
-    public function index()
+   
+    public function buyNow($productId, $quantity = 1)
     {
-
-        $customer = Auth::guard('customer')->user();
-        $customerId = $customer ? $customer->id : null;
-
-        // Use session_id for guest
-        $sessionId = $customerId ? null : session()->getId();
-
-        // Get cart items
-        $cartQuery = Cart::with('product');
-
-        if ($customerId) {
-            $cartQuery->where('customer_id', $customerId);
-        } else {
-            $cartQuery->where('session_id', $sessionId);
-        }
-
-        $cartItems = $cartQuery->get();
-
-        // Calculate subtotal and total
-        $subtotal = $cartItems->sum(function ($item) {
-            return $item->quantity * $item->price;
-        });
-
-        $total = $subtotal; 
-
-        return view('Frontend.checkout', [
-            'customer' => $customer,
-            'cartItems' => $cartItems,
-            'subtotal' => $subtotal,
-            'total' => $total,
-        ]);
-    }
-
-
-    public function buyNow(Request $request)
-    {
-        $product = Product::with('images')->findOrFail($request->product_id);
-
-        $quantity = $request->quantity ?? 1;
+        $product = Product::with('images')->findOrFail($productId);
 
         $subtotal = $product->price * $quantity;
         $total = $subtotal;
@@ -71,40 +36,33 @@ class CheckoutController extends Controller
         ));
     }
 
-
     public function placeOrder(Request $request)
     {
         // Validate billing details
         $request->validate([
-            'fname' => 'required',
-            'lname' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'address' => 'required',
-            'city' => 'required',
-            'zip' => 'required',
-            'payment_method' => 'required',
+            'fname'=>'required',
+            'lname'=>'required',
+            'email'=>'required|email',
+            'phone'=>'required',
+            'address'=>'required',
+            'city'=>'required',
+            'zip'=>'required',
+            'payment_method'=>'required',
+            'product_id'=>'required|exists:products,id',
+            'quantity'=>'required|integer|min:1',
         ]);
 
         $customer = Auth::guard('customer')->user();
         $customerId = $customer ? $customer->id : null;
-        $sessionId = $customerId ? null : session()->getId();
 
-        // Get cart items
-        $cartItems = Cart::with('product')
-            ->when($customerId, fn($q) => $q->where('customer_id', $customerId))
-            ->when(!$customerId, fn($q) => $q->where('session_id', $sessionId))
-            ->get();
+        $product = Product::findOrFail($request->product_id);
+        $quantity = $request->quantity;
 
-        if ($cartItems->isEmpty()) {
-            return redirect()->back()->with('error', 'Your cart is empty.');
-        }
-
-        $subtotal = $cartItems->sum(fn($item) => $item->quantity * $item->price);
+        $subtotal = $product->price * $quantity;
         $discount = 0;
         $total = $subtotal - $discount;
 
-        // Create Order
+        // Create order with pending status
         $order = Order::create([
             'customer_id' => $customerId,
             'order_number' => 'ORD-' . strtoupper(Str::random(8)),
@@ -121,43 +79,34 @@ class CheckoutController extends Controller
             'total' => $total,
             'payment_method' => $request->payment_method,
             'status' => 'pending',
-            'payment_status' => $request->payment_method === 'cod' ? 'pending' : 'pending', // card will update after CyberSource callback
+            'payment_status' => 'pending',
         ]);
 
-        // Create Order Items & Reduce stock
-        foreach($cartItems as $item){
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $item->product_id,
-                'quantity' => $item->quantity,
-                'price' => $item->price,
-                'subtotal' => $item->quantity * $item->price,
-            ]);
-
-            if ($item->product) {
-                $item->product->decrement('stock_quantity', $item->quantity);
-            }
-        }
-
-        // Clear cart
-        if ($customerId) {
-            Cart::where('customer_id', $customerId)->delete();
-        } else {
-            Cart::where('session_id', $sessionId)->delete();
-        }
+        // Create order item and reduce stock
+        OrderItem::create([
+            'order_id' => $order->id,
+            'product_id' => $product->id,
+            'quantity' => $quantity,
+            'price' => $product->price,
+            'subtotal' => $subtotal,
+        ]);
+        $product->decrement('stock_quantity', $quantity);
 
         // Send emails for COD only
         if ($request->payment_method === 'cod') {
             Mail::to($order->email)->send(new OrderPlaced($order));
             Mail::to('kasthurid1234@gmail.com')->send(new OrderPlaced($order, true));
-            return redirect()->route('Frontend.checkout.cod_success', ['order_id'=>$order->id]);
         }
 
-        // If card payment, redirect to CyberSource
+        // Redirect to CyberSource if card payment
         if ($request->payment_method === 'card') {
             return $this->redirectToCyberSource($order);
         }
+
+        // For COD, redirect directly
+        return redirect()->route('Frontend.checkout.cod_success', ['order_id'=>$order->id]);
     }
+
 
 
     private function redirectToCyberSource($order)
@@ -169,8 +118,10 @@ class CheckoutController extends Controller
         $profileId  = 'A6331C57-9BBB-490C-B6D2-0E32E7EDC242';
         $currency   = 'LKR';
 
+        // Required fields
         $uuid = Str::uuid();
         $signedDateTime = gmdate("Y-m-d\TH:i:s\Z");
+        $referenceNumber = $order->order_number;
 
         $fields = [
             "access_key" => $accessKey,
@@ -182,7 +133,7 @@ class CheckoutController extends Controller
             "signed_date_time" => $signedDateTime,
             "locale" => "en",
             "transaction_type" => "sale",
-            "reference_number" => $order->order_number,
+            "reference_number" => $referenceNumber,
             "amount" => number_format($order->total, 2, '.', ''),
             "currency" => $currency,
             "bill_to_forename" => $order->first_name,
@@ -194,59 +145,21 @@ class CheckoutController extends Controller
             "bill_to_address_country" => "LK",
             "bill_to_address_postal_code" => $order->zip,
             "override_custom_receipt_page" => route('Frontend.checkout.success.post', ['order_id'=>$order->id]),
-            "merchant_defined_data1" => $order->id,
+            "merchant_defined_data1" => $order->id, // pass order id to track in return
         ];
 
+        // Generate signature
         $dataToSign = collect(explode(',', $fields['signed_field_names']))
             ->map(fn($key) => "$key={$fields[$key]}")
             ->implode(',');
 
         $fields['signature'] = base64_encode(hash_hmac('sha256', $dataToSign, $secretKey, true));
 
+        // Return Blade view that auto-submits
         return view('Frontend.cybersource_redirect', ['fields' => $fields, 'cybsUrl' => $cybsUrl]);
     }
 
 
-   
 
-    public function success(Request $request, $order_id)
-    {
-        $order = Order::with('items.product')->findOrFail($order_id);
-
-        // Check if this is a card payment return from CyberSource
-        if ($order->payment_method === 'card') {
-
-            // CyberSource returns 'decision' and other parameters
-            $decision = $request->input('decision'); // 'ACCEPT', 'REJECT', 'ERROR'
-
-            if ($decision === 'ACCEPT') {
-                $order->payment_status = 'paid';
-                $order->status = 'confirmed';
-                $order->save();
-
-                // Send emails now that payment is successful
-                Mail::to($order->email)->send(new OrderPlaced($order));
-                Mail::to('kasthurid1234@gmail.com')->send(new OrderPlaced($order, true));
-
-            } else {
-                // Payment failed
-                $order->payment_status = 'failed';
-                $order->status = 'failed';
-                $order->save();
-
-                return view('Frontend.checkout_failed', compact('order', 'request'));
-            }
-        }
-
-        return view('Frontend.checkout_success', compact('order'));
-    }
-
-
-
-    public function codSuccess($order_id)
-    {
-        $order = Order::with('items.product')->findOrFail($order_id);
-        return view('Frontend.checkout_success', compact('order'));
-    }
 
 }

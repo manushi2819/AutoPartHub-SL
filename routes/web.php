@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\ReviewController;
+use App\Http\Controllers\Frontend\BuynowCheckoutController;
 
 Route::get('/', [HomeController::class, 'index'])->name('Frontend.index');
 Route::get('/about-us', [HomeController::class, 'about'])->name('Frontend.about');
@@ -30,7 +31,19 @@ Route::post('wishlist/add', [WishlistController::class, 'addToWishlist'])->name(
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('Frontend.checkout');
 Route::post('/checkout/process', [CheckoutController::class, 'placeOrder'])->name('Frontend.checkout.process');
-Route::get('/checkout/success/{order_id}', [CheckoutController::class,'success'])->name('Frontend.checkout.success');
+
+
+// Show Buy Now checkout page
+Route::get('/buy-now/{product}/{quantity?}', [BuynowCheckoutController::class, 'buyNow'])->name('Frontend.buyNow');
+Route::post('/buy-now/checkout/process', [BuynowCheckoutController::class, 'placeOrder'])->name('Frontend.buyNowcheckout.process');
+
+Route::get('/checkout/cod-success/{order_id}', [CheckoutController::class, 'codSuccess'])
+    ->name('Frontend.checkout.cod_success');
+
+Route::post('/checkout/success/{order_id}', [CheckoutController::class, 'success'])
+    ->name('Frontend.checkout.success.post')
+    ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class, 'web']);
+
 
 Route::get('/login', [LoginController::class, 'login'])->name('Frontend.login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('Frontend.login.authenticate');
@@ -39,6 +52,8 @@ Route::post('/register', [LoginController::class, 'store'])->name('Frontend.regi
 Route::post('/customer/logout', [LoginController::class, 'logout'])->name('Frontend.logout');
 
 Route::post('/product/{product}/review', [ReviewController::class, 'store'])->name('product.review.store');
+
+
 
 
 
@@ -81,7 +96,6 @@ Route::post('admin/logout', [AdminLoginController::class, 'logout'])->name('admi
 
 
 Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(function () {
-
 
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
 

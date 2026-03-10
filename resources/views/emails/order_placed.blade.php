@@ -73,7 +73,7 @@
         }
         
         .greeting strong {
-            color: #ea6666;
+            color: #d30808;
         }
         
         /* Customer info cards */
@@ -220,8 +220,8 @@
                     <!-- Header -->
                     <div class="email-header">
                       
-                        <h2>{{ $isAdmin ? 'New Order Received!' : 'Thank You for Your Order!' }}</h2>
-                        <div class="order-badge">
+                        <h2 style="color: #000000;">{{ $isAdmin ? 'New Order Received!' : 'Thank You for Your Order!' }}</h2>
+                        <div class="order-badge" style="color: #000000;">
                             Order #{{ $order->order_number }}
                         </div>
                     </div>
@@ -278,7 +278,7 @@
                         </table>
                         
                        <!-- Totals -->
-                    <div class="totals-section" style="width: 100%; max-width: 400px; margin-top: 20px;">
+                    <div class="totals-section" style=" margin-top: 20px;">
                         <div class="total-row" style="display: flex; justify-content: space-between">
                             <span class="total-label" style="font-weight: bold;">Subtotal:</span>
                             <span class="total-value" style="text-align: right; font-weight: bold;">Rs. {{ number_format($order->subtotal,2) }}</span>

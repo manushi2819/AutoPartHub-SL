@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Mar 05, 2026 at 06:50 PM
+-- Generation Time: Mar 07, 2026 at 05:42 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,6 +20,39 @@ SET time_zone = "+00:00";
 --
 -- Database: `autoparthub_sl`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `brands`
+--
+
+CREATE TABLE `brands` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `brands`
+--
+
+INSERT INTO `brands` (`id`, `name`, `image`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Toyota', '1772893481_brand-15.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:54:41'),
+(2, 'Honda', '1772893408_brand-13.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:53:28'),
+(3, 'Ford', '1772893417_brands-11.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:53:37'),
+(4, 'BMW', '1772893423_brands-2.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:53:43'),
+(5, 'Mercedes-Benz', '1772893428_brands-3.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:53:48'),
+(6, 'Audi', '1772893433_brands-1.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:53:53'),
+(7, 'Nissan', '1772893438_brand-16.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:53:58'),
+(8, 'Hyundai', '1772893445_brands-7.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:54:05'),
+(9, 'Porsche', '1772893451_brands-6.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:54:11'),
+(10, 'Tesla', '1772893461_brands-4.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:54:21'),
+(11, 'Suzuki', '1772893467_brand-14.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:54:27'),
+(12, 'Jaguar', '1772893476_brands-10.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:54:36');
 
 -- --------------------------------------------------------
 
@@ -330,6 +363,33 @@ INSERT INTO `customers` (`id`, `first_name`, `last_name`, `email`, `phone`, `add
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `customer_activities`
+--
+
+CREATE TABLE `customer_activities` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `customer_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `activity_type` varchar(255) NOT NULL,
+  `reference_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `customer_activities`
+--
+
+INSERT INTO `customer_activities` (`id`, `customer_id`, `activity_type`, `reference_id`, `value`, `created_at`, `updated_at`) VALUES
+(1, 1, 'product_view', 2, NULL, '2026-03-07 10:18:16', '2026-03-07 10:18:16'),
+(3, 1, 'search', NULL, 'Radiator', '2026-03-07 10:22:30', '2026-03-07 10:22:30'),
+(4, 1, 'category_view', 39, NULL, '2026-03-07 10:22:42', '2026-03-07 10:22:42'),
+(5, 1, 'category_view', 77, NULL, '2026-03-07 10:22:54', '2026-03-07 10:22:54'),
+(6, 1, 'brand_view', NULL, 'Honda', '2026-03-07 10:23:05', '2026-03-07 10:23:05');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `failed_jobs`
 --
 
@@ -411,7 +471,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (18, '2026_03_03_153516_create_orders_table', 8),
 (19, '2026_03_03_153528_create_order_items_table', 8),
 (21, '2026_03_03_164640_create_reviews_table', 9),
-(22, '2026_03_05_154110_add_image_to_categories_table', 10);
+(22, '2026_03_05_154110_add_image_to_categories_table', 10),
+(26, '2026_03_06_162547_create_brands_table', 11),
+(27, '2026_03_07_142452_create_customer_activities_table', 12);
 
 -- --------------------------------------------------------
 
@@ -450,7 +512,7 @@ INSERT INTO `orders` (`id`, `customer_id`, `order_number`, `first_name`, `last_n
 (2, NULL, 'ORD-WM3FLWAZ', 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 38741.00, 0.00, 38741.00, 'cod', 'pending', 'pending', '2026-03-03 10:41:49', '2026-03-03 10:41:49'),
 (3, 1, 'ORD-ODKZZ2E3', 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Kurunegala', '60040', 'Sri Lanka', 24568.00, 0.00, 24568.00, 'cod', 'pending', 'pending', '2026-03-03 10:46:57', '2026-03-03 10:46:57'),
 (4, 1, 'ORD-8YYLFBFY', 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Kurunegala', '60040', 'Sri Lanka', 17158.00, 0.00, 17158.00, 'cod', 'pending', 'pending', '2026-03-03 10:50:35', '2026-03-03 10:50:35'),
-(5, 1, 'ORD-SY26YXOV', 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Kurunegala', '60040', 'Sri Lanka', 32605.00, 0.00, 32605.00, 'cod', 'pending', 'pending', '2026-03-03 10:53:57', '2026-03-03 10:53:57');
+(5, 1, 'ORD-SY26YXOV', 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Kurunegala', '60040', 'Sri Lanka', 32605.00, 0.00, 32605.00, 'cod', 'delivered', 'paid', '2026-03-03 10:53:57', '2026-03-07 11:07:20');
 
 -- --------------------------------------------------------
 
@@ -701,7 +763,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('1eKxdkDPimfPzSdud4SR2E6tqmc0lNRlunxYzln0', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiMHVQbW9LSXk2UVNoM0xNQ3JicWxCQkVRSVFIVEs4RnNHNnZXbExoUyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMS9hYm91dC11cyI7czo1OiJyb3V0ZSI7czoxNDoiRnJvbnRlbmQuYWJvdXQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjg6ImlzX2FkbWluIjtiOjE7czo0OiJuYW1lIjtzOjExOiJTdXBlciBBZG1pbiI7czo1OiJlbWFpbCI7czoxNzoiYWRtaW5AZXhhbXBsZS5jb20iO30=', 1772732644);
+('nsArfBTqxQ4RCL2DT1Q9L1ecszgGv8gWQTOM1ivN', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiNjFhcnphMXg3TXRDc2l1dDljdDNGUlhGV0E3cmtUNGozRElSMW9jNCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbiI7czo1OiJyb3V0ZSI7czoxNToiYWRtaW4uZGFzaGJvYXJkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo4OiJpc19hZG1pbiI7YjoxO3M6NDoibmFtZSI7czoxMToiU3VwZXIgQWRtaW4iO3M6NToiZW1haWwiO3M6MTc6ImFkbWluQGV4YW1wbGUuY29tIjtzOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1772901627);
 
 -- --------------------------------------------------------
 
@@ -719,6 +781,13 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Test User', 'test@example.com', '2026-03-06 11:23:19', '$2y$12$0aorHw/iX6K/U9LpZPtIz.HZSFK.bKNvO1FA6CeE2fKY3qWJQuNcC', 'jSa7btyH4i', '2026-03-06 11:23:19', '2026-03-06 11:23:19');
 
 -- --------------------------------------------------------
 
@@ -747,6 +816,12 @@ INSERT INTO `wishlists` (`id`, `customer_id`, `session_id`, `product_id`, `creat
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `brands`
+--
+ALTER TABLE `brands`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `cache`
@@ -790,6 +865,13 @@ ALTER TABLE `contact_messages`
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `customers_email_unique` (`email`);
+
+--
+-- Indexes for table `customer_activities`
+--
+ALTER TABLE `customer_activities`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_activities_customer_id_foreign` (`customer_id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -904,6 +986,12 @@ ALTER TABLE `wishlists`
 --
 
 --
+-- AUTO_INCREMENT for table `brands`
+--
+ALTER TABLE `brands`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
@@ -928,6 +1016,12 @@ ALTER TABLE `customers`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `customer_activities`
+--
+ALTER TABLE `customer_activities`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -943,7 +1037,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -961,7 +1055,7 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `product_images`
@@ -991,7 +1085,7 @@ ALTER TABLE `review_images`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `wishlists`
@@ -1015,6 +1109,12 @@ ALTER TABLE `carts`
 --
 ALTER TABLE `categories`
   ADD CONSTRAINT `categories_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `customer_activities`
+--
+ALTER TABLE `customer_activities`
+  ADD CONSTRAINT `customer_activities_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `orders`

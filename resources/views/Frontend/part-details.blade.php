@@ -109,11 +109,18 @@
                                 <div class="addto-cart-box mb_40">
                                     <ul class="clearfix">
                                         <li class="item-quantity">
-                                            <input class="quantity-spinner" type="text" value="1" name="quantity">
+                                            <input class="quantity-spinner" type="text" value="1" name="quantity" id="product_qty">
                                         </li>
                                         <li class="cart-btn">
                                             <button type="button" class="theme-btn">Add To Cart<span></span><span></span><span></span><span></span></button>
                                         </li>
+                                        <li>
+                                            <button type="button" class="theme-btn" id="buy-now-btn" style="background:#1fad0f;">
+                                                Buy Now
+                                                <span></span><span></span><span></span><span></span>
+                                            </button>
+                                        </li>
+                                
                                         <li class="like-btn">
                                             <button><i class="icon-7"></i></button>
                                         </li>
@@ -408,5 +415,17 @@ document.querySelectorAll('.star-btn').forEach(btn => {
         });
     });
 });
+</script>
+
+<script>
+    const buyNowBtn = document.getElementById('buy-now-btn');
+    const qtyInput = document.getElementById('product_qty');
+    const productId = "{{ $product->id }}"; // blade variable
+
+    buyNowBtn.addEventListener('click', function() {
+        const qty = qtyInput.value || 1; // default 1 if empty
+        // Redirect to the buy-now route with product ID and quantity in URL
+        window.location.href = `{{ url('/buy-now') }}/${productId}/${qty}`;
+    });
 </script>
 @endsection
