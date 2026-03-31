@@ -58,6 +58,7 @@ class OrderController extends Controller
         $request->validate([
             'status' => 'nullable|in:pending,confirmed,in_transit,delivered,cancelled',
             'payment_status' => 'nullable|in:pending,paid',
+            'tracking_no' => 'nullable|string|max:255',
         ]);
 
         $order = Order::findOrFail($id);
@@ -73,6 +74,11 @@ class OrderController extends Controller
 
         if ($request->filled('payment_status')) {
             $order->payment_status = $request->payment_status;
+        }
+
+        // ✅ Save tracking number
+        if ($request->filled('tracking_no')) {
+            $order->tracking_no = $request->tracking_no;
         }
 
         $order->save();

@@ -135,7 +135,8 @@
                     <p class="mb-1"><strong>Order Date:</strong> {{ $order->created_at->format('F d, Y') }}</p>
                     <p class="mb-0"><strong>Order Total:</strong> Rs. {{ number_format($order->total, 2) }}</p>
                     <p class="mb-0"><strong>Payment Status:</strong> 
-                        <span class="badge {{ $order->payment_status == 'paid' ? 'bg-success' : 'bg-warning' }}">
+                        <span class="px-24 py-4 rounded-pill fw-medium text-sm
+                         {{ $order->payment_status == 'paid' ? 'bg-success-focus text-success-main' : 'bg-warning-focus text-warning-main' }}">
                             {{ ucfirst($order->payment_status) }}
                         </span>
                     </p>
@@ -149,7 +150,7 @@
                     <p class="mb-1">{{ $order->first_name }} {{ $order->last_name }}</p>
                     <p class="mb-1">{{ $order->address }}</p>
                     <p class="mb-1">{{ $order->city }}, {{ $order->zip }}, {{ $order->country }}</p>
-                    <p class="mb-0"><strong>Contact:</strong> {{ $order->phone }}</p>
+                    <p class="mb-0"><strong>Contact:</strong> {{ $order->phone }} / {{ $order->email }}</p>
                 </div>
 
            
@@ -237,7 +238,7 @@
         <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST">
             @csrf
             <div class="row g-3 align-items-end">
-                <div class="col-5">
+                <div class="col-3">
                     <label class="form-label fw-semibold">Update Order Status</label>
                     <select name="status" class="form-select">
                         <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }}>Pending</option>
@@ -248,12 +249,18 @@
                     </select>
                 </div>
 
-                <div class="col-5">
+                <div class="col-3">
                     <label class="form-label fw-semibold">Payment Status</label>
                     <select name="payment_status" class="form-select">
                         <option value="pending" {{ $order->payment_status === 'pending' ? 'selected' : '' }}>Pending</option>
                         <option value="paid" {{ $order->payment_status === 'paid' ? 'selected' : '' }}>Paid</option>
                     </select>
+                </div>
+
+                <div class="col-4">
+                    <label class="form-label fw-semibold">Tracking Number</label>
+                    <input type="text" name="tracking_no" class="form-control"
+                        value="{{ $order->tracking_no ?? '' }}" placeholder="Enter tracking number">
                 </div>
 
                 <div class="col-2">

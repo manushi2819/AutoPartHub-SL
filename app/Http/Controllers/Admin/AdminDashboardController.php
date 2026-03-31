@@ -28,7 +28,7 @@ class AdminDashboardController extends Controller
                             ->sum('total');
 
         $todayIncome = Order::where('payment_status', 'paid')
-                            ->whereDate('created_at', Carbon::today())
+                            ->whereDate('updated_at', Carbon::today())
                             ->sum('total');
 
         // -----------------------
@@ -51,8 +51,8 @@ class AdminDashboardController extends Controller
 
             // Paid earnings only
             $earningsData[] = Order::where('payment_status', 'paid')
-                ->whereYear('created_at', $date->year)
-                ->whereMonth('created_at', $date->month)
+                ->whereYear('updated_at', $date->year)
+                ->whereMonth('updated_at', $date->month)
                 ->sum('total');
         }
 
