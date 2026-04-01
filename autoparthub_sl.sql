@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Mar 07, 2026 at 05:42 PM
+-- Generation Time: Apr 01, 2026 at 06:08 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -101,7 +101,8 @@ CREATE TABLE `carts` (
 
 INSERT INTO `carts` (`id`, `customer_id`, `session_id`, `product_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
 (1, NULL, '6CqkVTQRcQik22MLOXaQBZzCOR1kE2Y2GV6CGdhg', 3, 2, 44381.00, '2026-03-01 04:57:31', '2026-03-01 04:57:31'),
-(2, NULL, '6CqkVTQRcQik22MLOXaQBZzCOR1kE2Y2GV6CGdhg', 8, 2, 38741.00, '2026-03-01 05:00:43', '2026-03-01 05:01:26');
+(2, NULL, '6CqkVTQRcQik22MLOXaQBZzCOR1kE2Y2GV6CGdhg', 8, 2, 38741.00, '2026-03-01 05:00:43', '2026-03-01 05:01:26'),
+(18, NULL, '4faCqN8ztO3GuZTWR8Z7sx3NOGN8E9reDqM1dJwD', 2, 1, 15196.00, '2026-03-18 07:32:49', '2026-03-18 07:32:49');
 
 -- --------------------------------------------------------
 
@@ -335,6 +336,13 @@ CREATE TABLE `contact_messages` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `contact_messages`
+--
+
+INSERT INTO `contact_messages` (`id`, `name`, `email`, `phone`, `subject`, `message`, `reply_comment`, `is_replied`, `replied_at`, `created_at`, `updated_at`) VALUES
+(4, 'Manushi Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'hi', 'hiii', NULL, 0, NULL, '2026-03-10 10:59:51', '2026-03-10 10:59:51');
+
 -- --------------------------------------------------------
 
 --
@@ -348,6 +356,7 @@ CREATE TABLE `customers` (
   `email` varchar(255) NOT NULL,
   `phone` varchar(255) DEFAULT NULL,
   `address` text DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   `password` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -357,8 +366,8 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`id`, `first_name`, `last_name`, `email`, `phone`, `address`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', '$2y$12$VAzEOj2pD1xTt2BWS1O3cuUxpCi8t6xkTtHF1hcC9d.LNAN6WAyqy', '2026-02-18 03:05:37', '2026-02-28 11:52:08');
+INSERT INTO `customers` (`id`, `first_name`, `last_name`, `email`, `phone`, `address`, `status`, `password`, `created_at`, `updated_at`) VALUES
+(1, 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 1, '$2y$12$yjd2AhSYf0qTNGDccIAA3eMMbN1hulKFc3MFAkia9MJCckzeVkuda', '2026-02-18 03:05:37', '2026-04-01 10:35:28');
 
 -- --------------------------------------------------------
 
@@ -385,7 +394,8 @@ INSERT INTO `customer_activities` (`id`, `customer_id`, `activity_type`, `refere
 (3, 1, 'search', NULL, 'Radiator', '2026-03-07 10:22:30', '2026-03-07 10:22:30'),
 (4, 1, 'category_view', 39, NULL, '2026-03-07 10:22:42', '2026-03-07 10:22:42'),
 (5, 1, 'category_view', 77, NULL, '2026-03-07 10:22:54', '2026-03-07 10:22:54'),
-(6, 1, 'brand_view', NULL, 'Honda', '2026-03-07 10:23:05', '2026-03-07 10:23:05');
+(6, 1, 'brand_view', NULL, 'Honda', '2026-03-07 10:23:05', '2026-03-07 10:23:05'),
+(7, 1, 'product_view', 14, NULL, '2026-04-01 01:08:10', '2026-04-01 01:08:10');
 
 -- --------------------------------------------------------
 
@@ -473,7 +483,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (21, '2026_03_03_164640_create_reviews_table', 9),
 (22, '2026_03_05_154110_add_image_to_categories_table', 10),
 (26, '2026_03_06_162547_create_brands_table', 11),
-(27, '2026_03_07_142452_create_customer_activities_table', 12);
+(27, '2026_03_07_142452_create_customer_activities_table', 12),
+(28, '2026_03_31_014110_add_tracking_no_to_orders_table', 13),
+(29, '2026_04_01_014110_add_status_to_customers_table', 14);
 
 -- --------------------------------------------------------
 
@@ -485,6 +497,7 @@ CREATE TABLE `orders` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `customer_id` bigint(20) UNSIGNED DEFAULT NULL,
   `order_number` varchar(255) DEFAULT NULL,
+  `tracking_no` varchar(255) DEFAULT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -507,12 +520,14 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `customer_id`, `order_number`, `first_name`, `last_name`, `email`, `phone`, `address`, `city`, `zip`, `country`, `subtotal`, `discount`, `total`, `payment_method`, `status`, `payment_status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'ORD-B7YRZ5JV', 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Kurunegala', '60040', 'Sri Lanka', 60777.00, 0.00, 60777.00, 'cod', 'pending', 'pending', '2026-03-03 10:25:45', '2026-03-03 10:25:45'),
-(2, NULL, 'ORD-WM3FLWAZ', 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 38741.00, 0.00, 38741.00, 'cod', 'pending', 'pending', '2026-03-03 10:41:49', '2026-03-03 10:41:49'),
-(3, 1, 'ORD-ODKZZ2E3', 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Kurunegala', '60040', 'Sri Lanka', 24568.00, 0.00, 24568.00, 'cod', 'pending', 'pending', '2026-03-03 10:46:57', '2026-03-03 10:46:57'),
-(4, 1, 'ORD-8YYLFBFY', 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Kurunegala', '60040', 'Sri Lanka', 17158.00, 0.00, 17158.00, 'cod', 'pending', 'pending', '2026-03-03 10:50:35', '2026-03-03 10:50:35'),
-(5, 1, 'ORD-SY26YXOV', 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Kurunegala', '60040', 'Sri Lanka', 32605.00, 0.00, 32605.00, 'cod', 'delivered', 'paid', '2026-03-03 10:53:57', '2026-03-07 11:07:20');
+INSERT INTO `orders` (`id`, `customer_id`, `order_number`, `tracking_no`, `first_name`, `last_name`, `email`, `phone`, `address`, `city`, `zip`, `country`, `subtotal`, `discount`, `total`, `payment_method`, `status`, `payment_status`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'ORD-4VTDYSFM', NULL, 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 24568.00, 0.00, 24568.00, 'card', 'confirmed', 'paid', '2026-03-10 10:40:26', '2026-03-10 10:40:51'),
+(2, NULL, 'ORD-YUTHYBXP', NULL, 'Shasmal', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 38741.00, 0.00, 38741.00, 'cod', 'pending', 'pending', '2026-03-10 10:41:34', '2026-03-10 10:41:34'),
+(3, NULL, 'ORD-WPPRTVH3', NULL, 'Shashmal', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 45877.00, 0.00, 45877.00, 'cod', 'pending', 'pending', '2026-03-10 10:43:15', '2026-03-10 10:43:15'),
+(4, NULL, 'ORD-00PISXO4', NULL, 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 38741.00, 0.00, 38741.00, 'cod', 'pending', 'pending', '2026-03-10 10:46:02', '2026-03-10 10:46:02'),
+(5, NULL, 'ORD-GIIPRUZT', '12345678', 'Ruvidi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 32605.00, 0.00, 32605.00, 'cod', 'delivered', 'paid', '2026-03-10 10:47:11', '2026-03-30 23:37:04'),
+(6, NULL, 'ORD-X4DUOVHM', NULL, 'Tharumal', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 23531.00, 0.00, 23531.00, 'card', 'confirmed', 'paid', '2026-03-10 10:47:51', '2026-03-10 10:48:18'),
+(7, 1, 'ORD-FAKSH41F', NULL, 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Kurunegala', '60040', 'Sri Lanka', 29073.00, 0.00, 29073.00, 'cod', 'pending', 'pending', '2026-04-01 01:08:27', '2026-04-01 01:08:27');
 
 -- --------------------------------------------------------
 
@@ -536,12 +551,13 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`, `subtotal`, `created_at`, `updated_at`) VALUES
-(1, 1, 4, 1, 16396.00, 16396.00, '2026-03-03 10:25:45', '2026-03-03 10:25:45'),
-(2, 1, 3, 1, 44381.00, 44381.00, '2026-03-03 10:25:45', '2026-03-03 10:25:45'),
-(3, 2, 8, 1, 38741.00, 38741.00, '2026-03-03 10:41:49', '2026-03-03 10:41:49'),
-(4, 3, 5, 2, 12284.00, 24568.00, '2026-03-03 10:46:57', '2026-03-03 10:46:57'),
-(5, 4, 10, 1, 17158.00, 17158.00, '2026-03-03 10:50:35', '2026-03-03 10:50:35'),
-(6, 5, 11, 1, 32605.00, 32605.00, '2026-03-03 10:53:57', '2026-03-03 10:53:57');
+(1, 1, 5, 2, 12284.00, 24568.00, '2026-03-10 10:40:26', '2026-03-10 10:40:26'),
+(2, 2, 8, 1, 38741.00, 38741.00, '2026-03-10 10:41:34', '2026-03-10 10:41:34'),
+(3, 3, 6, 1, 45877.00, 45877.00, '2026-03-10 10:43:15', '2026-03-10 10:43:15'),
+(4, 4, 8, 1, 38741.00, 38741.00, '2026-03-10 10:46:02', '2026-03-10 10:46:02'),
+(5, 5, 11, 1, 32605.00, 32605.00, '2026-03-10 10:47:11', '2026-03-10 10:47:11'),
+(6, 6, 12, 1, 23531.00, 23531.00, '2026-03-10 10:47:51', '2026-03-10 10:47:51'),
+(7, 7, 14, 1, 29073.00, 29073.00, '2026-04-01 01:08:27', '2026-04-01 01:08:27');
 
 -- --------------------------------------------------------
 
@@ -584,21 +600,21 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `category_id`, `name`, `sku`, `brand`, `price`, `cost_price`, `description`, `small_description`, `stock_quantity`, `status`, `created_at`, `updated_at`) VALUES
 (1, 137, 'OEM Radiator', 'SKU0021', 'Mazda', 15196.00, 14267.00, '<p>Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance. A well-maintained and properly selected set of rims can significantly enhance the overall look and performance of a vehicle.</p><p>wheels provide a means of mounting and affixing the tires to the vehicle through which the engine’s power is transferred to the ground. As the engine generates power, it moves through the drivetrain to the wheels, which bolt to the wheel hub and rotate around the axles For the wheels to turn and propel the car forward, you need to have friction provided by the tires in direct and constant contact with the ground under the car.</p><p><strong>Features </strong>:</p><ul><li>Rims can be made from different materials</li><li>This includes spoke wheels, multi-spoke wheels</li><li>The weight of the rim can impact the vehicle\'s overall weight and performance.</li><li>Certain rims may have features that make them easier to clean and maintain.</li></ul><p><br></p>', 'Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance.', 38, 1, '2026-02-03 12:01:48', '2026-03-01 03:58:56'),
 (2, 137, 'OEM Radiator', 'SKU0001', 'Mazda', 15196.00, 14267.00, 'This is a description for Product 1.', NULL, 38, 1, '2026-03-04 12:01:48', '2026-02-23 12:10:00'),
-(3, 74, 'Synthetic ATF', 'SKU0002', 'Honda', 44381.00, 26178.00, 'This is a description for Product 2.', NULL, 38, 1, '2026-02-23 12:01:48', '2026-03-03 10:25:45'),
-(4, 143, 'High Flow Water Pump', 'SKU0003', 'Toyota', 16396.00, 16828.00, 'This is a description for Product 3.', NULL, 13, 1, '2026-03-04 12:01:48', '2026-03-03 10:25:45'),
-(5, 108, 'Truck Converter', 'SKU0004', 'Mazda', 12284.00, 15555.00, 'This is a description for Product 4.', NULL, 29, 1, '2026-02-23 12:01:48', '2026-03-03 10:46:57'),
-(6, 70, 'Steel Flywheel', 'SKU0005', 'Mazda', 45877.00, 31201.00, 'This is a description for Product 5.', NULL, 36, 1, '2026-02-23 12:01:48', '2026-02-23 12:15:35'),
-(7, 151, 'Performance Thermostat', 'SKU0006', 'Honda', 24389.00, 33058.00, 'This is a description for Product 6.', NULL, 20, 1, '2026-02-23 12:01:48', '2026-02-23 12:16:00'),
-(8, 180, 'Standard Wheel', 'SKU0007', 'Toyota', 38741.00, 30546.00, 'This is a description for Product 7.', NULL, 41, 1, '2026-02-23 12:01:48', '2026-03-03 10:41:49'),
+(3, 74, 'Synthetic ATF', 'SKU0002', 'Honda', 44381.00, 26178.00, 'This is a description for Product 2.', NULL, 37, 1, '2026-02-23 12:01:48', '2026-03-10 10:01:44'),
+(4, 143, 'High Flow Water Pump', 'SKU0003', 'Toyota', 16396.00, 16828.00, 'This is a description for Product 3.', NULL, 12, 1, '2026-03-04 12:01:48', '2026-03-10 10:38:19'),
+(5, 108, 'Truck Converter', 'SKU0004', 'Mazda', 12284.00, 15555.00, 'This is a description for Product 4.', NULL, 24, 1, '2026-02-23 12:01:48', '2026-03-10 10:40:26'),
+(6, 70, 'Steel Flywheel', 'SKU0005', 'Mazda', 45877.00, 31201.00, 'This is a description for Product 5.', NULL, 34, 1, '2026-02-23 12:01:48', '2026-03-10 10:43:15'),
+(7, 151, 'Performance Thermostat', 'SKU0006', 'Honda', 24389.00, 33058.00, 'This is a description for Product 6.', NULL, 17, 1, '2026-02-23 12:01:48', '2026-03-10 10:32:04'),
+(8, 180, 'Standard Wheel', 'SKU0007', 'Toyota', 38741.00, 30546.00, 'This is a description for Product 7.', NULL, 39, 1, '2026-02-23 12:01:48', '2026-03-10 10:46:02'),
 (9, 11, 'Hydraulic Camshafts', 'SKU0008', 'Mitsubishi', 17553.00, 39220.00, 'This is a description for Product 8.', NULL, 26, 1, '2026-02-23 12:01:48', '2026-02-23 12:16:58'),
 (10, 178, 'Custom Seats', 'SKU0009', 'Mazda', 17158.00, 36881.00, 'This is a description for Product 9.', NULL, 23, 1, '2026-02-23 12:01:48', '2026-03-03 10:50:35'),
-(11, 4, 'Forged Pistons', 'SKU0010', 'Honda', 32605.00, 5315.00, 'This is a description for Product 10.', NULL, 4, 1, '2026-02-23 12:01:48', '2026-03-03 10:53:57'),
-(12, 152, 'Truck Thermostat', 'SKU0011', 'Mitsubishi', 23531.00, 10969.00, 'This is a description for Product 11.', NULL, 11, 1, '2026-02-23 12:01:48', '2026-02-23 12:18:20'),
-(13, 42, 'Semi-Metallic Pads', 'SKU0012', 'Nissan', 48614.00, 30287.00, 'This is a description for Product 12.', NULL, 31, 1, '2026-02-23 12:01:48', '2026-02-23 12:18:48'),
-(14, 183, 'OEM Wheel', 'SKU0013', 'Honda', 29073.00, 22685.00, 'This is a description for Product 13.', NULL, 37, 1, '2026-02-23 12:01:48', '2026-02-23 12:19:25'),
+(11, 4, 'Forged Pistons', 'SKU0010', 'Honda', 32605.00, 5315.00, 'This is a description for Product 10.', NULL, 3, 1, '2026-02-23 12:01:48', '2026-03-10 10:47:11'),
+(12, 152, 'Truck Thermostat', 'SKU0011', 'Mitsubishi', 23531.00, 10969.00, 'This is a description for Product 11.', NULL, 10, 1, '2026-02-23 12:01:48', '2026-03-10 10:47:51'),
+(13, 42, 'Semi-Metallic Pads', 'SKU0012', 'Nissan', 48614.00, 30287.00, 'This is a description for Product 12.', NULL, 27, 1, '2026-02-23 12:01:48', '2026-03-10 09:59:21'),
+(14, 183, 'OEM Wheel', 'SKU0013', 'Honda', 29073.00, 22685.00, 'This is a description for Product 13.', NULL, 36, 1, '2026-02-23 12:01:48', '2026-04-01 01:08:27'),
 (15, 176, 'Leather Seats', 'SKU0014', 'Mitsubishi', 10442.00, 35868.00, 'This is a description for Product 14.', NULL, 27, 1, '2026-02-23 12:01:48', '2026-02-23 12:20:00'),
 (16, 190, 'Custom Panels', 'SKU0015', 'Mazda', 46682.00, 14373.00, 'This is a description for Product 15.', NULL, 26, 1, '2026-02-23 12:01:48', '2026-02-23 12:20:24'),
-(17, 79, 'Lead-Acid Battery', 'SKU0016', 'Honda', 6745.00, 32081.00, 'This is a description for Product 16.', NULL, 31, 1, '2026-02-23 12:01:48', '2026-02-23 12:21:25'),
+(17, 79, 'Lead-Acid Battery', 'SKU0016', 'Honda', 6745.00, 32081.00, 'This is a description for Product 16.', NULL, 28, 1, '2026-02-23 12:01:48', '2026-03-10 10:22:33'),
 (18, 16, 'Valve Cover Gaskets', 'SKU0017', 'Honda', 9926.00, 16694.00, 'This is a description for Product 17.', NULL, 38, 1, '2026-02-23 12:01:48', '2026-02-23 12:21:40'),
 (19, 159, 'Manual Mirror', 'SKU0018', 'Mazda', 12958.00, 15328.00, 'This is a description for Product 18.', NULL, 6, 1, '2026-02-23 12:01:48', '2026-02-23 12:22:25'),
 (20, 113, 'OEM Pipes', 'SKU0019', 'Toyota', 42050.00, 19719.00, 'This is a description for Product 19.', NULL, 25, 1, '2026-02-23 12:01:48', '2026-02-23 12:22:39'),
@@ -763,7 +779,9 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('nsArfBTqxQ4RCL2DT1Q9L1ecszgGv8gWQTOM1ivN', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiNjFhcnphMXg3TXRDc2l1dDljdDNGUlhGV0E3cmtUNGozRElSMW9jNCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbiI7czo1OiJyb3V0ZSI7czoxNToiYWRtaW4uZGFzaGJvYXJkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo4OiJpc19hZG1pbiI7YjoxO3M6NDoibmFtZSI7czoxMToiU3VwZXIgQWRtaW4iO3M6NToiZW1haWwiO3M6MTc6ImFkbWluQGV4YW1wbGUuY29tIjtzOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1772901627);
+('ELZX3rtj59Ss5wEPw84i4zg82zUuQtJQb2C45JEY', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiSjRlV3hnQ1JkeERKVWJvc2htSHFGSWZ0NTR3bHdsUjFLQW9kVGx6TSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7czo1OiJyb3V0ZSI7czoxNDoiRnJvbnRlbmQubG9naW4iO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1775059528),
+('x8gylYa0ayR25sTSNJrwsfILcdxa20PJC9HZHZEb', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiR3VRVjRxVWpqbEJUSEVoVlFzSWRUdU1SZGUxeFJRNFVyaFkyc29nVyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7czo1OiJyb3V0ZSI7czoxNDoiRnJvbnRlbmQubG9naW4iO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjg6ImlzX2FkbWluIjtiOjE7czo0OiJuYW1lIjtzOjExOiJTdXBlciBBZG1pbiI7czo1OiJlbWFpbCI7czoxNzoiYWRtaW5AZXhhbXBsZS5jb20iO30=', 1775025934),
+('xsobyxULigeucH9Ls1AoDD2XI7Psz1wZZgczEJMt', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiWXlKbTMzQmNJejI4RTNsZ0NVZ3dGY0RwV001cFlEaDJIZk1VTzNVViI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9mb3Jnb3QtcGFzc3dvcmQiO3M6NToicm91dGUiO3M6MTU6ImZvcmdvdC5wYXNzd29yZCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1775049231);
 
 -- --------------------------------------------------------
 
@@ -905,6 +923,7 @@ ALTER TABLE `migrations`
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `orders_order_number_unique` (`order_number`),
+  ADD UNIQUE KEY `orders_tracking_no_unique` (`tracking_no`),
   ADD KEY `orders_customer_id_foreign` (`customer_id`);
 
 --
@@ -995,7 +1014,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1007,7 +1026,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `contact_messages`
 --
 ALTER TABLE `contact_messages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -1019,7 +1038,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `customer_activities`
 --
 ALTER TABLE `customer_activities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1037,19 +1056,19 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `products`
