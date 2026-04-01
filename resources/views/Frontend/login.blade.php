@@ -4,9 +4,8 @@
 
 @section('content')
 
-      
     <!-- sign-section -->
-        <section class="sign-section pt_70 pb_80" style="background: linear-gradient(135deg, 
+    <section class="sign-section pt_70 pb_80" style="background: linear-gradient(135deg, 
             #e8f4ffd9 0%,  
             #fff9dbaa 50%, 
             #e8fff3 100% 
@@ -37,15 +36,18 @@
                     </form>
 
                     <div class="other-option">
-                        <div class="check-box">
+                        <!--<div class="check-box">
                             <input class="check" type="checkbox" id="checkbox1">
                             <label for="checkbox1">Remember me</label>
-                        </div>
-                        <button class="forgot-password">Forget password?</button>
+                        </div>-->
+                        <button type="button" onclick="window.location='{{ route('forgot.password') }}'" class="forgot-password">
+                            Forget password?
+                        </button>
                     </div>
                     <div class="lower-text centred"><p>Not registered yet? <a href="{{ route('Frontend.register') }}">Create an Account</a></p></div>
                 </div>
             </div>
         </section>
         <!-- sign-section end -->
+
  @endsection

@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\BuynowCheckoutController;
+use App\Http\Controllers\Frontend\ForgotPasswordController;
 
 Route::get('/', [HomeController::class, 'index'])->name('Frontend.index');
 Route::get('/about-us', [HomeController::class, 'about'])->name('Frontend.about');
@@ -53,7 +54,14 @@ Route::post('/customer/logout', [LoginController::class, 'logout'])->name('Front
 
 Route::post('/product/{product}/review', [ReviewController::class, 'store'])->name('product.review.store');
 
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotForm'])->name('forgot.password');
+Route::post('/send-otp', [ForgotPasswordController::class, 'sendOtp'])->name('send.otp');
 
+Route::get('/verify-otp', [ForgotPasswordController::class, 'showVerifyForm'])->name('verify.otp');
+Route::post('/verify-otp', [ForgotPasswordController::class, 'verifyOtp'])->name('verify.otp.post');
+
+Route::get('/reset-password', [ForgotPasswordController::class, 'showResetForm'])->name('reset.password');
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('reset.password.post');
 
 
 
@@ -88,6 +96,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Middleware\AdminAuth;
 
 Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
@@ -128,4 +137,9 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
     Route::post('/brands', [BrandController::class, 'store'])->name('brands.store');
     Route::put('/brands/{brand}', [BrandController::class, 'update'])->name('brands.update');
     Route::delete('/brands/{brand}', [BrandController::class, 'destroy'])->name('brands.destroy');
+
+    // customers
+    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+    Route::post('/customers/{customer}/update-status', [CustomerController::class, 'updateStatus'])->name('customers.updateStatus');
+
 });

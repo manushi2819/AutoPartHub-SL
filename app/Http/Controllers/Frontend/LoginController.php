@@ -29,16 +29,29 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
+        // Attempt to get the customer by email first
+        $customer = \App\Models\Customer::where('email', $request->email)->first();
+
+        if (!$customer) {
+            return back()->with('error', 'Invalid email or password.');
+        }
+
+        // Check if customer is active
+        if (!$customer->status) {
+            return back()->with('error', 'Your account is inactive. Please contact support.');
+        }
+
+        // Attempt login
         if (Auth::guard('customer')->attempt([
-            'email' => $request->email,
+            'email'    => $request->email,
             'password' => $request->password
         ])) {
-
-            return redirect()->route('Frontend.index')->with('success', 'logged in successfully.'); 
+            return redirect()->route('Frontend.index')->with('success', 'Logged in successfully.');
         }
-       return back()->with('error', 'Invalid email or password.');
 
+        return back()->with('error', 'Invalid email or password.');
     }
+    
 
     public function store(Request $request)
     {

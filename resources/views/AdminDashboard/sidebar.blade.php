@@ -64,12 +64,19 @@
     
             </li>
 
+            
+            <li>
+                <a href="{{ route('admin.customers.index') }}">
+                    <iconify-icon icon="mdi:account-outline" class="menu-icon"></iconify-icon>
+                    <span>Customers</span>
+                </a>
+            </li>
+
             <li>
                 <a href="{{ route('admin.contact') }}">
                 <iconify-icon icon="mdi:email-outline" class="menu-icon"></iconify-icon>
                     <span>Contact messages</span>
                 </a>
-    
             </li>
 
 
