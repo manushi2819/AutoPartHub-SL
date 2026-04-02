@@ -25,7 +25,11 @@
 
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" name="password" required>
+                            <input type="password" id="password" name="password" required style="width: 100%; padding-right: 40px;">
+                            <span onclick="togglePassword(this)" 
+                            style="position: absolute; right: 10px; top: 38px; cursor: pointer;">
+                            👁️
+                        </span>
                         </div>
 
                         <div class="form-group message-btn">
@@ -49,5 +53,19 @@
             </div>
         </section>
         <!-- sign-section end -->
+
+<script>
+function togglePassword(icon) {
+    const passwordField = document.getElementById("password");
+
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+        icon.textContent = "🙈";
+    } else {
+        passwordField.type = "password";
+        icon.textContent = "👁️";
+    }
+}
+</script>
 
  @endsection

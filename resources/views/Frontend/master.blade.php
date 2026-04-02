@@ -210,6 +210,15 @@
 .theme-btn span:nth-child(4) {
   --n: 4;
 }
+
+
+a{
+    text-decoration: none !important;
+}
+
+a:hover{
+   color: #e53e3e; !important;
+}
 </style>
 </head>
 

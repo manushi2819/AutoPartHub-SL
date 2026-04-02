@@ -282,11 +282,11 @@
                                             <a href="{{ route('Frontend.shop') }}">Spare Parts</a>
                                         </li> 
 
-                                        <li class="{{ request()->routeIs('Frontend.about') ? 'current' : '' }}">
+                                        <li class="">
                                             <a href="{{ route('Frontend.about') }}">Vehicles</a>
                                         </li> 
 
-                                       <li class="{{ request()->routeIs('Frontend.about') ? 'current' : '' }}">
+                                       <li class="">
                                             <a href="{{ route('Frontend.about') }}" class="d-flex align-items-center">
                                                 Auctions
                                                 <span class="live-badge">LIVE</span>
@@ -400,16 +400,14 @@
                 <div class="contact-info">
                     <h4>Contact Info</h4>
                     <ul>
-                        <li>Chicago 12, Melborne City, USA</li>
+                        <li>Ridigama, Kurunegala</li>
                         <li><a href="tel:+94 71 631 6143">+94 71 631 6143</a></li>
-                        <li><a href="mailto:info@example.com">info@example.com</a></li>
+                        <li><a href="mailto:kasthurid1234@gmail.com">kasthurid1234@gmail.com</a></li>
                     </ul>
                 </div>
                 <div class="social-links">
                     <ul class="clearfix">
-                        <li><a href="{{ route('Frontend.index') }}"><span class="fab fa-twitter"></span></a></li>
                         <li><a href="{{ route('Frontend.index') }}"><span class="fab fa-facebook-square"></span></a></li>
-                        <li><a href="{{ route('Frontend.index') }}"><span class="fab fa-pinterest-p"></span></a></li>
                         <li><a href="{{ route('Frontend.index') }}"><span class="fab fa-instagram"></span></a></li>
                         <li><a href="{{ route('Frontend.index') }}"><span class="fab fa-youtube"></span></a></li>
                     </ul>
