@@ -135,7 +135,7 @@
 
                             <div class="search-box">
                                     <div class="form-group">
-                                        <input type="search" name="search" value="{{ request('search') }}" placeholder="Search Products">
+                                        <input type="search" name="search" value="{{ request('search') }}" placeholder="Search Parts..." required>
                                         <button type="submit"><i class="icon-9"></i></button>
                                     </div>
                                 </form>
@@ -282,8 +282,8 @@
                                             <a href="{{ route('Frontend.shop') }}">Spare Parts</a>
                                         </li> 
 
-                                        <li class="">
-                                            <a href="{{ route('Frontend.about') }}">Vehicles</a>
+                                        <li class="{{ request()->routeIs('Frontend.vehicles') ? 'current' : '' }}">
+                                            <a href="{{ route('Frontend.vehicles') }}">Vehicles</a>
                                         </li> 
 
                                        <li class="">

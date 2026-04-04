@@ -1,12 +1,12 @@
 @extends('AdminDashboard.master')
-@section('title', 'Products')
+@section('title', 'Vehicle Parts')
 
 @section('content')
 
 <div class="d-flex justify-content-between mb-3">
-    <h6>Products</h6>
+    <h6>Vehicle Parts</h6>
     <a href="{{ route('admin.products.create') }}" class="btn btn-primary btn-sm">
-        Add Product
+       Add Vehicle Parts
     </a>
 </div>
 

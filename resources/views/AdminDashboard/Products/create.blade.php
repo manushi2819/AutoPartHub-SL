@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="d-flex justify-content-between mb-24">
-    <h6 class="fw-semibold">{{ isset($product) ? 'Edit Product' : 'Create Product' }}</h6>
+    <h6 class="fw-semibold">{{ isset($product) ? 'Edit Vehicle Part' : 'Create Vehicle Part' }}</h6>
      <a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm">
         Back
     </a>

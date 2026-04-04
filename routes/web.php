@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\BuynowCheckoutController;
 use App\Http\Controllers\Frontend\ForgotPasswordController;
+use App\Http\Controllers\Frontend\VehicleController;
 
 Route::get('/', [HomeController::class, 'index'])->name('Frontend.index');
 Route::get('/about-us', [HomeController::class, 'about'])->name('Frontend.about');
@@ -21,6 +22,9 @@ Route::post('/contact-submit', [ContactController::class, 'store'])->name('conta
 
 Route::get('/parts-shop', [PartShopController::class, 'index'])->name('Frontend.shop');
 Route::get('/parts-details/{id}', [PartDetailsController::class, 'index'])->name('Frontend.parts-details');
+
+Route::get('/vehicles', [VehicleController::class, 'index'])->name('Frontend.vehicles');
+Route::get('/vehicles/{id}', [VehicleController::class, 'show'])->name('Frontend.vehicle.details');
 
 Route::get('/cart', [CartController::class, 'index'])->name('Frontend.cart');
 Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
@@ -97,6 +101,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\VehicleController as AdminVehicleController;
 use App\Http\Middleware\AdminAuth;
 
 Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
@@ -142,4 +147,10 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::post('/customers/{customer}/update-status', [CustomerController::class, 'updateStatus'])->name('customers.updateStatus');
 
+
+    // vehicles
+    Route::resource('vehicles', AdminVehicleController::class);
+    Route::post('vehicles/{vehicle}/images', [AdminVehicleController::class, 'uploadImages'])->name('vehicles.images.upload');
+    Route::delete('vehicles/images/{image}', [AdminVehicleController::class, 'deleteImage'])->name('vehicles.images.delete');
+    
 });
