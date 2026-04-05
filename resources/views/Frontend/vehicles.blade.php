@@ -17,7 +17,7 @@
     .filter-card {
         background: #ffffff;
         border: none;
-        border-radius: 12px;
+        border-radius: 0px;
         box-shadow: 0 5px 20px rgba(0,0,0,0.08);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
@@ -35,7 +35,7 @@
 
     .form-control, select.form-control {
         border: 2px solid #e0e0e0;
-        border-radius: 8px;
+        border-radius: 0px;
         padding: 10px 12px;
         transition: all 0.3s ease;
         font-size: 14px;
@@ -50,7 +50,7 @@
     .btn-dark {
         background: var(--primary-black);
         border: none;
-        border-radius: 8px;
+        border-radius: 0px;
         padding: 10px 24px;
         font-weight: 600;
         transition: all 0.3s ease;
@@ -65,7 +65,7 @@
     .btn-light {
         background: #f8f9fa;
         border: 2px solid #e0e0e0;
-        border-radius: 8px;
+        border-radius: 0px;
         padding: 10px 24px;
         font-weight: 600;
         color: var(--primary-black);
@@ -82,7 +82,7 @@
     .vehicle-card {
         background: #ffffff;
         border: none;
-        border-radius: 12px;
+        border-radius: 0px;
         overflow: hidden;
         transition: all 0.3s ease;
         box-shadow: 0 3px 10px rgba(0,0,0,0.08);
@@ -158,7 +158,7 @@
         background: var(--primary-black);
         color: #ffffff;
         border: none;
-        border-radius: 8px;
+        border-radius: 0px;
         padding: 10px;
         font-weight: 600;
         width: 100% !important;
@@ -177,7 +177,7 @@
         text-align: center;
         padding: 60px 20px;
         background: #ffffff;
-        border-radius: 12px;
+        border-radius: 0px;
         box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     }
 

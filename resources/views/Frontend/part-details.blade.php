@@ -17,6 +17,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 </style>
 
 <!-- Page Title -->
@@ -35,11 +36,11 @@
 
         <!-- shop-details -->
         <section class="shop-details pb_50">
-            <div class="auto-container">
+            <div class="container">
                <div class="product-details-content mb_45">
                    <div class="row clearfix">
-                        <!-- Images -->
-                        <div class="col-lg-6 col-md-12 col-sm-12 image-column">
+                    <!-- Images -->
+                        <div class="col-lg-7 col-md-12 col-sm-12 image-column">
                             <div class="bxslider">
                                 @foreach($product->images as $index => $image)
                                     <div class="slider-content">
@@ -68,8 +69,10 @@
                             </div>
                         </div>
 
+
+
                         <!-- Product Info -->
-                        <div class="col-lg-6 col-md-12 col-sm-12 content-column">
+                        <div class="col-lg-5 col-md-12 col-sm-12 content-column">
                             <div class="content-box ml_20">
                                 <span class="upper-text">{{ $product->category->name ?? 'Uncategorized' }}</span>
                                 <h2>{{ $product->name }}</h2>
@@ -106,26 +109,60 @@
                                     </li>
                                 </ul>
 
-                                <div class="addto-cart-box mb_40">
-                                    <ul class="clearfix">
-                                        <li class="item-quantity">
-                                            <input class="quantity-spinner" type="text" value="1" name="quantity" id="product_qty">
-                                        </li>
-                                        <li class="cart-btn">
-                                            <button type="button" class="theme-btn">Add To Cart<span></span><span></span><span></span><span></span></button>
-                                        </li>
-                                        <li>
-                                            <button type="button" class="theme-btn" id="buy-now-btn" style="background:#1fad0f;">
-                                                Buy Now
-                                                <span></span><span></span><span></span><span></span>
-                                            </button>
-                                        </li>
-                                
-                                        <li class="like-btn">
-                                            <button><i class="icon-7"></i></button>
-                                        </li>
-                                    </ul>
-                                </div>
+                             <div class="addto-cart-box mb_40">
+                                <ul class="clearfix" style="display:flex; flex-wrap:wrap; gap:10px;">
+                                    <li class="item-quantity" style="flex:1 1 100%;">
+                                        <input class="quantity-spinner form-control" type="text" value="1" name="quantity" id="product_qty">
+                                    </li>
+
+                                    <li class="cart-btn" style="flex:1 1 100%;">
+                                        <button type="button" class="theme-btn w-100" style="padding:12px; font-size:16px;">
+                                            Add To Cart
+                                            <span></span><span></span><span></span><span></span>
+                                        </button>
+                                    </li>
+
+                                    <li style="flex:1 1 100%;">
+                                        <button type="button" class="theme-btn w-100 mt-2" id="buy-now-btn" style="background:#1fad0f; padding:12px; font-size:16px;">
+                                            Buy Now
+                                            <span></span><span></span><span></span><span></span>
+                                        </button>
+                                    </li>
+
+                                    <li class="like-btn mt-2">
+                                        <button><i class="icon-7"></i></button>
+                                    </li>
+
+                                  <h6 class="mb-3 mt-3"><i class="fas fa-share-alt"></i> Share This Product</h6>
+
+                                    @php
+                                        $productLink = route('Frontend.parts-details', $product->id);
+                                        $encodedLink = urlencode($productLink);
+                                        $whatsappMessage = urlencode("Check out this product: $productLink");
+                                    @endphp
+
+                                    <div class="d-flex gap-2 mt-2">
+                                        <!-- WhatsApp Share -->
+                                        <a href="https://wa.me/?text={{ $whatsappMessage }}" 
+                                        target="_blank"
+                                        class="share-btn whatsapp-btn btn btn-success"
+                                        style="width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:50%;">
+                                            <i class="fab fa-whatsapp"></i>
+                                        </a>
+
+                                        <!-- Facebook Share -->
+                                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ $encodedLink }}" 
+                                        target="_blank"
+                                        class="share-btn facebook-btn btn btn-primary"
+                                        style="width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:50%;">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </a>
+                                    </div>
+                                </ul>
+                            </div>
+
+                           
+
                             </div>
                         </div>
                     </div>
@@ -271,7 +308,10 @@
                     </div>
                 </div>
 
+            </div>
 
+
+            <div class="auto-container">
             <div class="related-product">
                 <h2>You may also like these</h2>
                 <div class="inner-content clearfix">
@@ -319,8 +359,8 @@
                     @endforeach
                 </div>
             </div>
-
             </div>
+
         </section>
         <!-- shop-details end -->
 

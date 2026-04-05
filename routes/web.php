@@ -25,6 +25,7 @@ Route::get('/parts-details/{id}', [PartDetailsController::class, 'index'])->name
 
 Route::get('/vehicles', [VehicleController::class, 'index'])->name('Frontend.vehicles');
 Route::get('/vehicles/{id}', [VehicleController::class, 'show'])->name('Frontend.vehicle.details');
+Route::post('/vehicle-inquiry', [VehicleController::class, 'sendInquiry'])->name('vehicle.inquiry');
 
 Route::get('/cart', [CartController::class, 'index'])->name('Frontend.cart');
 Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
