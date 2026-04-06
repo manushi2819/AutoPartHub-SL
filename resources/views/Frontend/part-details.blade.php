@@ -18,6 +18,234 @@
     text-overflow: ellipsis;
 }
 
+
+/* Product Name */
+h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 12px 0;
+    line-height: 1.3;
+    letter-spacing: -0.3px;
+}
+
+/* Product Price */
+h3 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #e67e22;
+    margin: 0 0 15px 0;
+    display: inline-block;
+    position: relative;
+}
+
+/* Rating Container */
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0;
+    margin: 0 0 20px 0;
+    list-style: none;
+}
+
+.rating li {
+    display: inline-flex;
+    align-items: center;
+}
+
+.rating li i {
+    font-size: 18px;
+    transition: transform 0.2s ease;
+}
+
+.rating li:last-child {
+    margin-left: 8px;
+}
+
+.rating li:last-child span {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.rating li i:hover {
+    transform: scale(1.1);
+}
+
+.btn-success{
+    background-color: #25D366;
+    border-color: #25D366;
+}
+
+/* Description Box / Product Details */
+.discription-box {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    background: #ffffff;
+    border-radius: 0px;
+    overflow: hidden;
+    border: 1px solid #eee;
+}
+
+.discription-box li {
+    display: flex;
+    align-items: baseline;
+    padding: 5px 15px;
+    font-size: 14px;
+    color: #555;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s ease;
+}
+
+.discription-box li:last-child {
+    border-bottom: none;
+}
+
+.discription-box li:hover {
+    background: #fafafa;
+}
+
+.discription-box li strong {
+    min-width: 100px;
+    font-weight: 600;
+    color: #1a1a2e;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.discription-box li i {
+    margin-right: 6px;
+    font-size: 14px;
+}
+
+/* Stock Status Specific */
+.product-stock strong {
+    color: #1a1a2e;
+}
+
+.product-stock i {
+    color: #27ae60;
+}
+
+.product-stock:has(i) {
+    color: #27ae60;
+    font-weight: 500;
+}
+
+/* Out of Stock Styling */
+.discription-box li:has(> strong + :contains('Out of Stock')) {
+    color: #e74c3c;
+}
+
+/* If Out of Stock text appears without icon */
+.product-stock:not(:has(i)) {
+    color: #e74c3c;
+    font-weight: 500;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+
+    h2 {
+        font-size: 24px;
+    }
+    
+    h3 {
+        font-size: 24px;
+    }
+    
+    
+    .discription-box li {
+        flex-direction: column;
+        padding: 12px 16px;
+    }
+    
+    .discription-box li strong {
+        min-width: auto;
+        margin-bottom: 5px;
+    }
+}
+
+/* Hover Effects */
+h3:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+}
+
+.rating li i {
+    cursor: default;
+}
+
+/* Animation for Stock Status */
+.product-stock i {
+    animation: pulse 1.5s ease infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+/* Main Image Styling */
+.main-image {
+    border: 2px solid #eee;
+    border-radius: 0px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.main-image img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0px;
+}
+
+.main-image:hover {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    transform: scale(1.01);
+}
+
+/* Thumbnail Styling */
+.thumb-box li {
+    display: inline-block;
+    margin: 5px;
+}
+
+.thumb-item {
+    display: block;
+    border: 2px solid transparent;
+    border-radius: 0px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.thumb-item img {
+    width: 80px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 0px;
+}
+
+/* Active Thumbnail */
+.thumb-item.active {
+    border: 2px solid #ff4d00;
+    box-shadow: 0 4px 10px rgba(255, 77, 0, 0.4);
+}
+
+/* Hover Effect */
+.thumb-item:hover {
+    border: 2px solid #ffa500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+}
 </style>
 
 <!-- Page Title -->
@@ -35,8 +263,9 @@
 
 
         <!-- shop-details -->
-        <section class="shop-details pb_50">
+        <section class="shop-details mb-0">
             <div class="container">
+
                <div class="product-details-content mb_45">
                    <div class="row clearfix">
                     <!-- Images -->
@@ -46,18 +275,20 @@
                                     <div class="slider-content">
                                         <div class="image-inner">
                                             <div class="image-box">
-                                                <figure class="image" style="height:450px">
+                                               <figure class="image main-image" style="height:450px">
                                                     <a href="{{ asset('uploads/' . $image->image_url) }}" class="lightbox-image" data-fancybox="gallery">
-                                                        <img  style="height:100%" src="{{ asset('uploads/' . $image->image_url) }}" alt="{{ $product->name }}">
+                                                        <img style="height:100%" src="{{ asset('uploads/' . $image->image_url) }}" alt="{{ $product->name }}">
                                                     </a>
                                                 </figure>
                                             </div>
                                             <div class="slider-pager">
                                                 <ul class="thumb-box">
                                                     @foreach($product->images as $thumbIndex => $thumb)
-                                                        <li>
-                                                            <a class="{{ $thumbIndex == 0 ? 'active' : '' }}" data-slide-index="{{ $thumbIndex }}" href="#">
-                                                                <figure><img src="{{ asset('uploads/' . $thumb->image_url) }}" alt="{{ $product->name }}"></figure>
+                                                       <li>
+                                                            <a class="{{ $thumbIndex == 0 ? 'active' : '' }} thumb-item" data-slide-index="{{ $thumbIndex }}" href="#">
+                                                                <figure>
+                                                                    <img src="{{ asset('uploads/' . $thumb->image_url) }}" alt="{{ $product->name }}">
+                                                                </figure>
                                                             </a>
                                                         </li>
                                                     @endforeach
@@ -74,29 +305,28 @@
                         <!-- Product Info -->
                         <div class="col-lg-5 col-md-12 col-sm-12 content-column">
                             <div class="content-box ml_20">
-                                <span class="upper-text">{{ $product->category->name ?? 'Uncategorized' }}</span>
                                 <h2>{{ $product->name }}</h2>
                                 <h3>Rs. {{ number_format($product->price, 2) }}</h3>
 
-                                <ul class="rating mb_25">
-                                        @php
-                                            $avg = round($product->averageRating()); // Round to nearest whole number
-                                            $total = $product->reviewsCount();
-                                        @endphp
+                                <ul class="rating">
+                                    @php
+                                        $avg = round($product->averageRating());
+                                        $total = $product->reviewsCount();
+                                    @endphp
 
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            <li>
-                                                <i class="icon-41" style="color: {{ $i <= $avg ? '#FFD700' : '#ccc' }}"></i>
-                                            </li>
-                                        @endfor
-                                        <li><span>({{ $total }})</span></li>
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <li>
+                                            <i class="icon-41" style="color: {{ $i <= $avg ? '#FFD700' : '#ccc' }}"></i>
+                                        </li>
+                                    @endfor
+                                    <li><span>({{ $total }})</span></li>
                                 </ul>
 
-                                <div class="text-box mb_30">
+                                <div class="text-box mb-1">
                                     <p>{{ $product->small_description }}</p>
                                 </div>
 
-                                <ul class="discription-box mb_30 clearfix">
+                                <ul class="discription-box">
                                     <li><strong>Brand :</strong> {{ $product->brand }}</li>
                                     <li><strong>Product SKU :</strong> {{ $product->sku }}</li>
                                     <li><strong>Category :</strong> {{ $product->category->name ?? '-' }}</li>
@@ -108,6 +338,8 @@
                                         @endif
                                     </li>
                                 </ul>
+
+
 
                              <div class="addto-cart-box mb_40">
                                 <ul class="clearfix" style="display:flex; flex-wrap:wrap; gap:10px;">
@@ -167,6 +399,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="product-discription mb_70 card1">
                     <div class="tabs-box">
                         <div class="tab-btn-box">

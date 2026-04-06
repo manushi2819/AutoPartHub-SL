@@ -129,6 +129,42 @@
     z-index: 9999;
     font-size: 14px;
 }
+
+/* Mobile View - 2 columns for footer widgets */
+@media (max-width: 768px) {
+    .main-footer .widget-section .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -10px;
+    }
+    
+    .main-footer .widget-section .row [class*="col-"] {
+        width: 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+        padding: 0 10px;
+        margin-bottom: 30px;
+    }
+    
+    /* Optional: Adjust logo width for mobile */
+    .footer-widget.logo-widget figure img {
+        width: 180px !important;
+    }
+    
+    /* Optional: Reduce text size for better readability */
+    .footer-widget p {
+        font-size: 13px;
+    }
+    
+    .footer-widget .widget-title h4 {
+        font-size: 16px;
+    }
+    
+    .footer-widget .links-list li a {
+        font-size: 13px;
+    }
+}
+
 </style>
 
 <script>

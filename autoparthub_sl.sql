@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Apr 01, 2026 at 06:08 PM
+-- Generation Time: Apr 06, 2026 at 10:20 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -52,7 +52,8 @@ INSERT INTO `brands` (`id`, `name`, `image`, `status`, `created_at`, `updated_at
 (9, 'Porsche', '1772893451_brands-6.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:54:11'),
 (10, 'Tesla', '1772893461_brands-4.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:54:21'),
 (11, 'Suzuki', '1772893467_brand-14.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:54:27'),
-(12, 'Jaguar', '1772893476_brands-10.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:54:36');
+(12, 'Jaguar', '1772893476_brands-10.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:54:36'),
+(13, 'Mitsubishi', '1775291076_Mitsubish.png', 1, '2026-04-04 02:54:36', '2026-04-04 02:54:36');
 
 -- --------------------------------------------------------
 
@@ -102,7 +103,8 @@ CREATE TABLE `carts` (
 INSERT INTO `carts` (`id`, `customer_id`, `session_id`, `product_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
 (1, NULL, '6CqkVTQRcQik22MLOXaQBZzCOR1kE2Y2GV6CGdhg', 3, 2, 44381.00, '2026-03-01 04:57:31', '2026-03-01 04:57:31'),
 (2, NULL, '6CqkVTQRcQik22MLOXaQBZzCOR1kE2Y2GV6CGdhg', 8, 2, 38741.00, '2026-03-01 05:00:43', '2026-03-01 05:01:26'),
-(18, NULL, '4faCqN8ztO3GuZTWR8Z7sx3NOGN8E9reDqM1dJwD', 2, 1, 15196.00, '2026-03-18 07:32:49', '2026-03-18 07:32:49');
+(18, NULL, '4faCqN8ztO3GuZTWR8Z7sx3NOGN8E9reDqM1dJwD', 2, 1, 15196.00, '2026-03-18 07:32:49', '2026-03-18 07:32:49'),
+(19, NULL, 'Ko4GEXz8j7uvYlssqH4SXkZPwXxJZuTX69nzowNO', 15, 1, 10442.00, '2026-04-05 04:51:29', '2026-04-05 04:51:29');
 
 -- --------------------------------------------------------
 
@@ -367,7 +369,8 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `first_name`, `last_name`, `email`, `phone`, `address`, `status`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 1, '$2y$12$yjd2AhSYf0qTNGDccIAA3eMMbN1hulKFc3MFAkia9MJCckzeVkuda', '2026-02-18 03:05:37', '2026-04-01 10:35:28');
+(1, 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 1, '$2y$12$yjd2AhSYf0qTNGDccIAA3eMMbN1hulKFc3MFAkia9MJCckzeVkuda', '2026-02-18 03:05:37', '2026-04-01 10:35:28'),
+(2, 'Kasthuri', 'Dhananjaya', 'kasthurid1234@gmail.com', '0716316143', NULL, 1, '$2y$12$ialXlrJZtnollGjy287fkOnAlumBxf.wbY/UquUjEs7lVdffo1zUi', '2026-04-01 22:33:16', '2026-04-01 22:33:44');
 
 -- --------------------------------------------------------
 
@@ -395,7 +398,17 @@ INSERT INTO `customer_activities` (`id`, `customer_id`, `activity_type`, `refere
 (4, 1, 'category_view', 39, NULL, '2026-03-07 10:22:42', '2026-03-07 10:22:42'),
 (5, 1, 'category_view', 77, NULL, '2026-03-07 10:22:54', '2026-03-07 10:22:54'),
 (6, 1, 'brand_view', NULL, 'Honda', '2026-03-07 10:23:05', '2026-03-07 10:23:05'),
-(7, 1, 'product_view', 14, NULL, '2026-04-01 01:08:10', '2026-04-01 01:08:10');
+(7, 1, 'product_view', 14, NULL, '2026-04-01 01:08:10', '2026-04-01 01:08:10'),
+(8, 2, 'category_view', 1, NULL, '2026-04-01 22:35:00', '2026-04-01 22:35:00'),
+(9, 2, 'category_view', 20, NULL, '2026-04-01 22:35:05', '2026-04-01 22:35:05'),
+(10, 2, 'category_view', 20, NULL, '2026-04-01 22:35:53', '2026-04-01 22:35:53'),
+(11, 2, 'category_view', 20, NULL, '2026-04-01 22:36:21', '2026-04-01 22:36:21'),
+(12, 2, 'category_view', 20, NULL, '2026-04-01 22:36:41', '2026-04-01 22:36:41'),
+(13, 2, 'category_view', 1, NULL, '2026-04-01 22:37:00', '2026-04-01 22:37:00'),
+(14, 2, 'category_view', 20, NULL, '2026-04-01 22:37:00', '2026-04-01 22:37:00'),
+(15, 2, 'vehicle_location_view', NULL, 'Colombo', '2026-04-04 08:29:48', '2026-04-04 08:29:48'),
+(16, 2, 'vehicle_condition_view', NULL, 'Reconditioned', '2026-04-04 08:30:42', '2026-04-04 08:30:42'),
+(17, 2, 'search', NULL, 'Radiator', '2026-04-04 08:35:35', '2026-04-04 08:35:35');
 
 -- --------------------------------------------------------
 
@@ -485,7 +498,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (26, '2026_03_06_162547_create_brands_table', 11),
 (27, '2026_03_07_142452_create_customer_activities_table', 12),
 (28, '2026_03_31_014110_add_tracking_no_to_orders_table', 13),
-(29, '2026_04_01_014110_add_status_to_customers_table', 14);
+(29, '2026_04_01_014110_add_status_to_customers_table', 14),
+(32, '2026_04_04_063037_create_vehicles_table', 15),
+(33, '2026_04_04_063223_create_vehicle_images_table', 15);
 
 -- --------------------------------------------------------
 
@@ -779,9 +794,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('ELZX3rtj59Ss5wEPw84i4zg82zUuQtJQb2C45JEY', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiSjRlV3hnQ1JkeERKVWJvc2htSHFGSWZ0NTR3bHdsUjFLQW9kVGx6TSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7czo1OiJyb3V0ZSI7czoxNDoiRnJvbnRlbmQubG9naW4iO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1775059528),
-('x8gylYa0ayR25sTSNJrwsfILcdxa20PJC9HZHZEb', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiR3VRVjRxVWpqbEJUSEVoVlFzSWRUdU1SZGUxeFJRNFVyaFkyc29nVyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7czo1OiJyb3V0ZSI7czoxNDoiRnJvbnRlbmQubG9naW4iO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjg6ImlzX2FkbWluIjtiOjE7czo0OiJuYW1lIjtzOjExOiJTdXBlciBBZG1pbiI7czo1OiJlbWFpbCI7czoxNzoiYWRtaW5AZXhhbXBsZS5jb20iO30=', 1775025934),
-('xsobyxULigeucH9Ls1AoDD2XI7Psz1wZZgczEJMt', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiWXlKbTMzQmNJejI4RTNsZ0NVZ3dGY0RwV001cFlEaDJIZk1VTzNVViI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9mb3Jnb3QtcGFzc3dvcmQiO3M6NToicm91dGUiO3M6MTU6ImZvcmdvdC5wYXNzd29yZCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1775049231);
+('Ko4GEXz8j7uvYlssqH4SXkZPwXxJZuTX69nzowNO', NULL, '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Mobile Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiSEt0VVFEMVVKVExJRklCVWZPclIzWlN6TkFCb3BsQkNXS0c3ZHZUbiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wYXJ0cy1kZXRhaWxzLzIiO3M6NToicm91dGUiO3M6MjI6IkZyb250ZW5kLnBhcnRzLWRldGFpbHMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1775385307);
 
 -- --------------------------------------------------------
 
@@ -810,6 +823,67 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `vehicles`
+--
+
+CREATE TABLE `vehicles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `brand_id` bigint(20) UNSIGNED NOT NULL,
+  `model` varchar(255) DEFAULT NULL,
+  `year` year(4) DEFAULT NULL,
+  `price` decimal(12,2) NOT NULL,
+  `mileage` int(11) DEFAULT NULL,
+  `condition` varchar(255) NOT NULL DEFAULT 'used',
+  `fuel_type` varchar(255) DEFAULT NULL,
+  `transmission` varchar(255) DEFAULT NULL,
+  `engine_cc` int(11) DEFAULT NULL,
+  `body_type` varchar(255) DEFAULT NULL,
+  `color` varchar(255) DEFAULT NULL,
+  `district` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `vehicles`
+--
+
+INSERT INTO `vehicles` (`id`, `brand_id`, `model`, `year`, `price`, `mileage`, `condition`, `fuel_type`, `transmission`, `engine_cc`, `body_type`, `color`, `district`, `city`, `description`, `status`, `created_at`, `updated_at`) VALUES
+(2, 13, 'Lancer EX', '2016', 7500000.00, 85000, 'used', 'Petrol', 'Automatic', 1800, 'Sedan', 'Silver', 'Kurunegala', 'Kurunegala', '<p>✅ Well maintained Mitsubishi Lancer EX 2015 for sale</p><p>✅Original paint, no accidents, and regularly serviced</p><p>✅Smooth driving experience with automatic transmission</p><p>✅Spacious interior with modern features including multifunction steering and infotainment system</p><p>✅Ideal family car with good fuel efficiency and reliability</p><p>✅Price can be slightly negotiable after inspection</p>', 1, '2026-04-04 03:05:49', '2026-04-04 03:12:53'),
+(3, 1, 'Prius', '2017', 9800000.00, 72000, 'used', 'Petrol', 'Automatic', 1800, 'Sedan', 'Pearl White', 'Kurunegala', 'Kurunegala', '<p>✅ Well maintained Toyota Prius 2017 (Hybrid)</p><p>✅ Excellent fuel efficiency with hybrid technology</p><p>✅Smooth and silent driving experience</p><p>✅ Original paint, accident-free vehicle</p><p>✅ Spacious interior with digital display and reverse camera</p><p>✅ Ideal for daily use with low running cost</p><p>✅ Price negotiable after inspection</p>', 1, '2026-04-04 03:09:36', '2026-04-04 08:15:14');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vehicle_images`
+--
+
+CREATE TABLE `vehicle_images` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `vehicle_id` bigint(20) UNSIGNED NOT NULL,
+  `image_url` varchar(255) NOT NULL,
+  `is_main` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `vehicle_images`
+--
+
+INSERT INTO `vehicle_images` (`id`, `vehicle_id`, `image_url`, `is_main`, `created_at`, `updated_at`) VALUES
+(4, 2, '1775291895_69d0cdf7cd1fb.JPG', 1, '2026-04-04 03:08:15', '2026-04-04 03:08:15'),
+(5, 2, '1775291895_69d0cdf7cf4c9.jpg', 0, '2026-04-04 03:08:15', '2026-04-04 03:08:15'),
+(6, 2, '1775291895_69d0cdf7cffd4.jpg', 0, '2026-04-04 03:08:15', '2026-04-04 03:08:15'),
+(7, 3, '1775292094_69d0cebe7cc85.jpg', 1, '2026-04-04 03:11:34', '2026-04-04 03:11:34'),
+(8, 3, '1775292094_69d0cebe7efc1.jpg', 0, '2026-04-04 03:11:34', '2026-04-04 03:11:34');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `wishlists`
 --
 
@@ -829,7 +903,8 @@ CREATE TABLE `wishlists` (
 INSERT INTO `wishlists` (`id`, `customer_id`, `session_id`, `product_id`, `created_at`, `updated_at`) VALUES
 (2, NULL, '6CqkVTQRcQik22MLOXaQBZzCOR1kE2Y2GV6CGdhg', 3, '2026-03-01 04:59:07', '2026-03-01 04:59:07'),
 (3, NULL, '6CqkVTQRcQik22MLOXaQBZzCOR1kE2Y2GV6CGdhg', 8, '2026-03-01 05:02:15', '2026-03-01 05:02:15'),
-(4, 1, NULL, 3, '2026-03-01 05:05:53', '2026-03-01 05:05:53');
+(4, 1, NULL, 3, '2026-03-01 05:05:53', '2026-03-01 05:05:53'),
+(5, NULL, 'Ko4GEXz8j7uvYlssqH4SXkZPwXxJZuTX69nzowNO', 2, '2026-04-05 04:50:12', '2026-04-05 04:50:12');
 
 --
 -- Indexes for dumped tables
@@ -992,6 +1067,20 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Indexes for table `vehicles`
+--
+ALTER TABLE `vehicles`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `vehicles_brand_id_foreign` (`brand_id`);
+
+--
+-- Indexes for table `vehicle_images`
+--
+ALTER TABLE `vehicle_images`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `vehicle_images_vehicle_id_foreign` (`vehicle_id`);
+
+--
 -- Indexes for table `wishlists`
 --
 ALTER TABLE `wishlists`
@@ -1008,13 +1097,13 @@ ALTER TABLE `wishlists`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1032,13 +1121,13 @@ ALTER TABLE `contact_messages`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `customer_activities`
 --
 ALTER TABLE `customer_activities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1056,7 +1145,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1107,10 +1196,22 @@ ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `vehicles`
+--
+ALTER TABLE `vehicles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `vehicle_images`
+--
+ALTER TABLE `vehicle_images`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `wishlists`
 --
 ALTER TABLE `wishlists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -1177,6 +1278,18 @@ ALTER TABLE `reviews`
 --
 ALTER TABLE `review_images`
   ADD CONSTRAINT `review_images_review_id_foreign` FOREIGN KEY (`review_id`) REFERENCES `reviews` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `vehicles`
+--
+ALTER TABLE `vehicles`
+  ADD CONSTRAINT `vehicles_brand_id_foreign` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `vehicle_images`
+--
+ALTER TABLE `vehicle_images`
+  ADD CONSTRAINT `vehicle_images_vehicle_id_foreign` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `wishlists`

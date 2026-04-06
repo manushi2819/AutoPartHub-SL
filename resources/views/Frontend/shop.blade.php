@@ -14,8 +14,232 @@
         min-height: 2.5em; /* ensures even short names occupy 2 lines height */
         line-height: 1.2em; /* adjust based on your font size */
     }
+    
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .cta-style-two .inner-container {
+        height: 120px !important;
+    
+}
 
-</style> 
+@media (max-width: 480px) {
+    .cta-style-two .inner-container 
+    {
+        height: 150px !important;
+    }
+}
+}
+
+
+/* Products Grid */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.product-card {
+    background: #fff;
+    border-radius: 0px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.product-link {
+    text-decoration: none;
+    display: block;
+    color: inherit;
+}
+
+.product-image-wrapper {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background: #f5f5f5;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+.product-info {
+    padding: 15px;
+}
+
+.product-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 40px;
+}
+
+.product-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e31e24;
+    margin: 0 0 10px 0;
+}
+
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-bottom: 12px;
+}
+
+.star {
+    font-size: 14px;
+    color: #ddd;
+}
+
+.star.filled {
+    color: #ffc107;
+}
+
+.rating-count {
+    font-size: 12px;
+    color: #666;
+    margin-left: 5px;
+}
+
+.stock-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.stock-badge.in-stock {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.stock-badge.out-of-stock {
+    background: #ffebee;
+    color: #c62828;
+}
+
+
+/* Item Shorting */
+.item-shorting {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.left-column .text p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.left-column .text span {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .product-image-wrapper {
+        height: 180px;
+    }
+    
+    .product-title {
+        font-size: 14px;
+        height: 38px;
+    }
+    
+    .product-price {
+        font-size: 16px;
+    }
+    
+    .product-info {
+        padding: 12px;
+    }
+    
+    .pagination li a,
+    .pagination li span {
+        min-width: 35px;
+        height: 35px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .product-image-wrapper {
+        height: 150px;
+    }
+    
+    .product-title {
+        font-size: 13px;
+        height: 34px;
+    }
+    
+    .product-price {
+        font-size: 14px;
+    }
+    
+    .star {
+        font-size: 11px;
+    }
+    
+    .rating-count {
+        font-size: 10px;
+    }
+    
+    .stock-badge {
+        font-size: 10px;
+        padding: 3px 8px;
+    }
+    
+    .item-shorting {
+        padding: 10px 15px;
+    }
+    
+    .left-column .text p {
+        font-size: 12px;
+    }
+}
+</style>
 
 
         <!-- page-title -->
@@ -32,22 +256,16 @@
         <!-- page-title end -->
 
 
-        <!-- cta-style-two -->
-        <section class="cta-style-two pb_0">
-            <div class="auto-container">
-                <div class="inner-container">
-                    <figure class="image-layer"><img src="frontend/assets/images/cta-1.png" alt=""></figure>
-                    <div class="content-box">
-                        <span class="text"></span>
-                        <h2>Elevate Your Drive Authenticity. Get <span>Original Car Parts</span></h2>
-                        <p>Fulfill your automotive fantasies without breaking the bank.</p>
-                        <a href="index-4.html" class="theme-btn">Get All Deals <span></span><span></span><span></span><span></span></a>
-                    </div>
-                </div>
+    <!-- cta-style-two -->
+    <section class="cta-style-two pb_0">
+        <div class="auto-container">
+            <div class="inner-container" style="width: 100%; height: 350px; overflow: hidden; position: relative;">
+                <img src="frontend/assets/images/banner1.png" alt="Banner Image" 
+                    style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top: 0; left: 0;">
             </div>
-        </section>
-        <!-- cta-style-two end -->
-
+        </div>
+    </section>
+    <!-- cta-style-two end -->
 
         <!-- shop-page-section -->
         <section class="shop-page-section shop-style-two pt_60 pb_80">
@@ -333,100 +551,88 @@
 
 
                     <div class="col-lg-9 col-md-12 col-sm-12 content-side">
-                        <div class="our-shop">
-                           <div class="item-shorting">
-                                <div class="left-column">
-                                    <div class="text">
-                                        <p>
-                                            Showing 
-                                            <span>{{ $products->firstItem() ?? 0 }}</span>–<span>{{ $products->lastItem() ?? 0 }}</span> 
-                                            of <span>{{ $products->total() ?? 0 }}</span> results
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="wrapper grid">
-                                <div class="shop-grid-content">
-                                    <div class="row clearfix">
-                                        @foreach($products as $product)
-                                        <div class="col-lg-3 col-md-6 col-sm-12 shop-block">
-                                            <div class="shop-block-one">
-                                                <a href="{{ route('Frontend.parts-details', ['id' => $product->id]) }}">
-                                                <div class="inner-box">
-                                                   <div class="image-box" style="height: 200px; overflow: hidden;">
-                                                        @php
-                                                            $mainImage = $product->images->where('is_main', 1)->first();
-                                                        @endphp
-
-                                                        <figure class="image" style="height: 100%; margin: 0;">
-                                                            <img src="{{ $mainImage ? asset('uploads/' . $mainImage->image_url) : asset('no-image.png') }}"
-                                                                style="height: 100%; width: 100%; object-fit: cover;">
-                                                        </figure>
-                                                    </div>
-
-                                                    <div class="lower-content">
-                                                        <h4 class="product-name">{{ $product->name }}</h4>
-                                                        <h5>LKR {{ number_format($product->price, 2) }}</h5>
-                                                        <ul class="rating"> 
-                                                            @php
-                                                                $avg = round($product->averageRating()); // Round to nearest whole number
-                                                                $total = $product->reviewsCount();
-                                                            @endphp
-
-                                                            @for ($i = 1; $i <= 5; $i++)
-                                                                <li>
-                                                                    <i class="icon-41" style="color: {{ $i <= $avg ? '#FFD700' : '#ccc' }}"></i>
-                                                                </li>
-                                                            @endfor
-                                                            <li><span>({{ $total }})</span></li>
-                                                        </ul>
-
-                                                        @if($product->stock_quantity > 0)
-                                                             <span class="product-stock"><i class="icon-39"></i>
-                                                                In Stock
-                                                            </span>
-                                                        @else
-                                                            <span class="product-stock text-danger"><i class="icon-39"></i>
-                                                                Out of Stock
-                                                            </span>
-                                                        @endif
-                                                       
-                                                    </div>
-                                                </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                </div>
-                            </div>
-                           <div class="pagination-wrapper centred pt_20">
-                                <ul class="pagination clearfix">
-                                    {{-- Previous Page Link --}}
-                                    @if ($products->onFirstPage())
-                                        <li class="disabled"><span><i class="fal fa-angle-left"></i></span></li>
-                                    @else
-                                        <li><a href="{{ $products->previousPageUrl() }}"><i class="fal fa-angle-left"></i></a></li>
-                                    @endif
-
-                                    {{-- Pagination Elements --}}
-                                    @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
-                                        @if ($page == $products->currentPage())
-                                            <li><a href="{{ $url }}" class="current">{{ $page }}</a></li>
-                                        @else
-                                            <li><a href="{{ $url }}">{{ $page }}</a></li>
-                                        @endif
-                                    @endforeach
-
-                                    {{-- Next Page Link --}}
-                                    @if ($products->hasMorePages())
-                                        <li><a href="{{ $products->nextPageUrl() }}"><i class="fal fa-angle-right"></i></a></li>
-                                    @else
-                                        <li class="disabled"><span><i class="fal fa-angle-right"></i></span></li>
-                                    @endif
-                                </ul>
-                            </div>
-                        </div>
+    <div class="our-shop">
+        <div class="item-shorting">
+            <div class="left-column">
+                <div class="text">
+                    <p>
+                        Showing 
+                        <span>{{ $products->firstItem() ?? 0 }}</span>–<span>{{ $products->lastItem() ?? 0 }}</span> 
+                        of <span>{{ $products->total() ?? 0 }}</span> results
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="products-grid">
+            @foreach($products as $product)
+            <div class="product-card">
+                <a href="{{ route('Frontend.parts-details', ['id' => $product->id]) }}" class="product-link">
+                    <div class="product-image-wrapper">
+                        @php
+                            $mainImage = $product->images->where('is_main', 1)->first();
+                        @endphp
+                        <img src="{{ $mainImage ? asset('uploads/' . $mainImage->image_url) : asset('no-image.png') }}" 
+                             alt="{{ $product->name }}"
+                             class="product-image">
                     </div>
+                    
+                    <div class="product-info">
+                        <h4 class="product-title">{{ $product->name }}</h4>
+                        <h5 class="product-price">LKR {{ number_format($product->price, 2) }}</h5>
+                        
+                        <div class="product-rating">
+                            @php
+                                $avg = round($product->averageRating());
+                                $total = $product->reviewsCount();
+                            @endphp
+                            @for ($i = 1; $i <= 5; $i++)
+                                <span class="star {{ $i <= $avg ? 'filled' : '' }}">★</span>
+                            @endfor
+                            <span class="rating-count">({{ $total }})</span>
+                        </div>
+                        
+                        @if($product->stock_quantity > 0)
+                            <span class="stock-badge in-stock">✓ In Stock</span>
+                        @else
+                            <span class="stock-badge out-of-stock">✗ Out of Stock</span>
+                        @endif
+                    </div>
+                </a>
+            </div>
+            @endforeach
+        </div>
+        
+        <div class="pagination-wrapper">
+            <ul class="pagination">
+                {{-- Previous Page Link --}}
+                @if ($products->onFirstPage())
+                    <li class="disabled"><span>‹</span></li>
+                @else
+                    <li><a href="{{ $products->previousPageUrl() }}">‹</a></li>
+                @endif
+
+                {{-- Pagination Elements --}}
+                @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+                    @if ($page == $products->currentPage())
+                        <li class="active"><span>{{ $page }}</span></li>
+                    @else
+                        <li><a href="{{ $url }}">{{ $page }}</a></li>
+                    @endif
+                @endforeach
+
+                {{-- Next Page Link --}}
+                @if ($products->hasMorePages())
+                    <li><a href="{{ $products->nextPageUrl() }}">›</a></li>
+                @else
+                    <li class="disabled"><span>›</span></li>
+                @endif
+            </ul>
+        </div>
+    </div>
+</div>
+
+
                 </div>
             </div>
         </section>

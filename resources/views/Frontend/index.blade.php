@@ -12,7 +12,28 @@
     margin-bottom: 38px; 
 }
 
+/* Banner container */
+.content-block .banner {
+    width: 1000px!important;
+    height: 520px !important;
+    background-size: cover !important;   
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+}
 
+/* Tablet */
+@media (max-width: 768px) {
+    .content-block .banner {
+        height: 200px !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .content-block .banner {
+        height: 150px !important;
+    }
+}
 </style>
 
       
@@ -21,15 +42,9 @@
             <div class="pattern-layer" style="background-image: url(frontend/assets/images/shape/shape-6.png);"></div>
             <div class="large-container">
                 <div class="row clearfix">
-                    <div class="col-lg-9 col-md-12 col-sm-12 content-block">
-                        <div class="content-one content-box">
-                            <div class="bg-layer" style="background-image: url({{ asset('frontend/assets/images/banner/banner-img-4.png') }});"></div>
-                            <div class="inner-box">
-                                <span class="popular-product">The Best Place for Auto Parts</span>
-                                <h2 style="font-size:56px;">Premium Parts for Every Vehicle</h2>
-                                <h3 style="font-size:16px; color: #5a5a5a">Join our live auctions for exclusive deals on <br>vintage and performance parts.</span></h3>
-                                <a href="{{ route('Frontend.shop') }}" class="theme-btn mt-0">SHOP NOW<span></span><span></span><span></span><span></span></a>
-                            </div>
+                   <div class="col-lg-9 col-md-12 col-sm-12 content-block">
+                        <div class="content-one content-box banner" 
+                            style="background-image: url('{{ asset('frontend/assets/images/banner3.png') }}');">
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-12 col-sm-12 search-column">
