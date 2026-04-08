@@ -10,6 +10,8 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductVehicleCompatibility;
 use App\Models\Brand;
+use App\Models\Vehicle;
+use App\Models\VehicleImage;
 
 class HomeController extends Controller
 {
@@ -112,6 +114,24 @@ class HomeController extends Controller
             $product->parent_category_id = $category->id ?? $product->category_id;
         }
 
+        // Get featured vehicles (you can modify the criteria as needed)
+        $featuredVehicles = Vehicle::with(['brand', 'mainImage'])
+            ->where('status', 1) // Only available vehicles
+            ->orderBy('created_at', 'desc')
+            ->limit(6) // Show 6 vehicles on homepage
+            ->get();
+        
+        // Optional: Get statistics for dashboard
+        $totalVehicles = Vehicle::where('status', 1)->count();
+        $totalBrands = Brand::count();
+        
+        // Get popular brands (vehicles count per brand)
+        $popularBrands = Brand::withCount('vehicles')
+            ->having('vehicles_count', '>', 0)
+            ->orderBy('vehicles_count', 'desc')
+            ->limit(8)
+            ->get();
+
         return view('Frontend.index', compact(
             'years',
             'brands',
@@ -121,7 +141,12 @@ class HomeController extends Controller
             'engineTypes',
             'parentCategories',
             'filterCategories',
-            'latestProducts'
+            'latestProducts',
+            'featuredVehicles',
+            'totalVehicles',
+            'totalBrands',
+            'popularBrands',
+            
         ));
     }
 

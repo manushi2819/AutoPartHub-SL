@@ -42,9 +42,51 @@
             <div class="pattern-layer" style="background-image: url(frontend/assets/images/shape/shape-6.png);"></div>
             <div class="large-container">
                 <div class="row clearfix">
-                   <div class="col-lg-9 col-md-12 col-sm-12 content-block">
-                        <div class="content-one content-box banner" 
-                            style="background-image: url('{{ asset('frontend/assets/images/banner3.png') }}');">
+                    <div class="col-lg-9 col-md-12 col-sm-12 content-block">
+                        <div id="bannerSlider" 
+                            class="carousel slide" 
+                            data-bs-ride="carousel" 
+                            data-bs-interval="3000">
+
+                            <!-- Indicators -->
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#bannerSlider" data-bs-slide-to="0" class="active"></button>
+                                <button type="button" data-bs-target="#bannerSlider" data-bs-slide-to="1"></button>
+                                <button type="button" data-bs-target="#bannerSlider" data-bs-slide-to="2"></button>
+                            </div>
+
+                            <!-- Slides -->
+                            <div class="carousel-inner">
+
+                                <div class="carousel-item active">
+                                    <div class="content-one content-box banner"
+                                        style="background-image: url('{{ asset('frontend/assets/images/banner2.png') }}'); ">
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item">
+                                    <div class="content-one content-box banner"
+                                        style="background-image: url('{{ asset('frontend/assets/images/banner3.png') }}');">
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item">
+                                    <div class="content-one content-box banner"
+                                        style="background-image: url('{{ asset('frontend/assets/images/banner6.png') }}'); ">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Controls -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#bannerSlider" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </button>
+
+                            <button class="carousel-control-next" type="button" data-bs-target="#bannerSlider" data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </button>
+
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-12 col-sm-12 search-column">
@@ -223,7 +265,7 @@
                 </div>
                 <div class="inner-container">
                     <div class="row clearfix">
-                        @foreach($brands as $brand)
+                        @foreach($brands->take(12) as $brand)
                          <div class="col-lg-2 col-md-4 col-sm-12 brand-block">
                             <div class="brand-block-one">
                                 <div class="inner-box text-center">
@@ -333,7 +375,7 @@
         </section>
         <!-- shop-style-two end -->
 
-       <!-- feature-section -->
+       <!-- feature-section 
 <section class="feature-section pb_70">
     <div class="auto-container">
         <div class="row clearfix">
@@ -373,6 +415,380 @@
         </div>
     </div>
 </section>
-<!-- feature-section end -->
+ feature-section end -->
 
+
+<!-- Featured Vehicles Section 
+<section class="featured-vehicles mb-5">
+    <div class="container">
+        <div class="section-header">
+            <h2>Featured Vehicles</h2>
+            <p>Discover our collection of premium vehicles</p>
+        </div>
+
+        <div class="vehicles-grid">
+            @forelse($featuredVehicles as $vehicle)
+                <div class="vehicle-card">
+                       @php
+                            $image = $vehicle->images->first();
+                        @endphp
+                    <div class="vehicle-image">
+                       <img src="{{ $image ? asset('uploads/'.$image->image_url) : asset('no-image.png') }}"
+                        alt="{{ $vehicle->brand->name }} {{ $vehicle->model }}">
+                        <div class="vehicle-badge {{ $vehicle->condition }}">
+                            {{ ucfirst($vehicle->condition) }}
+                        </div>
+                        @if($vehicle->status)
+                            <div class="status-badge available">Available</div>
+                        @else
+                            <div class="status-badge sold">Sold</div>
+                        @endif
+                    </div>
+                    
+                    <div class="vehicle-details">
+                        <h3 class="vehicle-title">
+                            {{ $vehicle->brand->name }} {{ $vehicle->model }}
+                            <span class="vehicle-year">({{ $vehicle->year }})</span>
+                        </h3>
+                        
+                        <div class="vehicle-price">
+                            LKR {{ number_format($vehicle->price, 0) }}
+                        </div>
+                        
+                        <div class="vehicle-specs">
+                            <div class="spec-item">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span>{{ number_format($vehicle->mileage) }} km</span>
+                            </div>
+                            <div class="spec-item">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>{{ $vehicle->fuel_type }}</span>
+                            </div>
+                            <div class="spec-item">
+                                <i class="fas fa-cogs"></i>
+                                <span>{{ $vehicle->transmission }}</span>
+                            </div>
+                            <div class="spec-item">
+                                <i class="fas fa-car"></i>
+                                <span>{{ $vehicle->body_type }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="vehicle-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ $vehicle->city }}, {{ $vehicle->district }}</span>
+                        </div>
+                        
+                        <a href="{{ route('Frontend.vehicle.details', $vehicle->id) }}" class="btn-view-details">
+                            View Details
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            @empty
+                <div class="no-vehicles">
+                    <p>No vehicles available at the moment.</p>
+                </div>
+            @endforelse
+        </div>
+        
+        <div class="view-all-container">
+            <a href="{{ route('Frontend.vehicles') }}" class="btn-view-all">
+                View All Vehicles
+                <i class="fas fa-long-arrow-alt-right"></i>
+            </a>
+        </div>
+    </div>
+</section>-->
+<style>
+/* Featured Vehicles Section */
+.featured-vehicles {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #ededed 100%);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: #000000;
+    margin-bottom: 10px;
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+}
+
+.section-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #db3434, #a00e0e);
+    border-radius: 2px;
+}
+
+.section-header p {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+    margin-top: 15px;
+}
+
+.vehicles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.vehicle-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.vehicle-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.vehicle-image {
+    position: relative;
+    overflow: hidden;
+    height: 250px;
+}
+
+.vehicle-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.vehicle-card:hover .vehicle-image img {
+    transform: scale(1.1);
+}
+
+.vehicle-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: white;
+}
+
+.vehicle-badge.new {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+.vehicle-badge.used {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+}
+
+.status-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: white;
+}
+
+.status-badge.available {
+    background: #13bb2a;
+}
+
+.status-badge.sold {
+    background: #e74c3c;
+}
+
+.vehicle-details {
+    padding: 20px;
+}
+
+.vehicle-title {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.vehicle-year {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    font-weight: normal;
+}
+
+.vehicle-price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #bb1313;
+    margin-bottom: 15px;
+}
+
+.vehicle-price::before {
+    content: '';
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.vehicle-specs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    border-top: 1px solid #ecf0f1;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.spec-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #7f8c8d;
+}
+
+.spec-item i {
+    color: #bb1313;
+    width: 16px;
+}
+
+.vehicle-location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+    color: #95a5a6;
+}
+
+.vehicle-location i {
+    color: #bb1313;
+}
+
+.btn-view-details {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #615d5d, #000000);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    gap: 10px;
+}
+
+.btn-view-details:hover {
+    background: linear-gradient(135deg, #b92929, #db3434);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+    color:white;
+}
+
+.btn-view-details i {
+    transition: transform 0.3s ease;
+}
+
+.btn-view-details:hover i {
+    transform: translateX(5px);
+}
+
+.view-all-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 30px;
+    background: transparent;
+    color: #b92929;
+    text-decoration: none;
+    border: 2px solid #b92929;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-view-all:hover {
+    background: #b92929;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(219, 52, 52, 0.3);
+}
+
+.btn-view-all i {
+    transition: transform 0.3s ease;
+}
+
+.btn-view-all:hover i {
+    transform: translateX(5px);
+}
+
+.no-vehicles {
+    text-align: center;
+    padding: 60px;
+    background: white;
+    border-radius: 15px;
+    color: #7f8c8d;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .vehicles-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .section-header h2 {
+        font-size: 2rem;
+    }
+    
+    .vehicle-price {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .vehicles-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
+
+
+    <!-- cta-style-two -->
+     <div class="auto-container mb-5">
+        <img src="{{ asset('frontend/assets/images/banner8.png') }}" alt="Banner" style="width: 100%; height: auto; display: block;">
+    </div>
+
+    <!-- cta-style-two end -->
  @endsection

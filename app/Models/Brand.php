@@ -15,4 +15,9 @@ class Brand extends Model
      protected $casts = [
         'status' => 'boolean', 
     ];
+
+     public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class);
+    }
 }

@@ -34,7 +34,7 @@
     .thumbnail-vertical .thumb-img {
         width: 100%;
         height: 80px;
-        object-fit: cover;
+        object-fit: cover !important;
         border-radius: 0px;
         cursor: pointer;
         border: 2px solid transparent;
