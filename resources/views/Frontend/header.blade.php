@@ -66,9 +66,9 @@
 .live-badge {
     background: #ffcc00;
     color: #fff;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
-    padding: 2px 6px;
+    padding: 4px 6px;
     border-radius: 20px;
     margin-left: 6px;
     line-height: 1;
