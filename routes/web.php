@@ -103,6 +103,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\VehicleController as AdminVehicleController;
+use App\Http\Controllers\Admin\AuctionController;
 use App\Http\Middleware\AdminAuth;
 
 Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
@@ -154,4 +155,15 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
     Route::post('vehicles/{vehicle}/images', [AdminVehicleController::class, 'uploadImages'])->name('vehicles.images.upload');
     Route::delete('vehicles/images/{image}', [AdminVehicleController::class, 'deleteImage'])->name('vehicles.images.delete');
     
+
+    // auctions
+    Route::get('/auctions', [AuctionController::class, 'index'])->name('auctions.index');
+
+    Route::get('/auctions/create', [AuctionController::class, 'create'])->name('auctions.create');
+    Route::post('/auctions/store', [AuctionController::class, 'store'])->name('auctions.store');
+    Route::delete('/auctions/{auction}', [AuctionController::class, 'destroy'])->name('auctions.destroy');
+
+    Route::get('/auctions/{id}/edit', [AuctionController::class, 'edit'])->name('auctions.edit');
+    Route::put('/auctions/{id}/update', [AuctionController::class, 'update'])->name('auctions.update');
+
 });

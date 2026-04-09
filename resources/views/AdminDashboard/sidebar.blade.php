@@ -56,12 +56,26 @@
     
             </li>
 
+
             <li>
                 <a href="{{ route('admin.orders.index') }}">
                 <iconify-icon icon="mdi:cart-outline" class="menu-icon"></iconify-icon>
                     <span>Orders</span>
                 </a>
     
+            </li>
+
+
+             <li class="dropdown">
+                <a href="javascript:void(0)">
+                   <iconify-icon icon="mdi:gavel" class="menu-icon"></iconify-icon>
+                <span>Auction Module</span> 
+                </a>
+                <ul class="sidebar-submenu">
+                    <li>
+                        <a href="{{ route('admin.auctions.index') }}"><i class="ri-circle-fill circle-icon text-success-600 w-auto"></i> All Auctions</a>
+                    </li>
+                </ul>
             </li>
 
              <li>

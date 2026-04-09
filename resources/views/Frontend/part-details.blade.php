@@ -214,24 +214,31 @@ h3:hover {
 }
 
 /* Thumbnail Styling */
+.thumb-box {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* allow wrapping if many images */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
 .thumb-box li {
-    display: inline-block;
     margin: 5px;
 }
 
 .thumb-item {
-    display: block;
-    border: 2px solid transparent;
-    border-radius: 0px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.thumb-item img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 80px;
     height: 70px;
-    object-fit: cover;
-    border-radius: 0px;
+    border: 2px solid transparent;
+    overflow: hidden;
+}
+.thumb-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* or use 'contain' if you want full image visible */
 }
 
 /* Active Thumbnail */

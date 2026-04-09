@@ -418,7 +418,7 @@
  feature-section end -->
 
 
-<!-- Featured Vehicles Section 
+<!-- Featured Vehicles Section -->
 <section class="featured-vehicles mb-5">
     <div class="container">
         <div class="section-header">
@@ -499,7 +499,7 @@
             </a>
         </div>
     </div>
-</section>-->
+</section>
 <style>
 /* Featured Vehicles Section */
 .featured-vehicles {
