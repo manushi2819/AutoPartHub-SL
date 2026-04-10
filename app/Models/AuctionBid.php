@@ -14,6 +14,10 @@ class AuctionBid extends Model
         'is_winner'
     ];
 
+    protected $casts = [
+        'bid_time' => 'datetime',
+    ];
+
     public function auction()
     {
         return $this->belongsTo(Auction::class);

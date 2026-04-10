@@ -13,11 +13,25 @@
 <div class="card basic-data-table">
     <div class="card-body">
         <div class="table-responsive">
-            <ul class="nav nav-tabs mb-3">
-                <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#active">Active</a></li>
-                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#upcoming">Upcoming</a></li>
-                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#ended">Ended</a></li>
+
+            <ul class="nav focus-tab nav-pills mb-16" id="pills-tab-two" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-semibold text-primary-light radius-4 px-16 py-10 active" 
+                    id="pills-focus-home-tab" data-bs-toggle="pill" data-bs-target="#active" type="button" role="tab" 
+                    aria-controls="pills-focus-home" aria-selected="true">Active</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-semibold text-primary-light radius-4 px-16 py-10" 
+                    id="pills-focus-details-tab" data-bs-toggle="pill" data-bs-target="#upcoming" type="button" role="tab" 
+                    aria-controls="pills-focus-details" aria-selected="false">Upcoming</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-semibold text-primary-light radius-4 px-16 py-10" 
+                    id="pills-focus-settings-tab" data-bs-toggle="pill" data-bs-target="#ended" type="button" role="tab" 
+                    aria-controls="pills-focus-settings" aria-selected="false">Ended</button>
+                </li>
             </ul>
+
 
             <div class="tab-content">
 

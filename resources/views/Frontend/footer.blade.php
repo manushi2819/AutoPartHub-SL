@@ -1,8 +1,8 @@
 
         <!-- main-footer -->
-        <footer class="main-footer">
+        <footer class="main-footer mt-5">
             <div class="auto-container">
-                <div class="widget-section">
+                <div class="widget-section" style="padding: 50px 0px 20px 0px;">
                     <div class="row clearfix">
                         <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                             <div class="footer-widget logo-widget" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="700">

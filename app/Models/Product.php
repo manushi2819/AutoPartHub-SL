@@ -52,6 +52,11 @@ class Product extends Model
     {
         return $this->reviews()->count(); 
     }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 }
 
 

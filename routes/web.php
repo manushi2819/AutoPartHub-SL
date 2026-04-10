@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\BuynowCheckoutController;
 use App\Http\Controllers\Frontend\ForgotPasswordController;
 use App\Http\Controllers\Frontend\VehicleController;
+use App\Http\Controllers\Frontend\FrontendAuctionController;
 
 Route::get('/', [HomeController::class, 'index'])->name('Frontend.index');
 Route::get('/about-us', [HomeController::class, 'about'])->name('Frontend.about');
@@ -51,6 +52,12 @@ Route::post('/checkout/success/{order_id}', [CheckoutController::class, 'success
     ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class, 'web']);
 
 
+Route::get('/auctions', [FrontendAuctionController::class, 'index'])->name('Frontend.auctions');
+Route::get('/auctions/{id}', [FrontendAuctionController::class, 'detail'])->name('Frontend.auction.details');
+Route::post('/auction/bid', [FrontendAuctionController::class, 'placeBid'])->name('auction.bid');
+
+
+//customer routes
 Route::get('/login', [LoginController::class, 'login'])->name('Frontend.login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('Frontend.login.authenticate');
 Route::get('/register', [LoginController::class, 'register'])->name('Frontend.register');

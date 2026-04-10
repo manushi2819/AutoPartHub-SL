@@ -102,7 +102,7 @@ class HomeController extends Controller
             ->where('status',1)
             ->whereIn('category_id', $categoryIds)
             ->latest()
-            ->take(12)
+            ->take(8)
             ->get();
 
         // Attach parent category ID to products for filtering

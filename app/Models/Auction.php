@@ -58,4 +58,14 @@ class Auction extends Model
         return $this->belongsTo(Product::class, 'item_id');
     }
 
+        
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class, 'item_id');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'item_id');
+    }
 }

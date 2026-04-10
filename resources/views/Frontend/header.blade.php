@@ -107,7 +107,7 @@
             <div class="header-upper">
                 <div class="large-container">
                     <div class="upper-inner">
-                        <figure class="logo-box"  style="height:50px">
+                        <figure class="logo-box"  style="height:45px">
                             <a href="{{ route('Frontend.index') }}"><img src="{{ asset('logo.png') }}" alt=""  
                             style="height:100%"></a></figure>
                         <div class="search-area">
@@ -194,8 +194,8 @@
                 </div>
             </div>
             <!-- header-lower -->
-            <div class="header-lower">
-                <div class="large-container">
+            <div class="header-lower" >
+                <div class="large-container" >
                     <div class="outer-box">
                         @php
                             $categories = \App\Models\Category::whereNull('parent_id')
@@ -204,7 +204,7 @@
                                             ->get();
                         @endphp
 
-                        <div class="category-box">
+                        <div class="category-box" style="padding:10px">
                             <span class="text"><i class="fas fa-bars"></i>All Categories</span>
                             <ul class="category-list clearfix">
 
@@ -286,12 +286,12 @@
                                             <a href="{{ route('Frontend.vehicles') }}">Vehicles</a>
                                         </li> 
 
-                                       <li class="">
-                                            <a href="{{ route('Frontend.about') }}" class="d-flex align-items-center">
+                                       <li class="{{ request()->routeIs('Frontend.auctions') ? 'current' : '' }}">
+                                            <a href="{{ route('Frontend.auctions') }}" class="d-flex align-items-center">
                                                 Auctions
                                                 <span class="live-badge">LIVE</span>
                                             </a>
-                                        </li> 
+                                        </li>
 
                                         <li class="{{ request()->routeIs('Frontend.about') ? 'current' : '' }}">
                                             <a href="{{ route('Frontend.about') }}">About</a>
@@ -319,55 +319,64 @@
             <div class="sticky-header">
                 <div class="large-container">
                     <div class="outer-box">
-                        <div class="category-box">
+                        <div class="category-box" style="padding:10px">
                             <span class="text"><i class="fas fa-bars"></i>All Categories</span>
                             <ul class="category-list clearfix">
-                               
-                                <li class="category-dropdown">
-                                    <a href="#">Engine Oil</a>
-                                    <div class="list-inner">
-                                        <div class="inner-box clearfix">
-                                            <div class="single-column">
-                                                <p>Designed Engine Oil</p>
-                                                <ul>
-                                                    <li><a href="shop-details.html">Deep Dish Oil</a></li>
-                                                    <li><a href="shop-details.html">Mesh Pattern Oil</a></li>
-                                                    <li><a href="shop-details.html">Split-Spoke Oil</a></li>
-                                                    <li><a href="shop-details.html">Five-Spoke Oil</a></li>
-                                                    <li><a href="shop-details.html">Blade Design Oil</a></li>
-                                                </ul>
+
+                                @foreach($categories as $category)
+                                    <li class="{{ $category->children->count() ? 'category-dropdown' : '' }}">
+                                        
+                                        <a href="{{ route('Frontend.shop', ['category[]' => $category->id]) }}">
+                                            {{ $category->name }}
+                                        </a>
+
+                                        @if($category->children->count())
+                                        <div class="list-inner">
+                                            <div class="inner-box clearfix">
+
+                                                @foreach($category->children as $child)
+                                                    <div class="single-column">
+                                                        <p>
+                                                            <a href="{{ route('Frontend.shop', ['category[]' => $child->id]) }}"
+                                                            style="color:black">
+                                                                {{ $child->name }}
+                                                            </a>
+                                                        </p>
+
+                                                        @if($child->children->count())
+                                                        <ul>
+                                                            @foreach($child->children as $subChild)
+                                                                <li>
+                                                                    <a href="{{ route('Frontend.shop', ['category[]' => $subChild->id]) }}">
+                                                                        {{ $subChild->name }}
+                                                                    </a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                        @endif
+
+                                                    </div>
+                                                @endforeach
+
                                             </div>
-                                            <div class="single-column">
-                                                <p>Luxury Engine Oil</p>
-                                                <ul>
-                                                    <li><a href="shop-details.html">Multi-Spoke Oil</a></li>
-                                                    <li><a href="shop-details.html">Monoblock Oil</a></li>
-                                                    <li><a href="shop-details.html">Directional Oil</a></li>
-                                                    <li><a href="shop-details.html">Honeycomb Oil</a></li>
-                                                    <li><a href="shop-details.html">Twisted Spoke Oil</a></li>
-                                                </ul>
+
+                                            <!-- Keep Your Shop Block -->
+                                            <div class="shop-block">
+                                                <span class="title">Featured Category</span>
+                                                <h4>Explore the Latest Products</h4>
+                                                <a href="{{ route('Frontend.shop', ['category[]' => $category->id]) }}" class="link">Shop now</a>
+                                                <figure class="image" style="height:150px;overflow:hidden">
+                                                    <img src="{{ asset($category->image ?? 'assets/images/about2.jpg') }}" 
+                                                    alt="{{ $category->name }}">
+                                                </figure>
                                             </div>
-                                            <div class="single-column">
-                                                <p>Exclusive Engine Oil</p>
-                                                <ul>
-                                                    <li><a href="shop-details.html">Retro Steel Oil</a></li>
-                                                    <li><a href="shop-details.html">Thin-Spoke Oil</a></li>
-                                                    <li><a href="shop-details.html">Diamond-Cut Oil</a></li>
-                                                    <li><a href="shop-details.html">Cross-Spoke Oil</a></li>
-                                                    <li><a href="shop-details.html">Star-Shaped Oil</a></li>
-                                                </ul>
-                                            </div>
+
                                         </div>
-                                        <div class="shop-block">
-                                            <span class="title">Only for this month</span>
-                                            <h2><a href="shop-details.html">Buy the Tires</a></h2>
-                                            <h4>From $99.99</h4>
-                                            <a href="shop-details.html" class="link">Shop now</a>
-                                            <figure class="image"><img src="assets/images/shop/shop-1.png" alt=""></figure>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li><a href="shop-details.html">Clutch & Gears</a></li>
+                                        @endif
+
+                                    </li>
+                                @endforeach
+
                             </ul>
                         </div>
                         <div class="menu-area">

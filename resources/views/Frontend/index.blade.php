@@ -291,7 +291,7 @@
 
         <!-- shop-style-two -->
         <section class="shop-style-two pt_80 pb_70 mb-5">
-        <div class="bg-layer" style="background-image: url('{{ asset('frontend/assets/images/index4.jpg') }}');"></div>
+        <div class="bg-layer" style="background-image: url('{{ asset('frontend/assets/images/index7.jpg') }}');"></div>
             <div class="pattern-layer">
                 <div class="pattern-1" style="background-image: url('{{ asset('frontend/assets/images/shape/shape-4.png') }}');"></div>
                 <div class="pattern-2" style="background-image: url('{{ asset('frontend/assets/images/shape/shape-5.png') }}');"></div>
@@ -418,11 +418,20 @@
  feature-section end -->
 
 
+
+     <!-- cta-style-two -->
+     <div class="auto-container mb-5">
+        <img src="{{ asset('frontend/assets/images/banner8.png') }}" alt="Banner" style="width: 100%; height: auto; display: block;">
+    </div>
+
+    <!-- cta-style-two end -->
+     
+
 <!-- Featured Vehicles Section -->
 <section class="featured-vehicles mb-5">
     <div class="container">
-        <div class="section-header">
-            <h2>Featured Vehicles</h2>
+        <div class="sec-title mb_30">
+             <h2>Featured Vehicles</h2>
             <p>Discover our collection of premium vehicles</p>
         </div>
 
@@ -785,10 +794,5 @@
 </style>
 
 
-    <!-- cta-style-two -->
-     <div class="auto-container mb-5">
-        <img src="{{ asset('frontend/assets/images/banner8.png') }}" alt="Banner" style="width: 100%; height: auto; display: block;">
-    </div>
 
-    <!-- cta-style-two end -->
  @endsection

@@ -43,7 +43,7 @@
   position: absolute;
   left: 0px;
   top: 0px;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .header-top .top-inner .info-list li span{
@@ -94,7 +94,7 @@
 .header-upper{
   position: relative;
   background: #153979;
-  padding: 25px 0px;
+  padding: 15px 0px;
 }
 
 .header-upper .upper-inner{
@@ -159,7 +159,7 @@
   height: 40px;
   line-height: 44px;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
   color: #fff;
   border-radius: 3px;
   cursor: pointer;
@@ -189,7 +189,7 @@
 .main-header .option-list li button{
   position: relative;
   display: inline-block;
-  font-size: 18px;
+  font-size: 15px;
   color: #fff;
   cursor: pointer;
   transition: all 500ms ease;
@@ -243,7 +243,7 @@
 .main-header .outer-box .category-box .text{
   position: relative;
   display: block;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 20px;
   font-weight: 500;
   color: var(--title-color);
@@ -254,7 +254,7 @@
   position: absolute;
   left: 0px;
   top: 2px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
 }
 
@@ -264,7 +264,7 @@
   font-family: 'Font Awesome 5 Pro';
   top: 0px;
   right: 0px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
 }
 
@@ -309,7 +309,7 @@
 .main-header .outer-box .category-box .category-list > li > a{
   position: relative;
   display: block;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 26px;
   color: var(--title-color);
   padding: 12px 50px;
@@ -364,7 +364,7 @@
 
 .main-header .outer-box .category-box .list-inner .inner-box p{
   display: block;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 24px;
   font-weight: 700;
   color: var(--title-color);
@@ -385,7 +385,7 @@
 .main-header .outer-box .category-box .list-inner .inner-box .single-column ul li a{
   position: relative;
   display: inline-block;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 40px;
   color: var(--title-color);
 }
@@ -406,7 +406,7 @@
 .main-header .outer-box .category-box .list-inner .shop-block .title{
   position: relative;
   display: block;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 26px;
   font-weight: 500;
   color: var(--title-color);
@@ -461,7 +461,7 @@
 .main-header .outer-box .category-box .list-inner .shop-block .link{
   position: relative;
   display: inline-block;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 30px;
   font-weight: 500;
   color: var(--title-color);
@@ -514,7 +514,7 @@
   position:relative;
   display:block;
   text-align:center;
-  font-size:16px;
+  font-size:15px;
   line-height:26px;
   padding-top: 17px;
   padding-bottom: 17px;
@@ -610,7 +610,7 @@
 
 .main-menu .navigation > li > .megamenu h4{
   display: block;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 30px;
   color: #ffffff;
 }
@@ -902,7 +902,7 @@
   line-height: 30px;
   width: 24px;
   text-align: center;
-  font-size: 18px;
+  font-size: 15px;
   color: #ffffff;
   cursor: pointer;
   z-index: 10;
@@ -963,7 +963,7 @@
 }
 
 .mobile-menu .navigation li ul li > a{
-  font-size: 16px;
+  font-size: 14px;
   margin-left: 20px;
   text-transform: capitalize;
 }
@@ -1110,7 +1110,7 @@ div#mCSB_1_container{
   position: absolute;
   left: 20px;
   top: 10px;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .main-header .menu-right-content .btn-box a:hover{
@@ -1267,14 +1267,14 @@ div#mCSB_1_container{
   position: absolute;
   left: 0px;
   top: 5px;
-  font-size: 36px;
+  font-size: 30px;
 }
 
 .main-header .support-box a{
   position: relative;
   display: inline-block;
-  font-size: 24px;
-  line-height: 17px;
+  font-size: 20px;
+  line-height: 14px;
   font-weight: 700;
   margin-bottom: 4px;
 }
@@ -1287,7 +1287,7 @@ div#mCSB_1_container{
   position: relative;
   display: block;
   font-size: 14px;
-  line-height: 20px;
+  line-height: 15px;
   color: var(--title-color);
 }
 
@@ -1419,12 +1419,12 @@ div#mCSB_1_container{
 }
 
 .header-style-five .header-lower .main-menu .navigation > li > a{
-  padding-top: 27px;
-  padding-bottom: 27px;
+  padding-top: 19px;
+  padding-bottom: 19px;
 }
 
 .header-style-five .header-lower .main-menu .navigation > li.dropdown > a:before{
-  top: 27px;
+  top: 20px;
 }
 
 

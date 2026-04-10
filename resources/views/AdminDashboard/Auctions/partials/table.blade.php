@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>#</th>
+            <th>Item Type</th>
             <th>Item</th>
             <th>Start</th>
             <th>End</th>
@@ -15,6 +16,8 @@
         @foreach($auctions as $auction)
         <tr>
             <td>{{ $loop->iteration }}</td>
+
+            <td>{{ ucfirst($auction->item_type) }}</td>
 
            <td>
                 @if ($auction->item_type === 'vehicle' && $auction->item)
