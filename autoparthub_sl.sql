@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Apr 06, 2026 at 10:20 AM
+-- Generation Time: Apr 13, 2026 at 06:10 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,6 +20,77 @@ SET time_zone = "+00:00";
 --
 -- Database: `autoparthub_sl`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auctions`
+--
+
+CREATE TABLE `auctions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `item_type` enum('vehicle','product') NOT NULL,
+  `item_id` bigint(20) UNSIGNED NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
+  `starting_price` decimal(10,2) NOT NULL,
+  `bid_increment` decimal(10,2) NOT NULL,
+  `status` enum('upcoming','active','ended') NOT NULL DEFAULT 'upcoming',
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `auctions`
+--
+
+INSERT INTO `auctions` (`id`, `item_type`, `item_id`, `start_time`, `end_time`, `starting_price`, `bid_increment`, `status`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'vehicle', 2, '2026-04-10 08:30:00', '2026-04-12 10:30:00', 7500000.00, 30000.00, 'active', 1, '2026-04-09 09:29:06', '2026-04-10 06:43:19'),
+(2, 'product', 1, '2026-04-10 09:00:00', '2026-04-13 21:00:00', 15000.00, 1000.00, 'active', 1, '2026-04-09 15:24:27', '2026-04-10 07:19:11'),
+(3, 'vehicle', 3, '2026-04-11 11:39:00', '2026-04-11 12:39:00', 98000000.00, 50000.00, 'upcoming', 1, '2026-04-10 07:10:03', '2026-04-10 07:25:45'),
+(4, 'product', 13, '2026-04-11 14:08:00', '2026-04-13 14:08:00', 50000.00, 2500.00, 'upcoming', 1, '2026-04-10 08:38:34', '2026-04-10 08:38:34');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auction_bids`
+--
+
+CREATE TABLE `auction_bids` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `auction_id` bigint(20) UNSIGNED NOT NULL,
+  `customer_id` bigint(20) UNSIGNED NOT NULL,
+  `bid_amount` decimal(10,2) NOT NULL,
+  `bid_time` datetime NOT NULL DEFAULT current_timestamp(),
+  `is_winner` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `auction_bids`
+--
+
+INSERT INTO `auction_bids` (`id`, `auction_id`, `customer_id`, `bid_amount`, `bid_time`, `is_winner`, `created_at`, `updated_at`) VALUES
+(1, 2, 1, 16000.00, '2026-04-10 19:11:08', 0, '2026-04-10 13:41:08', '2026-04-10 13:41:08'),
+(2, 2, 2, 17000.00, '2026-04-10 19:12:35', 0, '2026-04-10 13:42:35', '2026-04-10 13:42:35');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auction_notifications`
+--
+
+CREATE TABLE `auction_notifications` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `auction_id` bigint(20) UNSIGNED NOT NULL,
+  `customer_id` bigint(20) UNSIGNED NOT NULL,
+  `type` enum('winner','outbid','general') NOT NULL,
+  `sent_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -104,7 +175,8 @@ INSERT INTO `carts` (`id`, `customer_id`, `session_id`, `product_id`, `quantity`
 (1, NULL, '6CqkVTQRcQik22MLOXaQBZzCOR1kE2Y2GV6CGdhg', 3, 2, 44381.00, '2026-03-01 04:57:31', '2026-03-01 04:57:31'),
 (2, NULL, '6CqkVTQRcQik22MLOXaQBZzCOR1kE2Y2GV6CGdhg', 8, 2, 38741.00, '2026-03-01 05:00:43', '2026-03-01 05:01:26'),
 (18, NULL, '4faCqN8ztO3GuZTWR8Z7sx3NOGN8E9reDqM1dJwD', 2, 1, 15196.00, '2026-03-18 07:32:49', '2026-03-18 07:32:49'),
-(19, NULL, 'Ko4GEXz8j7uvYlssqH4SXkZPwXxJZuTX69nzowNO', 15, 1, 10442.00, '2026-04-05 04:51:29', '2026-04-05 04:51:29');
+(19, NULL, 'Ko4GEXz8j7uvYlssqH4SXkZPwXxJZuTX69nzowNO', 15, 1, 10442.00, '2026-04-05 04:51:29', '2026-04-05 04:51:29'),
+(21, NULL, '0ykdA3SFLuWcOzsG9efWplyGtL9tMGq7GB9gbMyW', 1, 2, 15196.00, '2026-04-06 05:52:13', '2026-04-06 05:57:40');
 
 -- --------------------------------------------------------
 
@@ -408,7 +480,9 @@ INSERT INTO `customer_activities` (`id`, `customer_id`, `activity_type`, `refere
 (14, 2, 'category_view', 20, NULL, '2026-04-01 22:37:00', '2026-04-01 22:37:00'),
 (15, 2, 'vehicle_location_view', NULL, 'Colombo', '2026-04-04 08:29:48', '2026-04-04 08:29:48'),
 (16, 2, 'vehicle_condition_view', NULL, 'Reconditioned', '2026-04-04 08:30:42', '2026-04-04 08:30:42'),
-(17, 2, 'search', NULL, 'Radiator', '2026-04-04 08:35:35', '2026-04-04 08:35:35');
+(17, 2, 'search', NULL, 'Radiator', '2026-04-04 08:35:35', '2026-04-04 08:35:35'),
+(18, 1, 'category_view', 20, NULL, '2026-04-10 06:33:05', '2026-04-10 06:33:05'),
+(19, 2, 'vehicle_view', NULL, '2', '2026-04-10 15:39:21', '2026-04-10 15:39:21');
 
 -- --------------------------------------------------------
 
@@ -500,7 +574,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (28, '2026_03_31_014110_add_tracking_no_to_orders_table', 13),
 (29, '2026_04_01_014110_add_status_to_customers_table', 14),
 (32, '2026_04_04_063037_create_vehicles_table', 15),
-(33, '2026_04_04_063223_create_vehicle_images_table', 15);
+(33, '2026_04_04_063223_create_vehicle_images_table', 15),
+(34, '2026_04_09_141948_create_auctions_table', 16),
+(35, '2026_04_09_142100_create_auction_bids_table', 16),
+(36, '2026_04_09_142138_create_auction_notifications_table', 16);
 
 -- --------------------------------------------------------
 
@@ -794,7 +871,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('Ko4GEXz8j7uvYlssqH4SXkZPwXxJZuTX69nzowNO', NULL, '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Mobile Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiSEt0VVFEMVVKVExJRklCVWZPclIzWlN6TkFCb3BsQkNXS0c3ZHZUbiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wYXJ0cy1kZXRhaWxzLzIiO3M6NToicm91dGUiO3M6MjI6IkZyb250ZW5kLnBhcnRzLWRldGFpbHMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1775385307);
+('LC918cEpJ0P33tYjOcJgC7FxGkCqQPE8SAYjZos5', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiZnVQMUpBNG1nVnFXcG84WE9KbVhNM3pIU1JNcEZxWWNOSUZ0MVo1UyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7czo1OiJyb3V0ZSI7czoxNDoiRnJvbnRlbmQubG9naW4iO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjg6ImlzX2FkbWluIjtiOjE7czo0OiJuYW1lIjtzOjExOiJTdXBlciBBZG1pbiI7czo1OiJlbWFpbCI7czoxNzoiYWRtaW5AZXhhbXBsZS5jb20iO30=', 1775835591);
 
 -- --------------------------------------------------------
 
@@ -852,7 +929,7 @@ CREATE TABLE `vehicles` (
 --
 
 INSERT INTO `vehicles` (`id`, `brand_id`, `model`, `year`, `price`, `mileage`, `condition`, `fuel_type`, `transmission`, `engine_cc`, `body_type`, `color`, `district`, `city`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(2, 13, 'Lancer EX', '2016', 7500000.00, 85000, 'used', 'Petrol', 'Automatic', 1800, 'Sedan', 'Silver', 'Kurunegala', 'Kurunegala', '<p>✅ Well maintained Mitsubishi Lancer EX 2015 for sale</p><p>✅Original paint, no accidents, and regularly serviced</p><p>✅Smooth driving experience with automatic transmission</p><p>✅Spacious interior with modern features including multifunction steering and infotainment system</p><p>✅Ideal family car with good fuel efficiency and reliability</p><p>✅Price can be slightly negotiable after inspection</p>', 1, '2026-04-04 03:05:49', '2026-04-04 03:12:53'),
+(2, 13, 'Lancer EX', '2016', 7500000.00, 85000, 'used', 'Petrol', 'Automatic', 1800, 'Sedan', 'Silver', 'Kurunegala', 'Kurunegala', '<p>✅ Well maintained Mitsubishi Lancer EX 2015 for sale</p><p>✅Original paint, no accidents, and regularly serviced</p><p>✅Smooth driving experience with automatic transmission</p><p>✅Spacious interior with modern features including multifunction steering and infotainment system</p><p>✅Ideal family car with good fuel efficiency and reliability</p><p>✅Price can be slightly negotiable after inspection</p>', 1, '2026-04-04 03:05:49', '2026-04-10 08:42:57'),
 (3, 1, 'Prius', '2017', 9800000.00, 72000, 'used', 'Petrol', 'Automatic', 1800, 'Sedan', 'Pearl White', 'Kurunegala', 'Kurunegala', '<p>✅ Well maintained Toyota Prius 2017 (Hybrid)</p><p>✅ Excellent fuel efficiency with hybrid technology</p><p>✅Smooth and silent driving experience</p><p>✅ Original paint, accident-free vehicle</p><p>✅ Spacious interior with digital display and reverse camera</p><p>✅ Ideal for daily use with low running cost</p><p>✅ Price negotiable after inspection</p>', 1, '2026-04-04 03:09:36', '2026-04-04 08:15:14');
 
 -- --------------------------------------------------------
@@ -904,11 +981,35 @@ INSERT INTO `wishlists` (`id`, `customer_id`, `session_id`, `product_id`, `creat
 (2, NULL, '6CqkVTQRcQik22MLOXaQBZzCOR1kE2Y2GV6CGdhg', 3, '2026-03-01 04:59:07', '2026-03-01 04:59:07'),
 (3, NULL, '6CqkVTQRcQik22MLOXaQBZzCOR1kE2Y2GV6CGdhg', 8, '2026-03-01 05:02:15', '2026-03-01 05:02:15'),
 (4, 1, NULL, 3, '2026-03-01 05:05:53', '2026-03-01 05:05:53'),
-(5, NULL, 'Ko4GEXz8j7uvYlssqH4SXkZPwXxJZuTX69nzowNO', 2, '2026-04-05 04:50:12', '2026-04-05 04:50:12');
+(5, NULL, 'Ko4GEXz8j7uvYlssqH4SXkZPwXxJZuTX69nzowNO', 2, '2026-04-05 04:50:12', '2026-04-05 04:50:12'),
+(6, NULL, '0ykdA3SFLuWcOzsG9efWplyGtL9tMGq7GB9gbMyW', 1, '2026-04-06 05:53:04', '2026-04-06 05:53:04'),
+(7, NULL, 'PkoKdQE7yQ4EvOAimfFmkbTlQv9PAj9pMUoy3yd1', 1, '2026-04-08 08:49:23', '2026-04-08 08:49:23');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `auctions`
+--
+ALTER TABLE `auctions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `auction_bids`
+--
+ALTER TABLE `auction_bids`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `auction_bids_auction_id_foreign` (`auction_id`),
+  ADD KEY `auction_bids_customer_id_foreign` (`customer_id`);
+
+--
+-- Indexes for table `auction_notifications`
+--
+ALTER TABLE `auction_notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `auction_notifications_auction_id_foreign` (`auction_id`),
+  ADD KEY `auction_notifications_customer_id_foreign` (`customer_id`);
 
 --
 -- Indexes for table `brands`
@@ -1094,6 +1195,24 @@ ALTER TABLE `wishlists`
 --
 
 --
+-- AUTO_INCREMENT for table `auctions`
+--
+ALTER TABLE `auctions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `auction_bids`
+--
+ALTER TABLE `auction_bids`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `auction_notifications`
+--
+ALTER TABLE `auction_notifications`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
@@ -1103,7 +1222,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1127,7 +1246,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `customer_activities`
 --
 ALTER TABLE `customer_activities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1145,7 +1264,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1211,11 +1330,25 @@ ALTER TABLE `vehicle_images`
 -- AUTO_INCREMENT for table `wishlists`
 --
 ALTER TABLE `wishlists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `auction_bids`
+--
+ALTER TABLE `auction_bids`
+  ADD CONSTRAINT `auction_bids_auction_id_foreign` FOREIGN KEY (`auction_id`) REFERENCES `auctions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `auction_bids_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `auction_notifications`
+--
+ALTER TABLE `auction_notifications`
+  ADD CONSTRAINT `auction_notifications_auction_id_foreign` FOREIGN KEY (`auction_id`) REFERENCES `auctions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `auction_notifications_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `carts`
