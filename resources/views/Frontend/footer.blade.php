@@ -22,8 +22,8 @@
                                         <li><a href="{{ route('Frontend.index') }}">Home</a></li>
                                         <li><a href="{{ route('Frontend.about') }}">About Us</a></li>
                                         <li><a href="{{ route('Frontend.shop') }}">Spare Parts</a></li>
-                                        <li><a href="{{ route('Frontend.contact') }}">Vehicles</a></li>
-                                        <li><a href="{{ route('Frontend.index') }}">Auction</a></li>
+                                        <li><a href="">Vehicles</a></li>
+                                        <li><a href="">Auction</a></li>
                                     </ul>
                                 </div>
                             </div>

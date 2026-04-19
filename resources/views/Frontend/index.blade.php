@@ -34,6 +34,59 @@
         height: 150px !important;
     }
 }
+
+/* Mobile Responsiveness for Banner Slider */
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  
+  /* Fix carousel container height */
+  #bannerSlider {
+    height: 180px !important;
+    overflow: hidden;
+  }
+  
+  /* Make banner images cover area properly on mobile */
+  #bannerSlider .carousel-inner,
+  #bannerSlider .carousel-item {
+    height: 180px !important;
+  }
+  
+  /* Ensure background images scale correctly */
+  #bannerSlider .banner {
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    height: 180px !important;
+    width: 100% !important;
+  }
+
+}
+
+/* Small devices (phones, 768px and down) */
+@media only screen and (max-width: 768px) {
+  #bannerSlider .banner {
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+  }
+}
+
+/* Extra small devices (phones, 576px and down) */
+@media only screen and (max-width: 576px) {
+  #bannerSlider .banner {
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+  }
+}/* Mobile Responsive - Banner Image Size Only */
+
+@media only screen and (max-width: 768px) {
+  #bannerSlider .banner {
+    background-size: cover !important;
+    background-position: center center !important;
+  }
+}
 </style>
 
       
@@ -226,17 +279,17 @@
         <section class="category-section pt_60 pb_80">
             <div class="auto-container">
                 <div class="sec-title mb_30">
-                    <h2>Popular Categories</h2>
+                    <h4>Popular Categories</h4>
                 </div>
                 <div class="category-carousel owl-carousel owl-theme owl-dots-none owl-nav-none">
                     @foreach($parentCategories as $category)
                     <div class="category-block-one">
                         <div class="inner-box">
-                            <figure class="image-box" style="width: 160px; height: 160px; overflow: hidden;">
+                            <figure class="image-box" style="width: 120px; height: 120px; overflow: hidden;">
                                 <img src="{{ asset($category->image ?? 'assets/images/about2.jpg') }}" alt="{{ $category->name }}"
                                 style=" width: 100%;height: 100%;object-fit: cover; ">
                             </figure>
-                            <h4>
+                            <h4 style="font-size:16px">
                                 <a href="{{ route('Frontend.shop', ['category[]' => $category->id]) }}">
                                     {{ $category->name }}
                                 </a>
@@ -261,7 +314,7 @@
             </div>
             <div class="auto-container">
                 <div class="sec-title mb_30">
-                    <h2>Shop by Brands</h2>
+                    <h4>Shop by Brands</h4>
                 </div>
                 <div class="inner-container">
                     <div class="row clearfix">
@@ -427,7 +480,7 @@
     <!-- cta-style-two end -->
      
 
-<!-- Featured Vehicles Section -->
+<!-- Featured Vehicles Section 
 <section class="featured-vehicles mb-5">
     <div class="container">
         <div class="sec-title mb_30">
@@ -508,7 +561,7 @@
             </a>
         </div>
     </div>
-</section>
+</section>-->
 <style>
 /* Featured Vehicles Section */
 .featured-vehicles {

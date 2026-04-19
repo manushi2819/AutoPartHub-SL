@@ -41,7 +41,7 @@
                             @endif
                         </td>
                         <td>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#editCustomerModal{{ $customer->id }}" class="btn btn-sm btn-primary">Update Status</a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#editCustomerModal{{ $customer->id }}" class="btn btn-sm btn-warning p-1">Update Status</a>
                         </td>
                     </tr>
 

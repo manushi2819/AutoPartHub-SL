@@ -282,12 +282,12 @@
                                             <a href="{{ route('Frontend.shop') }}">Spare Parts</a>
                                         </li> 
 
-                                        <li class="{{ request()->routeIs('Frontend.vehicles') ? 'current' : '' }}">
-                                            <a href="{{ route('Frontend.vehicles') }}">Vehicles</a>
+                                        <li class="">
+                                            <a href="">Vehicles</a>
                                         </li> 
 
-                                       <li class="{{ request()->routeIs('Frontend.auctions') ? 'current' : '' }}">
-                                            <a href="{{ route('Frontend.auctions') }}" class="d-flex align-items-center">
+                                       <li class="">
+                                            <a href="" class="d-flex align-items-center">
                                                 Auctions
                                                 <span class="live-badge">LIVE</span>
                                             </a>

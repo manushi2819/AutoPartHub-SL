@@ -48,13 +48,13 @@
     
             </li>
 
-             <li>
+             <!--<li>
                 <a href="{{ route('admin.vehicles.index') }}">
                 <iconify-icon icon="mdi:car" class="menu-icon"></iconify-icon>
                     <span>Vehicles</span>
                 </a>
     
-            </li>
+            </li>-->
 
 
             <li>
@@ -66,7 +66,7 @@
             </li>
 
 
-             <li class="dropdown">
+            <!-- <li class="dropdown">
                 <a href="javascript:void(0)">
                    <iconify-icon icon="mdi:gavel" class="menu-icon"></iconify-icon>
                 <span>Auction Module</span> 
@@ -76,15 +76,15 @@
                         <a href="{{ route('admin.auctions.index') }}"><i class="ri-circle-fill circle-icon text-success-600 w-auto"></i> All Auctions</a>
                     </li>
                 </ul>
-            </li>
+            </li>-->
 
-             <li>
+            <!-- <li>
                 <a href="{{ route('admin.reviews.index') }}">
                 <iconify-icon icon="mdi:star-outline" class="menu-icon"></iconify-icon>
                     <span>Reviews</span>
                 </a>
     
-            </li>
+            </li>-->
 
             
             <li>
@@ -94,12 +94,12 @@
                 </a>
             </li>
 
-            <li>
+            <!--<li>
                 <a href="{{ route('admin.contact') }}">
                 <iconify-icon icon="mdi:email-outline" class="menu-icon"></iconify-icon>
                     <span>Contact messages</span>
                 </a>
-            </li>
+            </li>-->
 
 
 

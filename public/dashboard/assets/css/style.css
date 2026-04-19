@@ -15322,7 +15322,7 @@ td.fc-header-center {
 /* === dashboard body css end === */
 /* === footer css start === */
 .d-footer {
-  padding: 1.375rem 1.5rem;
+  padding: 1.0rem 1.2rem;
   background-color: var(--white);
   margin-block-start: auto;
 }

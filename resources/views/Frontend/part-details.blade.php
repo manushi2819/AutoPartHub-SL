@@ -257,7 +257,7 @@ h3:hover {
 
 <!-- Page Title -->
 <section class="page-title">
-    <div class="auto-container">
+    <div class="container">
         <div class="content-box">
             <ul class="bread-crumb">
                 <li><a href="{{ route('Frontend.index') }}">Home</a></li>
@@ -270,10 +270,10 @@ h3:hover {
 
 
         <!-- shop-details -->
-        <section class="shop-details mb-0">
+        <section class="shop-details mb-0 mt-3">
             <div class="container">
 
-               <div class="product-details-content mb_45">
+               <div class="product-details-content mb_0">
                    <div class="row clearfix">
                     <!-- Images -->
                         <div class="col-lg-7 col-md-12 col-sm-12 image-column">

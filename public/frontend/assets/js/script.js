@@ -474,19 +474,19 @@
 			navText: [ '<span class="icon-10"></span>', '<span class="icon-11"></span>' ],
 			responsive:{
 				0:{
-					items:1
-				},
-				480:{
 					items:2
 				},
+				480:{
+					items:4
+				},
 				600:{
-					items:3
+					items:5
 				},
 				800:{
-					items:4
+					items:6
 				},			
 				1200:{
-					items:6
+					items:7
 				}
 
 			}
