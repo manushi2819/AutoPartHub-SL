@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Apr 13, 2026 at 06:10 PM
+-- Generation Time: Apr 20, 2026 at 05:33 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -46,10 +46,10 @@ CREATE TABLE `auctions` (
 --
 
 INSERT INTO `auctions` (`id`, `item_type`, `item_id`, `start_time`, `end_time`, `starting_price`, `bid_increment`, `status`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 'vehicle', 2, '2026-04-10 08:30:00', '2026-04-12 10:30:00', 7500000.00, 30000.00, 'active', 1, '2026-04-09 09:29:06', '2026-04-10 06:43:19'),
-(2, 'product', 1, '2026-04-10 09:00:00', '2026-04-13 21:00:00', 15000.00, 1000.00, 'active', 1, '2026-04-09 15:24:27', '2026-04-10 07:19:11'),
-(3, 'vehicle', 3, '2026-04-11 11:39:00', '2026-04-11 12:39:00', 98000000.00, 50000.00, 'upcoming', 1, '2026-04-10 07:10:03', '2026-04-10 07:25:45'),
-(4, 'product', 13, '2026-04-11 14:08:00', '2026-04-13 14:08:00', 50000.00, 2500.00, 'upcoming', 1, '2026-04-10 08:38:34', '2026-04-10 08:38:34');
+(1, 'vehicle', 2, '2026-04-10 08:30:00', '2026-04-12 10:30:00', 7500000.00, 30000.00, 'ended', 1, '2026-04-09 09:29:06', '2026-04-18 13:47:36'),
+(2, 'product', 1, '2026-04-10 09:00:00', '2026-04-13 21:00:00', 15000.00, 1000.00, 'ended', 1, '2026-04-09 15:24:27', '2026-04-18 13:47:36'),
+(3, 'vehicle', 3, '2026-04-11 11:39:00', '2026-04-11 12:39:00', 98000000.00, 50000.00, 'ended', 1, '2026-04-10 07:10:03', '2026-04-18 13:47:36'),
+(4, 'product', 13, '2026-04-11 14:08:00', '2026-04-13 14:08:00', 50000.00, 2500.00, 'ended', 1, '2026-04-10 08:38:34', '2026-04-18 13:47:36');
 
 -- --------------------------------------------------------
 
@@ -114,7 +114,7 @@ CREATE TABLE `brands` (
 INSERT INTO `brands` (`id`, `name`, `image`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'Toyota', '1772893481_brand-15.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:54:41'),
 (2, 'Honda', '1772893408_brand-13.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:53:28'),
-(3, 'Ford', '1772893417_brands-11.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:53:37'),
+(3, 'Ford', '1776697511_brands-11.png', 1, '2026-04-20 15:04:03', '2026-04-20 15:05:11'),
 (4, 'BMW', '1772893423_brands-2.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:53:43'),
 (5, 'Mercedes-Benz', '1772893428_brands-3.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:53:48'),
 (6, 'Audi', '1772893433_brands-1.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:53:53'),
@@ -442,7 +442,8 @@ CREATE TABLE `customers` (
 
 INSERT INTO `customers` (`id`, `first_name`, `last_name`, `email`, `phone`, `address`, `status`, `password`, `created_at`, `updated_at`) VALUES
 (1, 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 1, '$2y$12$yjd2AhSYf0qTNGDccIAA3eMMbN1hulKFc3MFAkia9MJCckzeVkuda', '2026-02-18 03:05:37', '2026-04-01 10:35:28'),
-(2, 'Kasthuri', 'Dhananjaya', 'kasthurid1234@gmail.com', '0716316143', NULL, 1, '$2y$12$ialXlrJZtnollGjy287fkOnAlumBxf.wbY/UquUjEs7lVdffo1zUi', '2026-04-01 22:33:16', '2026-04-01 22:33:44');
+(2, 'Kasthuri', 'Dhananjaya', 'kasthurid1234@gmail.com', '0716316143', NULL, 1, '$2y$12$ialXlrJZtnollGjy287fkOnAlumBxf.wbY/UquUjEs7lVdffo1zUi', '2026-04-01 22:33:16', '2026-04-01 22:33:44'),
+(3, 'Ruwindi', 'Weerasinghe', 'ruwindi2819@gmail.com', NULL, NULL, 1, '$2y$12$XWzqyy1d0tW/d1kQOxoFje.MGKtl1VQE4Lc0/tqjbGbYhpJDupf6G', '2026-04-20 05:04:34', '2026-04-20 05:04:34');
 
 -- --------------------------------------------------------
 
@@ -577,7 +578,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (33, '2026_04_04_063223_create_vehicle_images_table', 15),
 (34, '2026_04_09_141948_create_auctions_table', 16),
 (35, '2026_04_09_142100_create_auction_bids_table', 16),
-(36, '2026_04_09_142138_create_auction_notifications_table', 16);
+(36, '2026_04_09_142138_create_auction_notifications_table', 16),
+(37, '2026_04_20_200134_add_brand_id_to_products_table', 17),
+(38, '2026_04_20_201304_remove_brand_from_products_table', 18);
 
 -- --------------------------------------------------------
 
@@ -674,7 +677,7 @@ CREATE TABLE `products` (
   `category_id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `sku` varchar(255) NOT NULL,
-  `brand` varchar(255) NOT NULL,
+  `brand_id` bigint(20) UNSIGNED DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
   `cost_price` decimal(10,2) DEFAULT NULL,
   `description` text DEFAULT NULL,
@@ -689,28 +692,28 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `category_id`, `name`, `sku`, `brand`, `price`, `cost_price`, `description`, `small_description`, `stock_quantity`, `status`, `created_at`, `updated_at`) VALUES
-(1, 137, 'OEM Radiator', 'SKU0021', 'Mazda', 15196.00, 14267.00, '<p>Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance. A well-maintained and properly selected set of rims can significantly enhance the overall look and performance of a vehicle.</p><p>wheels provide a means of mounting and affixing the tires to the vehicle through which the engine’s power is transferred to the ground. As the engine generates power, it moves through the drivetrain to the wheels, which bolt to the wheel hub and rotate around the axles For the wheels to turn and propel the car forward, you need to have friction provided by the tires in direct and constant contact with the ground under the car.</p><p><strong>Features </strong>:</p><ul><li>Rims can be made from different materials</li><li>This includes spoke wheels, multi-spoke wheels</li><li>The weight of the rim can impact the vehicle\'s overall weight and performance.</li><li>Certain rims may have features that make them easier to clean and maintain.</li></ul><p><br></p>', 'Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance.', 38, 1, '2026-02-03 12:01:48', '2026-03-01 03:58:56'),
-(2, 137, 'OEM Radiator', 'SKU0001', 'Mazda', 15196.00, 14267.00, 'This is a description for Product 1.', NULL, 38, 1, '2026-03-04 12:01:48', '2026-02-23 12:10:00'),
-(3, 74, 'Synthetic ATF', 'SKU0002', 'Honda', 44381.00, 26178.00, 'This is a description for Product 2.', NULL, 37, 1, '2026-02-23 12:01:48', '2026-03-10 10:01:44'),
-(4, 143, 'High Flow Water Pump', 'SKU0003', 'Toyota', 16396.00, 16828.00, 'This is a description for Product 3.', NULL, 12, 1, '2026-03-04 12:01:48', '2026-03-10 10:38:19'),
-(5, 108, 'Truck Converter', 'SKU0004', 'Mazda', 12284.00, 15555.00, 'This is a description for Product 4.', NULL, 24, 1, '2026-02-23 12:01:48', '2026-03-10 10:40:26'),
-(6, 70, 'Steel Flywheel', 'SKU0005', 'Mazda', 45877.00, 31201.00, 'This is a description for Product 5.', NULL, 34, 1, '2026-02-23 12:01:48', '2026-03-10 10:43:15'),
-(7, 151, 'Performance Thermostat', 'SKU0006', 'Honda', 24389.00, 33058.00, 'This is a description for Product 6.', NULL, 17, 1, '2026-02-23 12:01:48', '2026-03-10 10:32:04'),
-(8, 180, 'Standard Wheel', 'SKU0007', 'Toyota', 38741.00, 30546.00, 'This is a description for Product 7.', NULL, 39, 1, '2026-02-23 12:01:48', '2026-03-10 10:46:02'),
-(9, 11, 'Hydraulic Camshafts', 'SKU0008', 'Mitsubishi', 17553.00, 39220.00, 'This is a description for Product 8.', NULL, 26, 1, '2026-02-23 12:01:48', '2026-02-23 12:16:58'),
-(10, 178, 'Custom Seats', 'SKU0009', 'Mazda', 17158.00, 36881.00, 'This is a description for Product 9.', NULL, 23, 1, '2026-02-23 12:01:48', '2026-03-03 10:50:35'),
-(11, 4, 'Forged Pistons', 'SKU0010', 'Honda', 32605.00, 5315.00, 'This is a description for Product 10.', NULL, 3, 1, '2026-02-23 12:01:48', '2026-03-10 10:47:11'),
-(12, 152, 'Truck Thermostat', 'SKU0011', 'Mitsubishi', 23531.00, 10969.00, 'This is a description for Product 11.', NULL, 10, 1, '2026-02-23 12:01:48', '2026-03-10 10:47:51'),
-(13, 42, 'Semi-Metallic Pads', 'SKU0012', 'Nissan', 48614.00, 30287.00, 'This is a description for Product 12.', NULL, 27, 1, '2026-02-23 12:01:48', '2026-03-10 09:59:21'),
-(14, 183, 'OEM Wheel', 'SKU0013', 'Honda', 29073.00, 22685.00, 'This is a description for Product 13.', NULL, 36, 1, '2026-02-23 12:01:48', '2026-04-01 01:08:27'),
-(15, 176, 'Leather Seats', 'SKU0014', 'Mitsubishi', 10442.00, 35868.00, 'This is a description for Product 14.', NULL, 27, 1, '2026-02-23 12:01:48', '2026-02-23 12:20:00'),
-(16, 190, 'Custom Panels', 'SKU0015', 'Mazda', 46682.00, 14373.00, 'This is a description for Product 15.', NULL, 26, 1, '2026-02-23 12:01:48', '2026-02-23 12:20:24'),
-(17, 79, 'Lead-Acid Battery', 'SKU0016', 'Honda', 6745.00, 32081.00, 'This is a description for Product 16.', NULL, 28, 1, '2026-02-23 12:01:48', '2026-03-10 10:22:33'),
-(18, 16, 'Valve Cover Gaskets', 'SKU0017', 'Honda', 9926.00, 16694.00, 'This is a description for Product 17.', NULL, 38, 1, '2026-02-23 12:01:48', '2026-02-23 12:21:40'),
-(19, 159, 'Manual Mirror', 'SKU0018', 'Mazda', 12958.00, 15328.00, 'This is a description for Product 18.', NULL, 6, 1, '2026-02-23 12:01:48', '2026-02-23 12:22:25'),
-(20, 113, 'OEM Pipes', 'SKU0019', 'Toyota', 42050.00, 19719.00, 'This is a description for Product 19.', NULL, 25, 1, '2026-02-23 12:01:48', '2026-02-23 12:22:39'),
-(21, 159, 'Manual Mirror', 'SKU0020', 'Honda', 10636.00, 10014.00, 'This is a description for Product 20.', NULL, 11, 1, '2026-02-23 12:01:48', '2026-02-23 12:23:10');
+INSERT INTO `products` (`id`, `category_id`, `name`, `sku`, `brand_id`, `price`, `cost_price`, `description`, `small_description`, `stock_quantity`, `status`, `created_at`, `updated_at`) VALUES
+(1, 137, 'OEM Radiator', 'SKU0021', 1, 15196.00, 14267.00, '<p>Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance. A well-maintained and properly selected set of rims can significantly enhance the overall look and performance of a vehicle.</p><p>wheels provide a means of mounting and affixing the tires to the vehicle through which the engine’s power is transferred to the ground. As the engine generates power, it moves through the drivetrain to the wheels, which bolt to the wheel hub and rotate around the axles For the wheels to turn and propel the car forward, you need to have friction provided by the tires in direct and constant contact with the ground under the car.</p><p><strong>Features </strong>:</p><ul><li>Rims can be made from different materials</li><li>This includes spoke wheels, multi-spoke wheels</li><li>The weight of the rim can impact the vehicle\'s overall weight and performance.</li><li>Certain rims may have features that make them easier to clean and maintain.</li></ul><p><br></p>', 'Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance.', 38, 1, '2026-02-03 12:01:48', '2026-03-01 03:58:56'),
+(2, 137, 'OEM Radiator', 'SKU0001', 8, 15196.00, 14267.00, '<p>This is a description for Product 1.</p>', NULL, 38, 1, '2026-03-04 12:01:48', '2026-04-20 15:09:20'),
+(3, 74, 'Synthetic ATF', 'SKU0002', 2, 44381.00, 26178.00, 'This is a description for Product 2.', NULL, 37, 1, '2026-02-23 12:01:48', '2026-03-10 10:01:44'),
+(4, 143, 'High Flow Water Pump', 'SKU0003', 1, 16396.00, 16828.00, 'This is a description for Product 3.', NULL, 12, 1, '2026-03-04 12:01:48', '2026-03-10 10:38:19'),
+(5, 108, 'Truck Converter', 'SKU0004', 1, 12284.00, 15555.00, '<p>This is a description for Product 4.</p>', NULL, 24, 1, '2026-02-23 12:01:48', '2026-04-20 15:09:59'),
+(6, 70, 'Steel Flywheel', 'SKU0005', 1, 45877.00, 31201.00, '<p>This is a description for Product 5.</p>', NULL, 34, 1, '2026-02-23 12:01:48', '2026-04-20 15:10:08'),
+(7, 151, 'Performance Thermostat', 'SKU0006', 2, 24389.00, 33058.00, 'This is a description for Product 6.', NULL, 17, 1, '2026-02-23 12:01:48', '2026-03-10 10:32:04'),
+(8, 180, 'Standard Wheel', 'SKU0007', 1, 38741.00, 30546.00, 'This is a description for Product 7.', NULL, 39, 1, '2026-02-23 12:01:48', '2026-03-10 10:46:02'),
+(9, 11, 'Hydraulic Camshafts', 'SKU0008', 13, 17553.00, 39220.00, 'This is a description for Product 8.', NULL, 26, 1, '2026-02-23 12:01:48', '2026-02-23 12:16:58'),
+(10, 178, 'Custom Seats', 'SKU0009', 7, 17158.00, 36881.00, '<p>This is a description for Product 9.</p>', NULL, 23, 1, '2026-02-23 12:01:48', '2026-04-20 15:10:21'),
+(11, 4, 'Forged Pistons', 'SKU0010', 2, 32605.00, 5315.00, 'This is a description for Product 10.', NULL, 3, 1, '2026-02-23 12:01:48', '2026-03-10 10:47:11'),
+(12, 152, 'Truck Thermostat', 'SKU0011', 13, 23531.00, 10969.00, 'This is a description for Product 11.', NULL, 10, 1, '2026-02-23 12:01:48', '2026-03-10 10:47:51'),
+(13, 42, 'Semi-Metallic Pads', 'SKU0012', 7, 48614.00, 30287.00, 'This is a description for Product 12.', NULL, 27, 1, '2026-02-23 12:01:48', '2026-03-10 09:59:21'),
+(14, 183, 'OEM Wheel', 'SKU0013', 2, 29073.00, 22685.00, 'This is a description for Product 13.', NULL, 36, 1, '2026-02-23 12:01:48', '2026-04-01 01:08:27'),
+(15, 176, 'Leather Seats', 'SKU0014', 13, 10442.00, 35868.00, 'This is a description for Product 14.', NULL, 27, 1, '2026-02-23 12:01:48', '2026-02-23 12:20:00'),
+(16, 190, 'Custom Panels', 'SKU0015', 7, 46682.00, 14373.00, '<p>This is a description for Product 15.</p>', NULL, 26, 1, '2026-02-23 12:01:48', '2026-04-20 15:10:40'),
+(17, 79, 'Lead-Acid Battery', 'SKU0016', 2, 6745.00, 32081.00, 'This is a description for Product 16.', NULL, 28, 1, '2026-02-23 12:01:48', '2026-03-10 10:22:33'),
+(18, 16, 'Valve Cover Gaskets', 'SKU0017', 2, 9926.00, 16694.00, 'This is a description for Product 17.', NULL, 38, 1, '2026-02-23 12:01:48', '2026-02-23 12:21:40'),
+(19, 159, 'Manual Mirror', 'SKU0018', 1, 12958.00, 15328.00, '<p>This is a description for Product 18.</p>', NULL, 6, 1, '2026-02-23 12:01:48', '2026-04-20 15:10:52'),
+(20, 113, 'OEM Pipes', 'SKU0019', 1, 42050.00, 19719.00, 'This is a description for Product 19.', NULL, 25, 1, '2026-02-23 12:01:48', '2026-02-23 12:22:39'),
+(21, 159, 'Manual Mirror', 'SKU0020', 2, 10636.00, 10014.00, 'This is a description for Product 20.', NULL, 11, 1, '2026-02-23 12:01:48', '2026-02-23 12:23:10');
 
 -- --------------------------------------------------------
 
@@ -782,25 +785,25 @@ CREATE TABLE `product_vehicle_compatibilities` (
 --
 
 INSERT INTO `product_vehicle_compatibilities` (`id`, `product_id`, `brand`, `model`, `year_from`, `year_to`, `engine_type`, `engine_cc`, `fuel_type`, `transmission`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Mazda', 'Lancer', 2010, 2023, 'Inline', 2000, 'Diesel', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:10:00'),
-(2, 2, 'Mazda', 'Lanzer', 2010, 2023, 'Inline', 2000, 'Diesel', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:10:00'),
+(1, 1, 'Toyota', 'Lancer', 2010, 2023, 'Inline', 2000, 'Diesel', 'Automatic', '2026-02-23 12:01:48', '2026-04-20 15:09:00'),
+(2, 2, 'Hyundai', 'Lanzer', 2010, 2023, 'Inline', 2000, 'Diesel', 'Automatic', '2026-02-23 12:01:48', '2026-04-20 15:09:20'),
 (3, 3, 'Honda', 'Mazda3', 2012, 2023, 'Rotary', 1000, 'Petrol', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:10:53'),
 (4, 4, 'Toyota', 'Mazda3', 2013, 2023, 'V-Type', 2000, 'Hybrid', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:11:14'),
-(5, 5, 'Mazda', 'Lanzer', 2013, 2022, 'V-Type', 1000, 'Petrol', 'Manual', '2026-02-23 12:01:48', '2026-02-23 12:12:22'),
-(6, 6, 'Mazda', 'Mazda3', 2009, 2022, 'Rotary', 1500, 'Hybrid', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:15:35'),
+(5, 5, 'Toyota', 'Lanzer', 2013, 2022, 'V-Type', 1000, 'Petrol', 'Manual', '2026-02-23 12:01:48', '2026-04-20 15:09:59'),
+(6, 6, 'Toyota', 'Mazda3', 2009, 2022, 'Rotary', 1500, 'Hybrid', 'Automatic', '2026-02-23 12:01:48', '2026-04-20 15:10:08'),
 (7, 7, 'Honda', 'Civic', 2009, 2025, 'Rotary', 1300, 'Diesel', 'Manual', '2026-02-23 12:01:48', '2026-02-23 12:01:48'),
 (8, 8, 'Toyota', 'Mazda3', 2006, 2025, 'Rotary', 1300, 'Petrol', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:16:32'),
 (9, 9, 'Mitsubishi', 'Corolla', 2011, 2021, 'Rotary', 1800, 'Petrol', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:16:58'),
-(10, 10, 'Mazda', 'Altima', 2013, 2019, 'Inline', 1000, 'Hybrid', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:01:48'),
+(10, 10, 'Nissan', 'Altima', 2013, 2019, 'Inline', 1000, 'Hybrid', 'Automatic', '2026-02-23 12:01:48', '2026-04-20 15:10:21'),
 (11, 11, 'Honda', 'Altima', 2011, 2020, 'Rotary', 1300, 'Petrol', 'Manual', '2026-02-23 12:01:48', '2026-02-23 12:17:55'),
 (12, 12, 'Mitsubishi', 'Lancer', 2016, 2024, 'Rotary', 1300, 'Petrol', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:18:20'),
 (13, 13, 'Nissan', 'Mazda3', 2008, 2024, 'V-Type', 1500, 'Hybrid', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:18:48'),
 (14, 14, 'Honda', 'Lancer', 2015, 2025, 'Inline', 1800, 'Hybrid', 'Manual', '2026-02-23 12:01:48', '2026-02-23 12:19:25'),
 (15, 15, 'Mitsubishi', 'Altima', 2011, 2024, 'Rotary', 1000, 'Hybrid', 'Manual', '2026-02-23 12:01:48', '2026-02-23 12:20:00'),
-(16, 16, 'Mazda', 'Lancer', 2008, 2023, 'V-Type', 2000, 'Petrol', 'Manual', '2026-02-23 12:01:48', '2026-02-23 12:20:24'),
+(16, 16, 'Nissan', 'Lancer', 2008, 2023, 'V-Type', 2000, 'Petrol', 'Manual', '2026-02-23 12:01:48', '2026-04-20 15:10:40'),
 (17, 17, 'Honda', 'Corolla', 2015, 2021, 'Rotary', 1500, 'Hybrid', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:21:25'),
 (18, 18, 'Honda', 'Mazda3', 2007, 2025, 'Inline', 1800, 'Hybrid', 'Manual', '2026-02-23 12:01:48', '2026-02-23 12:01:48'),
-(19, 19, 'Mazda', 'Civic', 2017, 2019, 'Inline', 1300, 'Hybrid', 'Manual', '2026-02-23 12:01:48', '2026-02-23 12:22:25'),
+(19, 19, 'Toyota', 'Civic', 2017, 2019, 'Inline', 1300, 'Hybrid', 'Manual', '2026-02-23 12:01:48', '2026-04-20 15:10:52'),
 (20, 20, 'Toyota', 'Corolla', 2016, 2022, 'V-Type', 1300, 'Petrol', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:22:39'),
 (21, 21, 'Honda', 'Altima', 2009, 2021, 'Rotary', 1300, 'Hybrid', 'Manual', '2026-02-23 12:01:48', '2026-02-23 12:23:10');
 
@@ -871,7 +874,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('LC918cEpJ0P33tYjOcJgC7FxGkCqQPE8SAYjZos5', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiZnVQMUpBNG1nVnFXcG84WE9KbVhNM3pIU1JNcEZxWWNOSUZ0MVo1UyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7czo1OiJyb3V0ZSI7czoxNDoiRnJvbnRlbmQubG9naW4iO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjg6ImlzX2FkbWluIjtiOjE7czo0OiJuYW1lIjtzOjExOiJTdXBlciBBZG1pbiI7czo1OiJlbWFpbCI7czoxNzoiYWRtaW5AZXhhbXBsZS5jb20iO30=', 1775835591);
+('CSNV3QjSk2pCGjxF4J8GH5ufabXSqTqdOxnnFkjg', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiWndLZG5HSmhhZGhVYjFyYW44MHQ4TlRPWlVrQnJDWjZjZkt5bzd3diI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzg1OiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXV0aC9nb29nbGUvY2FsbGJhY2s/YXV0aHVzZXI9MiZjb2RlPTQlMkYwQWNpOThFOVVZSVZCOXhfMUFzUWhZM2FiWFY1dlBXa2RGck9uSFFGeW00UnUtX20tcDY4czlNUDNqZ1o1b3BDREItNVdMUSZpc3M9aHR0cHMlM0ElMkYlMkZhY2NvdW50cy5nb29nbGUuY29tJnByb21wdD1jb25zZW50JnNjb3BlPWVtYWlsJTIwcHJvZmlsZSUyMGh0dHBzJTNBJTJGJTJGd3d3Lmdvb2dsZWFwaXMuY29tJTJGYXV0aCUyRnVzZXJpbmZvLnByb2ZpbGUlMjBodHRwcyUzQSUyRiUyRnd3dy5nb29nbGVhcGlzLmNvbSUyRmF1dGglMkZ1c2VyaW5mby5lbWFpbCUyMG9wZW5pZCZzdGF0ZT1TaDdnSVdiczBDSTBSZG96Q09LRmpjcWg0dzVyanNnT0VySW9qcjFPIjtzOjU6InJvdXRlIjtOO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1776661385);
 
 -- --------------------------------------------------------
 
@@ -983,7 +986,8 @@ INSERT INTO `wishlists` (`id`, `customer_id`, `session_id`, `product_id`, `creat
 (4, 1, NULL, 3, '2026-03-01 05:05:53', '2026-03-01 05:05:53'),
 (5, NULL, 'Ko4GEXz8j7uvYlssqH4SXkZPwXxJZuTX69nzowNO', 2, '2026-04-05 04:50:12', '2026-04-05 04:50:12'),
 (6, NULL, '0ykdA3SFLuWcOzsG9efWplyGtL9tMGq7GB9gbMyW', 1, '2026-04-06 05:53:04', '2026-04-06 05:53:04'),
-(7, NULL, 'PkoKdQE7yQ4EvOAimfFmkbTlQv9PAj9pMUoy3yd1', 1, '2026-04-08 08:49:23', '2026-04-08 08:49:23');
+(7, NULL, 'PkoKdQE7yQ4EvOAimfFmkbTlQv9PAj9pMUoy3yd1', 1, '2026-04-08 08:49:23', '2026-04-08 08:49:23'),
+(8, NULL, 'Ltfm0bqmyjLSBejcEzx7UGiFcUICZEivlv5gDQ59', 3, '2026-04-20 12:15:39', '2026-04-20 12:15:39');
 
 --
 -- Indexes for dumped tables
@@ -1122,7 +1126,8 @@ ALTER TABLE `password_reset_tokens`
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `products_sku_unique` (`sku`),
-  ADD KEY `products_category_id_foreign` (`category_id`);
+  ADD KEY `products_category_id_foreign` (`category_id`),
+  ADD KEY `products_brand_id_foreign` (`brand_id`);
 
 --
 -- Indexes for table `product_images`
@@ -1240,7 +1245,7 @@ ALTER TABLE `contact_messages`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `customer_activities`
@@ -1264,7 +1269,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1282,19 +1287,19 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `product_vehicle_compatibilities`
 --
 ALTER TABLE `product_vehicle_compatibilities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `reviews`
@@ -1330,7 +1335,7 @@ ALTER TABLE `vehicle_images`
 -- AUTO_INCREMENT for table `wishlists`
 --
 ALTER TABLE `wishlists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -1386,6 +1391,7 @@ ALTER TABLE `order_items`
 -- Constraints for table `products`
 --
 ALTER TABLE `products`
+  ADD CONSTRAINT `products_brand_id_foreign` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `products_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
 
 --
