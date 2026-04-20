@@ -11,8 +11,8 @@
 .user-initials-circle {
     width: 35px;
     height: 35px;
-    background: linear-gradient(95deg, #ff0000, #000000); 
-    color: #fff;
+    background: #d7d7d7; 
+    color: #000000;
     border: 1px solid white;
     font-weight: bold;
     border-radius: 50%;
@@ -110,7 +110,7 @@
                         <figure class="logo-box"  style="height:45px">
                             <a href="{{ route('Frontend.index') }}"><img src="{{ asset('logo.png') }}" alt=""  
                             style="height:100%"></a></figure>
-                        <div class="search-area">
+                        <div class="search-area" style="height:45px">
                             @php
                                 $parentCategories = \App\Models\Category::whereNull('parent_id')
                                                     ->where('status', 1)
@@ -133,9 +133,9 @@
                                 </div>
                             </div>
 
-                            <div class="search-box">
-                                    <div class="form-group">
-                                        <input type="search" name="search" value="{{ request('search') }}" placeholder="Search Parts..." required>
+                            <div class="search-box" style="height:45px">
+                                    <div class="form-group" >
+                                        <input type="search" style="height:45px" name="search" value="{{ request('search') }}" placeholder="Search Parts..." required>
                                         <button type="submit"><i class="icon-9"></i></button>
                                     </div>
                                 </form>
@@ -204,7 +204,7 @@
                                             ->get();
                         @endphp
 
-                        <div class="category-box" style="padding:10px">
+                        <div class="category-box" style="padding:12px">
                             <span class="text"><i class="fas fa-bars"></i>All Categories</span>
                             <ul class="category-list clearfix">
 
@@ -283,7 +283,7 @@
                                         </li> 
 
                                         <li class="">
-                                            <a href="">Vehicles</a>
+                                            <a href="{{ route('Frontend.vehicles') }}">Vehicles</a>
                                         </li> 
 
                                        <li class="">

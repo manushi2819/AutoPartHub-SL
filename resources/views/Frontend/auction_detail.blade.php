@@ -9,16 +9,6 @@
     background: linear-gradient(135deg, #f0f0f0 0%, #e5e5e5 100%);
     }
 
-    :root {
-        --primary-red: #c20d0d;
-        --primary-red-dark: #9b0a0a;
-        --primary-red-light: #ffebeb;
-        --primary-black: #0b0b0b;
-        --primary-gray: #f8f9fa;
-        --border-radius: 8px;
-        --box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-        --box-shadow-hover: 0 20px 30px -12px rgba(0, 0, 0, 0.1);
-    }
 
     /* Smooth transitions */
     .card {

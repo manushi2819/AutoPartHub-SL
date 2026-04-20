@@ -5,13 +5,7 @@
 @section('content')
 
 <style>
-    /* Theme Colors */
-    :root {
-        --primary-red: #c20d0d;
-        --primary-black: #000000;
-        --dark-gray: #1a1a1a;
-        --light-gray: #f8f9fa;
-    }
+
 
     /* Filter Card */
     .filter-card {

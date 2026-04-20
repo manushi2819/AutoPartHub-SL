@@ -58,6 +58,20 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
+
+:root {
+    --primary-red: #c20d0d;
+    --primary-red-dark: #9b0a0a;
+    --primary-red-light: #ffebeb;
+    --primary-black: #0b0b0b;
+    --dark-gray: #1e1e2f;
+    --light-gray: #f8fafc;
+    --card-border-radius: 0px;
+    --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.02);
+    --shadow-hover: 0 20px 35px rgba(0, 0, 0, 0.1), 0 5px 12px rgba(0, 0, 0, 0.05);
+    --transition-smooth: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
 body {
   font-size:14px !important;
 }

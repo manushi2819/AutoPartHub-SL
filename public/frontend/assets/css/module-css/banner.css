@@ -580,17 +580,17 @@
   position: relative;
   display: block;
   background: #F3F3F3;
-  padding: 30px;
+  padding: 18px;
   border-radius: 10px;
 }
 
 .banner-style-two .search-inner .form-group{
   position: relative;
-  margin-bottom: 21px;
+  margin-bottom: 18px;
 }
 
 .banner-style-two .search-inner .form-group .select-box{
-  min-height: 50px;
+  min-height: 40px;
 }
 
 .banner-style-two .search-inner .form-group .select-box .nice-select{

@@ -15,7 +15,7 @@
 /* Banner container */
 .content-block .banner {
     width: 1000px!important;
-    height: 520px !important;
+    height: 490px !important;
     background-size: cover !important;   
     background-position: center center !important;
     background-repeat: no-repeat !important;
@@ -91,7 +91,7 @@
 
       
         <!-- banner-style-two -->
-        <section class="banner-style-two home-5 pt_30 pb_10 p_relative">
+        <section class="banner-style-two home-5 pt_20 pb_10 p_relative">
             <div class="pattern-layer" style="background-image: url(frontend/assets/images/shape/shape-6.png);"></div>
             <div class="large-container">
                 <div class="row clearfix">

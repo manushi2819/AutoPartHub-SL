@@ -7,7 +7,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                             <div class="footer-widget logo-widget" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="700">
                                 <figure class="footer-logo"><a href="{{ route('Frontend.index') }}"><img src="{{ asset('logo.png') }}" 
-                                style="width:250px" alt=""></a></figure>
+                                style="width:230px" alt=""></a></figure>
                                 <p>Your trusted automotive marketplace for vehicles and spare parts, featuring direct sales and auction integration for a smarter buying experience.</p>
                                
                             </div>

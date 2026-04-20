@@ -64,6 +64,9 @@ Route::get('/register', [LoginController::class, 'register'])->name('Frontend.re
 Route::post('/register', [LoginController::class, 'store'])->name('Frontend.register.store');
 Route::post('/customer/logout', [LoginController::class, 'logout'])->name('Frontend.logout');
 
+Route::get('/auth/google', [LoginController::class, 'redirectToGoogle']);
+Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
+
 Route::post('/product/{product}/review', [ReviewController::class, 'store'])->name('product.review.store');
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotForm'])->name('forgot.password');

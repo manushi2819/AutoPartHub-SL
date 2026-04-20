@@ -31,6 +31,7 @@
 }
 
 
+
 /* Products Grid */
 .products-grid {
     display: grid;
@@ -63,6 +64,7 @@
     height: 220px;
     overflow: hidden;
     background: #f5f5f5;
+    padding: 10px;
 }
 
 .product-image {
@@ -84,7 +86,7 @@
     font-size: 16px;
     font-weight: 600;
     color: #333;
-    margin: 0 0 8px 0;
+    margin: 0 0 0px 0;
     line-height: 1.4;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -97,7 +99,7 @@
     font-size: 18px;
     font-weight: 700;
     color: #e31e24;
-    margin: 0 0 10px 0;
+    margin: 0 0 5px 0;
 }
 
 .product-rating {
@@ -279,7 +281,7 @@
                             ========================== --}}
                             <div class="search-widget sidebar-widget pb_40 mb_40">
                                 <div class="widget-title mb_30">
-                                    <h3>Select Vehicle</h3>
+                                    <h4>Select Vehicle</h4>
                                 </div>
                                 <div class="search-inner">
                                     <form method="GET" action="{{ route('Frontend.shop') }}">
@@ -420,7 +422,7 @@
                         ========================== --}}
                         <div class="category-widget sidebar-widget pb_40 mb_40">
                             <div class="widget-title mb_30">
-                                <h3>Categories</h3>
+                                <h4>Categories</h4>
                             </div>
                             <div class="widget-content">
                                 <ul class="accordion-box">
@@ -482,7 +484,7 @@
                         ========================== --}}
                         <div class="filter-widget sidebar-widget  mb_40">
                             <div class="widget-title mb_30">
-                                <h3>Filter by Price</h3>
+                                <h4>Filter by Price</h4>
                             </div>
 
                             <div class="price-range-slider">

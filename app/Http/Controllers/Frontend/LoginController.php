@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+
 
 class LoginController extends Controller
 {
@@ -60,7 +62,7 @@ class LoginController extends Controller
             'last_name'  => 'required|string|max:255',
             'email'      => 'required|email|unique:customers,email',
             'phone'      => 'required|string|max:20',
-            'password'   => 'required|min:6',
+            'password' => 'required|min:6|confirmed',
         ]);
 
         $customer = Customer::create([
@@ -82,4 +84,40 @@ class LoginController extends Controller
         return redirect()->route('Frontend.login')->with('success', 'logged out successfully.'); 
     }
 
+
+
+    //google login
+  
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+   public function handleGoogleCallback()
+    {
+        $googleUser = Socialite::driver('google')->stateless()->user();
+
+        $customer = Customer::where('email', $googleUser->getEmail())->first();
+
+        if (!$customer) {
+
+            $fullName = $googleUser->getName();
+            $nameParts = explode(' ', $fullName);
+
+            $firstName = $nameParts[0] ?? '';
+            $lastName = $nameParts[1] ?? '';
+
+            $customer = Customer::create([
+                'first_name' => $firstName,
+                'last_name'  => $lastName,
+                'email'      => $googleUser->getEmail(),
+                'password'   => bcrypt('random_password'),
+                'status'     => 1
+            ]);
+        }
+
+        Auth::guard('customer')->login($customer);
+
+        return redirect()->route('Frontend.index');
+    }
 }
