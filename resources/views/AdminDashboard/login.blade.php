@@ -256,7 +256,7 @@
 
     <div class="login-card">
       <div class="logo-container">
-        <img src="{{ asset('logo.png') }}" alt="Logo">
+        <img src="{{ asset('logo1.png') }}" alt="Logo">
         <p class="login-subtitle">Sign in to your Admin Dashboard</p>
       </div>
 

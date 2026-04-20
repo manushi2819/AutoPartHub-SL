@@ -6,7 +6,7 @@
     <h6 class="fw-semibold">
         {{ isset($vehicle) ? 'Edit Vehicle' : 'Create Vehicle' }}
     </h6>
-    <a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm">
+    <a href="{{ route('admin.vehicles.index') }}" class="btn btn-secondary btn-sm">
         Back
     </a>
 </div>

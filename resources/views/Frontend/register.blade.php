@@ -25,7 +25,7 @@
 
     .register-card {
         background: white;
-        max-width: 800px;
+        max-width: 750px;
         width: 100%;
         padding: 48px 40px;
         position: relative;

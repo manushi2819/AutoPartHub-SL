@@ -58,7 +58,7 @@
 
 <div class="d-flex justify-content-between mb-3">
     <h6>Order Details - {{ $order->order_number }}</h6>
-     <a href="{{ url()->previous() }}" class="btn btn-outline-secondary btn-sm">
+     <a href="{{ route('admin.orders.index') }}" class="btn btn-outline-secondary btn-sm">
         <i class="iconify" data-icon="mdi:arrow-left"></i> Back
     </a>
 </div>

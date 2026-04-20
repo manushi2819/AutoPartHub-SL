@@ -10,7 +10,7 @@ class Product extends Model
         'category_id',
         'name',
         'sku',
-        'brand',
+        'brand_id',
         'price',
         'cost_price',
         'description',

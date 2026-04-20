@@ -219,13 +219,13 @@
 </div>
 
 <script>
-$(document).ready(function() {
-    $('.open-delete-modal').click(function() {
-        var url = $(this).data('url');
-        $('#deleteForm').attr('action', url); // set form action dynamically
-        var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-        deleteModal.show(); // show modal
-    });
+$(document).on('click', '.open-delete-modal', function () {
+    var url = $(this).data('url');
+
+    $('#deleteForm').attr('action', url);
+
+    var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+    deleteModal.show();
 });
 </script>
 

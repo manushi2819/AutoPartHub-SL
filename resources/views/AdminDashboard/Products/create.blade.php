@@ -4,7 +4,7 @@
 @section('content')
 <div class="d-flex justify-content-between mb-24">
     <h6 class="fw-semibold">{{ isset($product) ? 'Edit Vehicle Part' : 'Create Vehicle Part' }}</h6>
-     <a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm">
+     <a href="{{ route('admin.products.index') }}" class="btn btn-secondary btn-sm">
         Back
     </a>
 </div>
@@ -53,21 +53,21 @@
 
                 <div class="col-md-6">
                     <label class="form-label">SKU</label>
-                    <input type="text" name="sku" class="form-control" value="{{ $product->sku ?? 'AUTO-GENERATED' }}" readonly>
+                    <input type="text" name="sku" class="form-control" value="{{ $product->sku ?? '' }}" placeholder="AUTO-GENERATED" readonly>
                 </div>
 
-                <div class="col-md-6">
-                    <label class="form-label">Brand <i class="text-danger">*</i></label>
-                     <select name="brand" class="form-control" required>
+              <div class="col-md-6">
+                    <label class="form-label">Brand</label>
+                    <select name="brand_id" class="form-control">
                         <option value="">Select Brand</option>
                         @foreach($brands as $brand)
-                            <option value="{{ $brand->name }}" {{ isset($product) && $product->brand == $brand->name ? 'selected' : '' }}>
+                            <option value="{{ $brand->id }}"
+                                {{ old('brand_id', $product->brand_id ?? '') == $brand->id ? 'selected' : '' }}>
                                 {{ $brand->name }}
                             </option>
                         @endforeach
                     </select>
                 </div>
-
                 <div class="col-md-6">
                     <label class="form-label">Price <i class="text-danger">*</i></label>
                     <input type="number" name="price" class="form-control" step="0.01" value="{{ $product->price ?? old('price') }}" required>
@@ -266,4 +266,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+
 @endsection

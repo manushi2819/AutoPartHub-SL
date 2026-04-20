@@ -37,7 +37,7 @@ class PartDetailsController extends Controller
         if ($relatedProducts->count() < 10 && $brand) {
             $brandProducts = Product::with(['images', 'compatibility'])
                 ->where('id', '!=', $product->id)
-                ->where('brand', $brand)
+                ->where('brand_id', $brand->id)
                 ->whereNotIn('id', $relatedProducts->pluck('id'))
                 ->take(10 - $relatedProducts->count())
                 ->get();

@@ -46,7 +46,7 @@ class ProductController extends Controller
         'name' => 'required|string|max:255',
         'category_id' => 'required|exists:categories,id',
         'sku' => 'nullable|string|max:255',
-        'brand' => 'nullable|string|max:255',
+        'brand_id' => 'nullable|exists:brands,id',
         'price' => 'required|numeric',
         'cost_price' => 'nullable|numeric',
         'stock_quantity' => 'required|integer',
@@ -62,19 +62,33 @@ class ProductController extends Controller
         'transmission' => 'nullable|string|max:255',
     ]);
 
-        // Auto-generate SKU if not provided
-        if (empty($data['sku'])) {
-            // Take first 3 letters of name (uppercase) + timestamp
-            $namePart = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $data['name']), 0, 3));
-            $data['sku'] = $namePart . '-' . time(); // e.g., TOY-170820261234
+        $lastSku = \App\Models\Product::whereNotNull('sku')
+            ->where('sku', 'like', 'SKU%')
+            ->orderBy('sku', 'desc')
+            ->value('sku');
+
+        if ($lastSku) {
+            // extract number part
+            $number = (int) str_replace('SKU', '', $lastSku);
+            $nextNumber = $number + 1;
+        } else {
+            $nextNumber = 1;
         }
+
+        // format: SKU0001, SKU0020 etc.
+        $sku = 'SKU' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+
+        $data['sku'] = $sku;
 
         $product = Product::create($data);
 
         // Create single compatibility
-        if ($request->filled('compatibility_brand')) {
+        if ($request->filled('brand_id')) {
+
+            $brand = \App\Models\Brand::find($request->brand_id);
+
             $product->compatibility()->create([
-                'brand' => $request->brand,
+                'brand' => $brand->name ?? null, 
                 'model' => $request->compatibility_model,
                 'year_from' => $request->compatibility_year_from,
                 'year_to' => $request->compatibility_year_to,
@@ -88,23 +102,25 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
     }
 
+    
 
      // ================= update =================
     public function update(Request $request, Product $product)
     {
+        \Log::info('UPDATE PRODUCT REQUEST:', $request->all());
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'sku' => 'nullable|string|max:255',
-            'brand' => 'required|string|max:255',
+            'brand_id' => 'nullable|exists:brands,id',
             'price' => 'required|numeric',
             'cost_price' => 'nullable|numeric',
             'stock_quantity' => 'required|integer',
             'status' => 'required|boolean',
             'description' => 'nullable|string',
             'small_description' => 'nullable|string',
-            'compatibility_model' => 'required|string|max:255',
-            'compatibility_year_from' => 'required|integer',
+            'compatibility_model' => 'nullable|string|max:255',
+            'compatibility_year_from' => 'nullable|integer',
             'compatibility_year_to' => 'nullable|integer',
             'engine_type' => 'nullable|string|max:255',
             'engine_cc' => 'nullable|integer',
@@ -112,22 +128,35 @@ class ProductController extends Controller
             'transmission' => 'nullable|string|max:255'
         ]);
 
+        \Log::info('VALIDATED DATA:', $data);
+        \Log::info('BEFORE UPDATE PRODUCT:', $product->toArray());
+
         $product->update($data);
 
+        \Log::info('AFTER UPDATE PRODUCT:', $product->fresh()->toArray());
+
         // Update or create single compatibility
-        $product->compatibility()->updateOrCreate(
-            ['product_id' => $product->id],
-            [
-                'brand' => $request->brand,
-                'model' => $request->compatibility_model,
-                'year_from' => $request->compatibility_year_from,
-                'year_to' => $request->compatibility_year_to,
-                'engine_type' => $request->engine_type,
-                'engine_cc' => $request->engine_cc,
-                'fuel_type' => $request->fuel_type,
-                'transmission' => $request->transmission,
-            ]
-        );
+        if (
+            $request->filled('compatibility_model') ||
+            $request->filled('compatibility_year_from') ||
+            $request->filled('compatibility_year_to')
+        ) {
+            $brand = \App\Models\Brand::find($request->brand_id);
+
+            $product->compatibility()->updateOrCreate(
+                ['product_id' => $product->id],
+                [
+                    'brand' => $brand->name ?? null,
+                    'model' => $request->compatibility_model,
+                    'year_from' => $request->compatibility_year_from,
+                    'year_to' => $request->compatibility_year_to,
+                    'engine_type' => $request->engine_type,
+                    'engine_cc' => $request->engine_cc,
+                    'fuel_type' => $request->fuel_type,
+                    'transmission' => $request->transmission,
+                ]
+            );
+        }
 
           return back()->with('success', 'Product updates successfully.');
     }

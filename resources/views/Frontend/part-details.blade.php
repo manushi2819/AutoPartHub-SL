@@ -203,8 +203,8 @@ h3:hover {
 }
 
 .main-image img {
-    width: 100%;
-    object-fit: cover;
+    width: 100% !important;
+    object-fit: cover !important;
     border-radius: 0px;
 }
 
@@ -281,11 +281,31 @@ h3:hover {
                                 @foreach($product->images as $index => $image)
                                     <div class="slider-content">
                                         <div class="image-inner">
-                                            <div class="image-box">
-                                               <figure class="image main-image" style="height:450px">
-                                                    <a href="{{ asset('uploads/' . $image->image_url) }}" class="lightbox-image" data-fancybox="gallery">
-                                                        <img style="height:100%" src="{{ asset('uploads/' . $image->image_url) }}" alt="{{ $product->name }}">
+                                           <div class="image-box">
+                                                <figure class="image main-image"
+                                                    style="height:450px !important;
+                                                      background:#fff !important;
+                                                       ">
+
+                                                    <a href="{{ asset('uploads/' . $image->image_url) }}"
+                                                    class="lightbox-image"
+                                                    data-fancybox="gallery"
+                                                    style="width:100% !important;
+                                                            height:100% !important;
+                                                            display:flex !important;
+                                                            align-items:center !important;
+                                                            justify-content:center !important;">
+
+                                                        <img
+                                                            src="{{ asset('uploads/' . $image->image_url) }}"
+                                                            alt="{{ $product->name }}"
+                                                            style="width:100% !important;
+                                                                height:100% !important;
+                                                                object-fit:contain !important;
+                                                                display:block !important;
+                                                                padding:15px">
                                                     </a>
+
                                                 </figure>
                                             </div>
                                             <div class="slider-pager">
@@ -312,8 +332,8 @@ h3:hover {
                         <!-- Product Info -->
                         <div class="col-lg-5 col-md-12 col-sm-12 content-column">
                             <div class="content-box ml_20">
-                                <h2>{{ $product->name }}</h2>
-                                <h3>Rs. {{ number_format($product->price, 2) }}</h3>
+                                <h2 style="font-size: 34px;">{{ $product->name }}</h2>
+                                <h3 style="font-size: 24px; ">LKR {{ number_format($product->price, 2) }}</h3>
 
                                 <ul class="rating">
                                     @php
@@ -334,7 +354,7 @@ h3:hover {
                                 </div>
 
                                 <ul class="discription-box">
-                                    <li><strong>Brand :</strong> {{ $product->brand }}</li>
+                                    <li><strong>Brand :</strong> {{ $product->brand->name }}</li>
                                     <li><strong>Product SKU :</strong> {{ $product->sku }}</li>
                                     <li><strong>Category :</strong> {{ $product->category->name ?? '-' }}</li>
                                     <li class="product-stock"><strong>Availability :</strong>
@@ -469,7 +489,7 @@ h3:hover {
 
                                     {{-- Customer Review Form --}}
                                     <div class="customer-review" style="margin-top:30px;">
-                                        <h3>Write Your Rating</h3>
+                                        <h3 style="font-size: 20px; ">Write Your Rating</h3>
                                         
                                         <div class="rating-box mb_25">
                                             <p>Your Rating <span>*</span></p>
@@ -551,14 +571,14 @@ h3:hover {
             </div>
 
 
-            <div class="auto-container">
+            <div class="container">
             <div class="related-product">
                 <h2>You may also like these</h2>
                 <div class="inner-content clearfix">
                     @foreach($relatedProducts as $related)
                         <div class="shop-block-one">
-                            <div class="inner-box d-flex flex-column">
-                                <div class="image-box">
+                            <div class="inner-box d-flex flex-column" >
+                                <div class="image-box" style="height: 180px !important;">
                                     <ul class="option-list">
                                         <li>
                                             <a href="{{ asset('uploads/' . ($related->images->first()->image_url ?? 'placeholder.png')) }}" 
@@ -567,9 +587,6 @@ h3:hover {
                                             </a>
                                         </li>
                                    
-                                        <li>
-                                            <button type="button"><i class="icon-7"></i></button>
-                                        </li>
                                     </ul>
                                    <figure class="image" style="height:200px; overflow:hidden;">
                                     <img src="{{ asset('uploads/' . ($related->images->first()->image_url ?? 'placeholder.png')) }}" 
@@ -577,22 +594,20 @@ h3:hover {
                                         style="width:100%; height:100%; object-fit: cover;">
                                 </figure>
                                 </div>
-                                <div class="lower-content mt-auto">
+                                <div class="lower-content">
                                     <h4 class="product-name">
                                         <a href="{{ route('Frontend.parts-details', $related->id) }}">
                                             {{ $related->name }}
                                         </a>
                                     </h4>
-                                    <h5>Rs. {{ $related->price }}</h5>
-                                    <ul class="rating">
-                                        @for($i=0; $i<5; $i++)
-                                            <li><i class="icon-41"></i></li>
-                                        @endfor
-                                        <li><span>(5)</span></li>
-                                    </ul>
-                                    <span class="product-stock">
-                                        <i class="icon-39"></i>{{ $related->stock_quantity > 0 ? 'In Stock' : 'Out of Stock' }}
-                                    </span>
+                                    <h5>LKR {{ $related->price }}</h5>
+                                        <ul class="rating">
+                                            @for($i=0; $i<5; $i++)
+                                                <li><i class="icon-41"></i></li>
+                                            @endfor
+                                            <li><span>(5)</span></li>
+                                        </ul>
+                               
                                 </div>
                             </div>
                         </div>
@@ -604,7 +619,166 @@ h3:hover {
         </section>
         <!-- shop-details end -->
 
+<style>
 
+/* Shop block card */
+.shop-block-one {
+    float: left;
+    width: 25%;
+    padding: 0 12px !important;
+    margin-bottom: 0px !important;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 992px) {
+    .shop-block-one {
+        width: 33.333%;
+    }
+}
+
+@media (max-width: 768px) {
+    .shop-block-one {
+        width: 50%;
+    }
+}
+
+@media (max-width: 576px) {
+    .shop-block-one {
+        width: 100%;
+    }
+}
+
+.inner-box {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    height: 100%;
+}
+
+.inner-box:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+/* Flex column utilities */
+.d-flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.mt-auto {
+    margin-top: auto;
+}
+
+/* Image box */
+.image-box {
+    position: relative;
+    background-color: #f5f5f5 !important;
+    overflow: hidden;
+}
+
+.image-box .image {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.image-box .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.inner-box:hover .image-box .image img {
+    transform: scale(1.05);
+}
+
+
+
+/* Lower content */
+.lower-content {
+    padding: 5px;
+    background: #fff;
+}
+
+.product-name {
+    margin: 0 0 0px 0 !important;
+    font-size: 16px !important;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.product-name a {
+    color: #222;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.product-name a:hover {
+    color: #e74c3c;
+}
+
+.lower-content h5 {
+    margin: 0 0 10px 0 !important;
+    font-size: 18px;
+    font-weight: 700;
+    color: #e74c3c;
+}
+
+/* Rating stars */
+.rating {
+    margin: 0 0 12px 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.rating li {
+    display: inline-block;
+}
+
+.rating li i {
+    color: #f5b81b;
+    font-style: normal;
+    font-size: 13px;
+}
+
+.rating li:last-child i {
+    color: #999;
+    font-size: 13px;
+}
+
+.rating li span {
+    color: #777;
+    font-size: 12px;
+    margin-left: 0px !important;
+}
+
+
+/* Ensure icons look decent without font */
+i[class^="icon-"] {
+    font-style: normal;
+    font-size: 14px;
+}
+
+/* Lightbox link cursor */
+.lightbox-image {
+    cursor: pointer;
+}
+
+/* Button focus removal */
+.option-list li button:focus {
+    outline: none;
+}
+</style>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
