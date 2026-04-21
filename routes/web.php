@@ -35,6 +35,7 @@ Route::post('/cart/delete', [CartController::class, 'delete'])->name('cart.delet
 
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('Frontend.wishlist');
 Route::post('wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
+Route::post('/wishlist/remove', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('Frontend.checkout');
 Route::post('/checkout/process', [CheckoutController::class, 'placeOrder'])->name('Frontend.checkout.process');

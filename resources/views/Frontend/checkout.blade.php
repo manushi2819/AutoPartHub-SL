@@ -4,10 +4,38 @@
 
 @section('content')
 
+<style>
+     /* Page Title */
+    .cart-title {
+        text-align: center;
+    }
+
+    .cart-title h1 {
+        font-size: 1.9rem;
+        font-weight: 700;
+        color: var(--primary-black);
+        letter-spacing: -0.02em;
+        margin: 0;
+        position: relative;
+        display: inline-block;
+    }
+
+    .cart-title h1:after {
+        content: '';
+        position: absolute;
+        bottom: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: var(--primary-red);
+    }
+</style>
+
 <!-- page-title -->
 <section class="page-title-two centred">
     <div class="auto-container">
-        <div class="content-box">
+        <div class="content-box cart-title">
             <h1>Checkout</h1>
         </div>
     </div>

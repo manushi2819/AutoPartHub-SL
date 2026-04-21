@@ -101,10 +101,13 @@ class PartShopController extends Controller
         // -------------------------
         if ($request->filled('search')) {
             $search = $request->search;
+
             $products->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                ->orWhere('brand', 'like', "%{$search}%")
-                ->orWhere('description', 'like', "%{$search}%");
+                ->orWhere('description', 'like', "%{$search}%")
+                ->orWhereHas('brand', function ($b) use ($search) {
+                    $b->where('name', 'like', "%{$search}%");
+                });
             });
         }
 

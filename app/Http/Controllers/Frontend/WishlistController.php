@@ -72,4 +72,40 @@ class WishlistController extends Controller
         ]);
     }
 
+
+    public function removeFromWishlist(Request $request)
+    {
+        $request->validate([
+            'wishlist_id' => 'required|exists:wishlists,id',
+        ]);
+
+        $customer = auth()->guard('customer')->user();
+        $customerId = $customer ? $customer->id : null;
+        $sessionId = $customerId ? null : session()->getId();
+
+        $wishlist = Wishlist::where('id', $request->wishlist_id)
+            ->where(function ($q) use ($customerId, $sessionId) {
+                if ($customerId) {
+                    $q->where('customer_id', $customerId);
+                } else {
+                    $q->where('session_id', $sessionId);
+                }
+            })
+            ->first();
+
+        if (!$wishlist) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Item not found'
+            ]);
+        }
+
+        $wishlist->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Removed from wishlist'
+        ]);
+    }
+
 }

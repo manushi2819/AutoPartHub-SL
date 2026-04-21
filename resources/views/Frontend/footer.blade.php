@@ -1,6 +1,6 @@
 
         <!-- main-footer -->
-        <footer class="main-footer mt-5">
+        <footer class="main-footer">
             <div class="auto-container">
                 <div class="widget-section" style="padding: 50px 0px 20px 0px;">
                     <div class="row clearfix">

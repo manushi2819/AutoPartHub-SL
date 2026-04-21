@@ -103,15 +103,16 @@
                     </div>
                 </div>
             </div>
+           
             <!-- header-upper -->
             <div class="header-upper">
                 <div class="large-container">
                     <div class="upper-inner">
-                        <figure class="logo-box"  style="height:45px">
+                         <figure class="logo-box"  style="height:45px">
                             <a href="{{ route('Frontend.index') }}"><img src="{{ asset('logo.png') }}" alt=""  
                             style="height:100%"></a></figure>
-                        <div class="search-area" style="height:45px">
-                            @php
+                        <div class="search-area" >
+                             @php
                                 $parentCategories = \App\Models\Category::whereNull('parent_id')
                                                     ->where('status', 1)
                                                     ->orderBy('name')
@@ -132,7 +133,6 @@
                                         </select>
                                 </div>
                             </div>
-
                             <div class="search-box" style="height:45px">
                                     <div class="form-group" >
                                         <input type="search" style="height:45px" name="search" value="{{ request('search') }}" placeholder="Search Parts..." required>
@@ -148,14 +148,22 @@
 
                             if ($customer) {
                                 $cartCount = \App\Models\Cart::where('customer_id', $customer->id)
-                                                ->sum('quantity');
+                                                ->count();
                             } else {
                                 $cartCount = \App\Models\Cart::where('session_id', $sessionId)
-                                                ->sum('quantity');
+                                               ->count();
+                            }
+
+                            if ($customer) {
+                                $wishlistCount = \App\Models\Wishlist::where('customer_id', $customer->id)
+                                                                ->count();
+                            } else {
+                                $wishlistCount = \App\Models\Wishlist::where('session_id', $sessionId)
+                                                ->count();
                             }
                         @endphp
                         <ul class="option-list">
-                            <li><a href="{{ route('Frontend.wishlist') }}"><i class="icon-7"></i></a></li>
+                            <li><a href="{{ route('Frontend.wishlist') }}"><i class="icon-7"></i><span>{{ $wishlistCount }}</span></a></li>
                             <li><a href="{{ route('Frontend.cart') }}"><i class="icon-6"></i><span>{{ $cartCount }}</span></a></li>
                           
                              @if(Auth::guard('customer')->check())
@@ -188,11 +196,11 @@
                                     <a class="nav-link" href="{{ route('Frontend.login') }}"><i class="icon-25"></i></a>
                                 </li>
                             @endif
-
                         </ul>
                     </div>
                 </div>
             </div>
+
             <!-- header-lower -->
             <div class="header-lower" >
                 <div class="large-container" >
@@ -264,6 +272,7 @@
 
                             </ul>
                         </div>
+                        
                         <div class="menu-area">
                             <!--Mobile Navigation Toggler-->
                             <div class="mobile-nav-toggler">
@@ -283,7 +292,7 @@
                                         </li> 
 
                                         <li class="">
-                                            <a href="{{ route('Frontend.vehicles') }}">Vehicles</a>
+                                            <a href="">Vehicles</a>
                                         </li> 
 
                                        <li class="">
