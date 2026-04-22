@@ -264,7 +264,7 @@
                 </div>
 
                 <div class="col-2">
-                    <button type="submit" class="btn btn-primary">Update Status</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Update Status</button>
                 </div>
             </div>
 

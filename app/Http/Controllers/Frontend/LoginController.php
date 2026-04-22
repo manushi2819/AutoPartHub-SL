@@ -93,7 +93,8 @@ class LoginController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
-   public function handleGoogleCallback()
+
+    public function handleGoogleCallback()
     {
         $googleUser = Socialite::driver('google')->stateless()->user();
 
@@ -104,15 +105,14 @@ class LoginController extends Controller
             $fullName = $googleUser->getName();
             $nameParts = explode(' ', $fullName);
 
-            $firstName = $nameParts[0] ?? '';
-            $lastName = $nameParts[1] ?? '';
-
             $customer = Customer::create([
-                'first_name' => $firstName,
-                'last_name'  => $lastName,
+                'first_name' => $nameParts[0] ?? '',
+                'last_name'  => $nameParts[1] ?? '',
                 'email'      => $googleUser->getEmail(),
-                'password'   => bcrypt('random_password'),
-                'status'     => 1
+                'password'   => null, 
+                'status'     => 1,
+                'provider'   => 'google',
+                'provider_id'=> $googleUser->getId(),
             ]);
         }
 
@@ -120,4 +120,6 @@ class LoginController extends Controller
 
         return redirect()->route('Frontend.index');
     }
+
+ 
 }

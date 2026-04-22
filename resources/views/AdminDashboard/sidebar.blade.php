@@ -87,12 +87,12 @@
             </li>-->
 
             
-            <li>
+            <!-- <li>
                 <a href="{{ route('admin.customers.index') }}">
                     <iconify-icon icon="mdi:account-outline" class="menu-icon"></iconify-icon>
                     <span>Customers</span>
                 </a>
-            </li>
+            </li>-->
 
             <!--<li>
                 <a href="{{ route('admin.contact') }}">

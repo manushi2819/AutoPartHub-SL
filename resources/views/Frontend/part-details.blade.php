@@ -515,12 +515,21 @@ h3:hover {
                                                     <label>Write Your Review <span>*</span></label>
                                                     <textarea name="message" required></textarea>
                                                 </div>
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label fw-semibold">Add Photos</label>
 
-                                                <div class="form-group upload-field">
-                                                    <label>Add Photos</label>
-                                                    <input name="files[]" type="file" multiple>
+                                                    <div class="border rounded p-3 bg-light">
+                                                        <input 
+                                                            name="files[]" 
+                                                            type="file" 
+                                                            multiple 
+                                                            class="form-control"
+                                                            style="padding: 10px;"
+                                                        >
+                                                    </div>
+
+                                                    <small class="text-muted">You can upload multiple images at once.</small>
                                                 </div>
-
                                                 <div class="row">
                                                     <div class="form-group col-6">
                                                         <label>Your Name <span>*</span></label>
@@ -536,7 +545,7 @@ h3:hover {
                                                 <input type="hidden" name="rating" id="rating-value" value="5">
 
                                                 <div class="message-btn">
-                                                    <button type="submit" class="theme-btn">Submit Review<span></span><span></span><span></span><span></span></button>
+                                                    <button type="submit" class="theme-btn p-1" style="font-size:14px">Submit Review<span></span><span></span><span></span><span></span></button>
                                                 </div>
                                             </form>
                                         </div>
@@ -564,6 +573,8 @@ h3:hover {
                                     @endif
                                 </div>
                             </div>
+
+                            
                         </div>
                     </div>
                 </div>

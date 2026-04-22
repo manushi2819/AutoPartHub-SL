@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Apr 20, 2026 at 05:33 PM
+-- Generation Time: Apr 22, 2026 at 10:54 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -176,7 +176,8 @@ INSERT INTO `carts` (`id`, `customer_id`, `session_id`, `product_id`, `quantity`
 (2, NULL, '6CqkVTQRcQik22MLOXaQBZzCOR1kE2Y2GV6CGdhg', 8, 2, 38741.00, '2026-03-01 05:00:43', '2026-03-01 05:01:26'),
 (18, NULL, '4faCqN8ztO3GuZTWR8Z7sx3NOGN8E9reDqM1dJwD', 2, 1, 15196.00, '2026-03-18 07:32:49', '2026-03-18 07:32:49'),
 (19, NULL, 'Ko4GEXz8j7uvYlssqH4SXkZPwXxJZuTX69nzowNO', 15, 1, 10442.00, '2026-04-05 04:51:29', '2026-04-05 04:51:29'),
-(21, NULL, '0ykdA3SFLuWcOzsG9efWplyGtL9tMGq7GB9gbMyW', 1, 2, 15196.00, '2026-04-06 05:52:13', '2026-04-06 05:57:40');
+(21, NULL, '0ykdA3SFLuWcOzsG9efWplyGtL9tMGq7GB9gbMyW', 1, 2, 15196.00, '2026-04-06 05:52:13', '2026-04-06 05:57:40'),
+(22, NULL, 'nrL1MJplU5ohzM0TVXtrs4kL35pFlXY3hEOU2yBh', 2, 1, 15196.00, '2026-04-21 08:23:38', '2026-04-21 09:01:18');
 
 -- --------------------------------------------------------
 
@@ -431,7 +432,9 @@ CREATE TABLE `customers` (
   `phone` varchar(255) DEFAULT NULL,
   `address` text DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 1,
-  `password` varchar(255) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `provider` varchar(255) DEFAULT NULL,
+  `provider_id` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -440,10 +443,10 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`id`, `first_name`, `last_name`, `email`, `phone`, `address`, `status`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 1, '$2y$12$yjd2AhSYf0qTNGDccIAA3eMMbN1hulKFc3MFAkia9MJCckzeVkuda', '2026-02-18 03:05:37', '2026-04-01 10:35:28'),
-(2, 'Kasthuri', 'Dhananjaya', 'kasthurid1234@gmail.com', '0716316143', NULL, 1, '$2y$12$ialXlrJZtnollGjy287fkOnAlumBxf.wbY/UquUjEs7lVdffo1zUi', '2026-04-01 22:33:16', '2026-04-01 22:33:44'),
-(3, 'Ruwindi', 'Weerasinghe', 'ruwindi2819@gmail.com', NULL, NULL, 1, '$2y$12$XWzqyy1d0tW/d1kQOxoFje.MGKtl1VQE4Lc0/tqjbGbYhpJDupf6G', '2026-04-20 05:04:34', '2026-04-20 05:04:34');
+INSERT INTO `customers` (`id`, `first_name`, `last_name`, `email`, `phone`, `address`, `status`, `password`, `provider`, `provider_id`, `created_at`, `updated_at`) VALUES
+(1, 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 1, '$2y$12$yjd2AhSYf0qTNGDccIAA3eMMbN1hulKFc3MFAkia9MJCckzeVkuda', NULL, NULL, '2026-02-18 03:05:37', '2026-04-01 10:35:28'),
+(2, 'Kasthuri', 'Dhananjaya', 'kasthurid1234@gmail.com', '0716316143', NULL, 1, '$2y$12$ialXlrJZtnollGjy287fkOnAlumBxf.wbY/UquUjEs7lVdffo1zUi', NULL, NULL, '2026-04-01 22:33:16', '2026-04-01 22:33:44'),
+(4, 'Ruwindi', 'Weerasinghe', 'ruwindi2819@gmail.com', NULL, NULL, 1, NULL, 'google', '106816235934481292237', '2026-04-22 08:50:12', '2026-04-22 08:50:12');
 
 -- --------------------------------------------------------
 
@@ -483,7 +486,9 @@ INSERT INTO `customer_activities` (`id`, `customer_id`, `activity_type`, `refere
 (16, 2, 'vehicle_condition_view', NULL, 'Reconditioned', '2026-04-04 08:30:42', '2026-04-04 08:30:42'),
 (17, 2, 'search', NULL, 'Radiator', '2026-04-04 08:35:35', '2026-04-04 08:35:35'),
 (18, 1, 'category_view', 20, NULL, '2026-04-10 06:33:05', '2026-04-10 06:33:05'),
-(19, 2, 'vehicle_view', NULL, '2', '2026-04-10 15:39:21', '2026-04-10 15:39:21');
+(19, 2, 'vehicle_view', NULL, '2', '2026-04-10 15:39:21', '2026-04-10 15:39:21'),
+(20, 2, 'category_view', 96, NULL, '2026-04-22 08:40:55', '2026-04-22 08:40:55'),
+(21, 2, 'product_view', 20, NULL, '2026-04-22 08:41:00', '2026-04-22 08:41:00');
 
 -- --------------------------------------------------------
 
@@ -580,7 +585,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (35, '2026_04_09_142100_create_auction_bids_table', 16),
 (36, '2026_04_09_142138_create_auction_notifications_table', 16),
 (37, '2026_04_20_200134_add_brand_id_to_products_table', 17),
-(38, '2026_04_20_201304_remove_brand_from_products_table', 18);
+(38, '2026_04_20_201304_remove_brand_from_products_table', 18),
+(39, '2026_04_22_141742_add_provider_fields_to_customers_table', 19),
+(40, '2026_04_22_141925_modify_password_nullable_in_customers_table', 20);
 
 -- --------------------------------------------------------
 
@@ -616,13 +623,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `customer_id`, `order_number`, `tracking_no`, `first_name`, `last_name`, `email`, `phone`, `address`, `city`, `zip`, `country`, `subtotal`, `discount`, `total`, `payment_method`, `status`, `payment_status`, `created_at`, `updated_at`) VALUES
-(1, NULL, 'ORD-4VTDYSFM', NULL, 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 24568.00, 0.00, 24568.00, 'card', 'confirmed', 'paid', '2026-03-10 10:40:26', '2026-03-10 10:40:51'),
-(2, NULL, 'ORD-YUTHYBXP', NULL, 'Shasmal', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 38741.00, 0.00, 38741.00, 'cod', 'pending', 'pending', '2026-03-10 10:41:34', '2026-03-10 10:41:34'),
-(3, NULL, 'ORD-WPPRTVH3', NULL, 'Shashmal', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 45877.00, 0.00, 45877.00, 'cod', 'pending', 'pending', '2026-03-10 10:43:15', '2026-03-10 10:43:15'),
-(4, NULL, 'ORD-00PISXO4', NULL, 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 38741.00, 0.00, 38741.00, 'cod', 'pending', 'pending', '2026-03-10 10:46:02', '2026-03-10 10:46:02'),
-(5, NULL, 'ORD-GIIPRUZT', '12345678', 'Ruvidi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 32605.00, 0.00, 32605.00, 'cod', 'delivered', 'paid', '2026-03-10 10:47:11', '2026-03-30 23:37:04'),
-(6, NULL, 'ORD-X4DUOVHM', NULL, 'Tharumal', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 23531.00, 0.00, 23531.00, 'card', 'confirmed', 'paid', '2026-03-10 10:47:51', '2026-03-10 10:48:18'),
-(7, 1, 'ORD-FAKSH41F', NULL, 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Kurunegala', '60040', 'Sri Lanka', 29073.00, 0.00, 29073.00, 'cod', 'pending', 'pending', '2026-04-01 01:08:27', '2026-04-01 01:08:27');
+(1, NULL, 'ORD-CGK7ZTDW', NULL, 'Kasthuri', 'Dhananjaya', 'kasthurid1234@gmail.com', '0716316143', 'No.124,Ridigama,', 'Kurunegala', '60040', 'Sri Lanka', 16396.00, 0.00, 16396.00, 'cod', 'pending', 'pending', '2026-04-22 08:38:31', '2026-04-22 08:38:31'),
+(2, 2, 'ORD-QUVJUF4Y', NULL, 'Kasthuri', 'Dhananjaya', 'kasthurid1234@gmail.com', '0716316143', 'No.124', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 42050.00, 0.00, 42050.00, 'cod', 'pending', 'pending', '2026-04-22 08:41:40', '2026-04-22 08:41:40');
 
 -- --------------------------------------------------------
 
@@ -646,13 +648,8 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`, `subtotal`, `created_at`, `updated_at`) VALUES
-(1, 1, 5, 2, 12284.00, 24568.00, '2026-03-10 10:40:26', '2026-03-10 10:40:26'),
-(2, 2, 8, 1, 38741.00, 38741.00, '2026-03-10 10:41:34', '2026-03-10 10:41:34'),
-(3, 3, 6, 1, 45877.00, 45877.00, '2026-03-10 10:43:15', '2026-03-10 10:43:15'),
-(4, 4, 8, 1, 38741.00, 38741.00, '2026-03-10 10:46:02', '2026-03-10 10:46:02'),
-(5, 5, 11, 1, 32605.00, 32605.00, '2026-03-10 10:47:11', '2026-03-10 10:47:11'),
-(6, 6, 12, 1, 23531.00, 23531.00, '2026-03-10 10:47:51', '2026-03-10 10:47:51'),
-(7, 7, 14, 1, 29073.00, 29073.00, '2026-04-01 01:08:27', '2026-04-01 01:08:27');
+(1, 1, 4, 1, 16396.00, 16396.00, '2026-04-22 08:38:31', '2026-04-22 08:38:31'),
+(2, 2, 20, 1, 42050.00, 42050.00, '2026-04-22 08:41:40', '2026-04-22 08:41:40');
 
 -- --------------------------------------------------------
 
@@ -694,26 +691,26 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `category_id`, `name`, `sku`, `brand_id`, `price`, `cost_price`, `description`, `small_description`, `stock_quantity`, `status`, `created_at`, `updated_at`) VALUES
 (1, 137, 'OEM Radiator', 'SKU0021', 1, 15196.00, 14267.00, '<p>Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance. A well-maintained and properly selected set of rims can significantly enhance the overall look and performance of a vehicle.</p><p>wheels provide a means of mounting and affixing the tires to the vehicle through which the engine’s power is transferred to the ground. As the engine generates power, it moves through the drivetrain to the wheels, which bolt to the wheel hub and rotate around the axles For the wheels to turn and propel the car forward, you need to have friction provided by the tires in direct and constant contact with the ground under the car.</p><p><strong>Features </strong>:</p><ul><li>Rims can be made from different materials</li><li>This includes spoke wheels, multi-spoke wheels</li><li>The weight of the rim can impact the vehicle\'s overall weight and performance.</li><li>Certain rims may have features that make them easier to clean and maintain.</li></ul><p><br></p>', 'Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance.', 38, 1, '2026-02-03 12:01:48', '2026-03-01 03:58:56'),
-(2, 137, 'OEM Radiator', 'SKU0001', 8, 15196.00, 14267.00, '<p>This is a description for Product 1.</p>', NULL, 38, 1, '2026-03-04 12:01:48', '2026-04-20 15:09:20'),
-(3, 74, 'Synthetic ATF', 'SKU0002', 2, 44381.00, 26178.00, 'This is a description for Product 2.', NULL, 37, 1, '2026-02-23 12:01:48', '2026-03-10 10:01:44'),
-(4, 143, 'High Flow Water Pump', 'SKU0003', 1, 16396.00, 16828.00, 'This is a description for Product 3.', NULL, 12, 1, '2026-03-04 12:01:48', '2026-03-10 10:38:19'),
-(5, 108, 'Truck Converter', 'SKU0004', 1, 12284.00, 15555.00, '<p>This is a description for Product 4.</p>', NULL, 24, 1, '2026-02-23 12:01:48', '2026-04-20 15:09:59'),
-(6, 70, 'Steel Flywheel', 'SKU0005', 1, 45877.00, 31201.00, '<p>This is a description for Product 5.</p>', NULL, 34, 1, '2026-02-23 12:01:48', '2026-04-20 15:10:08'),
-(7, 151, 'Performance Thermostat', 'SKU0006', 2, 24389.00, 33058.00, 'This is a description for Product 6.', NULL, 17, 1, '2026-02-23 12:01:48', '2026-03-10 10:32:04'),
-(8, 180, 'Standard Wheel', 'SKU0007', 1, 38741.00, 30546.00, 'This is a description for Product 7.', NULL, 39, 1, '2026-02-23 12:01:48', '2026-03-10 10:46:02'),
-(9, 11, 'Hydraulic Camshafts', 'SKU0008', 13, 17553.00, 39220.00, 'This is a description for Product 8.', NULL, 26, 1, '2026-02-23 12:01:48', '2026-02-23 12:16:58'),
-(10, 178, 'Custom Seats', 'SKU0009', 7, 17158.00, 36881.00, '<p>This is a description for Product 9.</p>', NULL, 23, 1, '2026-02-23 12:01:48', '2026-04-20 15:10:21'),
-(11, 4, 'Forged Pistons', 'SKU0010', 2, 32605.00, 5315.00, 'This is a description for Product 10.', NULL, 3, 1, '2026-02-23 12:01:48', '2026-03-10 10:47:11'),
-(12, 152, 'Truck Thermostat', 'SKU0011', 13, 23531.00, 10969.00, 'This is a description for Product 11.', NULL, 10, 1, '2026-02-23 12:01:48', '2026-03-10 10:47:51'),
-(13, 42, 'Semi-Metallic Pads', 'SKU0012', 7, 48614.00, 30287.00, 'This is a description for Product 12.', NULL, 27, 1, '2026-02-23 12:01:48', '2026-03-10 09:59:21'),
-(14, 183, 'OEM Wheel', 'SKU0013', 2, 29073.00, 22685.00, 'This is a description for Product 13.', NULL, 36, 1, '2026-02-23 12:01:48', '2026-04-01 01:08:27'),
-(15, 176, 'Leather Seats', 'SKU0014', 13, 10442.00, 35868.00, 'This is a description for Product 14.', NULL, 27, 1, '2026-02-23 12:01:48', '2026-02-23 12:20:00'),
-(16, 190, 'Custom Panels', 'SKU0015', 7, 46682.00, 14373.00, '<p>This is a description for Product 15.</p>', NULL, 26, 1, '2026-02-23 12:01:48', '2026-04-20 15:10:40'),
-(17, 79, 'Lead-Acid Battery', 'SKU0016', 2, 6745.00, 32081.00, 'This is a description for Product 16.', NULL, 28, 1, '2026-02-23 12:01:48', '2026-03-10 10:22:33'),
-(18, 16, 'Valve Cover Gaskets', 'SKU0017', 2, 9926.00, 16694.00, 'This is a description for Product 17.', NULL, 38, 1, '2026-02-23 12:01:48', '2026-02-23 12:21:40'),
-(19, 159, 'Manual Mirror', 'SKU0018', 1, 12958.00, 15328.00, '<p>This is a description for Product 18.</p>', NULL, 6, 1, '2026-02-23 12:01:48', '2026-04-20 15:10:52'),
-(20, 113, 'OEM Pipes', 'SKU0019', 1, 42050.00, 19719.00, 'This is a description for Product 19.', NULL, 25, 1, '2026-02-23 12:01:48', '2026-02-23 12:22:39'),
-(21, 159, 'Manual Mirror', 'SKU0020', 2, 10636.00, 10014.00, 'This is a description for Product 20.', NULL, 11, 1, '2026-02-23 12:01:48', '2026-02-23 12:23:10');
+(2, 137, 'OEM Radiator', 'SKU0001', 8, 15196.00, 14267.00, '<p>Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance. A well-maintained and properly selected set of rims can significantly enhance the overall look and performance of a vehicle.</p><p>wheels provide a means of mounting and affixing the tires to the vehicle through which the engine’s power is transferred to the ground. As the engine generates power, it moves through the drivetrain to the wheels, which bolt to the wheel hub and rotate around the axles For the wheels to turn and propel the car forward, you need to have friction provided by the tires in direct and constant contact with the ground under the car.</p><p><strong style=\"color: unset;\">Features </strong>:</p><ul><li>Rims can be made from different materials</li><li>This includes spoke wheels, multi-spoke wheels</li><li>The weight of the rim can impact the vehicle\'s overall weight and performance.</li><li>Certain rims may have features that make them easier to clean and maintain.</li></ul>', 'Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance.', 38, 1, '2026-03-04 12:01:48', '2026-04-22 07:48:15'),
+(3, 74, 'Synthetic ATF', 'SKU0002', 2, 44381.00, 26178.00, '<p>Synthetic ATF is engineered to enhance transmission efficiency and durability. It provides superior lubrication and thermal stability compared to conventional fluids.</p><ul><li>Improves gear shifting performance</li><li>Reduces wear and friction</li><li>Performs well under high temperatures</li><li>Extends transmission life</li></ul>', 'High-performance automatic transmission fluid designed for smoother shifting and better protection.', 37, 1, '2026-02-23 12:01:48', '2026-04-22 07:49:38'),
+(4, 143, 'High Flow Water Pump', 'SKU0003', 1, 16396.00, 16828.00, '<p>A high flow water pump increases the movement of coolant through the engine, preventing overheating in high-performance conditions.</p><ul><li>Enhances cooling efficiency</li><li>Ideal for performance and racing engines</li><li>Reduces risk of overheating</li><li>Durable and long-lasting construction</li></ul><p><br></p>', 'Upgraded water pump designed to improve coolant circulation and engine cooling.', 11, 1, '2026-03-04 12:01:48', '2026-04-22 08:38:31'),
+(5, 108, 'Truck Converter', 'SKU0004', 1, 12284.00, 15555.00, '<p>Truck converters are designed to handle higher torque loads and provide better power transfer in heavy vehicles.</p><ul><li>Improves towing capacity</li><li>Enhances acceleration under load</li><li>Built for durability and strength</li><li>Suitable for commercial and heavy-duty use&nbsp;</li></ul><p><br></p>', 'Heavy-duty torque converter built for trucks to improve power delivery and towing performance.', 24, 1, '2026-02-23 12:01:48', '2026-04-22 07:50:16'),
+(6, 70, 'Steel Flywheel', 'SKU0005', 1, 45877.00, 31201.00, '<p>Steel flywheels are heavier than aluminum ones, offering better rotational stability and smoother power delivery.</p><ul><li>Provides consistent engine momentum</li><li>Increases durability</li><li>Ideal for daily driving and heavy-duty use</li><li>Improves clutch engagement</li></ul><p><br></p>', 'Strong and durable flywheel made from steel for improved engine stability and performance.', 34, 1, '2026-02-23 12:01:48', '2026-04-22 07:50:30'),
+(7, 151, 'Performance Thermostat', 'SKU0006', 2, 24389.00, 33058.00, '<p>Performance thermostats open at lower temperatures to maintain optimal engine cooling.</p><ul><li>Helps prevent overheating</li><li>Improves engine efficiency</li><li>Maintains stable operating temperature</li><li>Ideal for modified or high-performance engines</li></ul><p><br></p>', 'Thermostat designed to regulate engine temperature more efficiently for better performance.', 17, 1, '2026-02-23 12:01:48', '2026-04-22 07:50:44'),
+(8, 180, 'Standard Wheel', 'SKU0007', 1, 38741.00, 30546.00, '<p>Standard wheels are designed for general use, balancing comfort, durability, and cost-effectiveness.</p><ul><li>Suitable for daily driving</li><li>Provides stable handling</li><li>Cost-effective solution</li><li>Available in various sizes and designs</li></ul><p><br></p>', 'Reliable and durable wheel suitable for everyday driving conditions.', 39, 1, '2026-02-23 12:01:48', '2026-04-22 07:51:09'),
+(9, 11, 'Hydraulic Camshafts', 'SKU0008', 13, 17553.00, 39220.00, '<p>Hydraulic camshafts automatically adjust valve clearance, reducing maintenance and improving performance.</p><ul><li>Low maintenance operation</li><li>Reduces engine noise</li><li>Improves fuel efficiency</li><li>Ensures smoother valve timing</li></ul><p><br></p>', 'Camshafts that use hydraulic lifters for smoother and quieter engine operation.', 26, 1, '2026-02-23 12:01:48', '2026-04-22 07:51:22'),
+(10, 178, 'Custom Seats', 'SKU0009', 7, 17158.00, 36881.00, '<p>Custom seats are tailored to improve both aesthetics and driving comfort. They can be designed for luxury or performance use.</p><ul><li>Enhanced comfort and ergonomics</li><li>Custom design and materials</li><li>Improved driver support</li><li>Suitable for long drives or racing setups</li></ul><p><br></p>', 'Specially designed seats for enhanced comfort, style, and support.', 23, 1, '2026-02-23 12:01:48', '2026-04-22 07:51:36'),
+(11, 4, 'Forged Pistons', 'SKU0010', 2, 32605.00, 5315.00, '<p>Forged pistons are built using high-pressure forging processes, making them stronger than cast pistons. Ideal for high-performance and turbocharged engines.</p><ul><li>Handles high pressure and heat</li><li>Improves engine durability</li><li>Ideal for racing and performance builds</li><li>Longer lifespan under stress</li></ul><p><br></p>', 'High-strength pistons designed for extreme performance and durability.', 3, 1, '2026-02-23 12:01:48', '2026-04-22 08:26:00'),
+(12, 152, 'Truck Thermostat', 'SKU0011', 13, 23531.00, 10969.00, '<p>Truck thermostats are built to withstand higher loads and maintain optimal cooling in large engines.</p><ul><li>Maintains stable engine temperature</li><li>Prevents overheating under load</li><li>Durable construction for heavy-duty use</li><li>Improves engine efficiency</li></ul><p><br></p>', 'Heavy-duty thermostat designed for trucks to regulate engine temperature efficiently.', 10, 1, '2026-02-23 12:01:48', '2026-04-22 08:25:45'),
+(13, 42, 'Semi-Metallic Pads', 'SKU0012', 7, 48614.00, 30287.00, '<p>Semi-metallic brake pads offer excellent heat resistance and braking power, making them suitable for demanding driving conditions.</p><ul><li>High braking performance</li><li>Better heat dissipation</li><li>Durable and long-lasting</li><li>Slightly noisier than ceramic pads&nbsp;</li></ul><p><br></p>', 'Brake pads made with metal compounds for strong braking performance.', 27, 1, '2026-02-23 12:01:48', '2026-04-22 08:25:32'),
+(14, 183, 'OEM Wheel', 'SKU0013', 2, 29073.00, 22685.00, '<p>OEM wheels are built to manufacturer specifications, ensuring compatibility and consistent performance.</p><ul><li>Perfect fit for specific vehicles</li><li>Reliable and durable</li><li>Maintains factory standards</li><li>Balanced performance and comfort</li></ul><p><br></p>', 'Original equipment manufacturer wheel designed for perfect fit and reliability.', 36, 1, '2026-02-23 12:01:48', '2026-04-22 08:25:07'),
+(15, 176, 'Leather Seats', 'SKU0014', 13, 10442.00, 35868.00, '<p>Leather seats enhance the interior look and provide superior comfort and durability.</p><ul><li>Elegant and premium appearance</li><li>Comfortable for long drives</li><li>Easy to clean and maintain</li><li>Durable material</li></ul><p><br></p>', 'Premium seats designed with leather for comfort and luxury.', 27, 1, '2026-02-23 12:01:48', '2026-04-22 08:25:19'),
+(16, 190, 'Custom Panels', 'SKU0015', 7, 46682.00, 14373.00, '<p>Custom panels allow vehicle owners to modify the appearance and improve aesthetics or functionality.</p><ul><li>Unique design options</li><li>Enhances vehicle appearance</li><li>Available in various materials</li><li>Suitable for interior or exterior upgrades</li></ul><p><br></p>', 'Custom panels designed for style and personalization.', 26, 1, '2026-02-23 12:01:48', '2026-04-22 08:24:42'),
+(17, 79, 'Lead-Acid Battery', 'SKU0016', 2, 6745.00, 32081.00, '<p> Lead-acid batteries are widely used due to their affordability and dependable performance.</p><ul><li>Cost-effective solution</li><li>Provides consistent power</li><li>Suitable for most vehicles</li><li>Easy to maintain</li></ul><p><br></p>', 'Reliable automotive battery for starting and powering electrical systems.', 28, 1, '2026-02-23 12:01:48', '2026-04-22 08:24:29'),
+(18, 16, 'Valve Cover Gaskets', 'SKU0017', 2, 9926.00, 16694.00, '<p>Valve cover gaskets ensure a tight seal between the valve cover and engine, protecting against oil leakage.</p><ul><li>Prevents oil leaks</li><li>Maintains engine cleanliness</li><li>Resistant to heat and pressure</li><li>Easy to replace</li></ul><p><br></p>', 'Seals the valve cover to prevent oil leaks in the engine.', 38, 1, '2026-02-23 12:01:48', '2026-04-22 08:23:39'),
+(19, 159, 'Manual Mirror', 'SKU0018', 1, 12958.00, 15328.00, '<p>Manual mirrors are simple, reliable, and cost-effective alternatives to powered mirrors.</p><ul><li>No electrical components</li><li>Easy to maintain</li><li>Durable design</li><li>Budget-friendly option</li></ul><p><br></p>', 'Side mirror adjusted manually without electronic controls.', 6, 1, '2026-02-23 12:01:48', '2026-04-22 08:24:05'),
+(20, 113, 'OEM Pipes', 'SKU0019', 1, 42050.00, 19719.00, '<p>OEM pipes are manufactured to match original specifications, ensuring proper flow and compatibility.</p><ul><li>Perfect fit for vehicles</li><li>Maintains original performance</li><li>Durable material</li><li>Reliable and long-lasting</li></ul><p><br></p>', 'Factory-standard pipes designed for reliable performance and fit.', 24, 1, '2026-02-23 12:01:48', '2026-04-22 08:41:40'),
+(21, 159, 'Manual Mirror', 'SKU0020', 2, 10636.00, 10014.00, '<p>Manual mirrors are simple, reliable, and cost-effective alternatives to powered mirrors.</p><ul><li>No electrical components</li><li>Easy to maintain</li><li>Durable design</li><li>Budget-friendly option</li></ul><p><br></p>', 'Side mirror adjusted manually without electronic controls.', 11, 1, '2026-02-23 12:01:48', '2026-04-22 07:58:03');
 
 -- --------------------------------------------------------
 
@@ -830,7 +827,8 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`id`, `product_id`, `name`, `email`, `message`, `rating`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Ruvidi Weerasinghe', 'ruwindi2819@gmail.com', 'Good!!', 4, 'approved', '2026-03-03 11:26:10', '2026-03-03 11:39:38');
+(1, 1, 'Ruvidi Weerasinghe', 'ruwindi2819@gmail.com', 'Good!!', 4, 'approved', '2026-03-03 11:26:10', '2026-03-03 11:39:38'),
+(2, 4, 'John Doe', 'johndoe@gmail.com', 'Installed this water pump and noticed better cooling performance immediately.', 5, 'approved', '2026-04-22 08:33:19', '2026-04-22 08:33:49');
 
 -- --------------------------------------------------------
 
@@ -852,7 +850,8 @@ CREATE TABLE `review_images` (
 
 INSERT INTO `review_images` (`id`, `review_id`, `image`, `created_at`, `updated_at`) VALUES
 (1, 1, '1772556970_69a712aa1ee26.jpg', '2026-03-03 11:26:10', '2026-03-03 11:26:10'),
-(2, 1, '1772556970_69a712aa1f9cd.jpg', '2026-03-03 11:26:10', '2026-03-03 11:26:10');
+(2, 1, '1772556970_69a712aa1f9cd.jpg', '2026-03-03 11:26:10', '2026-03-03 11:26:10'),
+(3, 2, '1776846799_69e887cff02fb.png', '2026-04-22 08:33:19', '2026-04-22 08:33:19');
 
 -- --------------------------------------------------------
 
@@ -987,7 +986,8 @@ INSERT INTO `wishlists` (`id`, `customer_id`, `session_id`, `product_id`, `creat
 (5, NULL, 'Ko4GEXz8j7uvYlssqH4SXkZPwXxJZuTX69nzowNO', 2, '2026-04-05 04:50:12', '2026-04-05 04:50:12'),
 (6, NULL, '0ykdA3SFLuWcOzsG9efWplyGtL9tMGq7GB9gbMyW', 1, '2026-04-06 05:53:04', '2026-04-06 05:53:04'),
 (7, NULL, 'PkoKdQE7yQ4EvOAimfFmkbTlQv9PAj9pMUoy3yd1', 1, '2026-04-08 08:49:23', '2026-04-08 08:49:23'),
-(8, NULL, 'Ltfm0bqmyjLSBejcEzx7UGiFcUICZEivlv5gDQ59', 3, '2026-04-20 12:15:39', '2026-04-20 12:15:39');
+(8, NULL, 'Ltfm0bqmyjLSBejcEzx7UGiFcUICZEivlv5gDQ59', 3, '2026-04-20 12:15:39', '2026-04-20 12:15:39'),
+(10, NULL, 'nrL1MJplU5ohzM0TVXtrs4kL35pFlXY3hEOU2yBh', 3, '2026-04-21 08:49:18', '2026-04-21 08:49:18');
 
 --
 -- Indexes for dumped tables
@@ -1227,7 +1227,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1245,13 +1245,13 @@ ALTER TABLE `contact_messages`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customer_activities`
 --
 ALTER TABLE `customer_activities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1269,19 +1269,19 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -1305,13 +1305,13 @@ ALTER TABLE `product_vehicle_compatibilities`
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `review_images`
 --
 ALTER TABLE `review_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1335,7 +1335,7 @@ ALTER TABLE `vehicle_images`
 -- AUTO_INCREMENT for table `wishlists`
 --
 ALTER TABLE `wishlists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables

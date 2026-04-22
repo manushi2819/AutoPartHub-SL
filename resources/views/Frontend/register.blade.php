@@ -333,7 +333,7 @@
                     type="tel" 
                     name="phone" 
                     value="{{ old('phone') }}" 
-                    placeholder="+1 234 567 8900"
+                    placeholder="+94 71 456 7890"
                     class="@error('phone') is-invalid @enderror"
                     required
                 >

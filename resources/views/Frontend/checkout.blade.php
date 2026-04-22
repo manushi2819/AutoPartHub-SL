@@ -60,7 +60,7 @@
                                 <!-- First Name -->
                                 <div class="col-lg-6 col-md-6 col-sm-12 field-column">
                                     <div class="form-group">
-                                        <label>First Name<span>*</span></label>
+                                        <label>First Name <span>*</span></label>
                                         <input type="text" name="fname" value="{{ $customer->first_name ?? '' }}" required>
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
                                 <!-- Last Name -->
                                 <div class="col-lg-6 col-md-6 col-sm-12 field-column">
                                     <div class="form-group">
-                                        <label>Last Name<span>*</span></label>
+                                        <label>Last Name <span>*</span></label>
                                         <input type="text" name="lname" value="{{ $customer->last_name ?? '' }}" required>
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@
                                 <!-- Email -->
                                 <div class="col-lg-6 col-md-6 col-sm-12 field-column">
                                     <div class="form-group">
-                                        <label>Email Address<span>*</span></label>
+                                        <label>Email Address <span>*</span></label>
                                         <input type="email" name="email" value="{{ $customer->email ?? '' }}" required>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@
                                 <!-- Phone -->
                                 <div class="col-lg-6 col-md-6 col-sm-12 field-column">
                                     <div class="form-group">
-                                        <label>Phone Number<span>*</span></label>
+                                        <label>Phone Number <span>*</span></label>
                                         <input type="text" name="phone" value="{{ $customer->phone ?? '' }}" required>
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@
                                 <!-- Country -->
                                 <div class="col-lg-12 col-md-12 col-sm-12 field-column">
                                     <div class="form-group">
-                                        <label>Country<span>*</span></label>
+                                        <label>Country <span>*</span></label>
                                         <input type="hidden" name="country" value="Sri Lanka">
                                         <input type="text" class="form-control" value="Sri Lanka" readonly>
                                     </div>
@@ -101,7 +101,7 @@
                                 <!-- Address -->
                                 <div class="col-lg-12 col-md-12 col-sm-12 field-column">
                                     <div class="form-group">
-                                        <label>Address<span>*</span></label>
+                                        <label>Address <span>*</span></label>
                                         <input type="text" name="address" value="{{ $customer->address ?? '' }}" required>
                                     </div>
                                 </div>
@@ -109,7 +109,7 @@
                                 <!-- City -->
                                 <div class="col-lg-6 col-md-6 col-sm-12 field-column">
                                     <div class="form-group">
-                                        <label>Town / City<span>*</span></label>
+                                        <label>Town / City <span>*</span></label>
                                         <input type="text" name="city" required>
                                     </div>
                                 </div>
@@ -117,7 +117,7 @@
                                 <!-- ZIP -->
                                 <div class="col-lg-6 col-md-6 col-sm-12 field-column">
                                     <div class="form-group">
-                                        <label>Postcode / ZIP<span>*</span></label>
+                                        <label>Postcode / ZIP <span>*</span></label>
                                         <input type="text" name="zip" required>
                                     </div>
                                 </div>
@@ -182,12 +182,12 @@
                                         <label for="cod">Cash on Delivery</label>
                                     </div>
                                 </li>
-                                <li>
+                                <!--<li>
                                     <div class="check-box mb_12">
                                         <input class="check" type="radio" id="card" name="payment_method" value="card">
                                         <label for="card">Credit/Debit Cards</label>
                                     </div>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
 
