@@ -49,6 +49,26 @@
                     </select>
                 </div>
 
+               <div class="col-md-6">
+                    <label class="form-label">Vehicle Type </label>
+
+                    <div class="border p-3 rounded" style="max-height: 180px; overflow-y: auto;">
+                        @foreach($vehicleTypes as $type)
+                            <div class="form-check">
+                                <input class="form-check-input  ms-3"
+                                    type="checkbox"
+                                    name="vehicle_type_ids[]"
+                                    value="{{ $type->id }}"
+                                    id="vt{{ $type->id }}"
+                                    {{ isset($product) && in_array($type->id, $product->vehicle_type_ids ?? []) ? 'checked' : '' }}>
+
+                                <label class="form-check-label ms-1" for="vt{{ $type->id }}">
+                                    {{ $type->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
 
 
                 <div class="col-md-6">

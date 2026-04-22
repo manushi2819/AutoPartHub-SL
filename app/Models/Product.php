@@ -17,6 +17,11 @@ class Product extends Model
         'stock_quantity',
         'small_description',
         'status',
+        'vehicle_type_ids'
+    ];
+
+    protected $casts = [
+        'vehicle_type_ids' => 'array',
     ];
 
     // Category relationship
@@ -56,6 +61,11 @@ class Product extends Model
     public function brand()
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function vehicleType()
+    {
+        return $this->belongsTo(VehicleType::class);
     }
 }
 

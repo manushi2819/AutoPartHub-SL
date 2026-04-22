@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
 use App\Models\ProductImage;
+use App\Models\VehicleType;
 use App\Models\ProductVehicleCompatibility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -25,7 +26,8 @@ class ProductController extends Controller
     {
         $categories = Category::with('children.children')->whereNull('parent_id')->get();
         $brands = Brand::where('status', 1)->get();
-        return view('AdminDashboard.Products.create', compact('categories', 'brands'));
+        $vehicleTypes = VehicleType::where('status', 1)->get();
+        return view('AdminDashboard.Products.create', compact('categories', 'brands', 'vehicleTypes'));
     }
 
     // ================= EDIT =================
@@ -34,7 +36,8 @@ class ProductController extends Controller
         $product = Product::with(['images', 'compatibility'])->findOrFail($id);
         $categories = Category::with('children.children')->whereNull('parent_id')->get();
         $brands = Brand::where('status', 1)->get();
-        return view('AdminDashboard.Products.create', compact('product', 'categories', 'brands'));
+        $vehicleTypes = VehicleType::where('status', 1)->get();
+        return view('AdminDashboard.Products.create', compact('product', 'categories', 'brands', 'vehicleTypes'));
     }
 
 
@@ -60,6 +63,8 @@ class ProductController extends Controller
         'engine_cc' => 'nullable|integer',
         'fuel_type' => 'nullable|string|max:255',
         'transmission' => 'nullable|string|max:255',
+        'vehicle_type_ids' => 'nullable|array',
+        'vehicle_type_ids.*' => 'exists:vehicle_types,id',
     ]);
 
         $lastSku = \App\Models\Product::whereNotNull('sku')
@@ -125,7 +130,9 @@ class ProductController extends Controller
             'engine_type' => 'nullable|string|max:255',
             'engine_cc' => 'nullable|integer',
             'fuel_type' => 'nullable|string|max:255',
-            'transmission' => 'nullable|string|max:255'
+            'transmission' => 'nullable|string|max:255',
+            'vehicle_type_ids' => 'nullable|array',
+            'vehicle_type_ids.*' => 'exists:vehicle_types,id',
         ]);
 
         \Log::info('VALIDATED DATA:', $data);

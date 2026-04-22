@@ -108,7 +108,7 @@
             <div class="header-upper">
                 <div class="large-container">
                     <div class="upper-inner">
-                         <figure class="logo-box"  style="height:45px">
+                         <figure class="logo-box"  style="height:40px">
                             <a href="{{ route('Frontend.index') }}"><img src="{{ asset('logo.png') }}" alt=""  
                             style="height:100%"></a></figure>
                         <div class="search-area" >
@@ -119,7 +119,7 @@
                                                     ->get();
                             @endphp
 
-                            <div class="category-box">
+                            <div class="category-box" >
                                 <div class="select-box">
                                     <form method="GET" action="{{ route('Frontend.shop') }}">
                                         <select class="wide" name="category[]">
@@ -133,9 +133,9 @@
                                         </select>
                                 </div>
                             </div>
-                            <div class="search-box" style="height:45px">
+                            <div class="search-box" style="height:42px">
                                     <div class="form-group" >
-                                        <input type="search" style="height:45px" name="search" value="{{ request('search') }}" placeholder="Search Parts..." required>
+                                        <input type="search" style="height:42px" name="search" value="{{ request('search') }}" placeholder="Search Parts..." required>
                                         <button type="submit"><i class="icon-9"></i></button>
                                     </div>
                                 </form>

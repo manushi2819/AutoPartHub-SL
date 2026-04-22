@@ -115,6 +115,8 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\VehicleController as AdminVehicleController;
 use App\Http\Controllers\Admin\AuctionController;
+use App\Http\Controllers\Admin\VehicleTypeController;
+
 use App\Http\Middleware\AdminAuth;
 
 Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
@@ -177,4 +179,10 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
     Route::get('/auctions/{id}/edit', [AuctionController::class, 'edit'])->name('auctions.edit');
     Route::put('/auctions/{id}/update', [AuctionController::class, 'update'])->name('auctions.update');
 
+
+    //vehicle types
+    Route::get('/vehicle-types', [VehicleTypeController::class, 'index'])->name('vehicle-types.index');
+    Route::post('/vehicle-types', [VehicleTypeController::class, 'store'])->name('vehicle-types.store');
+    Route::put('/vehicle-types/{id}', [VehicleTypeController::class, 'update'])->name('vehicle-types.update');
+    Route::delete('/vehicle-types/{id}', [VehicleTypeController::class, 'destroy'])->name('vehicle-types.destroy');
 });

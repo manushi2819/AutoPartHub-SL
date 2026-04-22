@@ -60,11 +60,10 @@
                     <form action="{{ route('admin.auctions.destroy', $auction->id) }}" method="POST" class="m-0 p-0">
                         @csrf
                         @method('DELETE')
-                        <button type="button" class="w-32-px h-32-px bg-danger-focus text-danger-main 
-                        rounded-circle d-inline-flex align-items-center justify-content-center open-delete-modal"
-                               >
-                            <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
-                        </button>
+                        <button type="button" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center open-delete-modal" 
+                            data-url="{{ route('admin.auctions.destroy', $auction->id) }}">
+                        <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
+                    </button>
                     </form>
                 </div>
               

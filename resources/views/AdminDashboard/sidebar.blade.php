@@ -41,19 +41,25 @@
             </li>
 
             <li>
+                <a href="{{ route('admin.vehicle-types.index') }}">
+               <iconify-icon icon="mdi:car-outline" class="menu-icon"></iconify-icon>
+                    <span>Vehicle Types</span>
+                </a>
+            </li>
+
+            <li>
                 <a href="{{ route('admin.products.index') }}">
                 <iconify-icon icon="mdi:package-variant-closed" class="menu-icon"></iconify-icon>
-                    <span>Vehicle Parts</span>
+                    <span>Spare Parts</span>
                 </a>
     
             </li>
 
              <!--<li>
                 <a href="{{ route('admin.vehicles.index') }}">
-                <iconify-icon icon="mdi:car" class="menu-icon"></iconify-icon>
+                <iconify-icon icon="mdi:car-multiple" class="menu-icon"></iconify-icon>
                     <span>Vehicles</span>
                 </a>
-    
             </li>-->
 
 

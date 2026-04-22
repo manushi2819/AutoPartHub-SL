@@ -119,8 +119,8 @@
 }
 
 .header-upper .search-area .category-box .nice-select{
-  padding: 17px 20px 17px 25px;
-  font-size: 15px;
+  padding: 14px 12px;
+  font-size: 14px;
   color: var(--title-color);
   text-transform: capitalize;
   border-right: 1px solid #E5E5E5;
@@ -143,7 +143,7 @@
   position: relative;
   display: block;
   width: 100%;
-  height: 50px;
+  height: 45px;
   font-size: 15px;
   color: var(--title-color);
   font-family: var(--text-font);
@@ -153,11 +153,11 @@
 .header-upper .search-area .search-box .form-group button[type='submit']{
   position: absolute;
   display: inline-block;
-  top: 5px;
+  top: 3px;
   right: 5px;
   width: 60px;
   height: 35px;
-  line-height: 40px;
+  line-height: 35px;
   text-align: center;
   font-size: 14px;
   color: #fff;
