@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Apr 22, 2026 at 10:54 AM
+-- Generation Time: Apr 22, 2026 at 06:30 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -124,7 +124,11 @@ INSERT INTO `brands` (`id`, `name`, `image`, `status`, `created_at`, `updated_at
 (10, 'Tesla', '1772893461_brands-4.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:54:21'),
 (11, 'Suzuki', '1772893467_brand-14.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:54:27'),
 (12, 'Jaguar', '1772893476_brands-10.png', 1, '2026-03-07 08:52:27', '2026-03-07 08:54:36'),
-(13, 'Mitsubishi', '1775291076_Mitsubish.png', 1, '2026-04-04 02:54:36', '2026-04-04 02:54:36');
+(14, 'Mitsubishi', '1776871433_Mitsubish.png', 1, '2026-04-22 15:23:53', '2026-04-22 15:23:53'),
+(15, 'Yamaha', '1776874304_png-clipart-yamaha-motor-company-yamaha-corporation-motorcycle-logo-motorcycle-emblem-trademark-thumbnail.png', 1, '2026-04-22 16:11:44', '2026-04-22 16:11:44'),
+(16, 'Bajaj', '1776874363_Bajaj-Logo.png', 1, '2026-04-22 16:12:43', '2026-04-22 16:12:43'),
+(17, 'TVS', '1776874395_TVS-Motor-logo.png', 1, '2026-04-22 16:13:15', '2026-04-22 16:13:15'),
+(18, 'Hero', '1776874413_images.png', 1, '2026-04-22 16:13:33', '2026-04-22 16:13:33');
 
 -- --------------------------------------------------------
 
@@ -368,7 +372,6 @@ INSERT INTO `categories` (`id`, `name`, `image`, `parent_id`, `status`, `created
 (166, 'Lights', NULL, 153, 1, '2026-02-19 10:23:45', '2026-02-19 10:23:45'),
 (167, 'Headlights', NULL, 166, 1, '2026-02-19 10:23:45', '2026-02-19 10:23:45'),
 (168, 'Tail Lights', NULL, 166, 1, '2026-02-19 10:23:45', '2026-02-19 10:23:45'),
-(169, 'Fog Lights', NULL, 166, 1, '2026-02-19 10:23:45', '2026-02-19 10:23:45'),
 (170, 'LED Light Bars', NULL, 166, 1, '2026-02-19 10:23:45', '2026-02-19 10:23:45'),
 (171, 'Turn Signals', NULL, 166, 1, '2026-02-19 10:23:45', '2026-02-19 10:23:45'),
 (172, 'Interior', 'uploads/category_images/1772726274_69a9a802e383b.jpg', NULL, 1, '2026-02-19 10:23:45', '2026-03-05 10:27:54'),
@@ -587,7 +590,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (37, '2026_04_20_200134_add_brand_id_to_products_table', 17),
 (38, '2026_04_20_201304_remove_brand_from_products_table', 18),
 (39, '2026_04_22_141742_add_provider_fields_to_customers_table', 19),
-(40, '2026_04_22_141925_modify_password_nullable_in_customers_table', 20);
+(40, '2026_04_22_141925_modify_password_nullable_in_customers_table', 20),
+(43, '2026_04_22_202242_create_vehicle_types_table', 21),
+(44, '2026_04_22_202326_add_vehicle_type_id_to_products_table', 21),
+(45, '2026_04_22_210617_change_vehicle_type_to_json_in_products_table', 22);
 
 -- --------------------------------------------------------
 
@@ -675,6 +681,7 @@ CREATE TABLE `products` (
   `name` varchar(255) NOT NULL,
   `sku` varchar(255) NOT NULL,
   `brand_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `vehicle_type_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`vehicle_type_ids`)),
   `price` decimal(10,2) NOT NULL,
   `cost_price` decimal(10,2) DEFAULT NULL,
   `description` text DEFAULT NULL,
@@ -689,28 +696,38 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `category_id`, `name`, `sku`, `brand_id`, `price`, `cost_price`, `description`, `small_description`, `stock_quantity`, `status`, `created_at`, `updated_at`) VALUES
-(1, 137, 'OEM Radiator', 'SKU0021', 1, 15196.00, 14267.00, '<p>Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance. A well-maintained and properly selected set of rims can significantly enhance the overall look and performance of a vehicle.</p><p>wheels provide a means of mounting and affixing the tires to the vehicle through which the engine’s power is transferred to the ground. As the engine generates power, it moves through the drivetrain to the wheels, which bolt to the wheel hub and rotate around the axles For the wheels to turn and propel the car forward, you need to have friction provided by the tires in direct and constant contact with the ground under the car.</p><p><strong>Features </strong>:</p><ul><li>Rims can be made from different materials</li><li>This includes spoke wheels, multi-spoke wheels</li><li>The weight of the rim can impact the vehicle\'s overall weight and performance.</li><li>Certain rims may have features that make them easier to clean and maintain.</li></ul><p><br></p>', 'Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance.', 38, 1, '2026-02-03 12:01:48', '2026-03-01 03:58:56'),
-(2, 137, 'OEM Radiator', 'SKU0001', 8, 15196.00, 14267.00, '<p>Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance. A well-maintained and properly selected set of rims can significantly enhance the overall look and performance of a vehicle.</p><p>wheels provide a means of mounting and affixing the tires to the vehicle through which the engine’s power is transferred to the ground. As the engine generates power, it moves through the drivetrain to the wheels, which bolt to the wheel hub and rotate around the axles For the wheels to turn and propel the car forward, you need to have friction provided by the tires in direct and constant contact with the ground under the car.</p><p><strong style=\"color: unset;\">Features </strong>:</p><ul><li>Rims can be made from different materials</li><li>This includes spoke wheels, multi-spoke wheels</li><li>The weight of the rim can impact the vehicle\'s overall weight and performance.</li><li>Certain rims may have features that make them easier to clean and maintain.</li></ul>', 'Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance.', 38, 1, '2026-03-04 12:01:48', '2026-04-22 07:48:15'),
-(3, 74, 'Synthetic ATF', 'SKU0002', 2, 44381.00, 26178.00, '<p>Synthetic ATF is engineered to enhance transmission efficiency and durability. It provides superior lubrication and thermal stability compared to conventional fluids.</p><ul><li>Improves gear shifting performance</li><li>Reduces wear and friction</li><li>Performs well under high temperatures</li><li>Extends transmission life</li></ul>', 'High-performance automatic transmission fluid designed for smoother shifting and better protection.', 37, 1, '2026-02-23 12:01:48', '2026-04-22 07:49:38'),
-(4, 143, 'High Flow Water Pump', 'SKU0003', 1, 16396.00, 16828.00, '<p>A high flow water pump increases the movement of coolant through the engine, preventing overheating in high-performance conditions.</p><ul><li>Enhances cooling efficiency</li><li>Ideal for performance and racing engines</li><li>Reduces risk of overheating</li><li>Durable and long-lasting construction</li></ul><p><br></p>', 'Upgraded water pump designed to improve coolant circulation and engine cooling.', 11, 1, '2026-03-04 12:01:48', '2026-04-22 08:38:31'),
-(5, 108, 'Truck Converter', 'SKU0004', 1, 12284.00, 15555.00, '<p>Truck converters are designed to handle higher torque loads and provide better power transfer in heavy vehicles.</p><ul><li>Improves towing capacity</li><li>Enhances acceleration under load</li><li>Built for durability and strength</li><li>Suitable for commercial and heavy-duty use&nbsp;</li></ul><p><br></p>', 'Heavy-duty torque converter built for trucks to improve power delivery and towing performance.', 24, 1, '2026-02-23 12:01:48', '2026-04-22 07:50:16'),
-(6, 70, 'Steel Flywheel', 'SKU0005', 1, 45877.00, 31201.00, '<p>Steel flywheels are heavier than aluminum ones, offering better rotational stability and smoother power delivery.</p><ul><li>Provides consistent engine momentum</li><li>Increases durability</li><li>Ideal for daily driving and heavy-duty use</li><li>Improves clutch engagement</li></ul><p><br></p>', 'Strong and durable flywheel made from steel for improved engine stability and performance.', 34, 1, '2026-02-23 12:01:48', '2026-04-22 07:50:30'),
-(7, 151, 'Performance Thermostat', 'SKU0006', 2, 24389.00, 33058.00, '<p>Performance thermostats open at lower temperatures to maintain optimal engine cooling.</p><ul><li>Helps prevent overheating</li><li>Improves engine efficiency</li><li>Maintains stable operating temperature</li><li>Ideal for modified or high-performance engines</li></ul><p><br></p>', 'Thermostat designed to regulate engine temperature more efficiently for better performance.', 17, 1, '2026-02-23 12:01:48', '2026-04-22 07:50:44'),
-(8, 180, 'Standard Wheel', 'SKU0007', 1, 38741.00, 30546.00, '<p>Standard wheels are designed for general use, balancing comfort, durability, and cost-effectiveness.</p><ul><li>Suitable for daily driving</li><li>Provides stable handling</li><li>Cost-effective solution</li><li>Available in various sizes and designs</li></ul><p><br></p>', 'Reliable and durable wheel suitable for everyday driving conditions.', 39, 1, '2026-02-23 12:01:48', '2026-04-22 07:51:09'),
-(9, 11, 'Hydraulic Camshafts', 'SKU0008', 13, 17553.00, 39220.00, '<p>Hydraulic camshafts automatically adjust valve clearance, reducing maintenance and improving performance.</p><ul><li>Low maintenance operation</li><li>Reduces engine noise</li><li>Improves fuel efficiency</li><li>Ensures smoother valve timing</li></ul><p><br></p>', 'Camshafts that use hydraulic lifters for smoother and quieter engine operation.', 26, 1, '2026-02-23 12:01:48', '2026-04-22 07:51:22'),
-(10, 178, 'Custom Seats', 'SKU0009', 7, 17158.00, 36881.00, '<p>Custom seats are tailored to improve both aesthetics and driving comfort. They can be designed for luxury or performance use.</p><ul><li>Enhanced comfort and ergonomics</li><li>Custom design and materials</li><li>Improved driver support</li><li>Suitable for long drives or racing setups</li></ul><p><br></p>', 'Specially designed seats for enhanced comfort, style, and support.', 23, 1, '2026-02-23 12:01:48', '2026-04-22 07:51:36'),
-(11, 4, 'Forged Pistons', 'SKU0010', 2, 32605.00, 5315.00, '<p>Forged pistons are built using high-pressure forging processes, making them stronger than cast pistons. Ideal for high-performance and turbocharged engines.</p><ul><li>Handles high pressure and heat</li><li>Improves engine durability</li><li>Ideal for racing and performance builds</li><li>Longer lifespan under stress</li></ul><p><br></p>', 'High-strength pistons designed for extreme performance and durability.', 3, 1, '2026-02-23 12:01:48', '2026-04-22 08:26:00'),
-(12, 152, 'Truck Thermostat', 'SKU0011', 13, 23531.00, 10969.00, '<p>Truck thermostats are built to withstand higher loads and maintain optimal cooling in large engines.</p><ul><li>Maintains stable engine temperature</li><li>Prevents overheating under load</li><li>Durable construction for heavy-duty use</li><li>Improves engine efficiency</li></ul><p><br></p>', 'Heavy-duty thermostat designed for trucks to regulate engine temperature efficiently.', 10, 1, '2026-02-23 12:01:48', '2026-04-22 08:25:45'),
-(13, 42, 'Semi-Metallic Pads', 'SKU0012', 7, 48614.00, 30287.00, '<p>Semi-metallic brake pads offer excellent heat resistance and braking power, making them suitable for demanding driving conditions.</p><ul><li>High braking performance</li><li>Better heat dissipation</li><li>Durable and long-lasting</li><li>Slightly noisier than ceramic pads&nbsp;</li></ul><p><br></p>', 'Brake pads made with metal compounds for strong braking performance.', 27, 1, '2026-02-23 12:01:48', '2026-04-22 08:25:32'),
-(14, 183, 'OEM Wheel', 'SKU0013', 2, 29073.00, 22685.00, '<p>OEM wheels are built to manufacturer specifications, ensuring compatibility and consistent performance.</p><ul><li>Perfect fit for specific vehicles</li><li>Reliable and durable</li><li>Maintains factory standards</li><li>Balanced performance and comfort</li></ul><p><br></p>', 'Original equipment manufacturer wheel designed for perfect fit and reliability.', 36, 1, '2026-02-23 12:01:48', '2026-04-22 08:25:07'),
-(15, 176, 'Leather Seats', 'SKU0014', 13, 10442.00, 35868.00, '<p>Leather seats enhance the interior look and provide superior comfort and durability.</p><ul><li>Elegant and premium appearance</li><li>Comfortable for long drives</li><li>Easy to clean and maintain</li><li>Durable material</li></ul><p><br></p>', 'Premium seats designed with leather for comfort and luxury.', 27, 1, '2026-02-23 12:01:48', '2026-04-22 08:25:19'),
-(16, 190, 'Custom Panels', 'SKU0015', 7, 46682.00, 14373.00, '<p>Custom panels allow vehicle owners to modify the appearance and improve aesthetics or functionality.</p><ul><li>Unique design options</li><li>Enhances vehicle appearance</li><li>Available in various materials</li><li>Suitable for interior or exterior upgrades</li></ul><p><br></p>', 'Custom panels designed for style and personalization.', 26, 1, '2026-02-23 12:01:48', '2026-04-22 08:24:42'),
-(17, 79, 'Lead-Acid Battery', 'SKU0016', 2, 6745.00, 32081.00, '<p> Lead-acid batteries are widely used due to their affordability and dependable performance.</p><ul><li>Cost-effective solution</li><li>Provides consistent power</li><li>Suitable for most vehicles</li><li>Easy to maintain</li></ul><p><br></p>', 'Reliable automotive battery for starting and powering electrical systems.', 28, 1, '2026-02-23 12:01:48', '2026-04-22 08:24:29'),
-(18, 16, 'Valve Cover Gaskets', 'SKU0017', 2, 9926.00, 16694.00, '<p>Valve cover gaskets ensure a tight seal between the valve cover and engine, protecting against oil leakage.</p><ul><li>Prevents oil leaks</li><li>Maintains engine cleanliness</li><li>Resistant to heat and pressure</li><li>Easy to replace</li></ul><p><br></p>', 'Seals the valve cover to prevent oil leaks in the engine.', 38, 1, '2026-02-23 12:01:48', '2026-04-22 08:23:39'),
-(19, 159, 'Manual Mirror', 'SKU0018', 1, 12958.00, 15328.00, '<p>Manual mirrors are simple, reliable, and cost-effective alternatives to powered mirrors.</p><ul><li>No electrical components</li><li>Easy to maintain</li><li>Durable design</li><li>Budget-friendly option</li></ul><p><br></p>', 'Side mirror adjusted manually without electronic controls.', 6, 1, '2026-02-23 12:01:48', '2026-04-22 08:24:05'),
-(20, 113, 'OEM Pipes', 'SKU0019', 1, 42050.00, 19719.00, '<p>OEM pipes are manufactured to match original specifications, ensuring proper flow and compatibility.</p><ul><li>Perfect fit for vehicles</li><li>Maintains original performance</li><li>Durable material</li><li>Reliable and long-lasting</li></ul><p><br></p>', 'Factory-standard pipes designed for reliable performance and fit.', 24, 1, '2026-02-23 12:01:48', '2026-04-22 08:41:40'),
-(21, 159, 'Manual Mirror', 'SKU0020', 2, 10636.00, 10014.00, '<p>Manual mirrors are simple, reliable, and cost-effective alternatives to powered mirrors.</p><ul><li>No electrical components</li><li>Easy to maintain</li><li>Durable design</li><li>Budget-friendly option</li></ul><p><br></p>', 'Side mirror adjusted manually without electronic controls.', 11, 1, '2026-02-23 12:01:48', '2026-04-22 07:58:03');
+INSERT INTO `products` (`id`, `category_id`, `name`, `sku`, `brand_id`, `vehicle_type_ids`, `price`, `cost_price`, `description`, `small_description`, `stock_quantity`, `status`, `created_at`, `updated_at`) VALUES
+(1, 137, 'OEM Radiator', 'OEM-CAR-0001', 1, '[\"1\"]', 15196.00, 14267.00, '<p>Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance. A well-maintained and properly selected set of rims can significantly enhance the overall look and performance of a vehicle.</p><p>wheels provide a means of mounting and affixing the tires to the vehicle through which the engine’s power is transferred to the ground. As the engine generates power, it moves through the drivetrain to the wheels, which bolt to the wheel hub and rotate around the axles For the wheels to turn and propel the car forward, you need to have friction provided by the tires in direct and constant contact with the ground under the car.</p><p><strong>Features </strong>:</p><ul><li>Rims can be made from different materials</li><li>This includes spoke wheels, multi-spoke wheels</li><li>The weight of the rim can impact the vehicle\'s overall weight and performance.</li><li>Certain rims may have features that make them easier to clean and maintain.</li></ul><p><br></p>', 'Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance.', 38, 1, '2026-02-03 12:01:48', '2026-04-22 15:40:58'),
+(2, 137, 'OEM Radiator', 'OEM-CAR-0002', 8, '[\"1\"]', 15196.00, 14267.00, '<p>Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance. A well-maintained and properly selected set of rims can significantly enhance the overall look and performance of a vehicle.</p><p>wheels provide a means of mounting and affixing the tires to the vehicle through which the engine’s power is transferred to the ground. As the engine generates power, it moves through the drivetrain to the wheels, which bolt to the wheel hub and rotate around the axles For the wheels to turn and propel the car forward, you need to have friction provided by the tires in direct and constant contact with the ground under the car.</p><p><strong style=\"color: unset;\">Features </strong>:</p><ul><li>Rims can be made from different materials</li><li>This includes spoke wheels, multi-spoke wheels</li><li>The weight of the rim can impact the vehicle\'s overall weight and performance.</li><li>Certain rims may have features that make them easier to clean and maintain.</li></ul>', 'Choosing the right rim involves considering factors such as the vehicle type, intended use, driving conditions, and personal preferences for style and performance.', 38, 1, '2026-03-04 12:01:48', '2026-04-22 15:46:41'),
+(3, 74, 'Synthetic ATF', 'SYN-CAR-0003', 2, '[\"1\"]', 44381.00, 26178.00, '<p>Synthetic ATF is engineered to enhance transmission efficiency and durability. It provides superior lubrication and thermal stability compared to conventional fluids.</p><ul><li>Improves gear shifting performance</li><li>Reduces wear and friction</li><li>Performs well under high temperatures</li><li>Extends transmission life</li></ul>', 'High-performance automatic transmission fluid designed for smoother shifting and better protection.', 37, 1, '2026-02-23 12:01:48', '2026-04-22 15:41:13'),
+(4, 143, 'High Flow Water Pump', 'HIG-CAR-0004', 1, '[\"1\"]', 16396.00, 16828.00, '<p>A high flow water pump increases the movement of coolant through the engine, preventing overheating in high-performance conditions.</p><ul><li>Enhances cooling efficiency</li><li>Ideal for performance and racing engines</li><li>Reduces risk of overheating</li><li>Durable and long-lasting construction</li></ul><p><br></p>', 'Upgraded water pump designed to improve coolant circulation and engine cooling.', 11, 1, '2026-03-04 12:01:48', '2026-04-22 15:41:20'),
+(5, 108, 'Truck Converter', 'TRU-LORR-0005', 1, '[\"5\"]', 12284.00, 15555.00, '<p>Truck converters are designed to handle higher torque loads and provide better power transfer in heavy vehicles.</p><ul><li>Improves towing capacity</li><li>Enhances acceleration under load</li><li>Built for durability and strength</li><li>Suitable for commercial and heavy-duty use&nbsp;</li></ul><p><br></p>', 'Heavy-duty torque converter built for trucks to improve power delivery and towing performance.', 24, 1, '2026-02-23 12:01:48', '2026-04-22 15:41:29'),
+(6, 70, 'Steel Flywheel', 'STE-CAR-0006', 1, '[\"1\"]', 45877.00, 31201.00, '<p>Steel flywheels are heavier than aluminum ones, offering better rotational stability and smoother power delivery.</p><ul><li>Provides consistent engine momentum</li><li>Increases durability</li><li>Ideal for daily driving and heavy-duty use</li><li>Improves clutch engagement</li></ul><p><br></p>', 'Strong and durable flywheel made from steel for improved engine stability and performance.', 34, 1, '2026-02-23 12:01:48', '2026-04-22 15:41:41'),
+(7, 151, 'Performance Thermostat', 'PER-CAR-0007', 2, '[\"1\"]', 24389.00, 33058.00, '<p>Performance thermostats open at lower temperatures to maintain optimal engine cooling.</p><ul><li>Helps prevent overheating</li><li>Improves engine efficiency</li><li>Maintains stable operating temperature</li><li>Ideal for modified or high-performance engines</li></ul><p><br></p>', 'Thermostat designed to regulate engine temperature more efficiently for better performance.', 17, 1, '2026-02-23 12:01:48', '2026-04-22 15:41:48'),
+(8, 180, 'Standard Wheel', 'STA-CAR-0008', 1, '[\"1\",\"4\"]', 38741.00, 30546.00, '<p>Standard wheels are designed for general use, balancing comfort, durability, and cost-effectiveness.</p><ul><li>Suitable for daily driving</li><li>Provides stable handling</li><li>Cost-effective solution</li><li>Available in various sizes and designs</li></ul><p><br></p>', 'Reliable and durable wheel suitable for everyday driving conditions.', 39, 1, '2026-02-23 12:01:48', '2026-04-22 15:42:00'),
+(9, 11, 'Hydraulic Camshafts', 'HYD-CAR-0009', NULL, '[\"1\"]', 17553.00, 39220.00, '<p>Hydraulic camshafts automatically adjust valve clearance, reducing maintenance and improving performance.</p><ul><li>Low maintenance operation</li><li>Reduces engine noise</li><li>Improves fuel efficiency</li><li>Ensures smoother valve timing</li></ul><p><br></p>', 'Camshafts that use hydraulic lifters for smoother and quieter engine operation.', 26, 1, '2026-02-23 12:01:48', '2026-04-22 15:42:10'),
+(10, 178, 'Custom Seats', 'CUS-CAR-0010', 7, '[\"1\",\"4\"]', 17158.00, 36881.00, '<p>Custom seats are tailored to improve both aesthetics and driving comfort. They can be designed for luxury or performance use.</p><ul><li>Enhanced comfort and ergonomics</li><li>Custom design and materials</li><li>Improved driver support</li><li>Suitable for long drives or racing setups</li></ul><p><br></p>', 'Specially designed seats for enhanced comfort, style, and support.', 23, 1, '2026-02-23 12:01:48', '2026-04-22 15:42:19'),
+(11, 4, 'Forged Pistons', 'FOR-CAR-0011', 2, '[\"1\"]', 32605.00, 5315.00, '<p>Forged pistons are built using high-pressure forging processes, making them stronger than cast pistons. Ideal for high-performance and turbocharged engines.</p><ul><li>Handles high pressure and heat</li><li>Improves engine durability</li><li>Ideal for racing and performance builds</li><li>Longer lifespan under stress</li></ul><p><br></p>', 'High-strength pistons designed for extreme performance and durability.', 3, 1, '2026-02-23 12:01:48', '2026-04-22 15:42:29'),
+(12, 152, 'Truck Thermostat', 'TRU-LORR-0012', NULL, '[\"5\"]', 23531.00, 10969.00, '<p>Truck thermostats are built to withstand higher loads and maintain optimal cooling in large engines.</p><ul><li>Maintains stable engine temperature</li><li>Prevents overheating under load</li><li>Durable construction for heavy-duty use</li><li>Improves engine efficiency</li></ul><p><br></p>', 'Heavy-duty thermostat designed for trucks to regulate engine temperature efficiently.', 10, 1, '2026-02-23 12:01:48', '2026-04-22 15:42:41'),
+(13, 42, 'Semi-Metallic Pads', 'SEM-CAR-0013', 7, '[\"1\",\"4\"]', 48614.00, 30287.00, '<p>Semi-metallic brake pads offer excellent heat resistance and braking power, making them suitable for demanding driving conditions.</p><ul><li>High braking performance</li><li>Better heat dissipation</li><li>Durable and long-lasting</li><li>Slightly noisier than ceramic pads&nbsp;</li></ul><p><br></p>', 'Brake pads made with metal compounds for strong braking performance.', 27, 1, '2026-02-23 12:01:48', '2026-04-22 15:42:53'),
+(14, 183, 'OEM Wheel', 'OEM-CAR-0014', 2, '[\"1\",\"4\"]', 29073.00, 22685.00, '<p>OEM wheels are built to manufacturer specifications, ensuring compatibility and consistent performance.</p><ul><li>Perfect fit for specific vehicles</li><li>Reliable and durable</li><li>Maintains factory standards</li><li>Balanced performance and comfort</li></ul><p><br></p>', 'Original equipment manufacturer wheel designed for perfect fit and reliability.', 36, 1, '2026-02-23 12:01:48', '2026-04-22 15:45:19'),
+(15, 176, 'Leather Seats', 'LEA-CAR-0015', NULL, '[\"1\"]', 10442.00, 35868.00, '<p>Leather seats enhance the interior look and provide superior comfort and durability.</p><ul><li>Elegant and premium appearance</li><li>Comfortable for long drives</li><li>Easy to clean and maintain</li><li>Durable material</li></ul><p><br></p>', 'Premium seats designed with leather for comfort and luxury.', 27, 1, '2026-02-23 12:01:48', '2026-04-22 15:43:35'),
+(16, 190, 'Custom Panels', 'CUS-CAR-0016', 7, '[\"1\",\"4\"]', 46682.00, 14373.00, '<p>Custom panels allow vehicle owners to modify the appearance and improve aesthetics or functionality.</p><ul><li>Unique design options</li><li>Enhances vehicle appearance</li><li>Available in various materials</li><li>Suitable for interior or exterior upgrades</li></ul><p><br></p>', 'Custom panels designed for style and personalization.', 26, 1, '2026-02-23 12:01:48', '2026-04-22 15:43:07'),
+(17, 79, 'Lead-Acid Battery', 'LEA-CAR-0017', 2, '[\"1\",\"4\",\"5\"]', 6745.00, 32081.00, '<p>Lead-acid batteries are widely used due to their affordability and dependable performance.</p><ul><li>Cost-effective solution</li><li>Provides consistent power</li><li>Suitable for most vehicles</li><li>Easy to maintain</li></ul><p><br></p>', 'Reliable automotive battery for starting and powering electrical systems.', 28, 1, '2026-02-23 12:01:48', '2026-04-22 15:39:59'),
+(18, 16, 'Valve Cover Gaskets', 'VAL-CAR-0018', 2, '[\"1\"]', 9926.00, 16694.00, '<p>Valve cover gaskets ensure a tight seal between the valve cover and engine, protecting against oil leakage.</p><ul><li>Prevents oil leaks</li><li>Maintains engine cleanliness</li><li>Resistant to heat and pressure</li><li>Easy to replace</li></ul><p><br></p>', 'Seals the valve cover to prevent oil leaks in the engine.', 38, 1, '2026-02-23 12:01:48', '2026-04-22 15:43:52'),
+(19, 159, 'Manual Mirror', 'MAN-CAR-0019', 1, '[\"1\",\"4\"]', 12958.00, 15328.00, '<p>Manual mirrors are simple, reliable, and cost-effective alternatives to powered mirrors.</p><ul><li>No electrical components</li><li>Easy to maintain</li><li>Durable design</li><li>Budget-friendly option</li></ul><p><br></p>', 'Side mirror adjusted manually without electronic controls.', 6, 1, '2026-02-23 12:01:48', '2026-04-22 15:44:04'),
+(20, 113, 'OEM Pipes', 'OEM-CAR-0020', 1, '[\"1\",\"4\",\"5\"]', 42050.00, 19719.00, '<p>OEM pipes are manufactured to match original specifications, ensuring proper flow and compatibility.</p><ul><li>Perfect fit for vehicles</li><li>Maintains original performance</li><li>Durable material</li><li>Reliable and long-lasting</li></ul><p><br></p>', 'Factory-standard pipes designed for reliable performance and fit.', 24, 1, '2026-02-23 12:01:48', '2026-04-22 15:44:25'),
+(22, 159, 'Manual Mirror', 'MAN-CAR-0021', 1, '[\"1\",\"4\"]', 12958.00, 15328.00, '<p>Manual mirrors are simple, reliable, and cost-effective alternatives to powered mirrors.</p><ul><li>No electrical components</li><li>Easy to maintain</li><li>Durable design</li><li>Budget-friendly option</li></ul><p><br></p>', 'Side mirror adjusted manually without electronic controls.', 6, 1, '2026-02-23 12:01:48', '2026-04-22 15:45:33'),
+(31, 59, 'Motorbike Chain Set', 'CLU-MOTO-0022', 2, '[\"2\"]', 8500.00, 5950.00, '<p>Motorbike Chain Set suitable for most motorcycles.</p>', 'High quality motorbike spare part.', 16, 1, '2026-04-22 15:53:08', '2026-04-22 16:16:53'),
+(32, 42, 'Disc Brake Pads (Bike)', 'SEM-MOTO-0023', 15, '[\"2\"]', 2500.00, 1750.00, '<p>Disc Brake Pads (Bike) suitable for most motorcycles.</p>', 'High quality motorbike spare part.', 19, 1, '2026-04-22 15:53:08', '2026-04-22 16:17:10'),
+(33, 74, 'Motorcycle Engine Oil 10W-40', 'SYN-MOTO-0024', 16, '[\"2\"]', 3200.00, 2240.00, '<p>Motorcycle Engine Oil 10W-40 suitable for most motorcycles.</p>', 'High quality motorbike spare part.', 47, 1, '2026-04-22 15:53:08', '2026-04-22 16:17:28'),
+(34, 129, 'Bike Air Filter', 'INL-MOTO-0025', 11, '[\"2\"]', 1500.00, 1050.00, '<p>Bike Air Filter suitable for most motorcycles.</p>', 'High quality motorbike spare part.', 47, 1, '2026-04-22 15:53:08', '2026-04-22 16:17:44'),
+(35, 60, 'Motorbike Clutch Plate Kit', 'STA-MOTO-0026', 2, '[\"2\"]', 4200.00, 2940.00, '<p>Motorbike Clutch Plate Kit suitable for most motorcycles.</p>', 'High quality motorbike spare part.', 39, 1, '2026-04-22 15:53:08', '2026-04-22 16:18:03'),
+(36, 167, 'LED Headlight Bulb (Bike)', 'HEA-MOTO-0027', 15, '[\"2\"]', 1800.00, 1260.00, '<p>LED Headlight Bulb (Bike) suitable for most motorcycles.</p>', 'High quality motorbike spare part.', 10, 1, '2026-04-22 15:53:08', '2026-04-22 16:18:24'),
+(37, 83, 'Motorcycle Battery 12V', 'MOT-MOTO-0028', 17, '[\"2\"]', 6500.00, 4550.00, '<p>Motorcycle Battery 12V suitable for most motorcycles.</p>', 'High quality motorbike spare part.', 29, 1, '2026-04-22 15:53:08', '2026-04-22 16:18:46'),
+(38, 123, 'Bike Spark Plug', 'STA-MOTO-0029', 16, '[\"2\"]', 900.00, 630.00, '<p>Bike Spark Plug suitable for most motorcycles.</p>', 'High quality motorbike spare part.', 20, 1, '2026-04-22 15:53:08', '2026-04-22 16:19:01'),
+(39, 155, 'Motorbike Rear View Mirror Set', 'SID-MOTO-0030', 18, '[\"2\"]', 2200.00, 1540.00, '<p>Motorbike Rear View Mirror Set suitable for most motorcycles.</p>', 'High quality motorbike spare part.', 45, 1, '2026-04-22 15:53:08', '2026-04-22 16:19:15'),
+(40, 171, 'Bike Indicator Light Set', 'TUR-MOTO-0031', 2, '[\"2\"]', 1700.00, 1190.00, '<p>Bike Indicator Light Set suitable for most motorcycles.</p>', 'High quality motorbike spare part.', 46, 1, '2026-04-22 15:53:08', '2026-04-22 16:19:27');
 
 -- --------------------------------------------------------
 
@@ -750,11 +767,21 @@ INSERT INTO `product_images` (`id`, `product_id`, `image_url`, `is_main`, `creat
 (19, 18, '1771869116_699c93bc5e2a5.jpg', 1, '2026-02-23 12:21:56', '2026-02-23 12:21:56'),
 (20, 19, '1771869149_699c93dd7a7dc.jpg', 1, '2026-02-23 12:22:29', '2026-02-23 12:22:29'),
 (21, 20, '1771869174_699c93f6a110a.png', 1, '2026-02-23 12:22:54', '2026-02-23 12:22:54'),
-(22, 21, '1771869205_699c941561287.jpg', 1, '2026-02-23 12:23:25', '2026-02-23 12:23:25'),
 (23, 1, '1772354758_69a3fcc64235a.jpg', 1, '2026-03-01 03:15:58', '2026-03-01 03:15:58'),
 (24, 1, '1772354758_69a3fcc644234.jpg', 0, '2026-03-01 03:15:58', '2026-03-01 03:15:58'),
 (25, 1, '1772354758_69a3fcc644d82.jpg', 0, '2026-03-01 03:15:58', '2026-03-01 03:15:58'),
-(26, 5, '1772360021_69a4115583aae.jpg', 1, '2026-03-01 04:43:41', '2026-03-01 04:43:41');
+(26, 5, '1772360021_69a4115583aae.jpg', 1, '2026-03-01 04:43:41', '2026-03-01 04:43:41'),
+(28, 22, '1776871664_69e8e8f0c028b.jpg', 1, '2026-04-22 15:27:44', '2026-04-22 15:27:44'),
+(29, 31, '1776873383_69e8efa762524.jpg', 1, '2026-04-22 15:56:23', '2026-04-22 15:56:23'),
+(30, 32, '1776873460_69e8eff46301e.jpg', 1, '2026-04-22 15:57:40', '2026-04-22 15:57:40'),
+(31, 33, '1776873550_69e8f04e51e36.png', 1, '2026-04-22 15:59:10', '2026-04-22 15:59:10'),
+(32, 34, '1776873747_69e8f113520fd.jpg', 1, '2026-04-22 16:02:27', '2026-04-22 16:02:27'),
+(33, 35, '1776873830_69e8f16634e04.jpg', 1, '2026-04-22 16:03:50', '2026-04-22 16:03:50'),
+(34, 36, '1776873923_69e8f1c3c8dd8.jpg', 1, '2026-04-22 16:05:23', '2026-04-22 16:05:23'),
+(35, 37, '1776873962_69e8f1ea65b1e.jpg', 1, '2026-04-22 16:06:02', '2026-04-22 16:06:02'),
+(36, 38, '1776874014_69e8f21ec8d6e.jpg', 1, '2026-04-22 16:06:54', '2026-04-22 16:06:54'),
+(37, 39, '1776874067_69e8f2536d4e7.jpg', 1, '2026-04-22 16:07:47', '2026-04-22 16:07:47'),
+(38, 40, '1776874115_69e8f283399f9.jpg', 1, '2026-04-22 16:08:35', '2026-04-22 16:08:35');
 
 -- --------------------------------------------------------
 
@@ -790,19 +817,28 @@ INSERT INTO `product_vehicle_compatibilities` (`id`, `product_id`, `brand`, `mod
 (6, 6, 'Toyota', 'Mazda3', 2009, 2022, 'Rotary', 1500, 'Hybrid', 'Automatic', '2026-02-23 12:01:48', '2026-04-20 15:10:08'),
 (7, 7, 'Honda', 'Civic', 2009, 2025, 'Rotary', 1300, 'Diesel', 'Manual', '2026-02-23 12:01:48', '2026-02-23 12:01:48'),
 (8, 8, 'Toyota', 'Mazda3', 2006, 2025, 'Rotary', 1300, 'Petrol', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:16:32'),
-(9, 9, 'Mitsubishi', 'Corolla', 2011, 2021, 'Rotary', 1800, 'Petrol', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:16:58'),
+(9, 9, NULL, 'Corolla', 2011, 2021, 'Rotary', 1800, 'Petrol', 'Automatic', '2026-02-23 12:01:48', '2026-04-22 15:42:10'),
 (10, 10, 'Nissan', 'Altima', 2013, 2019, 'Inline', 1000, 'Hybrid', 'Automatic', '2026-02-23 12:01:48', '2026-04-20 15:10:21'),
 (11, 11, 'Honda', 'Altima', 2011, 2020, 'Rotary', 1300, 'Petrol', 'Manual', '2026-02-23 12:01:48', '2026-02-23 12:17:55'),
-(12, 12, 'Mitsubishi', 'Lancer', 2016, 2024, 'Rotary', 1300, 'Petrol', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:18:20'),
+(12, 12, NULL, 'Lancer', 2016, 2024, 'Rotary', 1300, 'Petrol', 'Automatic', '2026-02-23 12:01:48', '2026-04-22 15:42:41'),
 (13, 13, 'Nissan', 'Mazda3', 2008, 2024, 'V-Type', 1500, 'Hybrid', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:18:48'),
 (14, 14, 'Honda', 'Lancer', 2015, 2025, 'Inline', 1800, 'Hybrid', 'Manual', '2026-02-23 12:01:48', '2026-02-23 12:19:25'),
-(15, 15, 'Mitsubishi', 'Altima', 2011, 2024, 'Rotary', 1000, 'Hybrid', 'Manual', '2026-02-23 12:01:48', '2026-02-23 12:20:00'),
+(15, 15, NULL, 'Altima', 2011, 2024, 'Rotary', 1000, 'Hybrid', 'Manual', '2026-02-23 12:01:48', '2026-04-22 15:43:35'),
 (16, 16, 'Nissan', 'Lancer', 2008, 2023, 'V-Type', 2000, 'Petrol', 'Manual', '2026-02-23 12:01:48', '2026-04-20 15:10:40'),
 (17, 17, 'Honda', 'Corolla', 2015, 2021, 'Rotary', 1500, 'Hybrid', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:21:25'),
 (18, 18, 'Honda', 'Mazda3', 2007, 2025, 'Inline', 1800, 'Hybrid', 'Manual', '2026-02-23 12:01:48', '2026-02-23 12:01:48'),
 (19, 19, 'Toyota', 'Civic', 2017, 2019, 'Inline', 1300, 'Hybrid', 'Manual', '2026-02-23 12:01:48', '2026-04-20 15:10:52'),
 (20, 20, 'Toyota', 'Corolla', 2016, 2022, 'V-Type', 1300, 'Petrol', 'Automatic', '2026-02-23 12:01:48', '2026-02-23 12:22:39'),
-(21, 21, 'Honda', 'Altima', 2009, 2021, 'Rotary', 1300, 'Hybrid', 'Manual', '2026-02-23 12:01:48', '2026-02-23 12:23:10');
+(26, 31, 'Honda', 'CBR 150', 2015, 2023, 'Single Cylinder', 150, 'Petrol', 'Manual', '2026-04-22 15:53:08', '2026-04-22 15:54:34'),
+(27, 32, 'Yamaha', 'FZ-S', 2015, 2023, 'Single Cylinder', 150, 'Petrol', 'Manual', '2026-04-22 15:53:08', '2026-04-22 16:00:40'),
+(28, 33, 'Bajaj', 'Pulsar 150', 2015, 2023, 'Single Cylinder', 150, 'Petrol', 'Manual', '2026-04-22 15:53:08', '2026-04-22 15:58:44'),
+(29, 34, 'Suzuki', 'Gixxer', 2015, 2023, 'Single Cylinder', 155, 'Petrol', 'Manual', '2026-04-22 15:53:08', '2026-04-22 16:02:18'),
+(30, 35, 'Honda', 'CD 125', 2015, 2023, 'Single Cylinder', 125, 'Petrol', 'Manual', '2026-04-22 15:53:08', '2026-04-22 16:03:17'),
+(31, 36, 'Yamaha', 'R15', 2015, 2023, 'Single Cylinder', 155, 'Petrol', 'Manual', '2026-04-22 15:53:08', '2026-04-22 16:04:38'),
+(32, 37, 'TVS', 'Apache RTR', 2015, 2023, 'Single Cylinder', 160, 'Petrol', 'Manual', '2026-04-22 15:53:08', '2026-04-22 16:05:58'),
+(33, 38, 'Bajaj', 'Discover 125', 2015, 2023, 'Single Cylinder', 125, 'Petrol', 'Manual', '2026-04-22 15:53:08', '2026-04-22 16:06:40'),
+(34, 39, 'Hero', 'Hunk', 2015, 2023, 'Single Cylinder', 150, 'Petrol', 'Manual', '2026-04-22 15:53:08', '2026-04-22 16:07:26'),
+(35, 40, 'Honda', 'Hornet 160R', 2015, 2023, 'Single Cylinder', 160, 'Petrol', 'Manual', '2026-04-22 15:53:08', '2026-04-22 16:08:06');
 
 -- --------------------------------------------------------
 
@@ -931,7 +967,6 @@ CREATE TABLE `vehicles` (
 --
 
 INSERT INTO `vehicles` (`id`, `brand_id`, `model`, `year`, `price`, `mileage`, `condition`, `fuel_type`, `transmission`, `engine_cc`, `body_type`, `color`, `district`, `city`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(2, 13, 'Lancer EX', '2016', 7500000.00, 85000, 'used', 'Petrol', 'Automatic', 1800, 'Sedan', 'Silver', 'Kurunegala', 'Kurunegala', '<p>✅ Well maintained Mitsubishi Lancer EX 2015 for sale</p><p>✅Original paint, no accidents, and regularly serviced</p><p>✅Smooth driving experience with automatic transmission</p><p>✅Spacious interior with modern features including multifunction steering and infotainment system</p><p>✅Ideal family car with good fuel efficiency and reliability</p><p>✅Price can be slightly negotiable after inspection</p>', 1, '2026-04-04 03:05:49', '2026-04-10 08:42:57'),
 (3, 1, 'Prius', '2017', 9800000.00, 72000, 'used', 'Petrol', 'Automatic', 1800, 'Sedan', 'Pearl White', 'Kurunegala', 'Kurunegala', '<p>✅ Well maintained Toyota Prius 2017 (Hybrid)</p><p>✅ Excellent fuel efficiency with hybrid technology</p><p>✅Smooth and silent driving experience</p><p>✅ Original paint, accident-free vehicle</p><p>✅ Spacious interior with digital display and reverse camera</p><p>✅ Ideal for daily use with low running cost</p><p>✅ Price negotiable after inspection</p>', 1, '2026-04-04 03:09:36', '2026-04-04 08:15:14');
 
 -- --------------------------------------------------------
@@ -954,11 +989,34 @@ CREATE TABLE `vehicle_images` (
 --
 
 INSERT INTO `vehicle_images` (`id`, `vehicle_id`, `image_url`, `is_main`, `created_at`, `updated_at`) VALUES
-(4, 2, '1775291895_69d0cdf7cd1fb.JPG', 1, '2026-04-04 03:08:15', '2026-04-04 03:08:15'),
-(5, 2, '1775291895_69d0cdf7cf4c9.jpg', 0, '2026-04-04 03:08:15', '2026-04-04 03:08:15'),
-(6, 2, '1775291895_69d0cdf7cffd4.jpg', 0, '2026-04-04 03:08:15', '2026-04-04 03:08:15'),
 (7, 3, '1775292094_69d0cebe7cc85.jpg', 1, '2026-04-04 03:11:34', '2026-04-04 03:11:34'),
 (8, 3, '1775292094_69d0cebe7efc1.jpg', 0, '2026-04-04 03:11:34', '2026-04-04 03:11:34');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vehicle_types`
+--
+
+CREATE TABLE `vehicle_types` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `vehicle_types`
+--
+
+INSERT INTO `vehicle_types` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Car', 1, '2026-04-22 15:22:19', '2026-04-22 15:22:19'),
+(2, 'Motorbike', 1, '2026-04-22 15:15:29', '2026-04-22 15:15:29'),
+(4, 'Van', 1, '2026-04-22 15:15:29', '2026-04-22 15:15:29'),
+(5, 'Lorry', 1, '2026-04-22 15:15:29', '2026-04-22 15:15:29'),
+(6, 'Bus', 1, '2026-04-22 15:15:29', '2026-04-22 15:15:29'),
+(7, 'Three Wheeler', 1, '2026-04-22 15:15:29', '2026-04-22 15:15:29');
 
 -- --------------------------------------------------------
 
@@ -1187,6 +1245,12 @@ ALTER TABLE `vehicle_images`
   ADD KEY `vehicle_images_vehicle_id_foreign` (`vehicle_id`);
 
 --
+-- Indexes for table `vehicle_types`
+--
+ALTER TABLE `vehicle_types`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `wishlists`
 --
 ALTER TABLE `wishlists`
@@ -1221,7 +1285,7 @@ ALTER TABLE `auction_notifications`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `carts`
@@ -1269,7 +1333,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1287,19 +1351,19 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `product_vehicle_compatibilities`
 --
 ALTER TABLE `product_vehicle_compatibilities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `reviews`
@@ -1317,7 +1381,7 @@ ALTER TABLE `review_images`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `vehicles`
@@ -1330,6 +1394,12 @@ ALTER TABLE `vehicles`
 --
 ALTER TABLE `vehicle_images`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `vehicle_types`
+--
+ALTER TABLE `vehicle_types`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `wishlists`

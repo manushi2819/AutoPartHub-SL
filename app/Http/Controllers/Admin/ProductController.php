@@ -12,6 +12,9 @@ use App\Models\ProductVehicleCompatibility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
+
+
+
 class ProductController extends Controller
 {
     // ================= INDEX =================
@@ -67,23 +70,37 @@ class ProductController extends Controller
         'vehicle_type_ids.*' => 'exists:vehicle_types,id',
     ]);
 
-        $lastSku = \App\Models\Product::whereNotNull('sku')
-            ->where('sku', 'like', 'SKU%')
-            ->orderBy('sku', 'desc')
-            ->value('sku');
 
-        if ($lastSku) {
-            // extract number part
-            $number = (int) str_replace('SKU', '', $lastSku);
-            $nextNumber = $number + 1;
-        } else {
-            $nextNumber = 1;
-        }
+    // ---- CATEGORY + VEHICLE TYPE ----
+    $category = Category::find($request->category_id);
 
-        // format: SKU0001, SKU0020 etc.
-        $sku = 'SKU' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+    // take first selected vehicle type (since it's array)
+    $vehicleTypeId = $request->vehicle_type_ids[0] ?? null;
+    $vehicleType = VehicleType::find($vehicleTypeId);
 
-        $data['sku'] = $sku;
+    // safe fallback
+    $categoryCode = strtoupper(substr($category->name ?? 'CAT', 0, 3));
+    $vehicleCode = strtoupper(substr($vehicleType->name ?? 'VEH', 0, 4));
+
+    // prefix example: BRA-BIKE
+    $prefix = $categoryCode . '-' . $vehicleCode;
+
+    // ---- GET LAST SKU FOR SAME PREFIX ----
+    $lastSku = Product::where('sku', 'like', $prefix . '%')
+        ->orderBy('sku', 'desc')
+        ->value('sku');
+
+    if ($lastSku) {
+        $number = (int) substr($lastSku, -4);
+        $nextNumber = $number + 1;
+    } else {
+        $nextNumber = 1;
+    }
+
+    // final SKU
+    $sku = $prefix . '-' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+
+    $data['sku'] = $sku;
 
         $product = Product::create($data);
 
