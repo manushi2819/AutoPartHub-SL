@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Admin Dashboard</title>
-  <link rel="icon" type="image/png" href="{{ asset('logo.png') }}" sizes="16x16">
+  <!-- Fav Icon -->
+<link rel="icon" href="{{ asset('icon.png') }}" type="image/x-icon">
   <link rel="stylesheet" href="{{ asset('dashboard/assets/css/remixicon.css') }}">
   <link rel="stylesheet" href="{{ asset('dashboard/assets/css/lib/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('dashboard/assets/css/style.css') }}">

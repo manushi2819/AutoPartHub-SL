@@ -277,14 +277,14 @@ h3:hover {
                    <div class="row clearfix">
                     <!-- Images -->
                         <div class="col-lg-7 col-md-12 col-sm-12 image-column">
-                            <div class="bxslider">
+                            <div class="bxslider ">
                                 @foreach($product->images as $index => $image)
-                                    <div class="slider-content">
-                                        <div class="image-inner">
-                                           <div class="image-box">
+                                    <div class="slider-content ">
+                                        <div class="image-inner" >
+                                           <div class="image-box" >
                                                 <figure class="image main-image"
                                                     style="height:450px !important;
-                                                      background:#fff !important;
+                                                      background:#fff !important; 
                                                        ">
 
                                                     <a href="{{ asset('uploads/' . $image->image_url) }}"
@@ -331,8 +331,8 @@ h3:hover {
 
                         <!-- Product Info -->
                         <div class="col-lg-5 col-md-12 col-sm-12 content-column">
-                            <div class="content-box ml_20">
-                                <h2 style="font-size: 34px;">{{ $product->name }}</h2>
+                            <div class="content-box ml_20 card1" style="background-color: #f4f4f4; ">
+                                <h2 style="font-size: 28px;">{{ $product->name }}</h2>
                                 <h3 style="font-size: 24px; ">LKR {{ number_format($product->price, 2) }}</h3>
 
                                 <ul class="rating">
@@ -354,7 +354,6 @@ h3:hover {
                                 </div>
 
                                 <ul class="discription-box">
-                                    <li><strong>Brand :</strong> {{ $product->brand->name }}</li>
                                     <li><strong>Product SKU :</strong> {{ $product->sku }}</li>
                                     <li><strong>Category :</strong> {{ $product->category->name ?? '-' }}</li>
                                     <li class="product-stock"><strong>Availability :</strong>
@@ -368,7 +367,7 @@ h3:hover {
 
 
 
-                             <div class="addto-cart-box mb_40">
+                             <div class="addto-cart-box mb_0">
                                 <ul class="clearfix" style="display:flex; flex-wrap:wrap; gap:10px;">
                                     <li class="item-quantity" style="flex:1 1 100%;">
                                         <input class="quantity-spinner form-control" type="text" value="1" name="quantity" id="product_qty">
@@ -392,7 +391,7 @@ h3:hover {
                                         <button><i class="icon-7"></i></button>
                                     </li>
 
-                                  <h6 class="mb-3 mt-3"><i class="fas fa-share-alt"></i> Share This Product</h6>
+                                  <h6 class="mb-0 mt-3"><i class="fas fa-share-alt"></i> Share This Product</h6>
 
                                     @php
                                         $productLink = route('Frontend.parts-details', $product->id);
@@ -427,12 +426,12 @@ h3:hover {
                     </div>
                 </div>
                 
-                <div class="product-discription mb_70 card1">
+                <div class="product-discription mb_70 card1 mt-5">
                     <div class="tabs-box">
                         <div class="tab-btn-box">
                             <ul class="tab-btns tab-buttons clearfix">
                                 <li class="tab-btn active-btn" data-tab="#tab-1">Description</li>
-                                <li class="tab-btn" data-tab="#tab-3">Compatibility</li>
+                                <li class="tab-btn" data-tab="#tab-3">Vehicle Compatibility</li>
                                 <li class="tab-btn" data-tab="#tab-2">Reviews</li>
                             </ul>
                         </div>
@@ -582,12 +581,12 @@ h3:hover {
             </div>
 
 
-            <div class="container">
+            <div class="container mb-5">
             <div class="related-product">
                 <h2>You may also like these</h2>
                 <div class="inner-content clearfix">
                     @foreach($relatedProducts as $related)
-                        <div class="shop-block-one">
+                        <div class="shop-block-one ">
                             <div class="inner-box d-flex flex-column" >
                                 <div class="image-box" style="height: 180px !important;">
                                     <ul class="option-list">
@@ -612,12 +611,19 @@ h3:hover {
                                         </a>
                                     </h4>
                                     <h5>LKR {{ $related->price }}</h5>
-                                        <ul class="rating">
-                                            @for($i=0; $i<5; $i++)
-                                                <li><i class="icon-41"></i></li>
-                                            @endfor
-                                            <li><span>(5)</span></li>
-                                        </ul>
+                                    <ul class="rating">
+                                    @php
+                                        $avg = round($product->averageRating());
+                                        $total = $product->reviewsCount();
+                                    @endphp
+
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <li>
+                                            <i class="icon-41" style="color: {{ $i <= $avg ? '#FFD700' : '#ccc' }}"></i>
+                                        </li>
+                                    @endfor
+                                    <li><span>({{ $total }})</span></li>
+                                </ul>
                                
                                 </div>
                             </div>

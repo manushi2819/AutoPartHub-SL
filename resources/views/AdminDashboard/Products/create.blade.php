@@ -76,18 +76,7 @@
                     <input type="text" name="sku" class="form-control" value="{{ $product->sku ?? '' }}" placeholder="AUTO-GENERATED" readonly>
                 </div>
 
-              <div class="col-md-6">
-                    <label class="form-label">Brand</label>
-                    <select name="brand_id" class="form-control">
-                        <option value="">Select Brand</option>
-                        @foreach($brands as $brand)
-                            <option value="{{ $brand->id }}"
-                                {{ old('brand_id', $product->brand_id ?? '') == $brand->id ? 'selected' : '' }}>
-                                {{ $brand->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+            
                 <div class="col-md-6">
                     <label class="form-label">Price <i class="text-danger">*</i></label>
                     <input type="number" name="price" class="form-control" step="0.01" value="{{ $product->price ?? old('price') }}" required>
@@ -130,6 +119,19 @@
                 <hr>
                  <h6 class="fw-semibold">Vehicle Compatibility</h6>
                 {{-- Single Compatibility --}}
+
+                  <div class="col-md-6">
+                    <label class="form-label">Brand</label>
+                    <select name="brand_id" class="form-control">
+                        <option value="">Select Brand</option>
+                        @foreach($brands as $brand)
+                            <option value="{{ $brand->id }}"
+                                {{ old('brand_id', $product->brand_id ?? '') == $brand->id ? 'selected' : '' }}>
+                                {{ $brand->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
 
                 <div class="col-md-6">
                     <label class="form-label">Model</label>

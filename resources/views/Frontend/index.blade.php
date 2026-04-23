@@ -388,11 +388,10 @@
 
                                         <div class="content-box">
                                             <h6>
-                                                <a href="#">
+                                                <a href="#" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                                                     {{ $product->name }}
                                                 </a>
                                             </h6>
-
                                             <ul class="rating mb_25">
                                                     @php
                                                         $avg = round($product->averageRating()); // Round to nearest whole number
