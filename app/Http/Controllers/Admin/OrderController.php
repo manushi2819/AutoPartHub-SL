@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Mail\OrderInTransitMail;
+use App\Mail\OrderConfirmedMail;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
@@ -64,11 +65,18 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
 
         $statusChangedToInTransit = false;
+        $statusChangedToConfirmed = false;
 
         if ($request->filled('status')) {
+
             if ($request->status === 'in_transit' && $order->status !== 'in_transit') {
                 $statusChangedToInTransit = true;
             }
+
+            if ($request->status === 'confirmed' && $order->status !== 'confirmed') {
+                $statusChangedToConfirmed = true;
+            }
+
             $order->status = $request->status;
         }
 
@@ -76,14 +84,17 @@ class OrderController extends Controller
             $order->payment_status = $request->payment_status;
         }
 
-        // ✅ Save tracking number
         if ($request->filled('tracking_no')) {
             $order->tracking_no = $request->tracking_no;
         }
 
         $order->save();
 
-        // Send email if status changed to in_transit
+        // ✅ Send emails
+        if ($statusChangedToConfirmed) {
+            Mail::to($order->email)->send(new OrderConfirmedMail($order));
+        }
+
         if ($statusChangedToInTransit) {
             Mail::to($order->email)->send(new OrderInTransitMail($order));
         }

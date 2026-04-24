@@ -56,39 +56,269 @@
         <!-- google-map-section end -->
 
 
-        <!-- contact-section -->
-        <section class="contact-section pt_70 pb_80">
-            <div class="auto-container">
-                <div class="sec-title centred mb_50">
-                    <h2>Send a Message</h2>
+       <!-- contact-section -->
+<section class="contact-section pt_70 pb_80">
+    <div class="auto-container">
+        <div class="sec-title centred mb_50">
+            <h2>Send a Message</h2>
+        </div>
+        <div class="form-inner card1">
+            <form method="post" action="{{ route('contact.submit') }}" id="contact-form">
+                @csrf 
+                <div class="row clearfix">
+                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                        <input type="text" name="name" placeholder="Name" required>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                        <input type="email" name="email" placeholder="E-mail" required>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                        <input type="text" name="phone" placeholder="Phone" required>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                        <input type="text" name="subject" placeholder="Subject" required>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                        <textarea name="message" placeholder="Type message"></textarea>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn centred">
+                        <button type="submit" class="theme-btn" name="submit-form">Send Message<span></span><span></span><span></span><span></span></button>
+                    </div>
                 </div>
-                <div class="form-inner card1">
-                    <form method="post"  action="{{ route('contact.submit') }}" id="contact-form">
-                         @csrf 
-                        <div class="row clearfix">
-                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                <input type="text" name="name" placeholder="Name" required>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                <input type="email" name="email" placeholder="E-mail" required>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                <input type="text" name="phone" placeholder="Phone" required>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                <input type="text" name="subject" placeholder="Subject" required>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                <textarea name="message" placeholder="Type message"></textarea>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn centred">
-                                <button type="submit" class="theme-btn" name="submit-form">Send Message<span></span><span></span><span></span><span></span></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-        <!-- contact-section end -->
+            </form>
+        </div>
+    </div>
+</section>
+<!-- contact-section end -->
+
+<style>
+  
+
+    .contact-section {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+
+    .contact-section .auto-container {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .contact-section .sec-title {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .contact-section .sec-title h2 {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--primary-black);
+        margin-bottom: 12px;
+        letter-spacing: -0.5px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .contact-section .sec-title h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: var(--primary-red);
+    }
+
+    .contact-section .form-inner {
+        background: white;
+        padding: 48px 40px;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition-smooth);
+        border-radius: var(--card-border-radius);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .contact-section .form-inner:hover {
+        box-shadow: var(--shadow-hover);
+        transform: translateY(-5px);
+    }
+
+    .contact-section .form-group {
+        margin-bottom: 24px;
+        position: relative;
+    }
+
+    .contact-section input,
+    .contact-section textarea {
+        width: 100%;
+        padding: 14px 18px;
+        border: 2px solid #e0e0e0;
+        background: white;
+        font-size: 15px;
+        transition: var(--transition-smooth);
+        border-radius: var(--card-border-radius);
+        color: var(--primary-black);
+        font-family: inherit;
+    }
+
+    .contact-section input:focus,
+    .contact-section textarea:focus {
+        outline: none;
+        border-color: var(--primary-red);
+        background: var(--primary-red-light);
+        transform: translateY(-2px);
+    }
+
+    .contact-section input::placeholder,
+    .contact-section textarea::placeholder {
+        color: #aaa;
+        font-weight: 400;
+    }
+
+    .contact-section textarea {
+        min-height: 150px;
+        resize: vertical;
+        line-height: 1.6;
+    }
+
+    .contact-section .theme-btn {
+        width: auto;
+        min-width: 200px;
+        padding: 16px 32px;
+        background: var(--primary-red);
+        color: white;
+        border: none;
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        border-radius: var(--card-border-radius);
+        position: relative;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+
+    /* Animation for form fields */
+    .contact-section .form-group {
+        opacity: 0;
+        animation: fadeInUp 0.5s ease-out forwards;
+    }
+
+    .contact-section .form-group:nth-child(1) { animation-delay: 0.05s; }
+    .contact-section .form-group:nth-child(2) { animation-delay: 0.1s; }
+    .contact-section .form-group:nth-child(3) { animation-delay: 0.15s; }
+    .contact-section .form-group:nth-child(4) { animation-delay: 0.2s; }
+    .contact-section .form-group:nth-child(5) { animation-delay: 0.25s; }
+    .contact-section .form-group:nth-child(6) { animation-delay: 0.3s; }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Error state */
+    .contact-section input.error,
+    .contact-section textarea.error {
+        border-color: var(--primary-red);
+        background: var(--primary-red-light);
+        animation: shake 0.3s ease-in-out;
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+
+    /* Success message styling */
+    .contact-success {
+        background: #d4edda;
+        color: #155724;
+        padding: 12px 20px;
+        border-radius: var(--card-border-radius);
+        margin-bottom: 20px;
+        border-left: 4px solid #28a745;
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    .contact-error {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 12px 20px;
+        border-radius: var(--card-border-radius);
+        margin-bottom: 20px;
+        border-left: 4px solid var(--primary-red);
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .contact-section .form-inner {
+            padding: 32px 24px;
+        }
+        
+        .contact-section .sec-title h2 {
+            font-size: 28px;
+        }
+        
+        .contact-section .theme-btn {
+            width: 100%;
+            min-width: auto;
+        }
+        
+        .contact-section .row {
+            margin: 0;
+        }
+        
+        .contact-section [class*="col-"] {
+            padding: 0;
+        }
+    }
+
+    /* Loading state for submit button */
+    .contact-section .theme-btn.loading {
+        pointer-events: none;
+        opacity: 0.8;
+    }
+
+    .contact-section .theme-btn.loading::after {
+        content: '';
+        width: 18px;
+        height: 18px;
+        border: 2px solid white;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+</style>
+
+
 
  @endsection

@@ -9,10 +9,7 @@
 
     /* Wishlist Page Specific Styles */
     .wishlist-page {
-         background: linear-gradient(135deg, 
-            #e8f4ffd9 0%,  
-            #fff9dbaa 50%, 
-            #e8fff3 100% );
+   
         min-height: 100vh;
     }
 

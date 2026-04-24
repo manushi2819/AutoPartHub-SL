@@ -257,7 +257,7 @@ h3:hover {
 
 <!-- Page Title -->
 <section class="page-title">
-    <div class="container">
+    <div class="auto-container">
         <div class="content-box">
             <ul class="bread-crumb">
                 <li><a href="{{ route('Frontend.index') }}">Home</a></li>
@@ -271,7 +271,7 @@ h3:hover {
 
         <!-- shop-details -->
         <section class="shop-details mb-0 mt-3">
-            <div class="container">
+            <div class="auto-container">
 
                <div class="product-details-content mb_0">
                    <div class="row clearfix">
@@ -581,58 +581,63 @@ h3:hover {
             </div>
 
 
-            <div class="container mb-5">
-            <div class="related-product">
-                <h2>You may also like these</h2>
-                <div class="inner-content clearfix">
-                    @foreach($relatedProducts as $related)
-                        <div class="shop-block-one ">
-                            <div class="inner-box d-flex flex-column" >
-                                <div class="image-box" style="height: 180px !important;">
-                                    <ul class="option-list">
-                                        <li>
-                                            <a href="{{ asset('uploads/' . ($related->images->first()->image_url ?? 'placeholder.png')) }}" 
-                                            class="lightbox-image" data-fancybox="gallery">
-                                            <i class="icon-12"></i>
-                                            </a>
-                                        </li>
-                                   
-                                    </ul>
-                                   <figure class="image" style="height:200px; overflow:hidden;">
-                                    <img src="{{ asset('uploads/' . ($related->images->first()->image_url ?? 'placeholder.png')) }}" 
-                                        alt="{{ $related->name }}" 
-                                        style="width:100%; height:100%; object-fit: cover;">
-                                </figure>
-                                </div>
-                                <div class="lower-content">
-                                    <h4 class="product-name">
-                                        <a href="{{ route('Frontend.parts-details', $related->id) }}">
-                                            {{ $related->name }}
-                                        </a>
-                                    </h4>
-                                    <h5>LKR {{ $related->price }}</h5>
-                                    <ul class="rating">
-                                    @php
-                                        $avg = round($product->averageRating());
-                                        $total = $product->reviewsCount();
-                                    @endphp
+          @if($relatedProducts->count() > 0)
+            <div class="auto-container mb-5">
+                <div class="related-product">
+                    <h2>You may also like these</h2>
+                    <div class="inner-content clearfix">
+                        @foreach($relatedProducts as $related)
+                            <div class="shop-block-one">
+                                <div class="inner-box d-flex flex-column">
+                                    <div class="image-box" style="height: 180px !important;">
+                                        <ul class="option-list">
+                                            <li>
+                                                <a href="{{ asset('uploads/' . ($related->images->first()->image_url ?? 'placeholder.png')) }}" 
+                                                class="lightbox-image" data-fancybox="gallery">
+                                                    <i class="icon-12"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
 
-                                    @for ($i = 1; $i <= 5; $i++)
-                                        <li>
-                                            <i class="icon-41" style="color: {{ $i <= $avg ? '#FFD700' : '#ccc' }}"></i>
-                                        </li>
-                                    @endfor
-                                    <li><span>({{ $total }})</span></li>
-                                </ul>
-                               
+                                        <figure class="image" style="height:200px; overflow:hidden;">
+                                            <img src="{{ asset('uploads/' . ($related->images->first()->image_url ?? 'placeholder.png')) }}" 
+                                                alt="{{ $related->name }}" 
+                                                style="width:100%; height:100%; object-fit: cover;">
+                                        </figure>
+                                    </div>
+
+                                    <div class="lower-content">
+                                        <h4 class="product-name">
+                                            <a href="{{ route('Frontend.parts-details', $related->id) }}">
+                                                {{ $related->name }}
+                                            </a>
+                                        </h4>
+
+                                        <h5>LKR {{ $related->price }}</h5>
+
+                                        <ul class="rating">
+                                            @php
+                                                $avg = round($product->averageRating());
+                                                $total = $product->reviewsCount();
+                                            @endphp
+
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <li>
+                                                    <i class="icon-41" style="color: {{ $i <= $avg ? '#FFD700' : '#ccc' }}"></i>
+                                                </li>
+                                            @endfor
+                                            <li><span>({{ $total }})</span></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
-            </div>
+            @endif
 
+            
         </section>
         <!-- shop-details end -->
 
@@ -780,11 +785,7 @@ h3:hover {
 }
 
 
-/* Ensure icons look decent without font */
-i[class^="icon-"] {
-    font-style: normal;
-    font-size: 14px;
-}
+
 
 /* Lightbox link cursor */
 .lightbox-image {

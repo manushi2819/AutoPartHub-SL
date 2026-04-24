@@ -286,10 +286,22 @@
                                         <li class="{{ request()->routeIs('Frontend.index') ? 'current' : '' }}">
                                             <a href="{{ route('Frontend.index') }}">Home</a>
                                         </li> 
-                                        
-                                        <li class="{{ request()->routeIs('Frontend.shop') ? 'current' : '' }}">
+                                    
+                                        @php
+                                            $vehicleTypes = \App\Models\VehicleType::where('status', 1)->get();
+                                        @endphp
+                                         <li class="dropdown {{ request()->routeIs('Frontend.shop') ? 'current' : '' }}">
                                             <a href="{{ route('Frontend.shop') }}">Spare Parts</a>
-                                        </li> 
+                                            <ul>
+                                                @foreach($vehicleTypes as $type)
+                                                    <li>
+                                                        <a href="{{ route('Frontend.shop', ['vehicle_type' => $type->id]) }}">
+                                                            {{ $type->name }}
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </li>
 
                                         <li class="">
                                             <a href="">Vehicles</a>

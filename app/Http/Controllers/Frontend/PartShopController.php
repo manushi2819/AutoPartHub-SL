@@ -78,6 +78,14 @@ class PartShopController extends Controller
             $q->whereHas('compatibility', fn($q2) => $q2->where('engine_type', $request->engine_type));
         });
 
+        $products->when($request->vehicle_type, function ($q) use ($request) {
+            $value = $request->vehicle_type;
+
+            $q->where(function ($sub) use ($value) {
+                $sub->whereJsonContains('vehicle_type_ids', (int) $value)
+                    ->orWhereJsonContains('vehicle_type_ids', (string) $value);
+            });
+        });
         // -------------------------
         // Category Filter
         // -------------------------
@@ -148,6 +156,7 @@ class PartShopController extends Controller
             }
         }
 
+        
         // -------------------------
         // Pagination
         // -------------------------
@@ -168,7 +177,7 @@ class PartShopController extends Controller
             'engines',
             'fuelTypes',
             'engineTypes',
-            'categories'
+            'categories',
         ));
     }
 

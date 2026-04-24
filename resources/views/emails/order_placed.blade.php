@@ -233,7 +233,7 @@
                             @if($isAdmin)
                                 <strong>New order alert!</strong> A customer has placed an order.
                             @else
-                                <strong>Hi {{ $order->first_name }},</strong> your order has been confirmed.
+                                <strong>Hi {{ $order->first_name }},</strong> your order has been placed.
                             @endif
                         </div>
                         
