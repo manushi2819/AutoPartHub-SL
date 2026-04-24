@@ -64,11 +64,11 @@
     display: block;
 }
 .live-badge {
-    background: #ffcc00;
+    background: #22c55e;
     color: #fff;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    padding: 4px 6px;
+    padding: 6px 6px;
     border-radius: 20px;
     margin-left: 6px;
     line-height: 1;
@@ -77,7 +77,7 @@
 
 /* Optional small pulse animation */
 @keyframes pulseLive {
-    0% { box-shadow: 0 0 0 0 rgba(255, 200, 0, 0.6); }
+    0% { box-shadow: 0 0 0 0 rgba(64, 255, 0, 0.6); }
     70% { box-shadow: 0 0 0 6px rgba(255, 0, 0, 0); }
     100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
 }

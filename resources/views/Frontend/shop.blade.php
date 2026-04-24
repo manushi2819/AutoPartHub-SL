@@ -261,7 +261,7 @@
     <!-- cta-style-two -->
     <section class="cta-style-two pb_0">
         <div class="auto-container">
-            <div class="inner-container" style="width: 100%; height: 350px; overflow: hidden; position: relative;">
+            <div class="inner-container" style="width: 100%; height: 310px; overflow: hidden; position: relative;">
                 <img src="frontend/assets/images/banner1.png" alt="Banner Image" 
                     style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top: 0; left: 0;">
             </div>

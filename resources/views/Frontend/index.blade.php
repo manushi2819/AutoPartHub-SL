@@ -125,7 +125,7 @@
 
                                 <div class="carousel-item">
                                     <div class="content-one content-box banner"
-                                        style="background-image: url('{{ asset('frontend/assets/images/banner6.png') }}'); ">
+                                        style="background-image: url('{{ asset('frontend/assets/images/banner10.png') }}'); ">
                                     </div>
                                 </div>
 
