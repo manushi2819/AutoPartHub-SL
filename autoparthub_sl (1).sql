@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Apr 22, 2026 at 06:30 PM
+-- Generation Time: Apr 24, 2026 at 07:33 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -629,8 +629,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `customer_id`, `order_number`, `tracking_no`, `first_name`, `last_name`, `email`, `phone`, `address`, `city`, `zip`, `country`, `subtotal`, `discount`, `total`, `payment_method`, `status`, `payment_status`, `created_at`, `updated_at`) VALUES
-(1, NULL, 'ORD-CGK7ZTDW', NULL, 'Kasthuri', 'Dhananjaya', 'kasthurid1234@gmail.com', '0716316143', 'No.124,Ridigama,', 'Kurunegala', '60040', 'Sri Lanka', 16396.00, 0.00, 16396.00, 'cod', 'pending', 'pending', '2026-04-22 08:38:31', '2026-04-22 08:38:31'),
-(2, 2, 'ORD-QUVJUF4Y', NULL, 'Kasthuri', 'Dhananjaya', 'kasthurid1234@gmail.com', '0716316143', 'No.124', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 42050.00, 0.00, 42050.00, 'cod', 'pending', 'pending', '2026-04-22 08:41:40', '2026-04-22 08:41:40');
+(1, NULL, 'ORD-CGK7ZTDW', '12345678', 'Kasthuri', 'Dhananjaya', 'kasthurid1234@gmail.com', '0716316143', 'No.124,Ridigama,', 'Kurunegala', '60040', 'Sri Lanka', 16396.00, 0.00, 16396.00, 'cod', 'in_transit', 'pending', '2026-04-22 08:38:31', '2026-04-24 05:31:57'),
+(2, 2, 'ORD-QUVJUF4Y', NULL, 'Kasthuri', 'Dhananjaya', 'kasthurid1234@gmail.com', '0716316143', 'No.124', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 42050.00, 0.00, 42050.00, 'cod', 'pending', 'pending', '2026-04-22 08:41:40', '2026-04-24 05:27:18');
 
 -- --------------------------------------------------------
 
