@@ -241,6 +241,45 @@
         font-size: 12px;
     }
 }
+
+    .price-box {
+        width: 100%;
+    }
+
+    .slider-track {
+        position: relative;
+        height: 6px;
+        background: #e5e7eb;
+        border-radius: 5px;
+        margin: 20px 0;
+    }
+
+    .slider-track input[type="range"] {
+        position: absolute;
+        width: 100%;
+        pointer-events: none;
+        background: none;
+        -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+        pointer-events: auto;
+        width: 13px;
+        height: 13px;
+        background: #c52222;
+        border-radius: 50%;
+        cursor: pointer;
+        -webkit-appearance: none;
+        border: 1px solid #fff;
+        box-shadow: 0 0 0 2px #c52222;
+    }
+
+    .price-values {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 600;
+        font-size: 14px;
+    }
 </style>
 
 
@@ -281,7 +320,7 @@
                             ========================== --}}
                             <div class="search-widget sidebar-widget pb_40 mb_40">
                                 <div class="widget-title mb_30">
-                                    <h4>Select Vehicle</h4>
+                                    <h5>Vehicle Compatibility</h5>
                                 </div>
                                 <div class="search-inner">
                                     <form method="GET" action="{{ route('Frontend.shop') }}">
@@ -422,7 +461,7 @@
                         ========================== --}}
                         <div class="category-widget sidebar-widget pb_40 mb_40">
                             <div class="widget-title mb_30">
-                                <h4>Categories</h4>
+                                <h5>Categories</h5>
                             </div>
                             <div class="widget-content">
                                 <ul class="accordion-box">
@@ -482,28 +521,26 @@
                         {{-- =========================
                             Price Filter
                         ========================== --}}
-                        <div class="filter-widget sidebar-widget  mb_40">
-                            <div class="widget-title mb_30">
-                                <h4>Filter by Price</h4>
+                     <div class="filter-widget sidebar-widget mb_40">
+                            <div class="widget-title mb_20">
+                                <h5>Price Range</h5>
                             </div>
 
-                            <div class="price-range-slider">
-                                <div id="slider-range" class="range-bar"></div>
+                            <div class="price-box">
+                                <div class="slider-track">
+                                    <input type="range" id="minRange" min="0" max="100000" value="{{ request('min_price') ?? 0 }}">
+                                    <input type="range" id="maxRange" min="0" max="100000" value="{{ request('max_price') ?? 100000 }}">
+                                </div>
 
-                                <p class="range-value">
-                                    <span>Price:</span>
-                                    <input type="text" id="amount" readonly
-                                        value="{{ request('min_price') ?? 0 }} - {{ request('max_price') ?? 100000 }}">
-                                </p>
+                                <div class="price-values">
+                                    <span>Rs. <span id="minValue">{{ request('min_price') ?? 0 }}</span></span>
+                                    <span>Rs. <span id="maxValue">{{ request('max_price') ?? 100000 }}</span></span>
+                                </div>
 
-                                <input type="hidden" name="min_price" id="min_price"
-                                    value="{{ request('min_price') ?? 0 }}">
-
-                                <input type="hidden" name="max_price" id="max_price"
-                                    value="{{ request('max_price') ?? 100000 }}">
+                                <input type="hidden" name="min_price" id="min_price">
+                                <input type="hidden" name="max_price" id="max_price">
                             </div>
                         </div>
-
     
                         <div class="btn-box" style="display:flex; gap:12px; margin-top:15px;">
 
@@ -644,34 +681,34 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-$(document).ready(function () {
-    var min = 0;
-    var max = 100000;
+const minRange = document.getElementById('minRange');
+const maxRange = document.getElementById('maxRange');
 
-    $("#slider-range").slider({
-        range: true,
-        min: min,
-        max: max,
-        values: [min, max],
-        slide: function (event, ui) {
-            $("#amount").val("LKR " + ui.values[0].toLocaleString() +
-                " - LKR " + ui.values[1].toLocaleString());
+const minValue = document.getElementById('minValue');
+const maxValue = document.getElementById('maxValue');
 
-            // Update hidden inputs
-            $("#min_price").val(ui.values[0]);
-            $("#max_price").val(ui.values[1]);
-        }
-    });
+const minInput = document.getElementById('min_price');
+const maxInput = document.getElementById('max_price');
 
-    // Set initial value display
-    $("#amount").val(
-        "LKR " + $("#slider-range").slider("values", 0).toLocaleString() +
-        " - LKR " + $("#slider-range").slider("values", 1).toLocaleString()
-    );
+function updateValues() {
+    let min = parseInt(minRange.value);
+    let max = parseInt(maxRange.value);
 
-    $("#min_price").val($("#slider-range").slider("values", 0));
-    $("#max_price").val($("#slider-range").slider("values", 1));
-});
+    if (min > max) {
+        [min, max] = [max, min];
+    }
+
+    minValue.textContent = min;
+    maxValue.textContent = max;
+
+    minInput.value = min;
+    maxInput.value = max;
+}
+
+minRange.addEventListener('input', updateValues);
+maxRange.addEventListener('input', updateValues);
+
+updateValues();
 </script>
  
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
