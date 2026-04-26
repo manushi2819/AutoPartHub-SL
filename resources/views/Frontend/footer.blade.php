@@ -60,9 +60,9 @@
                                     <ul class="links-list clearfix">
 
                                         @auth('customer')
-                                            <li><a href="{{ route('customer.dashboard') }}">Your Orders</a></li>
-                                            <li><a href="{{ route('customer.dashboard') }}">Your Account</a></li>
-                                            <li><a href="{{ route('customer.dashboard') }}">Track Order</a></li>
+                                            <li><a href="{{ route('customer.orders') }}">Your Orders</a></li>
+                                            <li><a href="{{ route('customer.profile') }}">Your Account</a></li>
+                                            <li><a href="{{ route('customer.orders') }}">Track Order</a></li>
                                         @else
                                             <li><a href="javascript:void(0)" onclick="showLoginToast()">Your Orders</a></li>
                                             <li><a href="javascript:void(0)" onclick="showLoginToast()">Your Account</a></li>

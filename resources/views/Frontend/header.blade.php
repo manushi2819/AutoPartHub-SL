@@ -181,7 +181,7 @@
 
                                     <!-- Dropdown menu -->
                                     <ul class="user-menu">
-                                        <li><a href="{{ route('customer.dashboard') }}" style=" color: black !important;
+                                        <li><a href="{{ route('customer.profile') }}" style=" color: black !important;
                                         font-size:15px !important;">Dashboard</a></li>
                                         <li>
                                             <form method="POST" action="{{ route('Frontend.logout') }}">

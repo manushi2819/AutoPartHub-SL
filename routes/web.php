@@ -85,13 +85,18 @@ use App\Http\Controllers\Frontend\CustomerProfileController;
 
 Route::prefix('customer')->name('customer.')->middleware('auth:customer')->group(function () {
 
-    Route::get('/dashboard', [CustomerProfileController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [CustomerProfileController::class, 'profile'])->name('profile');
     Route::post('/profile/update', [CustomerProfileController::class, 'update'])->name('profile.update');
+
+    Route::get('/password', [CustomerProfileController::class, 'password'])->name('password');
     Route::post('/profile/password', [CustomerProfileController::class, 'updatePassword'])->name('profile.password');
 
+    Route::get('/orders', [CustomerProfileController::class, 'orders'])->name('orders');
     Route::get('/order/track/{order}', [CustomerProfileController::class, 'track'])->name('order.track');
     Route::put('/order/{order}/update-delivered', [CustomerProfileController::class, 'updateDeliveredStatus'])->name('order.updateStatus');
 
+
+    
 }); 
 
 

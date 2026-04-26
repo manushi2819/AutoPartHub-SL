@@ -18,9 +18,32 @@ class CustomerProfileController extends Controller
         $customer = auth()->guard('customer')->user();
         $orders = $customer->orders()->with('items.product')->orderBy('created_at', 'desc')->get();
 
-        return view('Frontend.account', compact('customer', 'orders'));
+        return view('CustomerDashboard.account', compact('customer', 'orders'));
     }
 
+
+    public function profile()
+    {
+        $customer = auth('customer')->user();
+        return view('CustomerDashboard.profile', compact('customer'));
+    }
+
+    public function orders()
+    {
+        $customer = auth('customer')->user();
+
+        $orders = $customer->orders()
+            ->with('items.product')
+            ->latest()
+            ->paginate(5); 
+        return view('CustomerDashboard.orders', compact('orders', 'customer'));
+    }
+
+    public function password()
+    {
+        $customer = auth('customer')->user();
+        return view('CustomerDashboard.password', compact('customer'));
+    }
 
     public function update(Request $request)
     {
@@ -67,7 +90,7 @@ class CustomerProfileController extends Controller
                     ->where('customer_id', auth()->guard('customer')->id())
                     ->firstOrFail();
 
-        return view('Frontend.track_order', compact('order'));
+        return view('CustomerDashboard.track_order', compact('order'));
     }
 
 

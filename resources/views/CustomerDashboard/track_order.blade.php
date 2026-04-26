@@ -247,7 +247,7 @@
                             <p class="mb-0 ">Click the button below when you have received your order.</p>
                         </div>
                         <div class="col-12 col-md-4 text-md-end">
-                            <button type="submit" class="btn theme-btn">
+                            <button type="submit" class="btn theme-btn p-2">
                                 <i class="fa-solid fa-check-circle me-2"></i>Mark as Delivered<span></span><span></span><span></span><span></span></a>
                             </button>
                             
