@@ -87,7 +87,7 @@
         <header class="main-header header-style-five dark-header">
             <!-- header-top -->
             <div class="header-top">
-                <div class="large-container">
+                <div class="auto-container">
                     <div class="top-inner">
                         <ul class="info-list">
                             <li><i class="icon-2"></i>Open Hours: <span>Mon - Sat 8am - 6pm</span></li>
@@ -106,7 +106,7 @@
            
             <!-- header-upper -->
             <div class="header-upper">
-                <div class="large-container">
+                <div class="auto-container">
                     <div class="upper-inner">
                          <figure class="logo-box"  style="height:40px">
                             <a href="{{ route('Frontend.index') }}"><img src="{{ asset('logo.png') }}" alt=""  
@@ -119,7 +119,7 @@
                                                     ->get();
                             @endphp
 
-                            <div class="category-box" >
+                           <!-- <div class="category-box" >
                                 <div class="select-box">
                                     <form method="GET" action="{{ route('Frontend.shop') }}">
                                         <select class="wide" name="category[]">
@@ -132,13 +132,26 @@
                                             @endforeach
                                         </select>
                                 </div>
-                            </div>
-                            <div class="search-box" style="height:42px">
-                                    <div class="form-group" >
-                                        <input type="search" style="height:42px" name="search" value="{{ request('search') }}" placeholder="Search Parts..." required>
-                                        <button type="submit"><i class="icon-9"></i></button>
-                                    </div>
-                                </form>
+                            </div>-->
+
+                           <div class="search-area">
+                                <div class="search-box" style="height:42px">
+                                    <form method="GET" action="{{ route('Frontend.shop') }}">
+                                        <div class="form-group">
+                                            <input 
+                                                type="search" 
+                                                name="search" 
+                                                value="{{ request('search') }}" 
+                                                placeholder="Search Parts..." 
+                                                style="height:42px"
+                                                required
+                                            >
+                                            <button type="submit">
+                                                <i class="icon-9"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
 
@@ -203,7 +216,7 @@
 
             <!-- header-lower -->
             <div class="header-lower" >
-                <div class="large-container" >
+                <div class="auto-container" >
                     <div class="outer-box">
                         @php
                             $categories = \App\Models\Category::whereNull('parent_id')
@@ -293,6 +306,11 @@
                                          <li class="dropdown {{ request()->routeIs('Frontend.shop') ? 'current' : '' }}">
                                             <a href="{{ route('Frontend.shop') }}">Spare Parts</a>
                                             <ul>
+                                                <li>
+                                                    <a href="{{ route('Frontend.shop') }}">
+                                                        All Vehicles
+                                                    </a>
+                                                </li>
                                                 @foreach($vehicleTypes as $type)
                                                     <li>
                                                         <a href="{{ route('Frontend.shop', ['vehicle_type' => $type->id]) }}">
@@ -338,7 +356,7 @@
 
             <!--sticky Header-->
             <div class="sticky-header">
-                <div class="large-container">
+                <div class="auto-container">
                     <div class="outer-box">
                         <div class="category-box" style="padding:10px">
                             <span class="text"><i class="fas fa-bars"></i>All Categories</span>

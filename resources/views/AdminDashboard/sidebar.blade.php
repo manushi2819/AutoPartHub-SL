@@ -23,15 +23,6 @@
             </li>
             <li class="sidebar-menu-group-title">Application</li>
 
-
-             <li>
-                <a href="{{ route('admin.categories.index') }}">
-                <iconify-icon icon="mdi:view-grid-outline" class="menu-icon"></iconify-icon>
-                    <span>Categories</span>
-                </a>
-    
-            </li>
-
              <li>
                 <a href="{{ route('admin.brands.index') }}">
                 <iconify-icon icon="mdi:tag-outline" class="menu-icon"></iconify-icon>
@@ -46,6 +37,17 @@
                     <span>Vehicle Types</span>
                 </a>
             </li>
+
+             <li>
+                <a href="{{ route('admin.categories.index') }}">
+                <iconify-icon icon="mdi:view-grid-outline" class="menu-icon"></iconify-icon>
+                    <span>Categories</span>
+                </a>
+    
+            </li>
+
+            
+            
 
             <li>
                 <a href="{{ route('admin.products.index') }}">
@@ -84,13 +86,13 @@
                 </ul>
             </li>-->
 
-            <!-- <li>
+            <li>
                 <a href="{{ route('admin.reviews.index') }}">
                 <iconify-icon icon="mdi:star-outline" class="menu-icon"></iconify-icon>
                     <span>Reviews</span>
                 </a>
     
-            </li>-->
+            </li>
 
             
             <!-- <li>
@@ -100,12 +102,12 @@
                 </a>
             </li>-->
 
-            <!--<li>
+            <li>
                 <a href="{{ route('admin.contact') }}">
                 <iconify-icon icon="mdi:email-outline" class="menu-icon"></iconify-icon>
                     <span>Contact messages</span>
                 </a>
-            </li>-->
+            </li>
 
 
 

@@ -94,7 +94,7 @@
 .header-upper{
   position: relative;
   background: #153979;
-  padding: 15px 0px;
+  padding: 10px 0px;
 }
 
 .header-upper .upper-inner{
@@ -109,7 +109,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  width: 740px;
+  width: 640px;
   background: #fff;
   border-radius: 5px;
 }
@@ -135,7 +135,7 @@
 
 .header-upper .search-area .search-box .form-group{
   position: relative;
-  width: 565px;
+  width: 630px;
   margin: 0px;
 }
 
@@ -272,18 +272,24 @@
   position: absolute;
   left: 0px;
   top: 100%;
-  width: 100%;
+  width: 300px;
   background: #fff;
   box-shadow: 0px 0px 10px 0px #00000012;
-  padding: 0px 0px;
+  padding: 0px 0px !important;
   border-radius: 0px 0px 5px 5px;
+
+  /* 👇 ADD THESE */
+  max-height: 500px;        /* control height */
+  overflow-y: auto;         /* enable vertical scroll */
+  overflow-x: hidden;
+
   opacity: 0;
   transform-origin: top center;
   transform: scaleY(0);
   visibility: hidden;
-  width: 300px;
   transition: all 500ms ease;
 }
+
 
 .main-header .outer-box .category-box:hover .category-list{
   opacity: 1;
@@ -312,7 +318,7 @@
   font-size: 14px;
   line-height: 26px;
   color: var(--title-color);
-  padding: 12px 50px;
+  padding: 5px 50px;
   border-radius: 0px 0px 5px 5px;
   transition: all 500ms ease;
 }

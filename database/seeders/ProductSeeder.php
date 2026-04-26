@@ -20,7 +20,7 @@ class ProductSeeder extends Seeder
         $brands = ['Toyota', 'Honda', 'Nissan', 'Mazda', 'Mitsubishi'];
         $models = ['Corolla', 'Civic', 'Altima', 'Mazda3', 'Lancer'];
         $engine_ccs = [1000, 1300, 1500, 1800, 2000];
-        $fuel_types = ['Petrol', 'Diesel', 'Hybrid'];
+        $fuel_types = ['Petrol', 'Diesel'];
         $engine_types = ['Inline', 'V-Type', 'Rotary'];
 
         for ($i = 1; $i <= 20; $i++) {

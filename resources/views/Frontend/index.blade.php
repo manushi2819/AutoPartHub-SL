@@ -93,7 +93,7 @@
         <!-- banner-style-two -->
         <section class="banner-style-two home-5 pt_20 pb_10 p_relative">
             <div class="pattern-layer" style="background-image: url(frontend/assets/images/shape/shape-6.png);"></div>
-            <div class="large-container">
+            <div class="auto-container">
                 <div class="row clearfix">
                     <div class="col-lg-9 col-md-12 col-sm-12 content-block">
                         <div id="bannerSlider" 
@@ -244,7 +244,7 @@
 
         <!-- highlights-section -->
         <section class="highlights-section home-5 alternat-2">
-            <div class="large-container">
+            <div class="auto-container">
                 <div class="inner-container">
                     <div class="shape" style="background-image: url(frontend/assets/images/shape/shape-15.png);"></div>
                     <div class="single-item">

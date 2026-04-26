@@ -17,7 +17,8 @@ class Product extends Model
         'stock_quantity',
         'small_description',
         'status',
-        'vehicle_type_ids'
+        'vehicle_type_ids',
+        'condition'
     ];
 
     protected $casts = [

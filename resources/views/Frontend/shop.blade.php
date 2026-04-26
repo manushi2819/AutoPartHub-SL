@@ -280,6 +280,13 @@
         font-weight: 600;
         font-size: 14px;
     }
+
+        /* Category Sidebar Scroll */
+.category-widget .widget-content {
+    max-height: 400px;   /* adjust height as needed */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 </style>
 
 
@@ -528,13 +535,13 @@
 
                             <div class="price-box">
                                 <div class="slider-track">
-                                    <input type="range" id="minRange" min="0" max="100000" value="{{ request('min_price') ?? 0 }}">
-                                    <input type="range" id="maxRange" min="0" max="100000" value="{{ request('max_price') ?? 100000 }}">
+                                    <input type="range" id="minRange" min="0" max="1000000" value="{{ request('min_price') ?? 0 }}">
+                                    <input type="range" id="maxRange" min="0" max="1000000" value="{{ request('max_price') ?? 1000000 }}">
                                 </div>
 
                                 <div class="price-values">
                                     <span>Rs. <span id="minValue">{{ request('min_price') ?? 0 }}</span></span>
-                                    <span>Rs. <span id="maxValue">{{ request('max_price') ?? 100000 }}</span></span>
+                                    <span>Rs. <span id="maxValue">{{ request('max_price') ?? 1000000 }}</span></span>
                                 </div>
 
                                 <input type="hidden" name="min_price" id="min_price">

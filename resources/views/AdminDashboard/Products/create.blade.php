@@ -21,7 +21,7 @@
             <div class="row g-3">
                 {{-- Product Details --}}
                 <div class="col-md-6">
-                    <label class="form-label">Product Name <i class="text-danger">*</i></label>
+                    <label class="form-label">Part Name <i class="text-danger">*</i></label>
                     <input type="text" name="name" class="form-control" value="{{ $product->name ?? old('name') }}" required>
                 </div>
 
@@ -50,7 +50,7 @@
                 </div>
 
                <div class="col-md-6">
-                    <label class="form-label">Vehicle Type </label>
+                    <label class="form-label">Vehicle Type <i class="text-danger">*</i></label>
 
                     <div class="border p-3 rounded" style="max-height: 180px; overflow-y: auto;">
                         @foreach($vehicleTypes as $type)
@@ -71,9 +71,19 @@
                 </div>
 
 
-                <div class="col-md-6">
-                    <label class="form-label">SKU</label>
-                    <input type="text" name="sku" class="form-control" value="{{ $product->sku ?? '' }}" placeholder="AUTO-GENERATED" readonly>
+                  <div class="col-md-6">
+                    <label class="form-label">Condition <i class="text-danger">*</i></label>
+
+                    @php
+                        $selected = old('condition', $product->condition ?? '');
+                    @endphp
+
+                    <select name="condition" class="form-control">
+                        <option value="">-- Select Condition --</option>
+
+                        <option value="Brand New" {{ $selected == 'Brand New' ? 'selected' : '' }}>Brand New</option>
+                        <option value="Used" {{ $selected == 'Used' ? 'selected' : '' }}>Used</option>
+                    </select>
                 </div>
 
             
@@ -91,6 +101,12 @@
                     <label class="form-label">Stock Quantity <i class="text-danger">*</i></label>
                     <input type="number" name="stock_quantity" class="form-control" value="{{ $product->stock_quantity ?? old('stock_quantity') }}" required>
                 </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label">SKU</label>
+                    <input type="text" name="sku" class="form-control" value="{{ $product->sku ?? '' }}" placeholder="AUTO-GENERATED" readonly>
+                </div>
+
 
                 <div class="col-md-6">
                     <label class="form-label">Status <i class="text-danger">*</i></label>
@@ -121,8 +137,8 @@
                 {{-- Single Compatibility --}}
 
                   <div class="col-md-6">
-                    <label class="form-label">Brand</label>
-                    <select name="brand_id" class="form-control">
+                    <label class="form-label">Brand <i class="text-danger">*</i></label>
+                    <select name="brand_id" class="form-control" required>
                         <option value="">Select Brand</option>
                         @foreach($brands as $brand)
                             <option value="{{ $brand->id }}"
@@ -134,25 +150,25 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label">Model</label>
+                    <label class="form-label">Model <i class="text-danger">*</i></label>
                     <input type="text" name="compatibility_model" class="form-control" 
-                        value="{{ $product->compatibility->model ?? '' }}" placeholder="e.g., Corolla">
+                        value="{{ $product->compatibility->model ?? '' }}" placeholder="e.g., Corolla" required>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label">Year From</label>
+                    <label class="form-label">Year <i class="text-danger">*</i></label>
                     <input type="number" name="compatibility_year_from" class="form-control" 
-                        value="{{ $product->compatibility->year_from ?? '' }}" placeholder="e.g., 2010">
+                        value="{{ $product->compatibility->year_from ?? '' }}" placeholder="e.g., 2010" required>
                 </div>
 
-                <div class="col-md-6">
+                <!--<div class="col-md-6">
                     <label class="form-label">Year To</label>
                     <input type="number" name="compatibility_year_to" class="form-control" 
                         value="{{ $product->compatibility->year_to ?? '' }}" placeholder="e.g., 2015">
-                </div>
+                </div>-->
 
                 <div class="col-md-6">
-                    <label class="form-label">Engine Type</label>
+                    <label class="form-label">Engine Type </label>
                     <input type="text" name="engine_type" class="form-control" 
                         value="{{ $product->compatibility->engine_type ?? '' }}" placeholder="e.g., V6">
                 </div>
@@ -165,14 +181,42 @@
 
                 <div class="col-md-6">
                     <label class="form-label">Fuel Type</label>
-                    <input type="text" name="fuel_type" class="form-control" 
-                        value="{{ $product->compatibility->fuel_type ?? '' }}" placeholder="e.g., Petrol">
+
+                    @php
+                        $selected = old('fuel_type', $product->compatibility->fuel_type ?? '');
+                    @endphp
+
+                    <select name="fuel_type" class="form-control">
+                        <option value="">-- Select Fuel Type --</option>
+
+                        <option value="Petrol" {{ $selected == 'Petrol' ? 'selected' : '' }}>Petrol</option>
+                        <option value="Diesel" {{ $selected == 'Diesel' ? 'selected' : '' }}>Diesel</option>
+                        <option value="Electric" {{ $selected == 'Electric' ? 'selected' : '' }}>Electric</option>
+                        <option value="Hybrid" {{ $selected == 'Hybrid' ? 'selected' : '' }}>Hybrid</option>
+                        <option value="Gas" {{ $selected == 'Gas' ? 'selected' : '' }}>Gas</option>
+                    </select>
                 </div>
 
-                <div class="col-md-6">
+               <div class="col-md-6">
                     <label class="form-label">Transmission</label>
-                    <input type="text" name="transmission" class="form-control" 
-                        value="{{ $product->compatibility->transmission ?? '' }}" placeholder="e.g., Automatic">
+                    <select name="transmission" class="form-control">
+                        <option value="">-- Select Transmission --</option>
+
+                        <option value="Automatic"
+                            {{ ($product->compatibility->transmission ?? '') == 'Automatic' ? 'selected' : '' }}>
+                            Automatic
+                        </option>
+
+                        <option value="Manual"
+                            {{ ($product->compatibility->transmission ?? '') == 'Manual' ? 'selected' : '' }}>
+                            Manual
+                        </option>
+
+                        <option value="Both"
+                            {{ ($product->compatibility->transmission ?? '') == 'Both' ? 'selected' : '' }}>
+                            Both Automatic & Manual
+                        </option>
+                    </select>
                 </div>
 
             </div>

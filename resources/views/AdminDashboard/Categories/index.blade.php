@@ -38,7 +38,7 @@
                 @if($main->image)
                     <img src="{{ asset($main->image) }}" alt="{{ $main->name }}" width="50" height="50">
                 @else
-                    N/A
+                    -
                 @endif
             </td>
             <td>Main</td>

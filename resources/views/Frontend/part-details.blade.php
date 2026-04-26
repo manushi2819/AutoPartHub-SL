@@ -556,20 +556,45 @@ h3:hover {
                             <!-- Compatibility Tab -->
                             <div class="tab" id="tab-3">
                                 <div class="specification-content pt_40">
-                                    @if($product->compatibility)
-                                        <ul class="specification-list clean">
+                                   @if($product->compatibility)
+                                    <ul class="specification-list clean">
+                                        
+                                        @if($product->compatibility->brand)
                                             <li><strong>Brand:</strong> {{ $product->compatibility->brand }}</li>
+                                        @endif
+
+                                        @if($product->compatibility->model)
                                             <li><strong>Model:</strong> {{ $product->compatibility->model }}</li>
-                                            <li><strong>Year From:</strong> {{ $product->compatibility->year_from }}</li>
+                                        @endif
+
+                                        @if($product->compatibility->year_from)
+                                            <li><strong>Year:</strong> {{ $product->compatibility->year_from }}</li>
+                                        @endif
+
+                                        <!--@if($product->compatibility->year_to)
                                             <li><strong>Year To:</strong> {{ $product->compatibility->year_to }}</li>
+                                        @endif-->
+
+                                        @if($product->compatibility->engine_type)
                                             <li><strong>Engine Type:</strong> {{ $product->compatibility->engine_type }}</li>
+                                        @endif
+
+                                        @if($product->compatibility->engine_cc)
                                             <li><strong>Engine CC:</strong> {{ $product->compatibility->engine_cc }}</li>
+                                        @endif
+
+                                        @if($product->compatibility->fuel_type)
                                             <li><strong>Fuel Type:</strong> {{ $product->compatibility->fuel_type }}</li>
+                                        @endif
+
+                                        @if($product->compatibility->transmission)
                                             <li><strong>Transmission:</strong> {{ $product->compatibility->transmission }}</li>
-                                        </ul>
-                                    @else
-                                        <p>No compatibility information available for this product.</p>
-                                    @endif
+                                        @endif
+
+                                    </ul>
+                                @else
+                                    <p>No compatibility information available for this product.</p>
+                                @endif
                                 </div>
                             </div>
 

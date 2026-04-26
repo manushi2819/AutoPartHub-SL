@@ -66,6 +66,7 @@ class ProductController extends Controller
         'engine_cc' => 'nullable|integer',
         'fuel_type' => 'nullable|string|max:255',
         'transmission' => 'nullable|string|max:255',
+        'condition' => 'nullable|string|max:255',
         'vehicle_type_ids' => 'nullable|array',
         'vehicle_type_ids.*' => 'exists:vehicle_types,id',
     ]);
@@ -121,7 +122,8 @@ class ProductController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
+        return redirect()->route('admin.products.edit', $product->id)
+    ->with('success', 'Product created successfully!');
     }
 
     
@@ -148,6 +150,7 @@ class ProductController extends Controller
             'engine_cc' => 'nullable|integer',
             'fuel_type' => 'nullable|string|max:255',
             'transmission' => 'nullable|string|max:255',
+            'condition' => 'nullable|string|max:255',
             'vehicle_type_ids' => 'nullable|array',
             'vehicle_type_ids.*' => 'exists:vehicle_types,id',
         ]);
