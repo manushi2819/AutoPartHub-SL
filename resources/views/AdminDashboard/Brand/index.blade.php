@@ -18,7 +18,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content radius-16 bg-base">
             <div class="modal-header py-16 px-24 border-top-0 border-start-0 border-end-0">
-                <h5 class="modal-title">Add New Brand</h5>
+                <h6 class="modal-title">Add New Brand</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-24">
@@ -50,7 +50,6 @@
                         </div>
 
                         <div class="d-flex justify-content-center gap-3 mt-24">
-                            <button type="reset" class="btn btn-outline-danger">Cancel</button>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </div>
@@ -120,7 +119,7 @@
                             <div class="modal-dialog modal-lg modal-dialog-centered">
                                 <div class="modal-content radius-16 bg-base">
                                     <div class="modal-header py-16 px-24 border-top-0 border-start-0 border-end-0">
-                                        <h5 class="modal-title">Edit Brand</h5>
+                                        <h6 class="modal-title">Edit Brand</h6>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body p-24">
@@ -155,7 +154,7 @@
                                                 </div>
 
                                                 <div class="d-flex justify-content-center gap-3 mt-24">
-                                                    <button type="reset" class="btn btn-outline-danger">Cancel</button>
+                                                
                                                     <button type="submit" class="btn btn-primary">Update</button>
                                                 </div>
                                             </div>
