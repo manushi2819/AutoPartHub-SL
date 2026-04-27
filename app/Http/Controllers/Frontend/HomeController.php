@@ -19,19 +19,30 @@ class HomeController extends Controller
     public function index() {
 
         // dropdown filters (your existing code)
-        $years = ProductVehicleCompatibility::select('year_from')->distinct()->orderBy('year_from','desc')->pluck('year_from');
-        $models = ProductVehicleCompatibility::select('model')->distinct()->orderBy('model')->pluck('model');
-        $engines = ProductVehicleCompatibility::select('engine_cc')->distinct()->orderBy('engine_cc')->pluck('engine_cc');
-        $fuelTypes = ProductVehicleCompatibility::select('fuel_type')->distinct()->pluck('fuel_type');
-        $engineTypes = ProductVehicleCompatibility::select('engine_type')->distinct()->pluck('engine_type');
+        $years = range(1980, 2026);
+        rsort($years); // optional: to show latest first
+
+        $models = ProductVehicleCompatibility::select('model')
+            ->whereNotNull('model')
+            ->where('model', '!=', '') // optional (avoid empty strings)
+            ->distinct()
+            ->orderBy('model')
+            ->pluck('model');
+
+        $brands = Brand::where('status', 1)->get();
+        $engines = [800, 1000, 1300, 1500, 1800, 2000, 2500, 3000];
+
+        $fuelTypes = ['Petrol', 'Diesel', 'Hybrid', 'Electric', 'Gas'];
+
+        $engineTypes = ['Inline', 'Boxer', 'Rotary', 'V4' , 'V8' , 'V6', 'W2', 'Inline 2' ,'V2'];
         $brands = Brand::where('status', 1)->get();
 
-        // Parent categories
         $parentCategories = Category::with('children.children')
-            ->whereNull('parent_id')
-            ->where('status',1)
-            ->orderBy('name')
-            ->get();
+        ->whereNull('parent_id')
+        ->where('status', 1)
+        ->orderBy('name')
+        ->limit(20)
+        ->get();
 
         // calculate product count
         foreach($parentCategories as $category){
@@ -102,7 +113,7 @@ class HomeController extends Controller
             ->where('status',1)
             ->whereIn('category_id', $categoryIds)
             ->latest()
-            ->take(8)
+            ->take(12)
             ->get();
 
         // Attach parent category ID to products for filtering

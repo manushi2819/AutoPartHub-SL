@@ -138,7 +138,7 @@
 
                   <div class="col-md-6">
                     <label class="form-label">Brand <i class="text-danger">*</i></label>
-                    <select name="brand_id" class="form-control" required>
+                    <select name="brand_id" class="form-control">
                         <option value="">Select Brand</option>
                         @foreach($brands as $brand)
                             <option value="{{ $brand->id }}"
@@ -152,13 +152,13 @@
                 <div class="col-md-6">
                     <label class="form-label">Model <i class="text-danger">*</i></label>
                     <input type="text" name="compatibility_model" class="form-control" 
-                        value="{{ $product->compatibility->model ?? '' }}" placeholder="e.g., Corolla" required>
+                        value="{{ $product->compatibility->model ?? '' }}" placeholder="e.g., Corolla" >
                 </div>
 
                 <div class="col-md-6">
                     <label class="form-label">Year <i class="text-danger">*</i></label>
                     <input type="number" name="compatibility_year_from" class="form-control" 
-                        value="{{ $product->compatibility->year_from ?? '' }}" placeholder="e.g., 2010" required>
+                        value="{{ $product->compatibility->year_from ?? '' }}" placeholder="e.g., 2010">
                 </div>
 
                 <!--<div class="col-md-6">
@@ -222,7 +222,7 @@
             </div>
 
             <div class="mt-3">
-                <button type="submit" class="btn btn-primary">{{ isset($product) ? 'Update Product' : 'Add Product' }}</button>
+                <button type="submit" class="btn btn-primary btn-sm">{{ isset($product) ? 'Update Product' : 'Add Product' }}</button>
             </div>
         </form>
     </div>
@@ -240,7 +240,7 @@
                 <label class="form-label">Upload Images</label>
                 <input type="file" name="images[]" multiple class="form-control" accept="image/*">
             </div>
-            <button class="btn btn-primary mt-2">Upload</button>
+            <button class="btn btn-primary btn-sm mt-2">Upload</button>
         </form>
 
         {{-- Display Images --}}

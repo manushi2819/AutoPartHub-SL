@@ -135,8 +135,8 @@
 
 .header-upper .search-area .search-box .form-group{
   position: relative;
-  width: 630px;
-  margin: 0px;
+  width: 635px;
+  margin-top: 1px;
 }
 
 .header-upper .search-area .search-box .form-group input[type='search']{

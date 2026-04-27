@@ -17,30 +17,22 @@ class PartShopController extends Controller
         // -------------------------
         // Get unique dropdown values
         // -------------------------
-        $years = ProductVehicleCompatibility::select('year_from')
-            ->distinct()
-            ->orderBy('year_from', 'desc')
-            ->pluck('year_from');
-
-        $brands = Brand::where('status', 1)->get();
+        $years = range(1980, 2026);
+            rsort($years); // optional: to show latest first
 
         $models = ProductVehicleCompatibility::select('model')
+            ->whereNotNull('model')
+            ->where('model', '!=', '') // optional (avoid empty strings)
             ->distinct()
             ->orderBy('model')
             ->pluck('model');
 
-        $engines = ProductVehicleCompatibility::select('engine_cc')
-            ->distinct()
-            ->orderBy('engine_cc')
-            ->pluck('engine_cc');
+        $brands = Brand::where('status', 1)->get();
+        $engines = [800, 1000, 1300, 1500, 1800, 2000, 2500, 3000];
 
-        $fuelTypes = ProductVehicleCompatibility::select('fuel_type')
-            ->distinct()
-            ->pluck('fuel_type');
+        $fuelTypes = ['Petrol', 'Diesel', 'Hybrid', 'Electric', 'Gas'];
 
-        $engineTypes = ProductVehicleCompatibility::select('engine_type')
-            ->distinct()
-            ->pluck('engine_type');
+        $engineTypes = ['Inline', 'Boxer', 'Rotary', 'V4' , 'V8' , 'V6', 'W2', 'Inline 2' ,'V2'];
 
         // -------------------------
         // Base Product Query
@@ -51,19 +43,22 @@ class PartShopController extends Controller
         // -------------------------
         // Vehicle Filters (OR)
         // -------------------------
-        $products->when($request->filled('year'), function($q) use ($request) {
-            $q->whereHas('compatibility', function($q2) use ($request){
-                $q2->where('year_from', '<=', $request->year)
-                ->where('year_to', '>=', $request->year);
+       $products->when($request->filled('year'), function($q) use ($request) {
+            $year = $request->year;
+
+            $q->whereHas('compatibility', function($q2) use ($year) {
+                $q2->where('year_from', $year);
             });
         });
-
+        
         $products->when($request->filled('brand'), function($q) use ($request) {
             $q->whereHas('compatibility', fn($q2) => $q2->where('brand', $request->brand));
         });
 
         $products->when($request->filled('model'), function($q) use ($request) {
-            $q->whereHas('compatibility', fn($q2) => $q2->where('model', $request->model));
+            $q->whereHas('compatibility', function($q2) use ($request){
+                $q2->where('model', 'like', '%' . $request->model . '%');
+            });
         });
 
         $products->when($request->filled('engine_cc'), function($q) use ($request) {

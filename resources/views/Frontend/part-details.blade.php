@@ -262,7 +262,6 @@ h3:hover {
             <ul class="bread-crumb">
                 <li><a href="{{ route('Frontend.index') }}">Home</a></li>
                 <li>Shop</li>
-                <li>{{ $product->name }}</li>
             </ul>
         </div>
     </div>
@@ -311,10 +310,14 @@ h3:hover {
                                             <div class="slider-pager">
                                                 <ul class="thumb-box">
                                                     @foreach($product->images as $thumbIndex => $thumb)
-                                                       <li>
+                                                    <li>
                                                             <a class="{{ $thumbIndex == 0 ? 'active' : '' }} thumb-item" data-slide-index="{{ $thumbIndex }}" href="#">
-                                                                <figure>
-                                                                    <img src="{{ asset('uploads/' . $thumb->image_url) }}" alt="{{ $product->name }}">
+                                                                <figure style="display:flex; justify-content:center; align-items:center; height:100%;">
+                                                                    <img 
+                                                                        src="{{ asset('uploads/' . $thumb->image_url) }}" 
+                                                                        alt="{{ $product->name }}"
+                                                                        style="max-width:100%; max-height:100%; object-fit:contain;"
+                                                                    >
                                                                 </figure>
                                                             </a>
                                                         </li>
@@ -332,7 +335,7 @@ h3:hover {
                         <!-- Product Info -->
                         <div class="col-lg-5 col-md-12 col-sm-12 content-column">
                             <div class="content-box ml_20 card1" style="background-color: #f4f4f4; ">
-                                <h2 style="font-size: 28px;">{{ $product->name }}</h2>
+                                <h2 style="font-size: 22px; line-height: 25px">{{ $product->name }}</h2>
                                 <h3 style="font-size: 24px; ">LKR {{ number_format($product->price, 2) }}</h3>
 
                                 <ul class="rating">

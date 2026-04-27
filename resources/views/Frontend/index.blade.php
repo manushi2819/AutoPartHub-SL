@@ -87,6 +87,11 @@
     background-position: center center !important;
   }
 }
+
+.nice-select .list {
+    max-height: 300px !important;
+    overflow-y: auto !important;
+}
 </style>
 
       
@@ -177,16 +182,19 @@
 
                                 {{-- MODEL --}}
                                 <div class="form-group">
-                                    <div class="select-box">
-                                        <select name="model" class="wide">
-                                            <option value="">Select Model</option>
-                                            @foreach($models as $model)
-                                                <option value="{{ $model }}" {{ request('model') == $model ? 'selected' : '' }}>
-                                                    {{ $model }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    <input 
+                                        type="text" 
+                                        name="model" 
+                                        value="{{ request('model') }}" 
+                                        placeholder="Type Model (e.g. Corolla, Civic)"
+                                        style="
+                                            width:100%;
+                                            padding:12px 18px;
+                                            border-radius:6px;
+                                            font-size:14px;
+                                            background: #ffffff;
+                                        "
+                                    >
                                 </div>
 
                                 {{-- ENGINE CC --}}
@@ -289,7 +297,7 @@
                                 <img src="{{ asset($category->image ?? 'assets/images/about2.jpg') }}" alt="{{ $category->name }}"
                                 style=" width: 100%;height: 100%;object-fit: cover; ">
                             </figure>
-                            <h4 style="font-size:16px">
+                            <h4 style="font-size:16px; line-height:20px">
                                 <a href="{{ route('Frontend.shop', ['category[]' => $category->id]) }}">
                                     {{ $category->name }}
                                 </a>
@@ -405,7 +413,7 @@
                                                     @endfor
                                                     <li><span>({{ $total }})</span></li>
                                             </ul>
-                                            <h5>LKR {{ number_format($product->price,2) }}</h5>
+                                            <h5 style="font-size:15px">LKR {{ number_format($product->price,2) }}</h5>
 
                                             <div class="cart-btn">
                                                 <a href="{{ route('Frontend.parts-details', ['id' => $product->id]) }}" 

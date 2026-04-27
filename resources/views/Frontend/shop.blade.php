@@ -287,6 +287,12 @@
     overflow-y: auto;
     overflow-x: hidden;
 }
+
+
+.nice-select .list {
+    max-height: 300px !important;
+    overflow-y: auto !important;
+}
 </style>
 
 
@@ -331,7 +337,7 @@
                                 </div>
                                 <div class="search-inner">
                                     <form method="GET" action="{{ route('Frontend.shop') }}">
-                                        @csrf
+                                       
 
                                         {{-- YEAR --}}
                                         <div class="form-group">
@@ -363,16 +369,19 @@
 
                                         {{-- MODEL --}}
                                         <div class="form-group">
-                                            <div class="select-box">
-                                                <select name="model" class="wide">
-                                                    <option value="">Select Model</option>
-                                                    @foreach($models as $model)
-                                                        <option value="{{ $model }}" {{ request('model') == $model ? 'selected' : '' }}>
-                                                            {{ $model }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                            <input 
+                                                type="text" 
+                                                name="model" 
+                                                value="{{ request('model') }}" 
+                                                placeholder="Type Model (e.g. Corolla, Civic)"
+                                                style="
+                                                    width:100%;
+                                                    padding:12px 18px;
+                                                    border-radius:6px;
+                                                    font-size:14px;
+                                                    background: #f0f0f0;
+                                                "
+                                            >
                                         </div>
 
                                         {{-- ENGINE CC --}}

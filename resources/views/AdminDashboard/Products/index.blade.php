@@ -33,7 +33,7 @@
                 @foreach($products as $product)
                     <tr>
                         <td>{{ $counter++ }}</td>
-                        <td>{{ $product->name }}</td>
+                        <td>{{ \Illuminate\Support\Str::limit($product->name, 30) }}</td>
                         <td>{{ $product->sku }}</td>
                         <td>{{ $product->category->name ?? 'N/A' }}</td>
                         <td>{{ number_format($product->price, 2) }}</td>
