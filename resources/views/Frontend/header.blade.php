@@ -322,14 +322,32 @@
                                         </li>
 
                                         <li class="">
-                                            <a href="">Vehicles</a>
+                                            <a href="{{ route('Frontend.vehicles') }}">Vehicles</a>
                                         </li> 
 
-                                       <li class="">
-                                            <a href="" class="d-flex align-items-center">
+                                      <li class="dropdown {{ request()->routeIs('Frontend.auctions') ? 'current' : '' }}">
+                                            <a href="{{ route('Frontend.auctions', ['status' => 'active']) }}"
+                                            class="d-flex align-items-center">
                                                 Auctions
                                                 <span class="live-badge">LIVE</span>
                                             </a>
+                                            <ul>
+                                                <li>
+                                                    <a href="{{ route('Frontend.auctions', ['status' => 'active']) }}">
+                                                        Active Auctions
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('Frontend.auctions', ['status' => 'upcoming']) }}">
+                                                        Upcoming Auctions
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('Frontend.auctions', ['status' => 'ended']) }}">
+                                                        Ended Auctions
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </li>
 
                                         <li class="{{ request()->routeIs('Frontend.about') ? 'current' : '' }}">

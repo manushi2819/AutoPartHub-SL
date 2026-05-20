@@ -26,7 +26,7 @@
 
     /* Card headers */
     .card-header {
-        background: linear-gradient(135deg, var(--primary-black) 0%, #1a1a1a 100%);
+        background:  #000000 ;
         color: white;
         font-weight: 600;
         border: none;
@@ -411,7 +411,7 @@
         <!-- page-title end -->
 
 
-<div class="auto-container py-4">
+<div class="auto-container py-4 mb-5">
     <div class="row">
 
         {{-- LEFT SIDE --}}
@@ -529,7 +529,7 @@
                                 </div>
                                 <div class="detail-row">
                                     <div class="detail-label">Brand</div>
-                                    <div class="detail-value">{{ $item->brand ?? 'N/A' }}</div>
+                                    <div class="detail-value">{{ $item->brand->name ?? 'N/A' }}</div>
                                 </div>
                                 <div class="detail-row">
                                     <div class="detail-label">SKU</div>
@@ -543,10 +543,7 @@
 
                             <div class="col-md-6">
                                 @if($item->compatibility)
-                                    <div class="detail-row">
-                                        <div class="detail-label">Compatible Brand</div>
-                                        <div class="detail-value">{{ $item->compatibility->brand }}</div>
-                                    </div>
+                                    
                                     <div class="detail-row">
                                         <div class="detail-label">Model</div>
                                         <div class="detail-value">{{ $item->compatibility->model }}</div>
@@ -830,5 +827,58 @@
             }
         });
     });
+</script>
+
+<script>
+const auctionId = {{ $auction->id }};
+let lastBidCount = {{ $auction->bids()->count() }};
+
+setInterval(async () => {
+
+    try {
+        const res = await fetch(`/auction/${auctionId}/bid-count`);
+        const data = await res.json();
+
+        if (data.count > lastBidCount) {
+
+            // optional toast
+            showNewBidToast();
+
+            // reload page
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        }
+
+    } catch (error) {
+        console.log('Bid check failed');
+    }
+
+}, 5000); // every 5 seconds
+
+
+function showNewBidToast() {
+    const toast = document.createElement('div');
+    toast.innerHTML = `
+        <div style="
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            color: #2e7d32;
+            border-left: 4px solid #4caf50;
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);
+            padding: 12px 18px;
+            border-radius: 8px;
+            z-index: 9999;
+            font-weight: 600;
+        ">
+            🔔 New bid placed! Reloading...
+        </div>
+    `;
+    document.body.appendChild(toast);
+
+    setTimeout(() => toast.remove(), 1500);
+}
 </script>
 @endsection

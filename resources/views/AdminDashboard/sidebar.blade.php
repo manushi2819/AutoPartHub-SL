@@ -57,12 +57,12 @@
     
             </li>
 
-             <!--<li>
+            <li>
                 <a href="{{ route('admin.vehicles.index') }}">
                 <iconify-icon icon="mdi:car-multiple" class="menu-icon"></iconify-icon>
                     <span>Vehicles</span>
                 </a>
-            </li>-->
+            </li>
 
 
             <li>
@@ -74,17 +74,22 @@
             </li>
 
 
-            <!-- <li class="dropdown">
+            <li class="dropdown">
                 <a href="javascript:void(0)">
                    <iconify-icon icon="mdi:gavel" class="menu-icon"></iconify-icon>
                 <span>Auction Module</span> 
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                        <a href="{{ route('admin.auctions.index') }}"><i class="ri-circle-fill circle-icon text-success-600 w-auto"></i> All Auctions</a>
+                        <a href="{{ route('admin.auctions.index') }}">
+                            <i class="ri-circle-fill circle-icon text-success-600 w-auto"></i> All Auctions</a>
+                    </li>
+                     <li>
+                        <a href="{{ route('admin.auction.bids') }}">
+                            <i class="ri-circle-fill circle-icon text-warning-600 w-auto"></i> Auction Bids</a>
                     </li>
                 </ul>
-            </li>-->
+            </li>
 
             <li>
                 <a href="{{ route('admin.reviews.index') }}">
@@ -95,12 +100,12 @@
             </li>
 
             
-            <!-- <li>
+            <li>
                 <a href="{{ route('admin.customers.index') }}">
                     <iconify-icon icon="mdi:account-outline" class="menu-icon"></iconify-icon>
                     <span>Customers</span>
                 </a>
-            </li>-->
+            </li>
 
             <li>
                 <a href="{{ route('admin.contact') }}">

@@ -8,49 +8,182 @@ use App\Models\Vehicle;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\AuctionBid;
+use App\Models\AuctionNotification;
+use App\Mail\AuctionEndedMail;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Customer;
+use App\Models\AuctionWinner;
+use Illuminate\Support\Facades\Log;
 
 class AuctionController extends Controller
 {
-    // AUTO STATUS UPDATE
-    private function updateAuctionStatuses()
+
+
+
+    public function statusCheck()
+    {
+        $this->updateAuctionStatuses(); 
+        $now = now();
+        $hasChange = Auction::where(function ($q) use ($now) {
+            $q->where('end_time', '<=', $now)
+            ->where('status', '!=', 'ended');
+        })->exists();
+
+        return response()->json([
+            'refresh' => $hasChange
+        ]);
+    }
+
+
+
+   private function updateAuctionStatuses()
     {
         $now = now();
 
-        // Set active auctions
-        Auction::where('start_time', '<=', $now)
+        // ACTIVE
+        $activeUpdated = Auction::where('start_time', '<=', $now)
             ->where('end_time', '>', $now)
-            ->where('status', '!=', 'active') // only update if not already active
             ->update(['status' => 'active']);
 
-        // Set ended auctions
-        Auction::where('end_time', '<=', $now)
-            ->where('status', '!=', 'ended') // only update if not already ended
-            ->update(['status' => 'ended']);
+        // ENDED
+        $endedAuctions = Auction::where('end_time', '<=', $now)
+            ->where('status', '!=', 'ended')
+            ->get();
 
-        // Set upcoming auctions
-        Auction::where('start_time', '>', $now)
-            ->where('status', '!=', 'upcoming')
+        foreach ($endedAuctions as $auction) {
+
+            try {
+
+                $auction->update(['status' => 'ended']);
+
+                // ===== WINNER =====
+                $highestBid = AuctionBid::where('auction_id', $auction->id)
+                    ->orderByDesc('bid_amount')
+                    ->first();
+
+                if ($highestBid) {
+
+                    Log::info("Highest bid found", [
+                        'auction_id' => $auction->id,
+                        'bid_id' => $highestBid->id,
+                        'amount' => $highestBid->bid_amount
+                    ]);
+
+                    $exists = AuctionWinner::where('auction_id', $auction->id)->exists();
+
+                    if (!$exists) {
+
+                        AuctionWinner::create([
+                            'auction_id' => $auction->id,
+                            'winner_id' => $highestBid->customer_id,
+                            'winner_bid_id' => $highestBid->id,
+                            'winner_price' => $highestBid->bid_amount,
+                            'status' => 'pending_admin_approval',
+                        ]);
+
+                        $highestBid->update([
+                            'is_winner' => 1
+                        ]);
+
+                        Log::info("Winner created", ['auction_id' => $auction->id]);
+                    }
+                }
+
+                // ===== EMAILS =====
+                $customerIds = AuctionBid::where('auction_id', $auction->id)
+                    ->whereNotNull('customer_id')
+                    ->distinct()
+                    ->pluck('customer_id');
+
+                Log::info("Customers found", [
+                    'auction_id' => $auction->id,
+                    'count' => $customerIds->count()
+                ]);
+
+                foreach ($customerIds as $customerId) {
+
+                    $exists = AuctionNotification::where([
+                        'auction_id' => $auction->id,
+                        'customer_id' => $customerId,
+                        'type' => 'auction_ended'
+                    ])->exists();
+
+                    if ($exists) {
+                        Log::info("Email already sent, skipping", [
+                            'auction_id' => $auction->id,
+                            'customer_id' => $customerId
+                        ]);
+                        continue;
+                    }
+
+                    $customer = Customer::find($customerId);
+
+                    if (!$customer) {
+                        Log::warning("Customer not found", ['customer_id' => $customerId]);
+                        continue;
+                    }
+
+                    Mail::to($customer->email)
+                        ->send(new AuctionEndedMail($auction));
+
+                    AuctionNotification::create([
+                        'auction_id' => $auction->id,
+                        'customer_id' => $customerId,
+                        'type' => 'auction_ended',
+                        'sent_at' => now(),
+                    ]);
+                }
+
+            } catch (\Exception $e) {
+
+                Log::error("Auction processing failed", [
+                    'auction_id' => $auction->id,
+                    'error' => $e->getMessage()
+                ]);
+            }
+        }
+
+        // UPCOMING
+        $upcomingUpdated = Auction::where('start_time', '>', $now)
             ->update(['status' => 'upcoming']);
     }
 
+
     //  INDEX
-    public function index()
+    public function index(Request $request)
     {
-        // Update statuses before fetching
-        $this->updateAuctionStatuses();
+        $status = $request->get('status', 'active');
 
-        $active = Auction::where('status', 'active')->latest()->get();
-        $upcoming = Auction::where('status', 'upcoming')->latest()->get();
-        $ended = Auction::where('status', 'ended')->latest()->get();
+        $now = now();
 
-        return view('AdminDashboard.Auctions.index', compact('active', 'upcoming', 'ended'));
+        $auctions = Auction::with(['highestBid', 'vehicle', 'product'])
+            ->when($status === 'active', function ($q) use ($now) {
+                $q->where('start_time', '<=', $now)
+                ->where('end_time', '>', $now);
+            })
+            ->when($status === 'ended', function ($q) use ($now) {
+                $q->where('end_time', '<=', $now);
+            })
+            ->when($status === 'upcoming', function ($q) use ($now) {
+                $q->where('start_time', '>', $now);
+            })
+            ->latest()
+            ->get();
+
+        return view('AdminDashboard.Auctions.index', compact('auctions', 'status'));
     }
+
 
     // CREATE
     public function create()
     {
-        $vehicles = Vehicle::with('brand')->get(['id', 'brand_id', 'model', 'year','price']);
-        $products = Product::select('id', 'name','sku','brand','price')->get();
+        $vehicles = Vehicle::with(['brand', 'images'])
+            ->get(['id', 'brand_id', 'model', 'year', 'price']);
+
+        $products = Product::with(['brand', 'images'])
+            ->select('id', 'name', 'sku', 'brand_id', 'price')
+            ->get();
 
         return view('AdminDashboard.Auctions.create', compact('vehicles', 'products'));
     }
@@ -76,7 +209,6 @@ class AuctionController extends Controller
             'starting_price' => $request->starting_price,
             'bid_increment' => $request->bid_increment,
             'is_active' => $request->is_active,
-            'status' => now()->lt($request->start_time) ? 'upcoming' : 'active',
         ]);
 
         return redirect()->route('admin.auctions.index')->with('success', 'Auction Created');
@@ -86,8 +218,12 @@ class AuctionController extends Controller
     public function edit($id)
     {
         $auction = Auction::findOrFail($id);
-        $vehicles = Vehicle::with('brand')->get(['id', 'brand_id', 'model', 'year','price']);
-        $products = Product::select('id', 'name','sku','brand','price')->get();
+        $vehicles = Vehicle::with(['brand', 'images'])
+            ->get(['id', 'brand_id', 'model', 'year', 'price']);
+
+        $products = Product::with(['brand', 'images'])
+            ->select('id', 'name', 'sku', 'brand_id', 'price')
+            ->get();
 
         return view('AdminDashboard.Auctions.edit', compact('auction', 'vehicles', 'products'));
     }
@@ -105,6 +241,21 @@ class AuctionController extends Controller
             'starting_price' => $request->starting_price,
             'bid_increment' => $request->bid_increment,
             'is_active' => $request->is_active,
+        ]);
+
+        $now = now();
+        if ($request->end_time <= $now) {
+            $status = 'ended';
+        } elseif ($request->start_time <= $now) {
+            $status = 'active';
+        } else {
+            $status = 'upcoming';
+        }
+
+        $auction->update([
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+            'status' => $status,
         ]);
 
         return redirect()->route('admin.auctions.index')->with('success', 'Auction Updated');

@@ -230,5 +230,22 @@ $(document).on('click', '.open-delete-modal', function () {
 });
 </script>
 
+
+<script>
+setInterval(() => {
+
+    fetch('/admin/auction/status-check')
+        .then(res => res.json())
+        .then(data => {
+
+            if (data.refresh) {
+                location.reload(); 
+            }
+
+        });
+
+}, 5000);
+</script>
+
 </body>
 </html>

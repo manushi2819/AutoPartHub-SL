@@ -446,114 +446,190 @@ h3:hover {
                                 </div>
                             </div>
 
-                           <!-- Reviews Tab -->
-                            <div class="tab" id="tab-2">
-                                <div class="review-content pt_40">
+                        <!-- Reviews Tab -->
+                        <div class="tab" id="tab-2">
+                            <div class="review-content pt_40">
 
-                                    {{-- Existing Reviews --}}
-                                    @forelse($product->reviews as $review)
-                                        <div class="single-review" style="margin-bottom:20px; border-bottom:1px solid #ddd; padding-bottom:15px;">
-                                            <div class="upper-box">
-                                                <div class="info-box" style="display:flex; align-items:center;">
-                                                    <figure class="image" style="margin-right:10px;">
-                                                        <img src="{{ asset('user1.png') }}" alt="" style="width:50px; height:50px; object-fit:cover; border-radius:50%;">
-                                                    </figure>
-                                                    <div class="inner">
-                                                        <h4>{{ $review->name }}</h4>
-                                                        <span class="date">{{ $review->created_at->format('M d, Y') }}</span>
+                                <div class="row">
+
+                                    <!-- LEFT SIDE - REVIEWS -->
+                                    <div class="col-lg-7 col-md-12">
+
+                                        {{-- Existing Reviews --}}
+                                        @forelse($product->reviews as $review)
+                                            <div class="single-review" style="margin-bottom:20px; border-bottom:1px solid #ddd; padding-bottom:15px;">
+                                                
+                                                <div class="upper-box">
+                                                    <div class="info-box" style="display:flex; align-items:center;">
+                                                        
+                                                        <figure class="image" style="margin-right:10px;">
+                                                            <img src="{{ asset('user1.png') }}" 
+                                                                alt=""
+                                                                style="width:50px; height:50px; object-fit:cover; border-radius:50%;">
+                                                        </figure>
+
+                                                        <div class="inner">
+                                                            <h4>{{ $review->name }}</h4>
+                                                            <span class="date">{{ $review->created_at->format('M d, Y') }}</span>
+                                                        </div>
+
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            {{-- Rating Stars --}}
-                                            <ul class="rating" style="list-style:none; padding:0; display:flex;">
-                                                @for($i=1; $i<=5; $i++)
-                                                    <li>
-                                                        <i class="icon-41" style="color:{{ $i <= $review->rating ? '#FFD700' : '#ccc' }}"></i>
-                                                    </li>
-                                                @endfor
-                                            </ul>
-
-                                            <p>{{ $review->message }}</p>
-
-                                            {{-- Review Images --}}
-                                            @if($review->images->count())
-                                                <ul class="image-list" style="display:flex; gap:5px; flex-wrap:wrap;">
-                                                    @foreach($review->images as $img)
-                                                        <li><img src="{{ asset('uploads/'.$img->image) }}" alt="" style="width:80px; height:80px; object-fit:cover; border-radius:5px;"></li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-                                        </div>
-                                    @empty
-                                        <div class="single-review">No Reviews Yet</div>
-                                    @endforelse
-
-                                    {{-- Customer Review Form --}}
-                                    <div class="customer-review" style="margin-top:30px;">
-                                        <h3 style="font-size: 20px; ">Write Your Rating</h3>
-                                        
-                                        <div class="rating-box mb_25">
-                                            <p>Your Rating <span>*</span></p>
-                                            <div class="rating-inner" id="star-rating">
-                                                {{-- Use JS to capture selected rating --}}
-                                                <ul class="rating-list" style="display:flex; gap:3px;">
+                                                {{-- Rating Stars --}}
+                                                <ul class="rating" style="list-style:none; padding:0; display:flex; gap:3px; margin-top:10px;">
                                                     @for($i=1; $i<=5; $i++)
                                                         <li>
-                                                            <button type="button" class="star-btn" data-value="{{ $i }}">
-                                                                <i class="icon-41"></i>
-                                                            </button>
+                                                            <i class="icon-41" style="color:{{ $i <= $review->rating ? '#FFD700' : '#ccc' }}"></i>
                                                         </li>
                                                     @endfor
                                                 </ul>
-                                            </div>
-                                        </div>
 
-                                        <div class="form-inner">
-                                            <form method="POST" action="{{ route('product.review.store', $product->id) }}" enctype="multipart/form-data">
+                                                <p style="margin-top:10px;">
+                                                    {{ $review->message }}
+                                                </p>
+
+                                                {{-- Review Images --}}
+                                                @if($review->images->count())
+                                                    <ul class="image-list" style="display:flex; gap:10px; flex-wrap:wrap; padding:0; margin-top:10px;">
+                                                        
+                                                        @foreach($review->images as $img)
+                                                            <li style="list-style:none;">
+                                                                <img src="{{ asset('uploads/'.$img->image) }}" 
+                                                                    alt=""
+                                                                    style="width:80px; height:80px; object-fit:cover; border-radius:5px;">
+                                                            </li>
+                                                        @endforeach
+
+                                                    </ul>
+                                                @endif
+
+                                            </div>
+                                        @empty
+                                            <div class="single-review">
+                                                No Reviews Yet
+                                            </div>
+                                        @endforelse
+
+                                    </div>
+
+                                    <!-- RIGHT SIDE - REVIEW FORM -->
+                                    <div class="col-lg-5 col-md-12">
+
+                                        <div class="customer-review" 
+                                            style="background:#f8f8f8; padding:25px; border-radius:10px;">
+
+                                            <h3 style="font-size:22px; margin-bottom:25px;">
+                                                Write Your Review
+                                            </h3>
+
+                                            <form method="POST"
+                                                action="{{ route('product.review.store', $product->id) }}"
+                                                enctype="multipart/form-data">
+
                                                 @csrf
 
-                                                <div class="form-group">
-                                                    <label>Write Your Review <span>*</span></label>
-                                                    <textarea name="message" required></textarea>
-                                                </div>
-                                                <div class="form-group mb-3">
-                                                    <label class="form-label fw-semibold">Add Photos</label>
+                                                {{-- Rating --}}
+                                                <div class="rating-box mb_25">
+                                                    <p style="margin-bottom:10px;">
+                                                        Your Rating <span>*</span>
+                                                    </p>
 
-                                                    <div class="border rounded p-3 bg-light">
+                                                    <div class="rating-inner" id="star-rating"> 
+                                                        {{-- Use JS to capture selected rating --}} 
+                                                        <ul class="rating-list" style="display:flex; gap:3px;"> 
+                                                            @for($i=1; $i<=5; $i++) <li> 
+                                                                <button type="button" class="star-btn" data-value="{{ $i }}"> 
+                                                                    <i class="icon-41"></i> 
+                                                                </button> 
+                                                            </li> @endfor 
+                                                        </ul> 
+                                                    </div>
+                                                </div>
+
+                                                {{-- Review Message --}}
+                                                <div class="form-group mb-3">
+                                                    <label>
+                                                        Write Your Review <span>*</span>
+                                                    </label>
+
+                                                    <textarea name="message"
+                                                            required
+                                                            style="width:100%; min-height:120px; padding:10px; border:1px solid #ddd; border-radius:5px;"></textarea>
+                                                </div>
+
+                                                {{-- Photos --}}
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label fw-semibold">
+                                                        Add Photos
+                                                    </label>
+
+                                                    <div class="border rounded p-3 bg-white">
                                                         <input 
                                                             name="files[]" 
                                                             type="file" 
                                                             multiple 
                                                             class="form-control"
-                                                            style="padding: 10px;"
+                                                            style="padding:10px;"
                                                         >
                                                     </div>
 
-                                                    <small class="text-muted">You can upload multiple images at once.</small>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-6">
-                                                        <label>Your Name <span>*</span></label>
-                                                        <input type="text" name="name" required>
-                                                    </div>
-                                                    <div class="form-group col-6">
-                                                        <label>Email Address <span>*</span></label>
-                                                        <input type="email" name="email" required>
-                                                    </div>
+                                                    <small class="text-muted">
+                                                        You can upload multiple images at once.
+                                                    </small>
                                                 </div>
 
-                                                {{-- Hidden input for rating --}}
+                                                {{-- Name & Email --}}
+                                                <div class="row">
+
+                                                    <div class="form-group col-12 mb-3">
+                                                        <label>
+                                                            Your Name <span>*</span>
+                                                        </label>
+
+                                                        <input type="text"
+                                                            name="name"
+                                                            required
+                                                            style="width:100%; padding:10px; border:1px solid #ddd; border-radius:5px;">
+                                                    </div>
+
+                                                    <div class="form-group col-12 mb-3">
+                                                        <label>
+                                                            Email Address <span>*</span>
+                                                        </label>
+
+                                                        <input type="email"
+                                                            name="email"
+                                                            required
+                                                            style="width:100%; padding:10px; border:1px solid #ddd; border-radius:5px;">
+                                                    </div>
+
+                                                </div>
+
+                                                {{-- Hidden Rating --}}
                                                 <input type="hidden" name="rating" id="rating-value" value="5">
 
-                                                <div class="message-btn">
-                                                    <button type="submit" class="theme-btn p-1" style="font-size:14px">Submit Review<span></span><span></span><span></span><span></span></button>
+                                                {{-- Submit --}}
+                                                <div class="message-btn mt-3">
+                                                    <button type="submit"
+                                                            class="theme-btn p-2"
+                                                            style="font-size:14px; width:100%;">
+                                                        Submit Review
+                                                        <span></span><span></span><span></span><span></span>
+                                                    </button>
                                                 </div>
+
                                             </form>
+
                                         </div>
+
                                     </div>
+
                                 </div>
+
                             </div>
+                        </div>
+
 
                          
                             <!-- Compatibility Tab -->

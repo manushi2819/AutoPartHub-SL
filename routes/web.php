@@ -56,7 +56,7 @@ Route::post('/checkout/success/{order_id}', [CheckoutController::class, 'success
 Route::get('/auctions', [FrontendAuctionController::class, 'index'])->name('Frontend.auctions');
 Route::get('/auctions/{id}', [FrontendAuctionController::class, 'detail'])->name('Frontend.auction.details');
 Route::post('/auction/bid', [FrontendAuctionController::class, 'placeBid'])->name('auction.bid');
-
+Route::get('/auction/{id}/bid-count', [FrontendAuctionController::class, 'bidCount'])->name('auction.bidCount');
 
 //customer routes
 Route::get('/login', [LoginController::class, 'login'])->name('Frontend.login');
@@ -121,6 +121,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\VehicleController as AdminVehicleController;
 use App\Http\Controllers\Admin\AuctionController;
 use App\Http\Controllers\Admin\VehicleTypeController;
+use App\Http\Controllers\Admin\AuctionBidController;
 
 use App\Http\Middleware\AdminAuth;
 
@@ -183,7 +184,9 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
 
     Route::get('/auctions/{id}/edit', [AuctionController::class, 'edit'])->name('auctions.edit');
     Route::put('/auctions/{id}/update', [AuctionController::class, 'update'])->name('auctions.update');
-
+    Route::get('/auction-bids', [AuctionBidController::class, 'index'])->name('auction.bids');
+    Route::get('/auction/{id}/bid-count', [AuctionBidController::class, 'bidCount']);
+    Route::get('/auction/status-check', [AuctionController::class, 'statusCheck']);
 
     //vehicle types
     Route::get('/vehicle-types', [VehicleTypeController::class, 'index'])->name('vehicle-types.index');

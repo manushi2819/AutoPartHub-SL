@@ -123,7 +123,7 @@
             /* ---------- HORIZONTAL AUCTION CARD ---------- */
         .active-auction-card {
             background: #ffffff;
-            border-radius: var(--card-border-radius);
+            border-radius: 15px;
             overflow: hidden;
             box-shadow: var(--shadow-sm);
             transition: var(--transition-smooth);
@@ -134,7 +134,7 @@
             border: 1px solid rgba(0, 0, 0, 0.04);
             position: relative;
             animation: riseUp 0.5s ease-out backwards;
-            border-color: rgba(194, 13, 13, 0.2);
+            border-color: rgb(236, 236, 236);
         }
 
         .active-auction-card:hover {
@@ -209,16 +209,15 @@
 
         /* countdown badge on image */
         .countdown-badge {
-            background: linear-gradient(135deg, #c20d0d 0%, #8b0000 100%);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.75rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            border: 1px solid rgba(255,255,255,0.2);
+            background: #22c55e;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 6px 6px;
+            border-radius: 20px;
+            margin-left: 6px;
+            line-height: 1;
+            animation: pulseLive 1.5s infinite;
         }
 
         /* content area - takes remaining space */
@@ -231,8 +230,8 @@
         }
 
         .item-title {
-            font-size: 1.5rem;
-            font-weight: 800;
+            font-size: 1.3rem;
+            font-weight: 600;
             line-height: 1.3;
             margin-bottom: 8px;
             color: #0a0c10;
@@ -465,6 +464,547 @@
         .status-badge {
             animation: softPulse 1.2s ease-in-out infinite;
         }
+
+        /* ====================== ENDED AUCTION CARD STYLES ====================== */
+.auction-card.ended-card {
+    background: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    min-height: 220px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    position: relative;
+    animation: riseUp 0.5s ease-out backwards;
+    border-color: #ececec;
+    opacity: 0.85;
+    filter: grayscale(0.05);
+}
+
+.auction-card.ended-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    opacity: 1;
+    filter: grayscale(0);
+}
+
+/* ended badge styling - positioned on the image */
+.badge.ended-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #d71717;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 40px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    z-index: 2;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+}
+
+/* ended price display */
+.auction-price.ended {
+    background: #f7fafc;
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin: 8px 0 14px;
+    border-left: 3px solid #2d3748;
+    font-size: 0.85rem;
+    color: #4a5568;
+}
+
+.auction-price.ended strong {
+    color: #1a202c;
+    font-size: 1.1rem;
+    margin-left: 8px;
+}
+
+/* view details button for ended auctions */
+.auction-btn {
+    background: #edf2f7;
+    color: #2d3748;
+    padding: 10px 0;
+    border-radius: 50px;
+    font-weight: 700;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.25s ease;
+    margin-top: auto;
+    border: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.auction-btn:hover {
+    background: #2d3748;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* ====================== UPCOMING AUCTION CARD STYLES ====================== */
+.auction-card.upcoming-card {
+    background: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    min-height: 220px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    position: relative;
+    animation: riseUp 0.5s ease-out backwards;
+    border-color: #ececec;
+    opacity: 0.9;
+}
+
+.auction-card.upcoming-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+    opacity: 1;
+}
+
+/* upcoming badge */
+.badge.upcoming-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #d2ae0e;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 40px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    z-index: 2;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+}
+
+/* time display for upcoming */
+.auction-time {
+    background: #fffaf0;
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin: 8px 0 14px;
+    border-left: 3px solid #d69e2e;
+    font-size: 0.85rem;
+    color: #744210;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.auction-time strong {
+    color: #c05621;
+    font-weight: 800;
+    font-family: monospace;
+    font-size: 0.9rem;
+}
+
+/* disabled button for upcoming */
+.auction-btn.disabled {
+    background: #e2e8f0;
+    color: #718096;
+    cursor: not-allowed;
+    box-shadow: none;
+    pointer-events: none;
+    transform: none;
+    opacity: 0.7;
+}
+
+/* ====================== HORIZONTAL LAYOUT ADAPTATIONS ====================== */
+/* ensure all card variants share same image container dimensions */
+.auction-card .auction-img {
+    padding: 10px;
+    width: 300px;
+    min-width: 300px;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: linear-gradient(135deg, #eef2f6 0%, #e2e8f0 100%);
+    position: relative;
+}
+
+.auction-card .auction-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.auction-card:hover .auction-img img {
+    transform: scale(1.05);
+}
+
+/* body/content area for all card variants */
+.auction-card .auction-body {
+    padding: 16px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auction-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 6px;
+    color: #0a0c10;
+    letter-spacing: -0.2px;
+}
+
+.auction-subtitle {
+    font-size: 0.8rem;
+    color: #718096;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ====================== RESPONSIVE ====================== */
+@media (max-width: 768px) {
+    .auction-card.ended-card,
+    .auction-card.upcoming-card {
+        flex-direction: column;
+    }
+    
+    .auction-card .auction-img {
+        width: 100%;
+        min-width: auto;
+        aspect-ratio: 16 / 9;
+    }
+    
+    .auction-card .auction-body {
+        padding: 16px;
+    }
+    
+    .badge.ended-badge,
+    .badge.upcoming-badge {
+        top: 12px;
+        right: 12px;
+        padding: 4px 12px;
+        font-size: 0.65rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .auction-card .auction-img {
+        width: 220px;
+        min-width: 220px;
+    }
+    
+    .auction-title {
+        font-size: 1rem;
+    }
+    
+    .auction-price.ended strong,
+    .auction-time strong {
+        font-size: 0.9rem;
+    }
+}
+
+/* ====================== GRID ENHANCEMENTS ====================== */
+/* ensure all card types are properly displayed in the auctions grid */
+.auctions-grid .auction-card {
+    margin-bottom: 0;
+}
+
+/* subtle animation delay for all card types */
+.auctions-grid .auction-card:nth-child(1) { animation-delay: 0.03s; }
+.auctions-grid .auction-card:nth-child(2) { animation-delay: 0.07s; }
+.auctions-grid .auction-card:nth-child(3) { animation-delay: 0.11s; }
+.auctions-grid .auction-card:nth-child(4) { animation-delay: 0.15s; }
+.auctions-grid .auction-card:nth-child(5) { animation-delay: 0.19s; }
+.auctions-grid .auction-card:nth-child(6) { animation-delay: 0.23s; }
+
+
+/* ====================== UPCOMING CARD - BID INFO & TIME STYLES ====================== */
+.bid-info-wrap {
+    margin: 0px 0 16px;
+}
+
+.bid-info-upcoming {
+    background: linear-gradient(135deg, #fef9e6 0%, #fff6e8 100%);
+    border-radius: 14px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    border: 1px solid #ffe4b5;
+}
+
+.bid-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: #744210;
+}
+
+.meta-item i {
+    font-size: 0.85rem;
+    color: #d69e2e;
+    width: 18px;
+}
+
+.meta-item span {
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.meta-item strong {
+    font-weight: 800;
+    color: #c05621;
+    font-size: 0.9rem;
+    letter-spacing: -0.2px;
+}
+
+.meta-divider {
+    width: 1px;
+    height: 24px;
+    background: #ffe0b5;
+}
+
+/* Time display - modern and compact */
+.auction-time-upcoming {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #f7fafc;
+    border-radius: 14px;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.auction-time-upcoming:hover {
+    background: #fffaf0;
+    border-color: #fed89a;
+}
+
+.time-icon {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #d69e2e 0%, #b7791f 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(214, 158, 46, 0.2);
+}
+
+.time-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
+.time-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 700;
+    color: #718096;
+}
+
+.time-value {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #2d3748;
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    flex-wrap: wrap;
+}
+
+.time-separator {
+    color: #cbd5e0;
+    font-weight: 400;
+}
+
+/* Alternative: More compact single-line version */
+.auction-time-upcoming.compact {
+    padding: 8px 14px;
+}
+
+.auction-time-upcoming.compact .time-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+}
+
+.auction-time-upcoming.compact .time-value {
+    font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .bid-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .meta-divider {
+        width: 100%;
+        height: 1px;
+    }
+    
+    .auction-time-upcoming {
+        padding: 12px;
+    }
+    
+    .time-value {
+        font-size: 0.85rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .meta-item {
+        font-size: 0.75rem;
+    }
+    
+    .meta-item strong {
+        font-size: 0.85rem;
+    }
+    
+    .time-value {
+        font-size: 0.85rem;
+    }
+}
+
+/* ====================== ENDED CARD - DETAILS GRID STYLES ====================== */
+.ended-info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 12px 0 0;
+}
+
+.ended-info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.ended-info-item.final-price {
+    background: linear-gradient(135deg, #f0f4f8 0%, #e8edf3 100%);
+    border-left: 3px solid #2d3748;
+}
+
+.ended-info-item.starting-price {
+    background: #f7fafc;
+    border-left: 3px solid #cbd5e0;
+}
+
+.ended-info-item.ended-date {
+    background: #f7fafc;
+    border-left: 3px solid #a0aec0;
+}
+
+.info-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #718096;
+}
+
+.info-value {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.final-price .info-value {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #1a202c;
+}
+
+.time-sm {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #718096;
+    margin-left: 4px;
+}
+
+/* Alternative: Horizontal layout for larger screens */
+@media (min-width: 769px) {
+    .ended-info-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    
+    .ended-info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 12px;
+    }
+    
+    .info-label {
+        font-size: 0.65rem;
+    }
+    
+    .info-value {
+        font-size: 0.85rem;
+    }
+    
+    .final-price .info-value {
+        font-size: 0.95rem;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ended-info-item {
+        padding: 10px 12px;
+    }
+    
+    .info-label {
+        font-size: 0.65rem;
+    }
+    
+    .info-value {
+        font-size: 0.85rem;
+    }
+    
+    .final-price .info-value {
+        font-size: 0.9rem;
+    }
+}
     </style>
 
 
@@ -486,91 +1026,52 @@
             <!-- LEFT COLUMN: TAB CONTENT -->
             <div>
                 <!-- VEHICLES TAB PANE -->
-                <div id="vehicles-pane" class="tab-pane active-pane">
-                
+               <div id="vehicles-pane" class="tab-pane active-pane">
                     <div class="auctions-grid">
-                        @forelse($activeVehicles as $auction)
-                            @include('Frontend.partials.active_auction_card', ['auction' => $auction])
+                        @forelse($vehicleAuctions as $auction)
+                            @if($status == 'active')
+                                @include('Frontend.partials.active_auction_card', ['auction' => $auction])
+
+                            @elseif($status == 'upcoming')
+                                @include('Frontend.partials.upcoming_auction_card', ['auction' => $auction])
+
+                            @else
+                                @include('Frontend.partials.ended_auction_card', ['auction' => $auction])
+                            @endif
                         @empty
-                            <div class="empty-state">
-                                <i class="fas fa-car-side"></i>
-                                <h5>No Active Vehicle Auctions</h5>
-                                <p>Check back soon for live vehicle auctions!</p>
-                            </div>
+                            <div class="empty-state">No Vehicle Auctions</div>
                         @endforelse
                     </div>
                 </div>
 
                 <!-- PARTS TAB PANE -->
                 <div id="parts-pane" class="tab-pane">
-                   
                     <div class="auctions-grid">
-                        @forelse($activeParts as $auction)
-                            @include('Frontend.partials.active_auction_card', ['auction' => $auction])
+                        @forelse($partAuctions as $auction)
+
+                            @if($status == 'active')
+                                @include('Frontend.partials.active_auction_card', ['auction' => $auction])
+
+                            @elseif($status == 'upcoming')
+                                @include('Frontend.partials.upcoming_auction_card', ['auction' => $auction])
+
+                            @else
+                                @include('Frontend.partials.ended_auction_card', ['auction' => $auction])
+                            @endif
                         @empty
-                            <div class="empty-state">
-                                <i class="fas fa-microchip"></i>
-                                <h5>No Active Parts Auctions</h5>
-                                <p>Check back soon for live parts auctions!</p>
-                            </div>
+                            <div class="empty-state">No Parts Auctions</div>
                         @endforelse
                     </div>
                 </div>
             </div>
 
-            <!-- RIGHT SIDEBAR: Upcoming Auctions (now aligned with tabs from top) -->
+            <!-- RIGHT SIDEBAR: -->
             <div class="sidebar">
 
                  <div class="mb-5">
                         <img src="{{ asset('frontend/assets/images/auction1.png') }}" 
                         alt="Banner" style="width: 100%; height: auto; display: block;">
                     </div>
-             
-
-                <div class="sidebar-widget">
-                    <h4 class="widget-titlenew"><i class="fas fa-calendar-week me-2"></i> Upcoming Auctions</h4>
-                    @php
-                        $allUpcoming = $upcomingVehicles->concat($upcomingParts)->sortBy('start_time');
-                    @endphp
-                    @forelse($allUpcoming as $auction)
-                        @php
-                            $item = $auction->item;
-                            $imageUrl = null;
-                            if ($auction->item_type === 'vehicle' && $item) {
-                                $firstImage = $item->images->first();
-                                $imageUrl = $firstImage ? asset('uploads/' . $firstImage->image_url) : asset('no-image.png');
-                            } elseif ($auction->item_type === 'product' && $item) {
-                                $mainImage = $item->images->where('is_main', 1)->first();
-                                $imageUrl = $mainImage ? asset('uploads/' . $mainImage->image_url) : asset('no-image.png');
-                            }
-                            $itemName = $item->name ?? $item->model ?? 'Auction Item';
-                            $itemBrand = $item->brand->name ?? '';
-                        @endphp
-                        <div class="upcoming-card">
-                            <div class="upcoming-img">
-                                <img src="{{ $imageUrl }}" alt="{{ $itemName }}">
-                            </div>
-                            <div class="upcoming-info">
-                                <h6>{{ $itemName }} {{ $itemBrand }}</h6>
-                                <p style="font-size: 0.7rem; color:#5b6e8c;">
-                                    @if($auction->item_type == 'vehicle') 🚗 Vehicle @else 🔧 Part @endif
-                                </p>
-                               <div class="upcoming-start">
-                                    <i class="far fa-clock"></i>
-                                    {{ \Carbon\Carbon::parse($auction->start_time)->format('M d, h:i A') }}
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="text-center py-5">
-                            <i class="fas fa-calendar-times fa-2x mb-2" style="color: #cbd5e0;"></i>
-                            <p class="mb-0">No upcoming auctions scheduled</p>
-                            <small>Stay tuned</small>
-                        </div>
-                    @endforelse
-                  
-                </div>
-
             </div>
             
               

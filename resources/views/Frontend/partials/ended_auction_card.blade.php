@@ -37,37 +37,49 @@
         $itemBrand = $item->brand->name ?? 'Genuine Part';
     }
 @endphp
+<div class="auction-card ended-card">
 
-<div class="active-auction-card">
     <div class="auction-img">
         <img src="{{ $imageUrl }}" alt="{{ $itemName }}">
-        <div class="image-badges">
 
-             <span class="">
-
-            </span>
-           <span class="item-type-tag countdown-badge countdown-timer"
-                data-end-time="{{ $auction->end_time->toIso8601String() }}">
-                ⏳ Loading...
-            </span>
-            
-        </div>
+        <span class="badge ended-badge">
+            ENDED
+        </span>
     </div>
-    <div class="auction-content">
-        <h3 class="item-title">{{ $itemName }} - {{ $itemBrand }}</h3>
 
-        <div class="bid-info">
-            <div class="current-bid">
-                <span class="current-bid-label">Current Bid</span>
-                <span class="current-bid-amount">LKR {{ number_format($currentBid, 2) }}</span>
+    <div class="auction-body">
+
+        <h3 class="auction-title">
+            {{ $itemName }}
+        </h3>
+
+        <p class="auction-subtitle">
+            {{ $itemBrand }}
+        </p>
+
+        <div class="ended-info-grid">
+            <div class="ended-info-item final-price">
+                <span class="info-label">Final Price</span>
+                <strong class="info-value">
+                    LKR {{ number_format($auction->highestBid?->bid_amount ?? $auction->starting_price, 2) }}
+                </strong>
             </div>
-            <div class="starting-bid">
-                <span>Starting: LKR {{ number_format($auction->starting_price, 2) }}</span>
-                <span>Increment: LKR {{ number_format($auction->bid_increment, 2) }}</span>
+            
+            <div class="ended-info-item starting-price">
+                <span class="info-label">Starting Price</span>
+                <span class="info-value">
+                    LKR {{ number_format($auction->starting_price, 2) }}
+                </span>
+            </div>
+            
+            <div class="ended-info-item ended-date">
+                <span class="info-label">Ended On</span>
+                <span class="info-value">
+                    {{ $auction->end_time->format('d M Y') }}
+                    <span class="time-sm">{{ $auction->end_time->format('h:i A') }}</span>
+                </span>
             </div>
         </div>
-        <a href="{{ route('Frontend.auction.details', $auction->id) }}" class="btn-bid">
-            Place Bid <i class="fas fa-gavel"></i>
-        </a>
+
     </div>
 </div>

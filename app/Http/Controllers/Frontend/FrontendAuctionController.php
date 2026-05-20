@@ -7,45 +7,35 @@ use App\Models\Auction;
 use App\Models\AuctionBid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Events\NewAuctionBid;
 
 class FrontendAuctionController extends Controller
 {
+
+
     public function index(Request $request)
     {
-        // Fetch all active auctions with their related items
-       $auctions = Auction::with(['highestBid'])
+        $status = $request->get('status', 'active');
+
+        $auctions = Auction::with(['highestBid'])
             ->where('is_active', true)
-            ->orderByRaw("CASE 
-                WHEN start_time <= NOW() AND end_time > NOW() THEN 0 
-                WHEN start_time > NOW() THEN 1 
-                ELSE 2 
-            END")
+            ->whereRaw("
+                CASE
+                    WHEN start_time <= NOW() AND end_time > NOW() THEN 'active'
+                    WHEN start_time > NOW() THEN 'upcoming'
+                    ELSE 'ended'
+                END = ?
+            ", [$status])
             ->orderBy('start_time', 'asc')
             ->get();
-        
-        // Separate by item type and status
+
         $vehicleAuctions = $auctions->where('item_type', 'vehicle');
         $partAuctions = $auctions->where('item_type', 'product');
-        
-        // Active auctions (for main display)
-        $activeVehicles = $vehicleAuctions->filter(function($auction) {
-            return $auction->getCurrentStatusAttribute() === 'active';
-        });
-        $activeParts = $partAuctions->filter(function($auction) {
-            return $auction->getCurrentStatusAttribute() === 'active';
-        });
-        
-        // Upcoming auctions (for sidebar)
-        $upcomingVehicles = $vehicleAuctions->filter(function($auction) {
-            return $auction->getCurrentStatusAttribute() === 'upcoming';
-        });
-        $upcomingParts = $partAuctions->filter(function($auction) {
-            return $auction->getCurrentStatusAttribute() === 'upcoming';
-        });
-        
+
         return view('Frontend.auction_list', compact(
-            'activeVehicles', 'activeParts',
-            'upcomingVehicles', 'upcomingParts'
+            'vehicleAuctions',
+            'partAuctions',
+            'status'
         ));
     }
     
@@ -82,14 +72,25 @@ class FrontendAuctionController extends Controller
             return back()->with('error', 'Bid must be higher than current highest bid');
         }
 
-        AuctionBid::create([
+        $bid = AuctionBid::create([
             'auction_id' => $auction->id,
             'customer_id' => $customerId,
             'bid_amount' => $request->bid_amount,
             'bid_time' => now(),
         ]);
 
+        broadcast(new NewAuctionBid($bid))->toOthers();
+
         return back()->with('success', 'Bid placed successfully!');
+    }
+
+
+    public function bidCount($id)
+    {
+        $auction = Auction::findOrFail($id);
+        return response()->json([
+            'count' => $auction->bids()->count()
+        ]);
     }
 
 }

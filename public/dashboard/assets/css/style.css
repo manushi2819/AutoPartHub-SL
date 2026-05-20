@@ -225,8 +225,8 @@
   --cyan-700: #03a9dc;
   --cyan-800: #049dcb;
   --cyan-900: #0390bb;
-  --dark-1: #1B2431;
-  --dark-2: #273142;
+  --dark-1: #1a1d1d;
+  --dark-2: #0d0e0e;
   --dark-3: #323D4E;
   --lilac-50: #f0e1ff;
   --lilac-100: #EBD7FF;
@@ -304,7 +304,7 @@
   --bg-color: var(--dark-1);
   --text-primary-light: var(--base);
   --text-secondary-light: #D1D5DB;
-  --text-secondary-dark: var(--dark-2);
+  --text-secondary-dark: var(--dark-1);
   --input-form-light: #6B7280;
   --input-form-dark: #D1D5DB;
   --input-bg: var(--dark-3);
