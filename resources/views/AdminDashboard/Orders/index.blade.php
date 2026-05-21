@@ -40,8 +40,8 @@
     </div>
 
     <div class="col-md-2 d-flex gap-2">
-        <button type="submit" class="btn btn-primary w-100">Filter</button>
-        <a href="{{ route('admin.orders.index') }}" class="btn btn-secondary w-100">Reset</a>
+        <button type="submit" class="btn btn-primary w-100 btn-sm">Filter</button>
+        <a href="{{ route('admin.orders.index') }}" class="btn btn-secondary btn-sm w-100">Reset</a>
     </div>
 
 </form>

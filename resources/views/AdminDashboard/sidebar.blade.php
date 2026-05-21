@@ -88,6 +88,10 @@
                         <a href="{{ route('admin.auction.bids') }}">
                             <i class="ri-circle-fill circle-icon text-warning-600 w-auto"></i> Auction Bids</a>
                     </li>
+                      <li>
+                        <a href="{{ route('admin.auction.winners') }}">
+                            <i class="ri-circle-fill circle-icon text-danger-600 w-auto"></i> Auction Winners</a>
+                    </li>
                 </ul>
             </li>
 

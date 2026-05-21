@@ -11,7 +11,8 @@ class AuctionWinner extends Model
         'winner_id',
         'winner_bid_id',
         'winner_price',
-        'status'
+        'status',
+        'rejection_reason'
     ];
 
     public function auction()

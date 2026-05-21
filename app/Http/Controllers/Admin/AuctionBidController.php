@@ -8,20 +8,21 @@ use Illuminate\Http\Request;
 
 class AuctionBidController extends Controller
 {
-   public function index(Request $request)
+    
+    public function index(Request $request)
     {
         $status = $request->get('status', 'active');
         $auctionId = $request->get('auction_id');
 
         $query = Auction::with([
-            'bids.customer',
-            'highestBid',
-            'vehicle.brand',
-            'product'
-        ])
-         ->where('is_active', 1);
+                'bids.customer',
+                'highestBid',
+                'vehicle.brand',
+                'product'
+            ])
+            ->where('is_active', 1);
 
-        // filter by status (DB-level, NOT collection)
+        // STATUS FILTER
         $query->whereRaw("
             CASE
                 WHEN end_time <= NOW() THEN 'ended'
@@ -30,14 +31,20 @@ class AuctionBidController extends Controller
             END = ?
         ", [$status]);
 
-        // filter by specific auction if selected
+        // DEFAULT: latest auction auto-selected
+        if (!$auctionId) {
+            $latestAuction = (clone $query)->latest()->first();
+            $auctionId = $latestAuction?->id;
+        }
+
+        // FILTER BY SELECTED AUCTION
         if ($auctionId) {
             $query->where('id', $auctionId);
         }
 
         $auctions = $query->latest()->get();
 
-        // dropdown list (FILTERED BY STATUS)
+        // DROPDOWN (same status only)
         $allAuctions = Auction::with(['vehicle', 'product'])
             ->where('is_active', 1)
             ->whereRaw("

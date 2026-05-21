@@ -15,7 +15,8 @@ class Auction extends Model
         'starting_price',
         'bid_increment',
         'status',
-        'is_active'
+        'is_active',
+        'winner_approved'
     ];
 
     protected $casts = [

@@ -22,132 +22,219 @@
 
 </div>
 
+
 {{-- Auction Selector --}}
 <form method="GET" class="mb-3">
+
     <input type="hidden" name="status" value="{{ $status }}">
 
-    <select name="auction_id" class="form-control" onchange="this.form.submit()">
-        <option value="">-- All {{ ucfirst($status) }} Auctions --</option>
+    <div class="d-flex gap-2 align-items-center">
 
-        @foreach($allAuctions as $a)
+        <select name="auction_id"
+                class="form-select"
+                onchange="this.form.submit()"
+                style="max-width: 400px;">
 
-            <option value="{{ $a->id }}"
-                {{ $auctionId == $a->id ? 'selected' : '' }}>
-
-                Auction #{{ $a->id }} -
-
-                @if($a->item_type === 'vehicle')
-                    {{ $a->vehicle->model ?? '' }}
-                @else
-                    {{ $a->product->name ?? '' }}
-                @endif
-
+            <option value="">
+                -- All {{ ucfirst($status) }} Auctions --
             </option>
 
-        @endforeach
-    </select>
-</form>
+            @foreach($allAuctions as $a)
 
+                <option value="{{ $a->id }}"
+                    {{ (int)$auctionId === $a->id ? 'selected' : '' }}>
+
+                    #{{ $a->id }} -
+
+                    @if($a->item_type === 'vehicle')
+                        {{ $a->vehicle->model ?? 'Vehicle' }}
+                    @else
+                        {{ $a->product->name ?? 'Product' }}
+                    @endif
+
+                </option>
+
+            @endforeach
+
+        </select>
+
+    </div>
+
+</form>
 
 <div id="auction-container">
 
-
-
 @foreach($auctions as $auction)
 
-<div class="card mb-3 shadow-sm auction-box" data-id="{{ $auction->id }}">
+<div class="card basic-data-table auction-box mb-3 p-1" data-id="{{ $auction->id }}">
 
-    <div class="card-header d-flex justify-content-between">
-        <strong>
-            Auction #{{ $auction->id }}
-        </strong>
-
-      <span class="badge text-sm fw-semibold rounded-pill bg-primary-600 px-20 py-9 radius-4 text-white">
-                {{ $auction->bids->count() }} Bids
-            </span>
-    </div>
-
-    <div class="card-body">
-
-        {{-- ITEM --}}
-        <p class="mb-1">
-            <strong>Item:</strong>
-            @if($auction->item_type === 'vehicle')
-                {{ $auction->vehicle->model ?? '' }}
-                ({{ $auction->vehicle->year ?? '' }})
-            @else
-                {{ \Illuminate\Support\Str::limit($auction->product->name ?? '', 60) }}
-            @endif
-        </p>
-
-    {{-- HIGHEST BID + TOTAL BIDS --}}
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    {{-- HEADER --}}
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
 
         <div>
-            @if($auction->highestBid)
-                <strong>Highest Bid:</strong>
-                <span class="text-danger fw-bold">
-                    LKR {{ number_format($auction->highestBid->bid_amount) }}
-                </span>
-            @else
-                <strong>Starting Price:</strong>
-                <span class="fw-bold">
-                    LKR {{ number_format($auction->starting_price) }}
-                </span>
-            @endif
+
+            <h6 class="mb-1 ">
+                Auction #{{ $auction->id }}
+            </h6>
+
+            <small class="text-muted">
+
+                @if($auction->item_type === 'vehicle')
+
+                    Vehicle :
+                    {{ $auction->vehicle->brand->name ?? '' }}
+                    {{ $auction->vehicle->model ?? '' }}
+                    ({{ $auction->vehicle->year ?? '' }})
+
+                @else
+
+                    Product :
+                    {{ \Illuminate\Support\Str::limit($auction->product->name ?? '', 60) }}
+
+                @endif
+
+            </small>
+
         </div>
+
+        <div class="text-end">
+
+            {{-- TOTAL BIDS --}}
+            <div class="mb-1">
+
+                <span class="badge text-sm fw-semibold rounded-pill bg-primary-600 px-20 py-9 radius-4 text-white">
+                    {{ $auction->bids->count() }} Bids
+                </span>
+
+            </div>
+
+            {{-- PRICE --}}
+            <div>
+
+                @if($auction->highestBid)
+
+                    <span class="fw-bold text-success me-3">
+                        Highest:
+                        LKR {{ number_format($auction->highestBid->bid_amount) }}
+                    </span>
+                @endif
+                    <span class="fw-bold text-dark">
+                        Starting:
+                        LKR {{ number_format($auction->starting_price) }}
+                    </span>
+
+                
+
+            </div>
+
+        </div>
+
     </div>
 
-        <hr>
+    {{-- BODY --}}
+    <div class="card-body">
 
-  
-      {{-- BID LIST --}}
-        <div style="max-height: 420px; overflow-y:auto;">
+        <div class="table-responsive">
 
-            @forelse($auction->bids()->with('customer')->latest()->take(15)->get() as $bid)
+            <table class="table basic-border-table mb-0" id="dataTable" data-page-length='10'>
+                <thead class="table-light">
 
-                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                    <tr>
+                        <th>#</th>
+                        <th>Customer</th>
+                        <th>Contact</th>
+                        <th>Bid Time</th>
+                        <th>Bid Amount</th>
+                        <th>Status</th>
+                    </tr>
 
-                    {{-- LEFT SIDE --}}
-                    <div>
+                </thead>
 
-                        {{-- LINE 1 --}}
-                        <div class="fw-semibold text-dark" style="font-size: 14px;">
-                            👤 {{ $bid->customer->first_name ?? 'Guest' }}
-                            {{ $bid->customer->last_name ?? '' }}
-                            <span class="text-muted" style="font-size: 12px;">
-                                ({{ $bid->customer->phone ?? 'N/A' }})
+                <tbody>
+
+                @foreach($auction->bids()->with('customer')->latest()->get() as $bid)
+
+                    <tr>
+
+                        {{-- NUMBER --}}
+                        <td>
+                            {{ $loop->iteration }}
+                        </td>
+
+                        {{-- CUSTOMER --}}
+                        <td>
+
+                            <div class="fw-semibold">
+
+                                {{ $bid->customer->first_name ?? 'Guest' }}
+                                {{ $bid->customer->last_name ?? '' }}
+
+                            </div>
+
+                        </td>
+
+                        {{-- CONTACT --}}
+                        <td>
+
+                            <small class="d-block">
+                                📞 {{ $bid->customer->phone ?? 'N/A' }} <br>
+                                 ✉ {{ $bid->customer->email ?? 'N/A' }}
+                            </small>
+
+                        </td>
+
+                        {{-- TIME --}}
+                        <td>
+
+                            <small class="d-block">
+                                {{ \Carbon\Carbon::parse($bid->bid_time)->format('d M Y') }}
+                                 {{ \Carbon\Carbon::parse($bid->bid_time)->format('h:i A') }}
+                            </small>
+
+                        </td>
+
+                        {{-- BID AMOUNT --}}
+                        <td>
+
+                            <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-success-focus text-success-main">
+                                LKR {{ number_format($bid->bid_amount) }}
                             </span>
-                        </div>
 
-                        {{-- LINE 2 --}}
-                        <small class="text-muted" style="font-size: 12px;">
-                            🕒 {{ \Carbon\Carbon::parse($bid->bid_time)->format('d M h:i A') }}
-                            • {{ $bid->customer->email ?? 'N/A' }}
-                        </small>
+                        </td>
 
-                    </div>
+                        {{-- STATUS --}}
+                        <td>
 
-                    {{-- RIGHT SIDE --}}
-                    <div class="text-end">
+                            @if($loop->first)
 
-                        <span class="badge text-sm fw-semibold rounded-pill bg-success-600 px-18 py-9 radius-4 text-white">
-                            LKR {{ number_format($bid->bid_amount) }}
-                        </span>
+                                <span class="badge text-sm fw-semibold rounded-pill bg-primary-600 px-20 py-9 radius-4 text-white">
+                                    Highest
+                                </span>
 
-                    </div>
+                            @endif
 
-                </div>
+                            @if($bid->is_winner)
 
-            @empty
-                <div class="text-center py-3 text-muted">
-                    <i class="fas fa-inbox"></i> No bids
-                </div>
-            @endforelse
+                                <span class="badge text-sm fw-semibold rounded-pill bg-warning px-20 py-9 radius-4 text-dark">
+                                    Winner
+                                </span>
+
+                            @endif
+
+                        </td>
+
+                    </tr>
+
+                @endforeach
+
+                </tbody>
+
+            </table>
 
         </div>
 
     </div>
+
 </div>
 
 @endforeach

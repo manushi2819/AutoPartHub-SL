@@ -122,6 +122,7 @@ use App\Http\Controllers\Admin\VehicleController as AdminVehicleController;
 use App\Http\Controllers\Admin\AuctionController;
 use App\Http\Controllers\Admin\VehicleTypeController;
 use App\Http\Controllers\Admin\AuctionBidController;
+use App\Http\Controllers\Admin\AuctionWinnerController;
 
 use App\Http\Middleware\AdminAuth;
 
@@ -187,6 +188,10 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
     Route::get('/auction-bids', [AuctionBidController::class, 'index'])->name('auction.bids');
     Route::get('/auction/{id}/bid-count', [AuctionBidController::class, 'bidCount']);
     Route::get('/auction/status-check', [AuctionController::class, 'statusCheck']);
+
+    Route::get('/auction-winners', [AuctionWinnerController::class, 'index'])->name('auction.winners');
+    Route::post('/auction-winners/{id}/approve', [AuctionWinnerController::class, 'approve'])->name('auction.winners.approve');
+    Route::post('/auction-winners/{id}/reject',[AuctionWinnerController::class, 'reject'])->name('auction.winners.reject');
 
     //vehicle types
     Route::get('/vehicle-types', [VehicleTypeController::class, 'index'])->name('vehicle-types.index');
