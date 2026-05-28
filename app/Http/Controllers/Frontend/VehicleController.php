@@ -134,7 +134,7 @@ class VehicleController extends Controller
             CustomerActivity::create([
                 'customer_id' => auth('customer')->id(),
                 'activity_type' => 'vehicle_view',
-                'value' => $vehicle->id
+                'reference_id' => $vehicle->id
             ]);
         }
 

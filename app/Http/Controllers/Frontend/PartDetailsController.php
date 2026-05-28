@@ -62,13 +62,22 @@ class PartDetailsController extends Controller
         // Limit to 10
         $relatedProducts = $relatedProducts->take(10);
 
-        if(auth('customer')->check())
-        {
-            CustomerActivity::create([
-                'customer_id' => auth('customer')->id(),
-                'activity_type' => 'product_view',
-                'reference_id' => $product->id
-            ]);
+        // -------------------------
+        // Track Customer Activity
+        // 
+        if (auth('customer')->check()) {
+            $exists = CustomerActivity::where('customer_id', auth('customer')->id())
+                ->where('activity_type', 'product_view')
+                ->where('reference_id', $product->id)
+                ->exists();
+
+            if (! $exists) {
+                CustomerActivity::create([
+                    'customer_id' => auth('customer')->id(),
+                    'activity_type' => 'product_view',
+                    'reference_id' => $product->id
+                ]);
+            }
         }
 
         return view('Frontend.part-details', compact('product', 'relatedProducts'));

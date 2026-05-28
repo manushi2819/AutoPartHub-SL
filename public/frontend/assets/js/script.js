@@ -313,7 +313,7 @@
 	// four-item-carousel
 	if ($('.four-item-carousel').length) {
 		$('.four-item-carousel').owlCarousel({
-			loop:true,
+			loop:false,
 			margin:30,
 			nav:true,
 			smartSpeed: 500,
@@ -374,7 +374,7 @@
 	// shop-carousel
 	if ($('.shop-carousel').length) {
 		$('.shop-carousel').owlCarousel({
-			loop:true,
+			loop:false,
 			margin:0,
 			nav:true,
 			smartSpeed: 500,

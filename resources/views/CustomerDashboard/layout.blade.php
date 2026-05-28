@@ -201,11 +201,11 @@ form textarea {
         </div>
     </div>
 </section>
-        <div class="container">
+        <div class="auto-container">
             <div class="row">
                 <!-- Sidebar -->
                 <div class="col-md-3">
-                    <div class="account-info">
+                    <div class="account-info newinfo">
                         <div class="upper-box centred mb_40">
                             <img src="{{ asset('frontend/assets/images/resource/account.jpg') }}" width="120" alt="Profile">
                             <h5>{{ $customer->first_name }} {{ $customer->last_name }}</h5>
@@ -223,6 +223,12 @@ form textarea {
                                 <a href="{{ route('customer.orders') }}"
                                    class="{{ request()->routeIs('customer.orders') ? 'active' : '' }}">
                                    Orders
+                                </a>
+                            </li>
+                             <li>
+                                <a href="{{ route('customer.auctionbids') }}"
+                                   class="{{ request()->routeIs('customer.auctionbids') ? 'active' : '' }}">
+                                   Auction Bids
                                 </a>
                             </li>
                             <li>

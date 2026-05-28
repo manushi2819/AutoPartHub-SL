@@ -435,7 +435,7 @@
         </section>
         <!-- shop-style-two end -->
 
-       <!-- feature-section 
+       <!-- feature-section  -->
 <section class="feature-section pb_70">
     <div class="auto-container">
         <div class="row clearfix">
@@ -475,21 +475,15 @@
         </div>
     </div>
 </section>
- feature-section end -->
 
 
 
-     <!-- cta-style-two -->
-     <div class="auto-container mb-5">
-        <img src="{{ asset('frontend/assets/images/banner8.png') }}" alt="Banner" style="width: 100%; height: auto; display: block;">
-    </div>
 
-    <!-- cta-style-two end -->
      
 
-<!-- Featured Vehicles Section 
+<!-- Featured Vehicles Section -->
 <section class="featured-vehicles mb-5">
-    <div class="container">
+    <div class="auto-container">
         <div class="sec-title mb_30">
              <h2>Featured Vehicles</h2>
             <p>Discover our collection of premium vehicles</p>
@@ -568,7 +562,7 @@
             </a>
         </div>
     </div>
-</section>-->
+</section>
 <style>
 /* Featured Vehicles Section */
 .featured-vehicles {
@@ -616,7 +610,7 @@
 
 .vehicles-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
     margin-bottom: 40px;
 }
@@ -656,9 +650,9 @@
     position: absolute;
     top: 15px;
     left: 15px;
-    padding: 5px 12px;
+    padding: 0px 8px;
     border-radius: 20px;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     font-weight: 600;
     text-transform: uppercase;
     color: white;
@@ -676,9 +670,9 @@
     position: absolute;
     top: 15px;
     right: 15px;
-    padding: 5px 12px;
+    padding: 0px 8px;
     border-radius: 20px;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     font-weight: 600;
     text-transform: uppercase;
     color: white;
@@ -710,10 +704,10 @@
 }
 
 .vehicle-price {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #bb1313;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 .vehicle-price::before {
@@ -726,14 +720,15 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
-    margin-bottom: 15px;
-    padding: 10px 0;
+    margin-bottom: 0px;
+    padding: 5px 0;
     border-top: 1px solid #ecf0f1;
     border-bottom: 1px solid #ecf0f1;
 }
 
 .spec-item {
     display: flex;
+    margin-bottom:0px;
     align-items: center;
     gap: 8px;
     font-size: 0.85rem;
@@ -763,7 +758,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 12px;
+    padding: 8px;
     background: linear-gradient(135deg, #615d5d, #000000);
     color: white;
     text-decoration: none;
@@ -852,6 +847,141 @@
     }
 }
 </style>
+
+
+<!-- Recently Viewed Parts -->
+@if(auth('customer')->check() && $recentlyViewedProducts->count() > 0)
+<!-- shop-style-two -->
+<section class="shop-style-two pb_100">
+    <div class="auto-container">
+        <div class="sec-title mb_35">
+            <h2>Recently Viewed Parts</h2>
+        </div>
+        <div class="four-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
+            @foreach($recentlyViewedProducts as $product)
+                <div class="shop-block-one">
+                    <div class="inner-box p-4">
+                        <div class="image-box">
+                            <a href="{{ route('Frontend.parts-details', ['id' => $product->id]) }}">
+                                @php
+                                    $mainImage = $product->images->where('is_main', 1)->first();
+                                @endphp
+
+                                <figure class="image" style="max-width: 300px;">
+                                    <img src="{{ $mainImage ? asset('uploads/' . $mainImage->image_url) : asset('no-image.png') }}"
+                                         alt="{{ $product->name }}"
+                                         style="height:200px; object-fit:cover;">
+                                </figure>
+                            </a>
+                        </div>
+
+                        <div class="lower-content">
+                            <span class="text">
+                                {{ $product->category->name ?? 'Parts' }}
+                            </span>
+                            <h4 style="font-size:17px">
+                                <a href="{{ route('Frontend.parts-details', ['id' => $product->id]) }}">
+                                    {{ Str::limit($product->name, 45) }}
+                                </a>
+                            </h4>
+                            <h5>
+                                Rs. {{ number_format($product->price, 2) }}
+                            </h5>
+                            <span class="product-stock">
+                                <i class="icon-39"></i>
+                                In Stock
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+<!-- shop-style-two end -->
+@endif
+
+
+
+<!-- Recommended For You -->
+@if(auth('customer')->check() && $recommendedProducts->count() > 0)
+
+<!-- shop-section -->
+<section class="shop-section pb_100">
+    <div class="auto-container">
+        <div class="inner-container">
+            <div class="ads-box">
+                <span class="text">Recommended For You</span>
+                <h3>Personalized Parts</h3>
+
+                <figure class="image">
+                    <img src="{{ asset('frontend/assets/images/shop/shop.png') }}" alt="">
+                </figure>
+            </div>
+            <div class="content-box">
+                <div class="shop-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
+                    @foreach($recommendedProducts as $product)
+                        <div class="shop-block-one">
+                            <div class="inner-box">
+                                <div class="image-box">
+                                    <a href="{{ route('Frontend.parts-details', ['id' => $product->id]) }}">
+                                        @php
+                                            $mainImage = $product->images->where('is_main', 1)->first();
+                                        @endphp
+
+                                        <figure class="image">
+                                            <img src="{{ $mainImage ? asset('uploads/' . $mainImage->image_url) : asset('no-image.png') }}"
+                                                 alt="{{ $product->name }}"
+                                                 style="height:200px; object-fit:cover;">
+                                        </figure>
+                                    </a>
+                                </div>
+
+                                <div class="lower-content">
+                                    <span class="text">
+                                        {{ $product->category->name ?? 'Parts' }}
+                                    </span>
+                                    <h4 style="font-size:17px">
+                                        <a href="{{ route('Frontend.parts-details', ['id' => $product->id]) }}">
+                                            {{ Str::limit($product->name, 45) }}
+                                        </a>
+                                    </h4>
+                                    <h5>
+                                        Rs. {{ number_format($product->price, 2) }}
+                                    </h5>
+                                    <span class="product-stock">
+                                        <i class="icon-39"></i>
+                                        In Stock
+                                    </span>
+                                    <div class="cart-btn">
+                                        <a href="{{ route('Frontend.parts-details', ['id' => $product->id]) }}"
+                                           class="theme-btn">
+                                            View Product
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- shop-section end -->
+
+@endif
+
+<!-- cta-style-two -->
+<div class="auto-container mb-5">
+<img src="{{ asset('frontend/assets/images/banner8.png') }}" alt="Banner" style="width: 100%; height: auto; display: block;">
+</div>
+
+<!-- cta-style-two end -->
 
 
 

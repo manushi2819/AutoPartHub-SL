@@ -23,22 +23,39 @@
             style="border: 2px solid #dee2e6;">
           </button>
          <div class="dropdown-menu to-top dropdown-menu-sm">
-          <!-- User info -->
-          <div class="py-12 px-16 radius-8 bg-primary-50 mb-16 d-flex align-items-center justify-content-between gap-2">
-              <div>
-                  <h6 style="font-size:13px !important" class="text-lg text-primary-light fw-semibold mb-2">Role: 
-                          Super Admin
-                  </h6>
+         <!-- User info -->
+        <div class="py-12 px-16 radius-8 bg-primary-50 mb-16 d-flex align-items-center justify-content-between gap-2">
+            <div>
+                <h6 style="font-size:13px !important"
+                    class="text-lg text-primary-light fw-semibold mb-2">
+                    Role:
+                    @if(session('is_super_admin'))
+                        Super Admin
+                    @else
+                        Admin User
+                    @endif
+                </h6>
 
-                  <h6 style="font-size:13px !important" class="text-lg text-primary-light fw-semibold mb-2 mt-4">Name: 
-                          Kasthuri Dhananjaya
-                  </h6>
-              </div>
-              <button type="button" class="hover-text-danger" data-bs-dismiss="dropdown">
-                  <iconify-icon icon="radix-icons:cross-1" class="icon text-xl"></iconify-icon> 
-              </button>
-          </div>
+                <h6 style="font-size:13px !important"
+                    class="text-lg text-primary-light fw-semibold mb-2 mt-4">
+                    Name:
+                    @if(session('is_super_admin'))
+                        Kasthuri Dhananjaya
+                    @else
+                        {{ session('name') }}
+                    @endif
+                </h6>
+            </div>
 
+            <button type="button"
+                    class="hover-text-danger"
+                    data-bs-dismiss="dropdown">
+                <iconify-icon icon="radix-icons:cross-1"
+                              class="icon text-xl">
+                </iconify-icon>
+            </button>
+
+        </div>
           <!-- Dropdown links -->
           <ul class="to-top-list">
              <!-- <li>

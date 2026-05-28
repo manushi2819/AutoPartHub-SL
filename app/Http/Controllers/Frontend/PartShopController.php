@@ -120,34 +120,52 @@ class PartShopController extends Controller
         if(auth('customer')->check())
         {
             // Search tracking
-            if($request->filled('search')){
-                CustomerActivity::create([
-                    'customer_id' => auth('customer')->id(),
-                    'activity_type' => 'search',
-                    'value' => $request->search
-                ]);
+           if ($request->filled('search')) {
+                $lastSearch = CustomerActivity::where('customer_id', auth('customer')->id())
+                    ->where('activity_type', 'search')
+                    ->where('value', $request->search)
+                    ->latest()
+                    ->first();
+
+                if (! $lastSearch || $lastSearch->created_at->diffInSeconds(now()) > 30) {
+                    CustomerActivity::create([
+                        'customer_id' => auth('customer')->id(),
+                        'activity_type' => 'search',
+                        'value' => $request->search
+                    ]);
+                }
             }
 
             // Category tracking
-            if($request->filled('category')){
-                foreach((array)$request->category as $cat){
-                    if($cat){
-                        CustomerActivity::create([
-                            'customer_id' => auth('customer')->id(),
-                            'activity_type' => 'category_view',
-                            'reference_id' => $cat
-                        ]);
+           if ($request->filled('category')) {
+                foreach ((array) $request->category as $cat) {
+                    if ($cat) {
+                        CustomerActivity::updateOrCreate(
+                            [
+                                'customer_id' => auth('customer')->id(),
+                                'activity_type' => 'category_view',
+                                'reference_id' => $cat,
+                            ],
+                            [
+                                'updated_at' => now()
+                            ]
+                        );
                     }
                 }
             }
 
             // Brand tracking
-            if($request->filled('brand')){
-                CustomerActivity::create([
-                    'customer_id' => auth('customer')->id(),
-                    'activity_type' => 'brand_view',
-                    'value' => $request->brand
-                ]);
+           if ($request->filled('brand')) {
+                CustomerActivity::updateOrCreate(
+                    [
+                        'customer_id' => auth('customer')->id(),
+                        'activity_type' => 'brand_view',
+                        'value' => $request->brand,
+                    ],
+                    [
+                        'updated_at' => now()
+                    ]
+                );
             }
         }
 

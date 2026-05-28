@@ -118,6 +118,19 @@
                 </a>
             </li>
 
+             <li class="dropdown">
+               <a href="javascript:void(0)">
+                <iconify-icon icon="mdi:cog" class="menu-icon"></iconify-icon>
+                    <span>Settings</span>
+                </a>
+                 <ul class="sidebar-submenu">
+                    <li>
+                        <a href="{{ route('admin.users.index') }}">
+                            <i class="ri-circle-fill circle-icon text-success-600 w-auto"></i> Admin Users</a>
+                    </li>
+                </ul>
+            </li>
+
 
 
         </ul>

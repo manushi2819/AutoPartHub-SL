@@ -143,6 +143,63 @@ class HomeController extends Controller
             ->limit(8)
             ->get();
 
+
+        // ==========================================
+        // RECENTLY VIEWED PRODUCTS
+        // ==========================================
+
+        $recentlyViewedProducts = collect();
+
+        if(auth('customer')->check())
+        {
+            // Get recently viewed product IDs
+            $recentProductIds = \App\Models\CustomerActivity::where('customer_id', auth('customer')->id())
+                ->where('activity_type', 'product_view')
+                ->latest()
+                ->pluck('reference_id')
+                ->unique()
+                ->take(8);
+
+            // Fetch products
+            $recentlyViewedProducts = Product::with(['images','category','reviews'])
+                ->whereIn('id', $recentProductIds)
+                ->where('status',1)
+                ->get();
+        }
+
+
+
+        // ==========================================
+        // PERSONALIZED RECOMMENDATIONS
+        // Based on Viewed Vehicle Brands
+        // ==========================================
+
+        $recommendedProducts = collect();
+
+        if(auth('customer')->check())
+        {
+            // Get most viewed vehicle brand
+            $topVehicleBrand = \App\Models\CustomerActivity::where('customer_id', auth('customer')->id())
+                ->where('activity_type', 'vehicle_brand_view')
+                ->select('value')
+                ->selectRaw('COUNT(*) as total')
+                ->groupBy('value')
+                ->orderByDesc('total')
+                ->first();
+
+            if($topVehicleBrand)
+            {
+                // Find compatible products for that brand
+                $recommendedProducts = Product::with(['images','category','reviews'])
+                    ->where('status',1)
+                    ->whereHas('compatibility', function($q) use ($topVehicleBrand){
+                        $q->where('brand', $topVehicleBrand->value);
+                    })
+                    ->latest()
+                    ->take(8)
+                    ->get();
+            }
+        }
         return view('Frontend.index', compact(
             'years',
             'brands',
@@ -157,6 +214,8 @@ class HomeController extends Controller
             'totalVehicles',
             'totalBrands',
             'popularBrands',
+            'recentlyViewedProducts',
+            'recommendedProducts',
             
         ));
     }

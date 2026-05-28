@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Employee;
+use App\Models\AdminUser;
 
 class AdminLoginController extends Controller
 {
@@ -17,7 +18,8 @@ class AdminLoginController extends Controller
     }
 
 
-   public function login(Request $request)
+
+    public function login(Request $request)
     {
         // Validate input
         $credentials = $request->validate([
@@ -28,23 +30,70 @@ class AdminLoginController extends Controller
         $email = $credentials['email'];
         $password = $credentials['password'];
 
-        // Hardcoded admin check
+        /*
+        |--------------------------------------------------------------------------
+        | Hardcoded Super Admin Login
+        |--------------------------------------------------------------------------
+        */
         $hardcodedAdminEmail    = 'admin@example.com';
-        $hardcodedAdminPassword = '12345678'; 
+        $hardcodedAdminPassword = '12345678';
 
-        if ($email === $hardcodedAdminEmail && $password === $hardcodedAdminPassword) {
-            // Store hardcoded admin session
+        if (
+            $email === $hardcodedAdminEmail &&
+            $password === $hardcodedAdminPassword
+        ) {
+
             session([
-                'is_admin' => true,
-                'name'     => 'Super Admin',
-                'email'    => $hardcodedAdminEmail,
+                'is_admin'      => true,
+                'is_super_admin'=> true,
+                'admin_id'      => 0,
+                'name'          => 'Super Admin',
+                'email'         => $hardcodedAdminEmail,
             ]);
 
-            session()->flash('success', 'Successfully logged in as Admin.');
+            session()->flash('success', 'Successfully logged in as Super Admin.');
+
             return redirect()->route('admin.dashboard');
         }
 
-        // Invalid credentials
+        /*
+        |--------------------------------------------------------------------------
+        | Admin Users Table Login
+        |--------------------------------------------------------------------------
+        */
+        $adminUser = AdminUser::where('email', $email)->first();
+
+        if (
+            $adminUser &&
+            Hash::check($password, $adminUser->password)
+        ) {
+
+            // Check status
+            if ($adminUser->status != 1) {
+
+                return back()->withErrors([
+                    'email' => 'Your account is inactive.',
+                ])->withInput();
+            }
+
+            session([
+                'is_admin'       => true,
+                'is_super_admin' => false,
+                'admin_id'       => $adminUser->id,
+                'name'           => $adminUser->name,
+                'email'          => $adminUser->email,
+            ]);
+
+            session()->flash('success', 'Successfully logged in.');
+
+            return redirect()->route('admin.dashboard');
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Invalid Credentials
+        |--------------------------------------------------------------------------
+        */
         return back()->withErrors([
             'email' => 'Invalid credentials.',
         ])->withInput();

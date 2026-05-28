@@ -82,6 +82,7 @@ Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'
 
 
 use App\Http\Controllers\Frontend\CustomerProfileController;
+use App\Http\Controllers\Frontend\CustomerAuctionBidController;
 
 Route::prefix('customer')->name('customer.')->middleware('auth:customer')->group(function () {
 
@@ -95,7 +96,8 @@ Route::prefix('customer')->name('customer.')->middleware('auth:customer')->group
     Route::get('/order/track/{order}', [CustomerProfileController::class, 'track'])->name('order.track');
     Route::put('/order/{order}/update-delivered', [CustomerProfileController::class, 'updateDeliveredStatus'])->name('order.updateStatus');
 
-
+    Route::get('/auction-bids', [CustomerAuctionBidController::class, 'index'])->name('auctionbids');
+    Route::get('/auction-bids/{id}', [CustomerAuctionBidController::class, 'show'])->name('auction.bids.show');
     
 }); 
 
@@ -123,6 +125,7 @@ use App\Http\Controllers\Admin\AuctionController;
 use App\Http\Controllers\Admin\VehicleTypeController;
 use App\Http\Controllers\Admin\AuctionBidController;
 use App\Http\Controllers\Admin\AuctionWinnerController;
+use App\Http\Controllers\Admin\AdminUserController;
 
 use App\Http\Middleware\AdminAuth;
 
@@ -198,4 +201,11 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
     Route::post('/vehicle-types', [VehicleTypeController::class, 'store'])->name('vehicle-types.store');
     Route::put('/vehicle-types/{id}', [VehicleTypeController::class, 'update'])->name('vehicle-types.update');
     Route::delete('/vehicle-types/{id}', [VehicleTypeController::class, 'destroy'])->name('vehicle-types.destroy');
+
+    // admin users
+    Route::get('/admin/users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::post('/admin/users', [AdminUserController::class, 'store'])->name('users.store');
+    Route::put('/admin/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
+    Route::delete('/admin/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+
 });
