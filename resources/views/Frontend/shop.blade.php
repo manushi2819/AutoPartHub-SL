@@ -331,7 +331,7 @@
                             {{-- =========================
                                 Vehicle Search Filter
                             ========================== --}}
-                            <div class="search-widget sidebar-widget pb_40 mb_40">
+                            <div class="search-widget sidebar-widget pb_10 mb_20">
                                 <div class="widget-title mb_30">
                                     <h5>Vehicle Compatibility</h5>
                                 </div>
@@ -426,52 +426,10 @@
                                             </div>
                                         </div>
 
-                                        {{-- SEARCH BUTTON --}}
-                               
-                                        <div class="btn-box" style="display:flex; gap:12px; margin-top:15px;">
-
-                                            <button type="submit"  class="theme-btn"
-                                                style="
-                                                    flex:1;
-                                                    padding:10px 18px;
-                                                    background:linear-gradient(135deg, #000000, #000000);
-                                                    border:none;
-                                                    border-radius:6px;
-                                                    color:#fff;
-                                                    font-weight:600;
-                                                    font-size:14px;
-                                                    cursor:pointer;
-                                                    transition:all 0.3s ease;
-                                                    box-shadow:0 4px 10px rgba(0,0,0,0.15);
-                                                "
-                                            >
-                                                Search Part
-                                            </button>
-
-                                            <a href="{{ route('Frontend.shop') }}" 
-                                                style="
-                                                    flex:1;
-                                                    text-align:center;
-                                                    padding:10px 18px;
-                                                    background:#f5f5f5;
-                                                    border:1px solid #ddd;
-                                                    border-radius:6px;
-                                                    color:#333;
-                                                    font-weight:600;
-                                                    font-size:14px;
-                                                    text-decoration:none;
-                                                    transition:all 0.3s ease;
-                                                "
-                                            >
-                                                Clear
-                                            </a>
-
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
 
-                   <form method="GET" action="{{ route('Frontend.shop') }}">
+                
                         {{-- =========================
                             Categories
                         ========================== --}}

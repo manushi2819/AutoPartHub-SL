@@ -102,18 +102,25 @@ class PartShopController extends Controller
         // -------------------------
         // Search Filter
         // -------------------------
-        if ($request->filled('search')) {
-            $search = $request->search;
+       $search = $request->get('query') ?? $request->get('search');
+        if ($search) {
+            $keywords = explode(' ', $search);
+            foreach ($keywords as $word) {
+                $products->where(function ($q) use ($word) {
+                    $q->where('name', 'like', "%{$word}%")
 
-            $products->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                ->orWhere('description', 'like', "%{$search}%")
-                ->orWhereHas('brand', function ($b) use ($search) {
-                    $b->where('name', 'like', "%{$search}%");
+                    ->orWhereHas('brand', function ($b) use ($word) {
+                        $b->where('name', 'like', "%{$word}%");
+                    })
+
+                    ->orWhereHas('category', function ($c) use ($word) {
+                        $c->where('name', 'like', "%{$word}%");
+                    })
+                    ->orWhere('description', 'like', "%{$word}%");
                 });
-            });
+            }
         }
-
+        
         // -------------------------
         // Track Customer Activity
         // -------------------------
@@ -196,6 +203,38 @@ class PartShopController extends Controller
 
 
 
+    public function searchSuggestions(Request $request)
+    {
+        $search = $request->get('query');
+        if (!$search) {
+            return response()->json([]);
+        }
+        $keywords = explode(' ', $search);
+        $products = \App\Models\Product::where('status', 1);
+        foreach ($keywords as $word) {
+            $products->where(function ($q) use ($word) {
+                $q->where('name', 'like', "%{$word}%")
+                ->orWhereHas('brand', function ($b) use ($word) {
+                    $b->where('name', 'like', "%{$word}%");
+                })
+                ->orWhereHas('category', function ($c) use ($word) {
+                    $c->where('name', 'like', "%{$word}%");
+                })
+                ->orWhere('description', 'like', "%{$word}%");
+
+            });
+        }
+
+        $products = $products
+            ->with(['images'])
+            ->select('id', 'name', 'price')
+            ->limit(8)
+            ->get();
+
+        return response()->json([
+            'products' => $products
+        ]);
+    }
 
 
 }

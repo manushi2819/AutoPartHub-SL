@@ -22,7 +22,9 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('Frontend.conta
 Route::post('/contact-submit', [ContactController::class, 'store'])->name('contact.submit');
 
 Route::get('/parts-shop', [PartShopController::class, 'index'])->name('Frontend.shop');
+Route::get('/search-suggestions', [PartShopController::class, 'searchSuggestions'])->name('search.suggestions');
 Route::get('/parts-details/{id}', [PartDetailsController::class, 'index'])->name('Frontend.parts-details');
+
 
 Route::get('/vehicles', [VehicleController::class, 'index'])->name('Frontend.vehicles');
 Route::get('/vehicles/{id}', [VehicleController::class, 'show'])->name('Frontend.vehicle.details');

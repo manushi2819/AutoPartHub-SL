@@ -134,23 +134,44 @@
                                 </div>
                             </div>-->
 
-                           <div class="search-area">
-                                <div class="search-box" style="height:42px">
+                          <div class="search-area">
+                                <div class="search-box" style="height:42px; position:relative;">
                                     <form method="GET" action="{{ route('Frontend.shop') }}">
                                         <div class="form-group">
                                             <input 
                                                 type="search" 
                                                 name="search" 
+                                                id="globalSearch"
                                                 value="{{ request('search') }}" 
                                                 placeholder="Search Parts..." 
                                                 style="height:42px"
-                                                required
+                                                autocomplete="off"
+                                                
                                             >
                                             <button type="submit">
                                                 <i class="icon-9"></i>
                                             </button>
                                         </div>
                                     </form>
+
+                                   <!-- Suggestions Box -->
+                                    <div id="searchSuggestions"
+                                        style="
+                                            position:absolute;
+                                            top:48px;
+                                            left:0;
+                                            right:0;
+                                            background:#fff;
+                                            z-index:99999;
+                                            display:none;
+                                            border:1px solid #e5e5e5;
+                                            border-radius:7px;
+                                            overflow:hidden;
+                                            box-shadow:0 10px 30px rgba(0,0,0,0.08);
+                                            max-height:400px;
+                                            overflow-y:auto;
+                                        ">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -480,3 +501,101 @@
                 </div>
             </nav>
         </div><!-- End Mobile Menu -->
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$('#globalSearch').on('keyup', function () {
+
+    let query = $(this).val();
+
+    if (query.length < 2) {
+        $('#searchSuggestions').hide();
+        return;
+    }
+
+    $.ajax({
+        url: "{{ route('search.suggestions') }}",
+        type: "GET",
+        data: { query: query },
+      success: function (data) {
+
+    console.log("SEARCH RESPONSE:", data); // 👈 IMPORTANT DEBUG
+
+    let html = '';
+
+    if (data.products && data.products.length > 0) {
+
+        data.products.forEach(item => {
+
+            let image = (item.images && item.images.length > 0)
+                ? '/uploads/' + item.images[0].image_url
+                : '/no-image.png';
+
+           html += `
+                <a href="/parts/${item.id}" 
+                style="
+                        text-decoration:none;
+                        color:#222;
+                ">
+
+                    <div class="search-suggestion-item"
+                        style="
+                            padding: 8px 12px;
+                            border-bottom:1px solid #f1f1f1;
+                            display:flex;
+                            align-items:center;
+                            gap:12px;
+                            transition:0.2s;
+                            cursor:pointer;
+                        ">
+
+                        <img src="${image}"
+                            style="
+                                width:40px;
+                                height:40px;
+                                object-fit:cover;
+                                border-radius:6px;
+                                border:1px solid #eee;
+                                flex-shrink:0;
+                            ">
+
+                        <div style="min-width:0;">
+
+                            <div style="
+                                font-size:14px;
+                                font-weight:500;
+                                line-height:1.2;
+                                margin-bottom:0px;
+                                color: #5a5a5a;
+                            ">
+                                ${item.name.length > 70 
+                                    ? item.name.substring(0, 70) + '...' 
+                                    : item.name}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </a>
+            `;
+        });
+
+        $('#searchSuggestions').html(html).show();
+
+    } else {
+        $('#searchSuggestions').html('<div class="p-2">No results</div>').show();
+    }
+}
+    });
+
+});
+
+// hide dropdown
+$(document).on('click', function(e){
+    if (!$(e.target).closest('#globalSearch').length) {
+        $('#searchSuggestions').hide();
+    }
+});
+</script>
