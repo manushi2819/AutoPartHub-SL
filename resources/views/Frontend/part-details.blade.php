@@ -688,7 +688,7 @@ h3:hover {
           @if($relatedProducts->count() > 0)
             <div class="auto-container mb-5">
                 <div class="related-product">
-                    <h2>You may also like these</h2>
+                    <h4 class="mb-3">You may also like these</h4>
                     <div class="inner-content clearfix">
                         @foreach($relatedProducts as $related)
                             <div class="shop-block-one">

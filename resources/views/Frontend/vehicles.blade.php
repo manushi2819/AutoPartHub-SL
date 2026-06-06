@@ -245,19 +245,18 @@
                         </select>
                     </div>
 
-                    {{-- MODEL (NOW DROPDOWN) --}}
+                  {{-- MODEL (NOW TEXT INPUT) --}}
                     <div class="col-md-3">
                         <label class="form-label">
                             <i class="fas fa-tag"></i> Model
                         </label>
-                        <select name="model" class="form-control">
-                            <option value="">All Models</option>
-                            @foreach($models as $model)
-                                <option value="{{ $model }}" {{ request('model') == $model ? 'selected' : '' }}>
-                                    {{ $model }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <input 
+                            type="text" 
+                            name="model" 
+                            class="form-control p-2" 
+                            value="{{ request('model') }}" 
+                            placeholder="Enter model"
+                        >
                     </div>
 
                     {{-- YEAR --}}

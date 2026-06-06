@@ -57,7 +57,7 @@
                         >
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-8">
 
                         <h5 class="fw-bold mb-2">
                             {{ $title }}
@@ -97,7 +97,7 @@
 
                     </div>
 
-                    <div class="col-md-4 text-md-end">
+                    <div class="col-md-2 text-md-end">
 
                         @if($auction->highestBid && $auction->highestBid->customer_id == auth()->guard('customer')->id())
 
@@ -118,7 +118,7 @@
                         <br>
 
                         <a href="{{ route('customer.auction.bids.show', $auction->id) }}"
-                           class="btn btn-dark rounded-pill px-4">
+                           class="btn btn-dark rounded-pill px-2" style="font-size:13px">
 
                             View Auction
                         </a>

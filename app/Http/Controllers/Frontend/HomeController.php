@@ -170,35 +170,144 @@ class HomeController extends Controller
 
 
         // ==========================================
-        // PERSONALIZED RECOMMENDATIONS
-        // Based on Viewed Vehicle Brands
+        // PERSONALIZED RECOMMENDATIONS (SMART)
+        // Based on Vehicle + Browsing Activity
         // ==========================================
 
         $recommendedProducts = collect();
 
-        if(auth('customer')->check())
-        {
-            // Get most viewed vehicle brand
-            $topVehicleBrand = \App\Models\CustomerActivity::where('customer_id', auth('customer')->id())
-                ->where('activity_type', 'vehicle_brand_view')
-                ->select('value')
-                ->selectRaw('COUNT(*) as total')
-                ->groupBy('value')
-                ->orderByDesc('total')
-                ->first();
+        if (auth('customer')->check()) {
 
-            if($topVehicleBrand)
-            {
-                // Find compatible products for that brand
-                $recommendedProducts = Product::with(['images','category','reviews'])
-                    ->where('status',1)
-                    ->whereHas('compatibility', function($q) use ($topVehicleBrand){
-                        $q->where('brand', $topVehicleBrand->value);
-                    })
-                    ->latest()
-                    ->take(8)
-                    ->get();
+            $customerId = auth('customer')->id();
+
+            // Get all activities
+            $activities = \App\Models\CustomerActivity::where('customer_id', $customerId)
+                ->latest()
+                ->get();
+
+            $brandScores = [];
+            $categoryScores = [];
+            $modelScores = [];
+
+            foreach ($activities as $activity) {
+
+                switch ($activity->activity_type) {
+
+                    // PRODUCT VIEW
+                    case 'product_view':
+
+                        $product = Product::find($activity->reference_id);
+
+                        if ($product) {
+
+                            if ($product->brand_id) {
+                                $brandScores[$product->brand_id] =
+                                    ($brandScores[$product->brand_id] ?? 0) + 2;
+                            }
+
+                            if ($product->category_id) {
+                                $categoryScores[$product->category_id] =
+                                    ($categoryScores[$product->category_id] ?? 0) + 2;
+                            }
+                        }
+
+                        break;
+
+                    // CATEGORY VIEW
+                    case 'category_view':
+
+                        if ($activity->reference_id) {
+                            $categoryScores[$activity->reference_id] =
+                                ($categoryScores[$activity->reference_id] ?? 0) + 3;
+                        }
+
+                        break;
+
+                    // BRAND VIEW
+                    case 'brand_view':
+
+                        $brandId = \App\Models\Brand::where('name', $activity->value)->value('id');
+
+                        if ($brandId) {
+                            $brandScores[$brandId] =
+                                ($brandScores[$brandId] ?? 0) + 3;
+                        }
+
+                        break;
+
+                    // VEHICLE BRAND VIEW
+                    case 'vehicle_brand_view':
+
+                        $brandId = \App\Models\Brand::where('name', $activity->value)->value('id');
+
+                        if ($brandId) {
+                            $brandScores[$brandId] =
+                                ($brandScores[$brandId] ?? 0) + 4;
+                        }
+
+                        break;
+
+                    // VEHICLE SEARCH (MODEL)
+                    case 'vehicle_search':
+
+                        $modelScores[$activity->value] =
+                            ($modelScores[$activity->value] ?? 0) + 4;
+
+                        break;
+
+                    // VEHICLE VIEW (STRONG SIGNAL)
+                    case 'vehicle_view':
+
+                        $vehicle = \App\Models\Vehicle::find($activity->reference_id);
+
+                        if ($vehicle) {
+
+                            if ($vehicle->brand) {
+                                $brandScores[$vehicle->brand->id] =
+                                    ($brandScores[$vehicle->brand->id] ?? 0) + 5;
+                            }
+
+                            if ($vehicle->model) {
+                                $modelScores[$vehicle->model] =
+                                    ($modelScores[$vehicle->model] ?? 0) + 5;
+                            }
+                        }
+
+                        break;
+                }
             }
+
+            // SORT SCORES
+            arsort($brandScores);
+            arsort($categoryScores);
+            arsort($modelScores);
+
+            $topBrandIds = array_slice(array_keys($brandScores), 0, 3);
+            $topCategoryIds = array_slice(array_keys($categoryScores), 0, 5);
+            $topModels = array_slice(array_keys($modelScores), 0, 5);
+
+            // BUILD RECOMMENDATIONS
+            $recommendedProducts = Product::with(['images','category','reviews'])
+                ->where('status', 1)
+                ->where(function ($q) use ($topBrandIds, $topCategoryIds, $topModels) {
+
+                    if (!empty($topBrandIds)) {
+                        $q->orWhereIn('brand_id', $topBrandIds);
+                    }
+
+                    if (!empty($topCategoryIds)) {
+                        $q->orWhereIn('category_id', $topCategoryIds);
+                    }
+
+                    if (!empty($topModels)) {
+                        $q->orWhereHas('compatibility', function ($c) use ($topModels) {
+                            $c->whereIn('model', $topModels);
+                        });
+                    }
+                })
+                ->latest()
+                ->take(8)
+                ->get();
         }
         return view('Frontend.index', compact(
             'years',

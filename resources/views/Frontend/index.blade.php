@@ -485,7 +485,7 @@
 <section class="featured-vehicles mb-5">
     <div class="auto-container">
         <div class="sec-title mb_30">
-             <h2>Featured Vehicles</h2>
+             <h4>Featured Vehicles</h4>
             <p>Discover our collection of premium vehicles</p>
         </div>
 
@@ -759,7 +759,7 @@
     justify-content: center;
     width: 100%;
     padding: 8px;
-    background: linear-gradient(135deg, #615d5d, #000000);
+    background: #000000;
     color: white;
     text-decoration: none;
     border-radius: 8px;
@@ -855,7 +855,7 @@
 <section class="shop-style-two pb_100">
     <div class="auto-container">
         <div class="sec-title mb_35">
-            <h2>Recently Viewed Parts</h2>
+            <h4>Recently Viewed Parts</h4>
         </div>
         <div class="four-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
             @foreach($recentlyViewedProducts as $product)
@@ -912,7 +912,7 @@
         <div class="inner-container">
             <div class="ads-box">
                 <span class="text">Recommended For You</span>
-                <h3>Personalized Parts</h3>
+                <h4 style="color: #000;">Personalized Parts</h4>
 
                 <figure class="image">
                     <img src="{{ asset('frontend/assets/images/shop/shop.png') }}" alt="">
@@ -943,7 +943,7 @@
                                     </span>
                                     <h4 style="font-size:17px">
                                         <a href="{{ route('Frontend.parts-details', ['id' => $product->id]) }}">
-                                            {{ Str::limit($product->name, 45) }}
+                                            {{ Str::limit($product->name, 30) }}
                                         </a>
                                     </h4>
                                     <h5>
@@ -955,7 +955,7 @@
                                     </span>
                                     <div class="cart-btn">
                                         <a href="{{ route('Frontend.parts-details', ['id' => $product->id]) }}"
-                                           class="theme-btn">
+                                           class="theme-btn p-2" style="font-size: 14px;">
                                             View Product
                                             <span></span>
                                             <span></span>
