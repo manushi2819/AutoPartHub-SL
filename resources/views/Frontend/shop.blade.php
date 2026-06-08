@@ -562,88 +562,125 @@
 
 
 
-
                     <div class="col-lg-9 col-md-12 col-sm-12 content-side">
-    <div class="our-shop">
-        <div class="item-shorting">
-            <div class="left-column">
-                <div class="text">
-                    <p>
-                        Showing 
-                        <span>{{ $products->firstItem() ?? 0 }}</span>–<span>{{ $products->lastItem() ?? 0 }}</span> 
-                        of <span>{{ $products->total() ?? 0 }}</span> results
-                    </p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="products-grid">
-            @foreach($products as $product)
-            <div class="product-card">
-                <a href="{{ route('Frontend.parts-details', ['id' => $product->id]) }}" class="product-link">
-                    <div class="product-image-wrapper">
-                        @php
-                            $mainImage = $product->images->where('is_main', 1)->first();
-                        @endphp
-                        <img src="{{ $mainImage ? asset('uploads/' . $mainImage->image_url) : asset('no-image.png') }}" 
-                             alt="{{ $product->name }}"
-                             class="product-image">
-                    </div>
-                    
-                    <div class="product-info">
-                        <h4 class="product-title">{{ $product->name }}</h4>
-                        <h5 class="product-price">LKR {{ number_format($product->price, 2) }}</h5>
-                        
-                        <div class="product-rating">
-                            @php
-                                $avg = round($product->averageRating());
-                                $total = $product->reviewsCount();
-                            @endphp
-                            @for ($i = 1; $i <= 5; $i++)
-                                <span class="star {{ $i <= $avg ? 'filled' : '' }}">★</span>
-                            @endfor
-                            <span class="rating-count">({{ $total }})</span>
+                        <div class="our-shop">
+                            {{-- RESULTS INFO --}}
+                            <div class="item-shorting">
+                                <div class="left-column">
+                                    <div class="text">
+                                        <p>
+                                            Showing 
+                                            <span>{{ $products->firstItem() ?? 0 }}</span>–
+                                            <span>{{ $products->lastItem() ?? 0 }}</span> 
+                                            of <span>{{ $products->total() ?? 0 }}</span> results
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                                    @php
+                                        // Top 5 boosted products (for badge only) 
+                                        $topBoostedIds = $boostedProducts->take(5)->pluck('id')->toArray();
+                                    @endphp
+
+                                    {{-- PRODUCT GRID (BOOSTED ORDERED) --}}
+                                    <div class="products-grid">
+                                                @foreach($boostedProducts as $product)
+                                                <div class="product-card" style="position:relative;">
+                                            @php
+                                        $viewCount = $views[$product->id] ?? 0;
+                                    @endphp
+
+                                    @if($viewCount > 0)
+                                        <span style="
+                                            position:absolute;
+                                            top:10px;
+                                            left:10px;
+                                            background:#ff3b30;
+                                            color:#fff;
+                                            font-size:12px;
+                                            padding:3px 8px;
+                                            border-radius:20px;
+                                            z-index:2;
+                                        ">
+                                            🔥 Popular
+                                        </span>
+                                    @endif
+
+                                    <a href="{{ route('Frontend.parts-details', ['id' => $product->id]) }}" class="product-link">
+                                        {{-- IMAGE --}}
+                                        <div class="product-image-wrapper">
+                                            @php
+                                                $mainImage = $product->images->where('is_main', 1)->first();
+                                            @endphp
+                                            <img src="{{ $mainImage ? asset('uploads/' . $mainImage->image_url) : asset('no-image.png') }}"
+                                                alt="{{ $product->name }}"
+                                                class="product-image">
+                                        </div>
+
+                                        {{-- INFO --}}
+                                        <div class="product-info">
+                                            <h4 class="product-title">
+                                                {{ \Illuminate\Support\Str::limit($product->name, 45) }}
+                                            </h4>
+                                            <h5 class="product-price">
+                                                LKR {{ number_format($product->price, 2) }}
+                                            </h5>
+
+                                            {{-- RATING --}}
+                                            <div class="product-rating">
+                                                @php
+                                                    $avg = round($product->averageRating());
+                                                    $total = $product->reviewsCount();
+                                                @endphp
+
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    <span class="star {{ $i <= $avg ? 'filled' : '' }}">★</span>
+                                                @endfor
+
+                                                <span class="rating-count">({{ $total }})</span>
+                                            </div>
+                                            {{-- STOCK --}}
+                                            @if($product->stock_quantity > 0)
+                                                <span class="stock-badge in-stock">✓ In Stock</span>
+                                            @else
+                                                <span class="stock-badge out-of-stock">✗ Out of Stock</span>
+                                            @endif
+                                        </div>
+                                    </a>
+                                </div>
+
+                                @endforeach
+
+                            </div>
+
+                            {{-- PAGINATION (optional note) --}}
+                            <div class="pagination-wrapper mt-4">
+                                <ul class="pagination">
+                                    @if ($products->onFirstPage())
+                                        <li class="disabled"><span>‹</span></li>
+                                    @else
+                                        <li><a href="{{ $products->previousPageUrl() }}">‹</a></li>
+                                    @endif
+
+                                    @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+                                        @if ($page == $products->currentPage())
+                                            <li class="active"><span>{{ $page }}</span></li>
+                                        @else
+                                            <li><a href="{{ $url }}">{{ $page }}</a></li>
+                                        @endif
+                                    @endforeach
+
+                                    @if ($products->hasMorePages())
+                                        <li><a href="{{ $products->nextPageUrl() }}">›</a></li>
+                                    @else
+                                        <li class="disabled"><span>›</span></li>
+                                    @endif
+                                </ul>
+                            </div>
+
                         </div>
-                        
-                        @if($product->stock_quantity > 0)
-                            <span class="stock-badge in-stock">✓ In Stock</span>
-                        @else
-                            <span class="stock-badge out-of-stock">✗ Out of Stock</span>
-                        @endif
                     </div>
-                </a>
-            </div>
-            @endforeach
-        </div>
-        
-        <div class="pagination-wrapper">
-            <ul class="pagination">
-                {{-- Previous Page Link --}}
-                @if ($products->onFirstPage())
-                    <li class="disabled"><span>‹</span></li>
-                @else
-                    <li><a href="{{ $products->previousPageUrl() }}">‹</a></li>
-                @endif
-
-                {{-- Pagination Elements --}}
-                @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
-                    @if ($page == $products->currentPage())
-                        <li class="active"><span>{{ $page }}</span></li>
-                    @else
-                        <li><a href="{{ $url }}">{{ $page }}</a></li>
-                    @endif
-                @endforeach
-
-                {{-- Next Page Link --}}
-                @if ($products->hasMorePages())
-                    <li><a href="{{ $products->nextPageUrl() }}">›</a></li>
-                @else
-                    <li class="disabled"><span>›</span></li>
-                @endif
-            </ul>
-        </div>
-    </div>
-</div>
 
 
                 </div>

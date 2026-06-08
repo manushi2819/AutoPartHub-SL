@@ -81,13 +81,15 @@ class PartShopController extends Controller
                     ->orWhereJsonContains('vehicle_type_ids', (string) $value);
             });
         });
+
         // -------------------------
         // Category Filter
         // -------------------------
+        $categoryIds = [];
         if ($request->filled('category')) {
-            $selected = array_filter((array) $request->category); // remove empty values
+            $selected = array_filter((array) $request->category);
             if (!empty($selected)) {
-                $categoryIds = \App\Models\Category::getAllDescendantIds($selected);
+                $categoryIds = Category::getAllDescendantIds($selected);
                 $products->whereIn('category_id', $categoryIds);
             }
         }
@@ -189,6 +191,106 @@ class PartShopController extends Controller
         // -------------------------
         $categories = Category::whereNull('parent_id')->with('children')->get();
 
+
+     // -------------------------
+// Popular / Boosted products for category
+// -------------------------
+
+$categoryIds = $categoryIds ?? [];
+
+$boostedProducts = collect();
+
+/*
+|--------------------------------------------------------------------------
+| STEP 1: BASE PRODUCTS (ALWAYS SAFE)
+|--------------------------------------------------------------------------
+*/
+
+$baseQuery = Product::with(['images', 'reviews'])
+    ->where('status', 1);
+
+if (!empty($categoryIds)) {
+    $baseQuery->whereIn('category_id', $categoryIds);
+}
+
+$productsBase = $baseQuery->get();
+
+/*
+|--------------------------------------------------------------------------
+| STEP 2: IF NO CATEGORY FILTER → JUST RETURN NORMAL PRODUCTS
+|--------------------------------------------------------------------------
+*/
+
+if ($productsBase->isEmpty()) {
+    $boostedProducts = Product::with(['images','reviews'])
+        ->where('status', 1)
+        ->latest()
+        ->take(8)
+        ->get();
+} else {
+
+    /*
+    |--------------------------------------------------------------------------
+    | STEP 3: GET VIEW COUNTS
+    |--------------------------------------------------------------------------
+    */
+
+    $views = CustomerActivity::where('activity_type', 'product_view')
+        ->whereIn('reference_id', $productsBase->pluck('id'))
+        ->selectRaw('reference_id, COUNT(*) as total_views')
+        ->groupBy('reference_id')
+        ->pluck('total_views', 'reference_id')
+        ->toArray();
+
+    /*
+    |--------------------------------------------------------------------------
+    | STEP 4: SCORING SYSTEM
+    |--------------------------------------------------------------------------
+    */
+
+    $scored = [];
+
+    foreach ($productsBase as $p) {
+
+        $viewsCount = $views[$p->id] ?? 0;
+        $rating = round($p->averageRating() ?? 0);
+
+        $score = 0;
+
+        // views boost (strong)
+        $score += $viewsCount * 5;
+
+        // rating boost
+        $score += $rating * 2;
+
+        // stock boost
+        if ($p->stock_quantity > 0) {
+            $score += 1;
+        }
+
+        // base score so everything appears
+        $score += 1;
+
+        $scored[$p->id] = $score;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | STEP 5: SORT PRODUCTS
+    |--------------------------------------------------------------------------
+    */
+
+    arsort($scored);
+
+    $orderedIds = array_keys($scored);
+
+    $boostedProducts = Product::with(['images','reviews'])
+        ->whereIn('id', $orderedIds)
+        ->get()
+        ->sortBy(function ($p) use ($scored) {
+            return -($scored[$p->id] ?? 0);
+        });
+}
         return view('Frontend.shop', compact(
             'products',
             'years',
@@ -198,6 +300,8 @@ class PartShopController extends Controller
             'fuelTypes',
             'engineTypes',
             'categories',
+            'boostedProducts',
+            'views' 
         ));
     }
 
