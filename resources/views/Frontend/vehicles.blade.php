@@ -365,30 +365,40 @@
                             </h6>
                             
                             <div class="vehicle-details">
-                                <div class="vehicle-detail-item">
-                                    <i class="fas fa-calendar"></i>
-                                    <span>Year: {{ $vehicle->year ?? 'N/A' }}</span>
-                                </div>
-                                <div class="vehicle-detail-item">
-                                    <i class="fas fa-gas-pump"></i>
-                                    <span>Fuel: {{ $vehicle->fuel_type ?? 'N/A' }}</span>
-                                </div>
-                                @if($vehicle->mileage ?? false)
-                                <div class="vehicle-detail-item">
-                                    <i class="fas fa-road"></i>
-                                    <span>Mileage: {{ number_format($vehicle->mileage) }} km</span>
-                                </div>
+                                @if(!empty($vehicle->year))
+                                    <div class="vehicle-detail-item">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>Year: {{ $vehicle->year }}</span>
+                                    </div>
                                 @endif
-                                @if($vehicle->transmission ?? false)
-                                <div class="vehicle-detail-item">
-                                    <i class="fas fa-cogs"></i>
-                                    <span>Transmission: {{ $vehicle->transmission }}</span>
-                                </div>
+
+                                @if(!empty($vehicle->fuel_type))
+                                    <div class="vehicle-detail-item">
+                                        <i class="fas fa-gas-pump"></i>
+                                        <span>Fuel: {{ $vehicle->fuel_type }}</span>
+                                    </div>
                                 @endif
-                                <div class="vehicle-detail-item">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <span>Location: {{ $vehicle->district ?? 'N/A' }}</span>
-                                </div>
+
+                                @if(!empty($vehicle->mileage))
+                                    <div class="vehicle-detail-item">
+                                        <i class="fas fa-road"></i>
+                                        <span>Mileage: {{ number_format($vehicle->mileage) }} km</span>
+                                    </div>
+                                @endif
+
+                                @if(!empty($vehicle->transmission))
+                                    <div class="vehicle-detail-item">
+                                        <i class="fas fa-cogs"></i>
+                                        <span>Transmission: {{ $vehicle->transmission }}</span>
+                                    </div>
+                                @endif
+
+                                @if(!empty($vehicle->district))
+                                    <div class="vehicle-detail-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Location: {{ $vehicle->district }}</span>
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="vehicle-price">

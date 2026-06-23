@@ -519,22 +519,28 @@
                         </div>
                         
                         <div class="vehicle-specs">
-                            <div class="spec-item">
-                                <i class="fas fa-tachometer-alt"></i>
-                                <span>{{ number_format($vehicle->mileage) }} km</span>
-                            </div>
-                            <div class="spec-item">
-                                <i class="fas fa-gas-pump"></i>
-                                <span>{{ $vehicle->fuel_type }}</span>
-                            </div>
-                            <div class="spec-item">
-                                <i class="fas fa-cogs"></i>
-                                <span>{{ $vehicle->transmission }}</span>
-                            </div>
-                            <div class="spec-item">
-                                <i class="fas fa-car"></i>
-                                <span>{{ $vehicle->body_type }}</span>
-                            </div>
+                           c
+
+                            @if(!empty($vehicle->fuel_type))
+                                <div class="spec-item">
+                                    <i class="fas fa-gas-pump"></i>
+                                    <span>{{ $vehicle->fuel_type }}</span>
+                                </div>
+                            @endif
+
+                            @if(!empty($vehicle->transmission))
+                                <div class="spec-item">
+                                    <i class="fas fa-cogs"></i>
+                                    <span>{{ $vehicle->transmission }}</span>
+                                </div>
+                            @endif
+
+                            @if(!empty($vehicle->body_type))
+                                <div class="spec-item">
+                                    <i class="fas fa-car"></i>
+                                    <span>{{ $vehicle->body_type }}</span>
+                                </div>
+                            @endif
                         </div>
                         
                         <div class="vehicle-location">
