@@ -18,12 +18,19 @@ class Product extends Model
         'small_description',
         'status',
         'vehicle_type_ids',
-        'condition'
+        'condition',
+        'vendor_id'
     ];
 
     protected $casts = [
         'vehicle_type_ids' => 'array',
     ];
+
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
+    }
 
     // Category relationship
     public function category()

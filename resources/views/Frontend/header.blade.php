@@ -343,6 +343,10 @@
                                         </li>
 
                                         <li class="">
+                                            <a href="{{ route('Frontend.vehicles') }}">Vendors</a>
+                                        </li> 
+
+                                        <li class="">
                                             <a href="{{ route('Frontend.vehicles') }}">Vehicles</a>
                                         </li> 
 

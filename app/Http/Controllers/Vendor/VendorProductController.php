@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
@@ -13,18 +13,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 
-
-class ProductController extends Controller
+class VendorProductController extends Controller
 {
     // ================= INDEX =================
     public function index()
     {
-        $products = Product::with(['category', 'images'])
-            ->where('vendor_id', 1)
+        $vendorId = session('vendor_id');
+        $products = Product::with(['category', 'images']) 
+            ->where('vendor_id', $vendorId)
             ->get();
-
-        return view('AdminDashboard.Products.index', compact('products'));
+        return view('VendorDashboard.Products.index', compact('products'));
     }
+
 
     // ================= CREATE =================
     public function create()
@@ -32,7 +32,7 @@ class ProductController extends Controller
         $categories = Category::with('children.children')->whereNull('parent_id')->get();
         $brands = Brand::where('status', 1)->get();
         $vehicleTypes = VehicleType::where('status', 1)->get();
-        return view('AdminDashboard.Products.create', compact('categories', 'brands', 'vehicleTypes'));
+        return view('VendorDashboard.Products.create', compact('categories', 'brands', 'vehicleTypes'));
     }
 
     // ================= EDIT =================
@@ -42,7 +42,7 @@ class ProductController extends Controller
         $categories = Category::with('children.children')->whereNull('parent_id')->get();
         $brands = Brand::where('status', 1)->get();
         $vehicleTypes = VehicleType::where('status', 1)->get();
-        return view('AdminDashboard.Products.create', compact('product', 'categories', 'brands', 'vehicleTypes'));
+        return view('VendorDashboard.Products.create', compact('product', 'categories', 'brands', 'vehicleTypes'));
     }
 
 
@@ -50,6 +50,9 @@ class ProductController extends Controller
      // ================= store =================
     public function store(Request $request)
     {
+
+      $vendorId = session('vendor_id');
+
       $data = $request->validate([
         'name' => 'required|string|max:255',
         'category_id' => 'required|exists:categories,id',
@@ -104,7 +107,7 @@ class ProductController extends Controller
     $sku = $prefix . '-' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
 
     $data['sku'] = $sku;
-    $data['vendor_id'] = 1;
+    $data['vendor_id'] = $vendorId;
 
         $product = Product::create($data);
 
@@ -125,7 +128,7 @@ class ProductController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.products.edit', $product->id)
+        return redirect()->route('vendor.products.edit', $product->id)
     ->with('success', 'Product created successfully!');
     }
 
@@ -205,7 +208,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return redirect()->route('admin.products.index')->with('success', 'Product deleted.');
+        return redirect()->route('vendor.products.index')->with('success', 'Product deleted.');
     }
 
     // ================= UPLOAD IMAGES =================

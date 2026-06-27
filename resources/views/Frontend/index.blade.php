@@ -511,7 +511,6 @@
                     <div class="vehicle-details">
                         <h3 class="vehicle-title">
                             {{ $vehicle->brand->name }} {{ $vehicle->model }}
-                            <span class="vehicle-year">({{ $vehicle->year }})</span>
                         </h3>
                         
                         <div class="vehicle-price">
@@ -519,7 +518,12 @@
                         </div>
                         
                         <div class="vehicle-specs">
-                           c
+                            @if(!empty($vehicle->year))
+                                <div class="vehicle-detail-item">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Year: {{ $vehicle->year }}</span>
+                                </div>
+                            @endif
 
                             @if(!empty($vehicle->fuel_type))
                                 <div class="spec-item">

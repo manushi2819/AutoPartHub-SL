@@ -60,6 +60,7 @@ Route::get('/auctions/{id}', [FrontendAuctionController::class, 'detail'])->name
 Route::post('/auction/bid', [FrontendAuctionController::class, 'placeBid'])->name('auction.bid');
 Route::get('/auction/{id}/bid-count', [FrontendAuctionController::class, 'bidCount'])->name('auction.bidCount');
 
+
 //customer routes
 Route::get('/login', [LoginController::class, 'login'])->name('Frontend.login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('Frontend.login.authenticate');
@@ -80,6 +81,38 @@ Route::post('/verify-otp', [ForgotPasswordController::class, 'verifyOtp'])->name
 
 Route::get('/reset-password', [ForgotPasswordController::class, 'showResetForm'])->name('reset.password');
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('reset.password.post');
+
+
+
+//vendors
+use App\Http\Controllers\Frontend\FrontendVendorController;
+Route::get('/become-a-vendor', [FrontendVendorController::class, 'index'])->name('frontend.vendor');
+Route::get('/vendor/register', [FrontendVendorController::class, 'showRegister'])->name('vendor.register');
+Route::post('/vendor/register', [FrontendVendorController::class, 'register'])->name('vendor.register.store');
+Route::get('/vendor/login', [FrontendVendorController::class, 'showLogin'])->name('vendor.login');
+Route::post('/vendor/login', [FrontendVendorController::class, 'login'])->name('vendor.login.store');
+Route::post('vendor/logout', [FrontendVendorController::class, 'logout'])->name('vendor.logout');
+
+//vendor dashboard
+use App\Http\Controllers\Vendor\VendorProfileController;
+use App\Http\Controllers\Vendor\VendorDashboardController;
+use App\Http\Controllers\Vendor\VendorProductController;
+use App\Http\Middleware\VendorAuth;
+
+Route::prefix('vendor')->name('vendor.')->middleware([VendorAuth::class])->group(function () {
+
+    Route::get('/', [VendorDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [VendorProfileController::class, 'profile'])->name('profile');
+    Route::post('/profile/update', [VendorProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/password', [VendorProfileController::class, 'updatePassword'])->name('profile.password');
+
+    // Product 
+    Route::resource('products', VendorProductController::class);
+    Route::post('products/{product}/images', [VendorProductController::class, 'uploadImages'])->name('products.images.upload');
+    Route::delete('products/images/{image}', [VendorProductController::class, 'deleteImage'])->name('products.images.delete');
+
+
+}); 
 
 
 
@@ -128,6 +161,7 @@ use App\Http\Controllers\Admin\VehicleTypeController;
 use App\Http\Controllers\Admin\AuctionBidController;
 use App\Http\Controllers\Admin\AuctionWinnerController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminVendorController;
 
 use App\Http\Middleware\AdminAuth;
 
@@ -205,9 +239,14 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
     Route::delete('/vehicle-types/{id}', [VehicleTypeController::class, 'destroy'])->name('vehicle-types.destroy');
 
     // admin users
-    Route::get('/admin/users', [AdminUserController::class, 'index'])->name('users.index');
-    Route::post('/admin/users', [AdminUserController::class, 'store'])->name('users.store');
-    Route::put('/admin/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
-    Route::delete('/admin/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+    Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::post('/users', [AdminUserController::class, 'store'])->name('users.store');
+    Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+
+    // vendors
+    Route::get('/vendors', [AdminVendorController::class, 'index'])->name('vendors.index');
+    Route::post('/vendors/status/{vendor}', [AdminVendorController::class, 'updateStatus'])->name('vendors.status');
+
 
 });

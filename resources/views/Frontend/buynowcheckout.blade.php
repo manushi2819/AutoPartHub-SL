@@ -173,12 +173,12 @@
                                         <label for="cod">Cash on Delivery</label>
                                     </div>
                                 </li>
-                                <!--<li>
+                                <li>
                                     <div class="check-box mb_12">
                                         <input class="check" type="radio" id="card" name="payment_method" value="card">
                                         <label for="card">Credit/Debit Cards</label>
                                     </div>
-                                </li>-->
+                                </li>
                             </ul>
                         </div>
 

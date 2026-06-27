@@ -58,6 +58,7 @@
                                 </div>
                               <div class="widget-content">
                                     <ul class="links-list clearfix">
+                                         <li><a href="{{ route('frontend.vendor') }}">Become a Vendor</a></li>
 
                                         @auth('customer')
                                             <li><a href="{{ route('customer.orders') }}">Your Orders</a></li>

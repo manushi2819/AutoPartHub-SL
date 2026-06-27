@@ -64,6 +64,13 @@
                 </a>
             </li>
 
+            <li>
+                <a href="{{ route('admin.vendors.index') }}">
+                <iconify-icon icon="mdi:store" class="menu-icon"></iconify-icon>
+                    <span>Vendors</span>
+                </a>
+            </li>
+
 
             <li>
                 <a href="{{ route('admin.orders.index') }}">
