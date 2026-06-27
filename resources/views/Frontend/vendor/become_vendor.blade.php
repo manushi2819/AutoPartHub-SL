@@ -5,19 +5,21 @@
 @section('content')
 
 <style>
-    :root {
-        --primary-red: #c20d0d;
-        --primary-red-dark: #8b0b0b;
-        --primary-black: #111111;
-        --primary-gray: #6b7280;
-        --light-gray: #f5f7fb;
-        --surface: #ffffff;
-        --card-radius: 28px;
-        --shadow-soft: 0 25px 50px -12px rgba(0, 0, 0, 0.12);
-        --shadow-sm: 0 8px 22px rgba(0, 0, 0, 0.04);
-        --transition: all 0.25s ease;
-    }
 
+    
+:root {
+    --primary-red: #c20d0d;
+    --primary-red-dark: #8b0b0b;
+    --primary-black: #111111;
+    --primary-gray: #6b7280;
+    --light-gray: #f5f7fb;
+    --surface: #ffffff;
+    --card-radius: 28px;
+    --shadow-soft: 0 25px 50px -12px rgba(0, 0, 0, 0.12);
+    --shadow-sm: 0 8px 22px rgba(0, 0, 0, 0.04);
+    --transition: all 0.25s ease;
+}
+  
     body {
         background: #f7fafc;
     }
@@ -468,7 +470,7 @@
     }
 </style>
 
-<div class="become-vendor-page container">
+<div class="become-vendor-page auto-container">
 
     {{-- HERO PANEL --}}
     <div class="hero-panel">
@@ -489,7 +491,7 @@
                 <h3><i class="fas fa-bolt"></i> Fast onboarding</h3>
                 <p>Submit your details, upload your business information, and get approval from our team in just a few days.</p>
                 <div class="badge-group">
-                    <span><i class="fas fa-check-circle"></i> no setup fees</span>
+                    <span><i class="fas fa-check-circle"></i> No Setup Fees</span>
                     <span><i class="fas fa-check-circle"></i> 24/7 support</span>
                 </div>
             </div>

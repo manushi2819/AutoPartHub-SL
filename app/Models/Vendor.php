@@ -30,11 +30,19 @@ class Vendor extends Authenticatable
         'business_registration',
         'approved_at',
         'password',
-        'status'
+        'status',
+        'description',
+        'found_year'
     ];
 
     protected $hidden = [
         'password',
         'remember_token'
     ];
+
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'vendor_id');
+    }
 }

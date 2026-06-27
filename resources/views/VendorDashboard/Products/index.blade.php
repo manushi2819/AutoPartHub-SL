@@ -23,6 +23,7 @@
                     <th>SKU</th>
                     <th>Category</th>
                     <th>Price</th>
+                    <th>Admin Commission</th>
                     <th>Stock</th>
                     <th>Status</th>
                     <th>Main Image</th>
@@ -36,8 +37,9 @@
                         <td>{{ $counter++ }}</td>
                         <td>{{ \Illuminate\Support\Str::limit($product->name, 30) }}</td>
                         <td>{{ $product->sku }}</td>
-                        <td>{{ $product->category->name ?? 'N/A' }}</td>
+                        <td>{{ $product->category->name ?? 'N/A' }} - {{ $product->vendor_percentage  ?? '' }} %</td>
                         <td>{{ number_format($product->price, 2) }}</td>
+                        <td>{{ number_format($product->vendor_commission_amount, 2) }}</td>
                         <td>{{ $product->stock_quantity }}</td>
                         <td>
                              <span class="px-24 py-4 rounded-pill fw-medium text-sm

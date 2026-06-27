@@ -21,7 +21,7 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('Frontend.conta
 
 Route::post('/contact-submit', [ContactController::class, 'store'])->name('contact.submit');
 
-Route::get('/parts-shop', [PartShopController::class, 'index'])->name('Frontend.shop');
+Route::get('/parts-shop/{vendor_slug?}', [PartShopController::class, 'index'])->name('Frontend.shop');
 Route::get('/search-suggestions', [PartShopController::class, 'searchSuggestions'])->name('search.suggestions');
 Route::get('/parts-details/{id}', [PartDetailsController::class, 'index'])->name('Frontend.parts-details');
 
@@ -86,6 +86,8 @@ Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'
 
 //vendors
 use App\Http\Controllers\Frontend\FrontendVendorController;
+
+Route::get('/shops', [FrontendVendorController::class, 'shops'])->name('Frontend.shops');
 Route::get('/become-a-vendor', [FrontendVendorController::class, 'index'])->name('frontend.vendor');
 Route::get('/vendor/register', [FrontendVendorController::class, 'showRegister'])->name('vendor.register');
 Route::post('/vendor/register', [FrontendVendorController::class, 'register'])->name('vendor.register.store');

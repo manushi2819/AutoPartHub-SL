@@ -108,6 +108,12 @@ class VendorProductController extends Controller
 
     $data['sku'] = $sku;
     $data['vendor_id'] = $vendorId;
+    // store vendor percentage from category (server-side authoritative)
+    $data['vendor_percentage'] = $category->vendor_commission_percentage ?? 0;
+    // calculate commission amount in LKR and store
+    $price = isset($data['price']) ? (float) $data['price'] : 0;
+    $pct = (float) ($data['vendor_percentage'] ?? 0);
+    $data['vendor_commission_amount'] = $price > 0 && $pct > 0 ? round(($price * $pct) / 100, 2) : 0.00;
 
         $product = Product::create($data);
 
@@ -163,6 +169,14 @@ class VendorProductController extends Controller
 
         \Log::info('VALIDATED DATA:', $data);
         \Log::info('BEFORE UPDATE PRODUCT:', $product->toArray());
+
+        // ensure vendor_percentage reflects the selected category
+        $category = Category::find($request->category_id);
+        $data['vendor_percentage'] = $category->vendor_commission_percentage ?? 0;
+        // calculate commission amount in LKR and store
+        $price = isset($data['price']) ? (float) $data['price'] : 0;
+        $pct = (float) ($data['vendor_percentage'] ?? 0);
+        $data['vendor_commission_amount'] = $price > 0 && $pct > 0 ? round(($price * $pct) / 100, 2) : 0.00;
 
         $product->update($data);
 

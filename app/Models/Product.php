@@ -19,7 +19,9 @@ class Product extends Model
         'status',
         'vehicle_type_ids',
         'condition',
-        'vendor_id'
+        'vendor_id',
+        'vendor_percentage',
+        'vendor_commission_amount'
     ];
 
     protected $casts = [
@@ -31,7 +33,7 @@ class Product extends Model
     {
         return $this->belongsTo(Vendor::class);
     }
-
+    
     // Category relationship
     public function category()
     {

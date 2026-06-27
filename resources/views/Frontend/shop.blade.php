@@ -293,6 +293,156 @@
     max-height: 300px !important;
     overflow-y: auto !important;
 }
+
+
+.vendor-shop-header{
+    padding: 30px 0;
+}
+
+.vendor-shop-card{
+    background: linear-gradient(135deg, #ffffff 0%, #f5dbdb 100%);
+    border: 1px solid rgba(194, 13, 13, 0.14);
+    border-radius: 24px;
+    box-shadow: 0 14px 34px rgba(17, 17, 17, 0.08);
+    padding: 26px 32px;
+}
+
+.vendor-shop-row{
+    display:flex;
+    align-items:center;
+    gap:0;
+    flex-wrap:wrap;
+}
+
+.vendor-shop-logo{
+    width:72px;
+    height:72px;
+    border-radius:16px;
+    overflow:hidden;
+    flex-shrink:0;
+    background: linear-gradient(135deg, #111111 0%, #2b2b2b 100%);
+    margin-right:20px;
+    border: 2px solid rgba(194, 13, 13, 0.12);
+    box-shadow: 0 8px 18px rgba(17, 17, 17, 0.12);
+}
+
+.vendor-shop-logo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.vendor-shop-name-block{
+    padding-right:24px;
+    border-right:1px solid rgba(194, 13, 13, 0.14);
+    margin-right:24px;
+}
+
+.vendor-since{
+    display:block;
+    font-size:.76rem;
+    color:#6b7280;
+    margin-bottom:2px;
+}
+
+.vendor-shop-name-block h3{
+    margin:0;
+    font-weight:700;
+    color:#111111;
+    white-space:nowrap;
+}
+
+.vendor-shop-desc-block{
+    flex:1;
+    min-width:180px;
+    padding-right:24px;
+    border-right:1px solid rgba(194, 13, 13, 0.14);
+    margin-right:24px;
+}
+
+.vendor-shop-desc-block p{
+    margin:0;
+    color:#666;
+    font-size:.9rem;
+    line-height:1.5;
+}
+
+.vendor-shop-stat-block{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    flex-shrink:0;
+}
+
+.stat-number{
+    font-size:1.4rem;
+    font-weight:700;
+    color:#c20d0d;
+    line-height:1.1;
+}
+
+.stat-label{
+    font-size:.72rem;
+    color:#6b7280;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
+
+.vendor-shop-divider{
+    border-top:1px solid rgba(194, 13, 13, 0.12);
+    margin:20px 0 18px;
+}
+
+.vendor-info-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:28px;
+}
+
+.vendor-info-item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+}
+
+.vendor-info-item i{
+    width:18px;
+    margin-top:3px;
+    color:#c20d0d;
+    font-size:.95rem;
+}
+
+.info-label{
+    display:block;
+    font-size:.78rem;
+    color:#6b7280;
+    margin-bottom:2px;
+}
+
+.info-value{
+    display:block;
+    font-size:.92rem;
+    color:#111111;
+}
+
+@media (max-width: 768px) {
+    .vendor-shop-name-block,
+    .vendor-shop-desc-block{
+        border-right:none;
+        padding-right:0;
+        margin-right:0;
+        margin-bottom:14px;
+        width:100%;
+    }
+    .vendor-shop-stat-block{
+        flex-direction:row;
+        gap:6px;
+        align-items:baseline;
+    }
+    .vendor-shop-card{
+        padding:20px;
+    }
+}
 </style>
 
 
@@ -310,16 +460,95 @@
         <!-- page-title end -->
 
 
-    <!-- cta-style-two -->
-    <section class="cta-style-two pb_0">
-        <div class="auto-container">
-            <div class="inner-container" style="width: 100%; height: 310px; overflow: hidden; position: relative;">
-                <img src="frontend/assets/images/banner1.png" alt="Banner Image" 
-                    style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top: 0; left: 0;">
-            </div>
-        </div>
-    </section>
-    <!-- cta-style-two end -->
+
+       <!-- cta-style-two -->
+        @if($selectedVendor)
+            <section class="vendor-shop-header pb_0">
+                <div class="auto-container">
+                    <div class="vendor-shop-card">
+
+                        <div class="vendor-shop-row">
+
+                            <div class="vendor-shop-logo">
+                                @if($selectedVendor->logo)
+                                    <img src="{{ asset($selectedVendor->logo) }}" alt="{{ $selectedVendor->shop_name }}">
+                                @else
+                                    <img src="{{ asset('images/default-shop.png') }}" alt="{{ $selectedVendor->shop_name }}">
+                                @endif
+                            </div>
+
+                            <div class="vendor-shop-name-block">
+                                @if($selectedVendor->found_year)
+                                    <span class="vendor-since">Since {{ $selectedVendor->found_year }}</span>
+                                @endif
+                                <h3>{{ $selectedVendor->shop_name }}</h3>
+                            </div>
+
+                            @if($selectedVendor->description)
+                                <div class="vendor-shop-desc-block">
+                                    <p>{{ Str::limit($selectedVendor->description, 230) }}</p>
+                                </div>
+                            @endif
+
+                            <div class="vendor-shop-stat-block">
+                                <span class="stat-number">
+                                    {{ $selectedVendor->products()->where('status', 1)->count() }}
+                                </span>
+                                <span class="stat-label">Products</span>
+                            </div>
+
+                        </div>
+
+                        <div class="vendor-shop-divider"></div>
+
+                        <div class="vendor-info-row">
+
+                            @if($selectedVendor->address)
+                                <div class="vendor-info-item">
+                                    <i class="fa fa-map-marker-alt"></i>
+                                    <div>
+                                        <span class="info-value">Address : 
+                                            {{ $selectedVendor->address }}, {{ $selectedVendor->district }}</span>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if($selectedVendor->phone)
+                                <div class="vendor-info-item">
+                                    <i class="fa fa-phone"></i>
+                                    <div>
+                                        <span class="info-value">Contact : {{ $selectedVendor->phone }}</span>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if($selectedVendor->email)
+                                <div class="vendor-info-item">
+                                    <i class="fa fa-envelope"></i>
+                                    <div>
+                                        <span class="info-value">Email : {{ $selectedVendor->email }}</span>
+                                    </div>
+                                </div>
+                            @endif
+
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        @else
+            <section class="cta-style-two pb_0">
+                <div class="auto-container">
+                    <div class="inner-container" style="width: 100%; height: 310px; overflow: hidden; position: relative;">
+                        <img src="{{ asset('frontend/assets/images/banner1.png') }}" alt="Banner Image"
+                            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top: 0; left: 0;">
+                    </div>
+                </div>
+            </section>
+        @endif
+        <!-- cta-style-two end -->
+
+         
 
         <!-- shop-page-section -->
         <section class="shop-page-section shop-style-two pt_60 pb_80">
@@ -336,8 +565,8 @@
                                     <h5>Vehicle Compatibility</h5>
                                 </div>
                                 <div class="search-inner">
-                                    <form method="GET" action="{{ route('Frontend.shop') }}">
-                                       
+                                    <form method="GET" action="{{ route('Frontend.shop', ['vendor_slug' => $vendorSlug]) }}">
+                                        <input type="hidden" name="vendor_slug" value="{{ $vendorSlug ?? '' }}">
 
                                         {{-- YEAR --}}
                                         <div class="form-group">
@@ -536,7 +765,7 @@
                                 Apply Filters
                             </button>
 
-                            <a href="{{ route('Frontend.shop') }}" 
+                            <a href="{{ route('Frontend.shop', ['vendor_slug' => $vendorSlug]) }}" 
                                 style="
                                     flex:1;
                                     text-align:center;

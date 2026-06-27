@@ -129,4 +129,17 @@ class FrontendVendorController extends Controller
         return redirect()->route('vendor.login');
     }
 
+
+  
+    public function shops()
+    {
+        $vendors = Vendor::withCount('products')
+            ->where('status', 'Approved')
+            ->orderBy('shop_name')
+            ->get();
+
+        return view('Frontend.vendor.shops', compact('vendors'));
+    }
+
+
 }

@@ -24,29 +24,31 @@
                     <label class="form-label">Part Name <i class="text-danger">*</i></label>
                     <input type="text" name="name" class="form-control" value="{{ $product->name ?? old('name') }}" required>
                 </div>
-
-              <div class="col-md-6">
+                
+                <div class="col-md-6">
                     <label class="form-label">Category <i class="text-danger">*</i></label>
-                    <select name="category_id" class="form-control select2" required>
+                    <select name="category_id" class="form-control" required>
                         <option value="">Select Category</option>
                         @foreach($categories as $main)
-                            <option value="{{ $main->id }}" {{ isset($product) && $product->category_id == $main->id ? 'selected' : '' }}>
+                            <option value="{{ $main->id }}" data-commission="{{ $main->vendor_commission_percentage ?? 0 }}" {{ isset($product) && $product->category_id == $main->id ? 'selected' : '' }}>
                                 {{ $main->name }}
                             </option>
 
                             @foreach($main->children as $sub)
-                                <option value="{{ $sub->id }}" {{ isset($product) && $product->category_id == $sub->id ? 'selected' : '' }}>
+                                <option value="{{ $sub->id }}" data-commission="{{ $sub->vendor_commission_percentage ?? 0 }}" {{ isset($product) && $product->category_id == $sub->id ? 'selected' : '' }}>
                                     — {{ $sub->name }}
                                 </option>
 
                                 @foreach($sub->children as $subsub)
-                                    <option value="{{ $subsub->id }}" {{ isset($product) && $product->category_id == $subsub->id ? 'selected' : '' }}>
+                                    <option value="{{ $subsub->id }}" data-commission="{{ $subsub->vendor_commission_percentage ?? 0 }}" {{ isset($product) && $product->category_id == $subsub->id ? 'selected' : '' }}>
                                         —— {{ $subsub->name }}
                                     </option>
                                 @endforeach
                             @endforeach
                         @endforeach
                     </select>
+
+                    <small id="categoryCommission" class="text-danger" style="display:none; margin-top:6px;">Admin commission: 0%</small>
                 </div>
 
                <div class="col-md-6">
@@ -89,7 +91,8 @@
             
                 <div class="col-md-6">
                     <label class="form-label">Price <i class="text-danger">*</i></label>
-                    <input type="number" name="price" class="form-control" step="0.01" value="{{ $product->price ?? old('price') }}" required>
+                    <input type="number" id="productPrice" name="price" class="form-control" step="0.01" value="{{ $product->price ?? old('price') }}" required>
+                    <small id="commissionAmount" class="text-muted" style="display:none; margin-top:6px;">Commission (0%): LKR 0.00</small>
                 </div>
 
                 <div class="col-md-6">
@@ -284,17 +287,45 @@ function deleteImage(url) {
 </script>
 @endif
 
-
-{{-- Include jQuery and Select2 --}}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
 <script>
-$(document).ready(function() {
-    $('.select2').select2({
-        placeholder: "Select Category",
-        allowClear: true
-    });
+document.addEventListener('DOMContentLoaded', function() {
+
+    function getSelectedCommission() {
+        const opt = document.querySelector("select[name='category_id'] option:checked");
+        if (!opt) return 0;
+        return parseFloat(opt.dataset.commission || 0);
+    }
+
+    const categorySelect = document.querySelector("select[name='category_id']");
+    const commissionLabel = document.getElementById('categoryCommission');
+    const priceInput = document.getElementById('productPrice');
+    const commissionAmount = document.getElementById('commissionAmount');
+
+    function updateCommissionDisplay() {
+        const pct = getSelectedCommission();
+
+        if (pct && pct > 0) {
+            commissionLabel.style.display = 'block';
+            commissionLabel.textContent = `Admin commission: ${pct.toFixed(2)}%`;
+        } else {
+            commissionLabel.style.display = 'none';
+        }
+
+        const price = parseFloat(priceInput.value) || 0;
+        const amount = (price * pct) / 100;
+        if (price > 0 && pct > 0) {
+            commissionAmount.style.display = 'block';
+            commissionAmount.textContent = `Commission (${pct.toFixed(2)}%): LKR ${amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+        } else {
+            commissionAmount.style.display = 'none';
+        }
+    }
+
+    updateCommissionDisplay();
+
+    categorySelect.addEventListener('change', updateCommissionDisplay);
+    priceInput && priceInput.addEventListener('input', updateCommissionDisplay);
+
 });
 </script>
 

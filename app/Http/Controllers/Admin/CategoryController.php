@@ -32,6 +32,7 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'vendor_commission_percentage' => 'nullable|numeric|min:0|max:100',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10248'
         ]);
 
@@ -39,6 +40,7 @@ class CategoryController extends Controller
             'name' => $request->name,
             'parent_id' => $request->parent_id,
             'status' => $request->status ?? true,
+            'vendor_commission_percentage' => $request->input('vendor_commission_percentage', 0),
         ];
 
         // Only allow image for parent category
@@ -75,6 +77,7 @@ class CategoryController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
+            'vendor_commission_percentage' => 'nullable|numeric|min:0|max:100',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10248',
         ]);
 
@@ -82,6 +85,7 @@ class CategoryController extends Controller
             'name' => $request->name,
             'parent_id' => $request->parent_id,
             'status' => $request->status ?? true,
+            'vendor_commission_percentage' => $request->input('vendor_commission_percentage', 0),
         ];
         // Only allow image for parent category
         if(!$request->parent_id){

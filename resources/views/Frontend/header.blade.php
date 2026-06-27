@@ -343,7 +343,7 @@
                                         </li>
 
                                         <li class="">
-                                            <a href="{{ route('Frontend.vehicles') }}">Vendors</a>
+                                            <a href="{{ route('Frontend.shops') }}">Vendors</a>
                                         </li> 
 
                                         <li class="">

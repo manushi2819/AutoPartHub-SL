@@ -11,6 +11,7 @@ class Category extends Model
         'parent_id',
         'status',
         'image',
+        'vendor_commission_percentage'
     ];
 
     // Parent category

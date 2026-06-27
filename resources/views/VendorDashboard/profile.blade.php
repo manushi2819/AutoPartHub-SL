@@ -32,8 +32,9 @@
                     <li class="mb-12"><strong>NIC:</strong> {{ $vendor->nic }}</li>
                     <li class="mb-12"><strong>Address:</strong> {{ $vendor->address }}</li>
                     <li class="mb-12"><strong>District:</strong> {{ $vendor->district }}</li>
-                    <li class="mb-12"><strong>Province:</strong> {{ $vendor->province }}</li>
-                    <li class="mb-12"><strong>Status:</strong> {{ $vendor->status }}</li>
+                    <li class="mb-12"><strong>Province:</strong> {{ $vendor->province }}</li>                    <li class="mb-12"><strong>Business Registration:</strong> {{ $vendor->business_registration }}</li>
+                    <li class="mb-12"><strong>Founded Year:</strong> {{ $vendor->found_year }}</li>
+                    <li class="mb-12"><strong>Description:</strong> {{ $vendor->description }}</li>                    <li class="mb-12"><strong>Status:</strong> {{ $vendor->status }}</li>
                 </ul>
             </div>
         </div>
@@ -42,12 +43,23 @@
     <div class="col-lg-8">
         <div class="card">
             <div class="card-body">
-                <ul class="nav nav-pills mb-20">
+
+
+                <ul class="nav border-gradient-tab nav-pills mb-20">
                     <li class="nav-item">
-                        <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#editProfile">Edit Profile</button>
+                        <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#editProfile">
+                            Profile
+                        </button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#changePassword">Change Password</button>
+                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#bankDetails">
+                            Bank Details
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#changePassword">
+                            Change Password
+                        </button>
                     </li>
                 </ul>
 
@@ -55,6 +67,7 @@
                     <div class="tab-pane fade show active" id="editProfile">
                         <form method="POST" action="{{ route('vendor.profile.update') }}" enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" name="section" value="profile">
 
                             <div class="row">
                                 <div class="col-md-6 mb-20">
@@ -97,6 +110,42 @@
                                     <input type="text" name="province" value="{{ old('province', $vendor->province) }}" class="form-control">
                                 </div>
 
+                                <div class="col-6 mb-20">
+                                    <label class="form-label fw-semibold">Business Registration</label>
+                                    <input type="text" name="business_registration" value="{{ old('business_registration', $vendor->business_registration) }}" class="form-control">
+                                </div>
+
+                                <div class="col-md-6 mb-20">
+                                    <label class="form-label fw-semibold">Founded Year</label>
+                                    <input type="number" name="found_year" value="{{ old('found_year', $vendor->found_year) }}" class="form-control" min="1900" max="2100">
+                                </div>
+
+                                <div class="col-md-12 mb-20">
+                                    <label class="form-label fw-semibold">Description</label>
+                                    <textarea name="description" class="form-control" rows="4">{{ old('description', $vendor->description) }}</textarea>
+                                </div>
+
+                                <div class="col-md-6 mb-20">
+                                    <label class="form-label fw-semibold">Logo</label>
+                                    <input type="file" name="logo" class="form-control">
+                                </div>
+
+                                <div class="col-md-6 mb-20">
+                                    <label class="form-label fw-semibold">Banner</label>
+                                    <input type="file" name="banner" class="form-control">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-success btn-sm">Save Changes</button>
+                        </form>
+                    </div>
+
+                    <div class="tab-pane fade" id="bankDetails">
+                        <form method="POST" action="{{ route('vendor.profile.update') }}">
+                            @csrf
+                            <input type="hidden" name="section" value="bank">
+
+                            <div class="row">
                                 <div class="col-md-6 mb-20">
                                     <label class="form-label fw-semibold">Bank Name</label>
                                     <input type="text" name="bank_name" value="{{ old('bank_name', $vendor->bank_name) }}" class="form-control">
@@ -116,19 +165,9 @@
                                     <label class="form-label fw-semibold">Account Number</label>
                                     <input type="text" name="account_number" value="{{ old('account_number', $vendor->account_number) }}" class="form-control">
                                 </div>
-
-                                <div class="col-md-6 mb-20">
-                                    <label class="form-label fw-semibold">Logo</label>
-                                    <input type="file" name="logo" class="form-control">
-                                </div>
-
-                                <div class="col-md-6 mb-20">
-                                    <label class="form-label fw-semibold">Banner</label>
-                                    <input type="file" name="banner" class="form-control">
-                                </div>
                             </div>
 
-                            <button type="submit" class="btn btn-success btn-sm">Save Changes</button>
+                            <button type="submit" class="btn btn-success btn-sm">Save Bank Details</button>
                         </form>
                     </div>
 

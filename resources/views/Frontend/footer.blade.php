@@ -22,8 +22,8 @@
                                         <li><a href="{{ route('Frontend.index') }}">Home</a></li>
                                         <li><a href="{{ route('Frontend.about') }}">About Us</a></li>
                                         <li><a href="{{ route('Frontend.shop') }}">Spare Parts</a></li>
-                                        <li><a href="">Vehicles</a></li>
-                                        <li><a href="">Auction</a></li>
+                                        <li><a href="{{ route('Frontend.vehicles') }}">Vehicles</a></li>
+                                        <li><a href="{{ route('frontend.vendor') }}">Become a Vendor</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -58,8 +58,7 @@
                                 </div>
                               <div class="widget-content">
                                     <ul class="links-list clearfix">
-                                         <li><a href="{{ route('frontend.vendor') }}">Become a Vendor</a></li>
-
+                                        
                                         @auth('customer')
                                             <li><a href="{{ route('customer.orders') }}">Your Orders</a></li>
                                             <li><a href="{{ route('customer.profile') }}">Your Account</a></li>

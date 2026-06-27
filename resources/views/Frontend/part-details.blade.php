@@ -366,6 +366,8 @@ h3:hover {
                                             Out of Stock
                                         @endif
                                     </li>
+                                    <li><strong>Vendor :</strong> {{ $product->vendor->shop_name ?? '-' }} -
+                                    {{ $product->vendor->address ?? '-' }}, {{ $product->vendor->district ?? '-' }}</li>
                                 </ul>
 
 

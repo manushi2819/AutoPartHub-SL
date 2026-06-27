@@ -79,6 +79,11 @@
         @endif
     </div>
 
+    <div class="mb-3 col-6">
+        <label class="form-label">Vendor Commission (%)</label>
+        <input type="number" name="vendor_commission_percentage" class="form-control" step="0.01" min="0" max="100" value="{{ old('vendor_commission_percentage', $category->vendor_commission_percentage ?? 0) }}">
+    </div>
+
    <div class="mb-3 col-6">
         <label class="form-label">Status</label>
         <select name="status" class="form-control">

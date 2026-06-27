@@ -22,6 +22,7 @@
                     <th>Name</th>
                     <th>Image</th>
                     <th>Level</th>
+                    <th>Commission</th>
                     <th>Status</th>
                     <th width="150">Action</th>
                 </tr>
@@ -42,6 +43,7 @@
                 @endif
             </td>
             <td>Main</td>
+            <td>{{ number_format($main->vendor_commission_percentage ?? 0, 2) }}%</td>
             <td>
                   <span class="px-24 py-4 rounded-pill fw-medium text-sm
                         {{ $main->status
@@ -78,6 +80,7 @@
             <td>— {{ $sub->name }}</td>
             <td>—</td>
             <td>Sub</td>
+            <td>{{ number_format($sub->vendor_commission_percentage ?? 0, 2) }}%</td>
             <td>
                 <span class="px-24 py-4 rounded-pill fw-medium text-sm
                         {{ $sub->status
@@ -114,6 +117,7 @@
             <td>—— {{ $subsub->name }}</td>
             <td>—</td>
             <td>Sub-Sub</td>
+            <td>{{ number_format($subsub->vendor_commission_percentage ?? 0, 2) }}%</td>
             <td>
                     <span class="px-24 py-4 rounded-pill fw-medium text-sm
                         {{ $subsub->status
