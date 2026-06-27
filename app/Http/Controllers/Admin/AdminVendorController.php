@@ -79,4 +79,18 @@ class AdminVendorController extends Controller
 
         return back()->with('success', 'Vendor status updated successfully.');
     }
+
+
+
+    public function show($id)
+    {
+        $vendor = Vendor::with(['products.images', 'products.category'])->findOrFail($id);
+        $ordersCount = \App\Models\OrderItem::where('vendor_id', $vendor->id)
+            ->distinct('order_id')
+            ->count('order_id');
+        $productsCount = $vendor->products->count();
+        $totalStock = $vendor->products->sum('stock_quantity');
+        return view('AdminDashboard.Vendors.show', compact('vendor', 'ordersCount', 'productsCount', 'totalStock'));
+    }
+
 }

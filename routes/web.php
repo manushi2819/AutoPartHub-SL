@@ -249,6 +249,6 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
     // vendors
     Route::get('/vendors', [AdminVendorController::class, 'index'])->name('vendors.index');
     Route::post('/vendors/status/{vendor}', [AdminVendorController::class, 'updateStatus'])->name('vendors.status');
-
+    Route::get('/vendors/{vendor}', [AdminVendorController::class, 'show'])->name('vendors.show');
 
 });

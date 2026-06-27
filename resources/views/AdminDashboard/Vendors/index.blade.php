@@ -89,6 +89,12 @@
             Update Status
         </button>
 
+        <a href="{{ route('admin.vendors.show', $vendor->id) }}" 
+            class="w-32-px h-32-px bg-info-focus text-info-main rounded-circle d-inline-flex align-items-center justify-content-center" 
+            title="View vendor">
+            <iconify-icon icon="lucide:eye"></iconify-icon>
+        </a>
+
     </td>
 </tr>
 

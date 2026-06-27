@@ -15,6 +15,7 @@ class OrderItem extends Model
         'quantity',
         'price',
         'subtotal',
+        'vendor_id'
     ];
 
     // Relationship to order
