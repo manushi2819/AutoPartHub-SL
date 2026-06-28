@@ -58,12 +58,12 @@
         </div>
           <!-- Dropdown links -->
           <ul class="to-top-list">
-             <!-- <li>
+              <li>
                   <a class="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-primary d-flex align-items-center gap-3"
-                    href="">
-                      <iconify-icon icon="solar:user-linear" class="icon text-xl"></iconify-icon> My Profile
+                    href="{{ route('admin.profile') }}">
+                      <iconify-icon icon="solar:user-linear" class="icon text-xl"></iconify-icon> Profile
                   </a>
-              </li>-->
+              </li>
               <li>
                   <form action="{{ route('admin.logout') }}" method="POST" class="d-inline">
                       @csrf

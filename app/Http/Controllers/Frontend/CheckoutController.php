@@ -126,13 +126,15 @@ class CheckoutController extends Controller
 
         // Create Order Items & Reduce stock
         foreach($cartItems as $item){
-            OrderItem::create([
+            OrderItem::create(array_merge([
                 'order_id' => $order->id,
                 'product_id' => $item->product_id,
                 'quantity' => $item->quantity,
                 'price' => $item->price,
                 'subtotal' => $item->quantity * $item->price,
-            ]);
+                'status' => 'pending',
+                'payment_status' => 'pending',
+            ], $this->buildVendorItemData($item)));
 
             if ($item->product) {
                 $item->product->decrement('stock_quantity', $item->quantity);
@@ -159,6 +161,22 @@ class CheckoutController extends Controller
         }
     }
 
+
+    private function buildVendorItemData($item): array
+    {
+        $product = $item->product;
+        $percentage = (float) ($product->vendor_percentage ?? 0);
+        $subtotal = (float) ($item->quantity * $item->price);
+        $commission = $subtotal > 0 ? round(($subtotal * $percentage) / 100, 2) : 0.0;
+        $earning = round($subtotal - $commission, 2);
+
+        return [
+            'vendor_id' => $product->vendor_id ?? null,
+            'vendor_percentage' => $percentage,
+            'vendor_commission_amount' => $commission,
+            'vendor_earning_amount' => $earning,
+        ];
+    }
 
     private function redirectToCyberSource($order)
     {
@@ -224,6 +242,11 @@ class CheckoutController extends Controller
                 $order->status = 'confirmed';
                 $order->save();
 
+                $order->items()->update([
+                    'status' => 'confirmed',
+                    'payment_status' => 'paid',
+                ]);
+
                 // Send emails now that payment is successful
                 Mail::to($order->email)->send(new OrderPlaced($order));
                 Mail::to('kasthurid1234@gmail.com')->send(new OrderPlaced($order, true));
@@ -233,6 +256,11 @@ class CheckoutController extends Controller
                 $order->payment_status = 'failed';
                 $order->status = 'failed';
                 $order->save();
+
+                $order->items()->update([
+                    'status' => 'failed',
+                    'payment_status' => 'failed',
+                ]);
 
                 return view('Frontend.checkout_failed', compact('order', 'request'));
             }

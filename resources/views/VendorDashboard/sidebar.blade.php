@@ -65,7 +65,7 @@
 
 
             <li>
-                <a href="{{ route('admin.reviews.index') }}">
+                <a href="{{ route('vendor.reviews.index') }}">
                 <iconify-icon icon="mdi:star-outline" class="menu-icon"></iconify-icon>
                     <span>Reviews</span>
                 </a>

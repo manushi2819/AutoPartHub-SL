@@ -99,6 +99,8 @@ Route::post('vendor/logout', [FrontendVendorController::class, 'logout'])->name(
 use App\Http\Controllers\Vendor\VendorProfileController;
 use App\Http\Controllers\Vendor\VendorDashboardController;
 use App\Http\Controllers\Vendor\VendorProductController;
+use App\Http\Controllers\Vendor\VendorReviewController;
+use App\Http\Controllers\Vendor\VendorOrderController;
 use App\Http\Middleware\VendorAuth;
 
 Route::prefix('vendor')->name('vendor.')->middleware([VendorAuth::class])->group(function () {
@@ -112,6 +114,17 @@ Route::prefix('vendor')->name('vendor.')->middleware([VendorAuth::class])->group
     Route::resource('products', VendorProductController::class);
     Route::post('products/{product}/images', [VendorProductController::class, 'uploadImages'])->name('products.images.upload');
     Route::delete('products/images/{image}', [VendorProductController::class, 'deleteImage'])->name('products.images.delete');
+
+    // Reviews
+    Route::get('/reviews', [VendorReviewController::class, 'index'])->name('reviews.index');
+    Route::post('/reviews/{review}/approve', [VendorReviewController::class, 'approve'])->name('reviews.approve');
+    Route::post('/reviews/{review}/reject', [VendorReviewController::class, 'reject'])->name('reviews.reject');
+    Route::delete('/reviews/{review}', [VendorReviewController::class, 'destroy'])->name('reviews.destroy');
+
+    // Orders
+    Route::get('/orders', [VendorOrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [VendorOrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders/{order}/update-status', [VendorOrderController::class, 'updateStatus'])->name('orders.updateStatus');
 
 
 }); 
@@ -164,6 +177,8 @@ use App\Http\Controllers\Admin\AuctionBidController;
 use App\Http\Controllers\Admin\AuctionWinnerController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminVendorController;
+use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\AdminReviewController;
 
 use App\Http\Middleware\AdminAuth;
 
@@ -190,15 +205,18 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
     Route::delete('/contact-messages/{message}', [ContactController::class, 'destroy'])->name('contact.destroy');
 
     // Reviews
-    Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
-    Route::post('/reviews/{review}/approve', [ReviewController::class, 'approve'])->name('reviews.approve');
-    Route::post('/reviews/{review}/reject', [ReviewController::class, 'reject'])->name('reviews.reject');
-    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+    Route::get('/reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
+    Route::post('/reviews/{review}/approve', [AdminReviewController::class, 'approve'])->name('reviews.approve');
+    Route::post('/reviews/{review}/reject', [AdminReviewController::class, 'reject'])->name('reviews.reject');
+    Route::delete('/reviews/{review}', [AdminReviewController::class, 'destroy'])->name('reviews.destroy');
 
     // Orders
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+
+    Route::patch('/order-items/{item}/status', [OrderController::class, 'updateItemStatus'])->name('orderitems.updateStatus');
+    Route::patch('/orders/{order}/payment-status', [OrderController::class, 'updatePaymentStatus'])->name('orders.updatePaymentStatus');
 
     // Brands
     Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
@@ -250,5 +268,9 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
     Route::get('/vendors', [AdminVendorController::class, 'index'])->name('vendors.index');
     Route::post('/vendors/status/{vendor}', [AdminVendorController::class, 'updateStatus'])->name('vendors.status');
     Route::get('/vendors/{vendor}', [AdminVendorController::class, 'show'])->name('vendors.show');
+
+    Route::get('/profile', [AdminProfileController::class, 'profile'])->name('profile');
+    Route::post('/profile/update', [AdminProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/password', [AdminProfileController::class, 'updatePassword'])->name('profile.password');
 
 });

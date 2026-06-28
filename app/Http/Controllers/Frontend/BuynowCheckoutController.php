@@ -83,13 +83,15 @@ class BuynowCheckoutController extends Controller
         ]);
 
         // Create order item and reduce stock
-        OrderItem::create([
+        OrderItem::create(array_merge([
             'order_id' => $order->id,
             'product_id' => $product->id,
             'quantity' => $quantity,
             'price' => $product->price,
             'subtotal' => $subtotal,
-        ]);
+            'status' => 'pending',
+            'payment_status' => 'pending',
+        ], $this->buildVendorItemData($product, $quantity, $subtotal)));
         $product->decrement('stock_quantity', $quantity);
 
         // Send emails for COD only
@@ -108,6 +110,20 @@ class BuynowCheckoutController extends Controller
     }
 
 
+
+    private function buildVendorItemData(Product $product, int $quantity, float $subtotal): array
+    {
+        $percentage = (float) ($product->vendor_percentage ?? 0);
+        $commission = $subtotal > 0 ? round(($subtotal * $percentage) / 100, 2) : 0.0;
+        $earning = round($subtotal - $commission, 2);
+
+        return [
+            'vendor_id' => $product->vendor_id ?? null,
+            'vendor_percentage' => $percentage,
+            'vendor_commission_amount' => $commission,
+            'vendor_earning_amount' => $earning,
+        ];
+    }
 
     private function redirectToCyberSource($order)
     {

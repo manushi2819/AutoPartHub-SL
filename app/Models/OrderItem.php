@@ -15,7 +15,13 @@ class OrderItem extends Model
         'quantity',
         'price',
         'subtotal',
-        'vendor_id'
+        'vendor_id',
+        'vendor_percentage',
+        'vendor_commission_amount',
+        'vendor_earning_amount',
+        'status',
+        'payment_status',
+        'tracking_no'
     ];
 
     // Relationship to order
@@ -28,5 +34,10 @@ class OrderItem extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+     public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
     }
 }

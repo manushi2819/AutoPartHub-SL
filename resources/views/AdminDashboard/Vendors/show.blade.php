@@ -123,12 +123,15 @@
                         <p class="mb-1"><strong>Owner Name:</strong> {{ $vendor->owner_name }}</p>
                         <p class="mb-1"><strong>Email:</strong> {{ $vendor->email }}</p>
                         <p class="mb-1"><strong>Phone:</strong> {{ $vendor->phone }}</p>
-                        <p class="mb-0"><strong>NIC:</strong> {{ $vendor->nic }}</p>
+                        <p class="mb-1"><strong>NIC:</strong> {{ $vendor->nic }}</p>
+                        <p class="mb-1"><strong>Province:</strong> {{ $vendor->province }}</p>
+                        <p class="mb-1"><strong>Address:</strong> {{ $vendor->address }},  {{ $vendor->district }}</p>
                     </div>
                     <div class="col-6">
-                        <p class="mb-1"><strong>District:</strong> {{ $vendor->district }}</p>
-                        <p class="mb-1"><strong>Province:</strong> {{ $vendor->province }}</p>
-                        <p class="mb-0"><strong>Address:</strong> {{ $vendor->address }}</p>
+                        <p class="mb-1"><strong>Bank Name:</strong> {{ $vendor->bank_name }}</p>
+                        <p class="mb-1"><strong>Branch Name:</strong> {{ $vendor->branch_name }}</p>
+                        <p class="mb-1"><strong>Account Name:</strong> {{ $vendor->account_name }}</p>
+                        <p class="mb-1"><strong>Account Number:</strong> {{ $vendor->account_number }}</p>
                     </div>
                 </div>
 
@@ -137,24 +140,6 @@
                     <p class="mb-0">{{ $vendor->description }}</p>
                 @endif
 
-            </div>
-        </div>
-
-        <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header text-white" style="background-color: #007bff60;">
-                <h6 class="mb-0">Banking Details</h6>
-            </div>
-            <div class="card-body">
-                <div class="row g-3">
-                    <div class="col-6">
-                        <p class="mb-1"><strong>Bank Name:</strong> {{ $vendor->bank_name }}</p>
-                        <p class="mb-0"><strong>Branch Name:</strong> {{ $vendor->branch_name }}</p>
-                    </div>
-                    <div class="col-6">
-                        <p class="mb-1"><strong>Account Name:</strong> {{ $vendor->account_name }}</p>
-                        <p class="mb-0"><strong>Account Number:</strong> {{ $vendor->account_number }}</p>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -196,25 +181,7 @@
             </div>
         </div>
 
-        <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header text-white" style="background-color: #007bff60;">
-                <h6 class="mb-0">Documents</h6>
-            </div>
-            <div class="card-body d-flex flex-wrap gap-2">
-                @if($vendor->nic_front)
-                    <a href="{{ asset($vendor->nic_front) }}" target="_blank" class="btn btn-sm btn-outline-secondary">NIC Front</a>
-                @endif
-                @if($vendor->nic_back)
-                    <a href="{{ asset($vendor->nic_back) }}" target="_blank" class="btn btn-sm btn-outline-secondary">NIC Back</a>
-                @endif
-                @if($vendor->business_registration)
-                    <a href="{{ asset($vendor->business_registration) }}" target="_blank" class="btn btn-sm btn-outline-secondary">Business Registration</a>
-                @endif
-                @if(!$vendor->nic_front && !$vendor->nic_back && !$vendor->business_registration)
-                    <span class="text-muted">No documents uploaded.</span>
-                @endif
-            </div>
-        </div>
+       
     </div>
 
 </div>
@@ -234,6 +201,7 @@
                         <th>Name</th>
                         <th>Category</th>
                         <th>Price</th>
+                        <th>Commission</th>
                         <th>Stock</th>
                         <th>Status</th>
                     </tr>
@@ -254,6 +222,7 @@
                             <td>{{ \Illuminate\Support\Str::limit($product->name, 30) }}</td>
                             <td>{{ $product->category->name ?? 'N/A' }}</td>
                             <td>Rs. {{ number_format($product->price, 2) }}</td>
+                            <td>{{ $product->vendor_percentage  ?? '' }} % - {{ number_format($product->vendor_commission_amount, 2) }}</td>
                             <td>{{ $product->stock_quantity }}</td>
                             <td>
                                 <span class="px-3 py-1 rounded-pill fw-medium text-sm

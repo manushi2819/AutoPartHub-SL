@@ -1,4 +1,4 @@
-@extends('AdminDashboard.index')
+@extends('VendorDashboard.index')
 
 @section('title', 'Reviews')
 
@@ -61,7 +61,7 @@
                                 <div class="d-flex gap-2">
                                     <!-- Approve button -->
                                     @if($review->status !== 'approved')
-                                    <form action="{{ route('admin.reviews.approve', $review->id) }}" method="POST">
+                                    <form action="{{ route('vendor.reviews.approve', $review->id) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center" title="Approve">
                                             <iconify-icon icon="mingcute:check-line"></iconify-icon>
@@ -71,7 +71,7 @@
 
                                     <!-- Reject button -->
                                     @if($review->status !== 'rejected')
-                                    <form action="{{ route('admin.reviews.reject', $review->id) }}" method="POST">
+                                    <form action="{{ route('vendor.reviews.reject', $review->id) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center" title="Reject">
                                             <iconify-icon icon="mingcute:close-line"></iconify-icon>
@@ -81,7 +81,7 @@
 
                                     <!-- Delete button -->
                                     <button type="button" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center open-delete-modal" 
-                                            data-url="{{ route('admin.reviews.destroy', $review->id) }}" title="Delete">
+                                            data-url="{{ route('vendor.reviews.destroy', $review->id) }}" title="Delete">
                                         <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
                                     </button>
                                 </div>

@@ -47,6 +47,7 @@ class AdminLoginController extends Controller
                 'is_admin'      => true,
                 'is_super_admin'=> true,
                 'admin_id'      => 0,
+                'vendor_id'     => 1,
                 'name'          => 'Super Admin',
                 'email'         => $hardcodedAdminEmail,
             ]);
@@ -80,6 +81,7 @@ class AdminLoginController extends Controller
                 'is_admin'       => true,
                 'is_super_admin' => false,
                 'admin_id'       => $adminUser->id,
+                'vendor_id'      => 1,
                 'name'           => $adminUser->name,
                 'email'          => $adminUser->email,
             ]);
@@ -103,7 +105,7 @@ class AdminLoginController extends Controller
     
     public function logout(Request $request)
     {
-        $request->session()->forget(['is_admin']);
+        $request->session()->forget(['is_admin', 'vendor_id']);
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
