@@ -23,7 +23,7 @@ class VendorSeeder extends Seeder
             'slug'        => Str::slug('Autoparthubsl'),
 
             'owner_name'  => 'Kasthuri Dhananjaya',
-            'email'       => 'kasthurid1234@gmail.com',
+            'email'       => 'ruwindi2819@gmail.com',
             'phone'       => '0716316143',
             'nic'         => '200073203633',
 

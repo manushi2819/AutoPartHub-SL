@@ -108,28 +108,28 @@ class CustomerProfileController extends Controller
 
     public function track($id)
     {
-        $order = Order::with('items.product')->where('id', $id)
-                    ->where('customer_id', auth()->guard('customer')->id())
-                    ->firstOrFail();
+        $order = Order::with('items.product')
+            ->where('id', $id)
+            ->where('customer_id', auth()->guard('customer')->id())
+            ->firstOrFail();
 
         return view('CustomerDashboard.track_order', compact('order'));
     }
 
-
-    public function updateDeliveredStatus(Request $request, $id)
+    public function updateDeliveredStatus(Request $request, $itemId)
     {
-        $order = Order::where('id', $id)
-                    ->where('customer_id', auth()->guard('customer')->id())
-                    ->firstOrFail();
+        $item = OrderItem::with('order')->findOrFail($itemId);
 
-        if($order->status !== 'delivered') {
-            $order->status = 'delivered';
-            $order->save();
+        // Customer can only confirm delivery once an item is actually in transit
+        if ($item->status !== 'in_transit') {
+            return redirect()->back()->with('error', 'This item cannot be marked as delivered yet.');
         }
 
-        return redirect()->back()->with('success', 'Order marked as delivered.');
-    }
+        $item->status = 'delivered';
+        $item->save();
 
+        return redirect()->back()->with('success', 'Item marked as delivered.');
+    }
 
 
   private function getRecommendedProducts($customerId)

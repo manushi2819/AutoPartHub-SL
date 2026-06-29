@@ -63,7 +63,7 @@ class FrontendVendorController extends Controller
             Mail::to($vendor->email)
                 ->send(new VendorRegistrationMail($vendor, $plainPassword));
 
-            Mail::to('kasthurid1234@gmail.com')
+            Mail::to('ruwindi2819@gmail.com')
                 ->send(new AdminNewVendorMail($vendor));
         } catch (\Exception $e) {
             // Fail silently for now; registration still completes.

@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
-
+use App\Models\VendorCommission;
+use App\Models\VendorEarning;
 
 class BuynowCheckoutController extends Controller
 {
@@ -36,94 +37,129 @@ class BuynowCheckoutController extends Controller
         ));
     }
 
-    public function placeOrder(Request $request)
-    {
-        // Validate billing details
-        $request->validate([
-            'fname'=>'required',
-            'lname'=>'required',
-            'email'=>'required|email',
-            'phone'=>'required',
-            'address'=>'required',
-            'city'=>'required',
-            'zip'=>'required',
-            'payment_method'=>'required',
-            'product_id'=>'required|exists:products,id',
-            'quantity'=>'required|integer|min:1',
-        ]);
+   public function placeOrder(Request $request)
+{
+    // Validate billing details
+    $request->validate([
+        'fname' => 'required',
+        'lname' => 'required',
+        'email' => 'required|email',
+        'phone' => 'required',
+        'address' => 'required',
+        'city' => 'required',
+        'zip' => 'required',
+        'payment_method' => 'required',
+        'product_id' => 'required|exists:products,id',
+        'quantity' => 'required|integer|min:1',
+    ]);
 
-        $customer = Auth::guard('customer')->user();
-        $customerId = $customer ? $customer->id : null;
+    $customer = Auth::guard('customer')->user();
+    $customerId = $customer ? $customer->id : null;
 
-        $product = Product::findOrFail($request->product_id);
-        $quantity = $request->quantity;
+    $product = Product::findOrFail($request->product_id);
+    $quantity = $request->quantity;
 
-        $subtotal = $product->price * $quantity;
-        $discount = 0;
-        $total = $subtotal - $discount;
+    $subtotal = $product->price * $quantity;
+    $discount = 0;
+    $total = $subtotal - $discount;
 
-        // Create order with pending status
-        $order = Order::create([
-            'customer_id' => $customerId,
-            'order_number' => 'ORD-' . strtoupper(Str::random(8)),
-            'first_name' => $request->fname,
-            'last_name' => $request->lname,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'city' => $request->city,
-            'zip' => $request->zip,
-            'country' => 'Sri Lanka',
-            'subtotal' => $subtotal,
-            'discount' => $discount,
-            'total' => $total,
-            'payment_method' => $request->payment_method,
-            'status' => 'pending',
-            'payment_status' => 'pending',
-        ]);
+    // Create order with pending status
+    $order = Order::create([
+        'customer_id' => $customerId,
+        'order_number' => 'ORD-' . strtoupper(Str::random(8)),
+        'first_name' => $request->fname,
+        'last_name' => $request->lname,
+        'email' => $request->email,
+        'phone' => $request->phone,
+        'address' => $request->address,
+        'city' => $request->city,
+        'zip' => $request->zip,
+        'country' => 'Sri Lanka',
+        'subtotal' => $subtotal,
+        'discount' => $discount,
+        'total' => $total,
+        'payment_method' => $request->payment_method,
+        'status' => 'pending',
+        'payment_status' => 'pending',
+    ]);
 
-        // Create order item and reduce stock
-        OrderItem::create(array_merge([
-            'order_id' => $order->id,
-            'product_id' => $product->id,
-            'quantity' => $quantity,
-            'price' => $product->price,
-            'subtotal' => $subtotal,
-            'status' => 'pending',
-            'payment_status' => 'pending',
-        ], $this->buildVendorItemData($product, $quantity, $subtotal)));
-        $product->decrement('stock_quantity', $quantity);
+    // Create order item and reduce stock
+    $vendorData = $this->buildVendorItemData($product, $quantity, $subtotal);
 
-        // Send emails for COD only
-        if ($request->payment_method === 'cod') {
-            Mail::to($order->email)->send(new OrderPlaced($order));
-            Mail::to('kasthurid1234@gmail.com')->send(new OrderPlaced($order, true));
-        }
+    $orderItem = OrderItem::create(array_merge([
+        'order_id' => $order->id,
+        'product_id' => $product->id,
+        'quantity' => $quantity,
+        'price' => $product->price,
+        'subtotal' => $subtotal,
+        'status' => 'pending',
+        'payment_status' => 'pending',
+    ], $vendorData));
 
-        // Redirect to CyberSource if card payment
-        if ($request->payment_method === 'card') {
-            return $this->redirectToCyberSource($order);
-        }
+    $product->decrement('stock_quantity', $quantity);
 
-        // For COD, redirect directly
-        return redirect()->route('Frontend.checkout.cod_success', ['order_id'=>$order->id]);
+    // ✅ Create the commission/earning ledger entries for this item
+    $this->createVendorLedgerEntries($order, $orderItem, $vendorData);
+
+    // Send emails for COD only
+    if ($request->payment_method === 'cod') {
+        Mail::to($order->email)->send(new OrderPlaced($order));
+        Mail::to('ruwindi2819@gmail.com')->send(new OrderPlaced($order, true));
     }
 
-
-
-    private function buildVendorItemData(Product $product, int $quantity, float $subtotal): array
-    {
-        $percentage = (float) ($product->vendor_percentage ?? 0);
-        $commission = $subtotal > 0 ? round(($subtotal * $percentage) / 100, 2) : 0.0;
-        $earning = round($subtotal - $commission, 2);
-
-        return [
-            'vendor_id' => $product->vendor_id ?? null,
-            'vendor_percentage' => $percentage,
-            'vendor_commission_amount' => $commission,
-            'vendor_earning_amount' => $earning,
-        ];
+    // Redirect to CyberSource if card payment
+    if ($request->payment_method === 'card') {
+        return $this->redirectToCyberSource($order);
     }
+
+    // For COD, redirect directly
+    return redirect()->route('Frontend.checkout.cod_success', ['order_id' => $order->id]);
+}
+
+private function buildVendorItemData(Product $product, int $quantity, float $subtotal): array
+{
+    $percentage = (float) ($product->vendor_percentage ?? 0);
+    $commission = $subtotal > 0 ? round(($subtotal * $percentage) / 100, 2) : 0.0;
+    $earning = round($subtotal - $commission, 2);
+
+    return [
+        'vendor_id' => $product->vendor_id ?? null,
+        'vendor_percentage' => $percentage,
+        'vendor_commission_amount' => $commission,
+        'vendor_earning_amount' => $earning,
+    ];
+}
+
+
+private function createVendorLedgerEntries(Order $order, OrderItem $orderItem, array $vendorData): void
+{
+    if (empty($vendorData['vendor_id'])) {
+        return; // no vendor attached to this product, nothing to ledger
+    }
+
+    $isCard = $order->payment_method === 'card';
+
+    VendorCommission::create([
+        'order_id' => $order->id,
+        'order_item_id' => $orderItem->id,
+        'vendor_id' => $vendorData['vendor_id'],
+        'product_id' => $orderItem->product_id,
+        'payment_method' => $order->payment_method,
+        'commission_amount' => $vendorData['vendor_commission_amount'],
+        'status' => 'pending',
+    ]);
+
+    VendorEarning::create([
+        'order_id' => $order->id,
+        'order_item_id' => $orderItem->id,
+        'vendor_id' => $vendorData['vendor_id'],
+        'product_id' => $orderItem->product_id,
+        'payment_method' => $order->payment_method,
+        'earning_amount' => $vendorData['vendor_earning_amount'],
+        'status' => 'pending',
+    ]);
+}
+
 
     private function redirectToCyberSource($order)
     {

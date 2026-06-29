@@ -361,9 +361,9 @@ h3:hover {
                                     <li><strong>Category :</strong> {{ $product->category->name ?? '-' }}</li>
                                     <li class="product-stock"><strong>Availability :</strong>
                                         @if($product->stock_quantity > 0)
-                                            <i class="icon-39"></i> In Stock
+                                            <i class="icon-39" style="color:red"></i> In Stock
                                         @else
-                                            Out of Stock
+                                           <i class="icon-39" style="color:red"></i> <span style="color:red">Out of Stock</span>
                                         @endif
                                     </li>
                                     <li><strong>Vendor :</strong> {{ $product->vendor->shop_name ?? '-' }} -

@@ -1,4 +1,4 @@
-@extends('AdminDashboard.index')
+@extends('VendorDashboard.index')
 
 @section('title', 'Orders')
 
@@ -8,7 +8,7 @@
     <h6>Orders</h6>
 </div>
 
-<form method="GET" action="{{ route('admin.orders.index') }}" class="row g-2 mb-3">
+<form method="GET" action="{{ route('vendor.orders.index') }}" class="row g-2 mb-3">
 
     <div class="col-md-3">
         <input type="text" name="order_number" class="form-control"
@@ -41,7 +41,7 @@
 
     <div class="col-md-2 d-flex gap-2">
         <button type="submit" class="btn btn-primary w-100 btn-sm">Filter</button>
-        <a href="{{ route('admin.orders.index') }}" class="btn btn-secondary btn-sm w-100">Reset</a>
+        <a href="{{ route('vendor.orders.index') }}" class="btn btn-secondary btn-sm w-100">Reset</a>
     </div>
 
 </form>
@@ -97,7 +97,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.orders.show', $order->id) }}" 
+                                <a href="{{ route('vendor.orders.show', $order->id) }}" 
                                    class="w-32-px h-32-px bg-info-focus text-info-main rounded-circle d-inline-flex align-items-center justify-content-center" 
                                    title="View Order">
                                    <iconify-icon icon="lucide:eye"></iconify-icon>

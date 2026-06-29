@@ -56,7 +56,7 @@
             </li>
 
             <li>
-                <a href="{{ route('admin.orders.index') }}">
+                <a href="{{ route('vendor.orders.index') }}">
                 <iconify-icon icon="mdi:cart-outline" class="menu-icon"></iconify-icon>
                     <span>Orders</span>
                 </a>

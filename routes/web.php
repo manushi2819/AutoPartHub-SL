@@ -124,9 +124,8 @@ Route::prefix('vendor')->name('vendor.')->middleware([VendorAuth::class])->group
     // Orders
     Route::get('/orders', [VendorOrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [VendorOrderController::class, 'show'])->name('orders.show');
-    Route::post('/orders/{order}/update-status', [VendorOrderController::class, 'updateStatus'])->name('orders.updateStatus');
-
-
+    Route::patch('/order-items/{item}/status', [VendorOrderController::class, 'updateItemStatus'])->name('orderitems.updateStatus');
+   
 }); 
 
 
@@ -144,7 +143,7 @@ Route::prefix('customer')->name('customer.')->middleware('auth:customer')->group
 
     Route::get('/orders', [CustomerProfileController::class, 'orders'])->name('orders');
     Route::get('/order/track/{order}', [CustomerProfileController::class, 'track'])->name('order.track');
-    Route::put('/order/{order}/update-delivered', [CustomerProfileController::class, 'updateDeliveredStatus'])->name('order.updateStatus');
+    Route::put('/customer/order-items/{item}/delivered', [CustomerOrderController::class, 'updateDeliveredStatus'])->name('customer.orderitem.markDelivered');;
 
     Route::get('/auction-bids', [CustomerAuctionBidController::class, 'index'])->name('auctionbids');
     Route::get('/auction-bids/{id}', [CustomerAuctionBidController::class, 'show'])->name('auction.bids.show');
@@ -213,11 +212,8 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
     // Orders
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::post('/orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
-
     Route::patch('/order-items/{item}/status', [OrderController::class, 'updateItemStatus'])->name('orderitems.updateStatus');
-    Route::patch('/orders/{order}/payment-status', [OrderController::class, 'updatePaymentStatus'])->name('orders.updatePaymentStatus');
-
+   
     // Brands
     Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
     Route::post('/brands', [BrandController::class, 'store'])->name('brands.store');

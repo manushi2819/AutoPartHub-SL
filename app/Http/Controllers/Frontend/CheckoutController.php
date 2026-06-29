@@ -12,6 +12,8 @@ use App\Mail\OrderPlaced;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Product;
 use Illuminate\Support\Str;
+use App\Models\VendorCommission;
+use App\Models\VendorEarning;
 
 class CheckoutController extends Controller
 {
@@ -90,7 +92,6 @@ class CheckoutController extends Controller
         $customerId = $customer ? $customer->id : null;
         $sessionId = $customerId ? null : session()->getId();
 
-        // Get cart items
         $cartItems = Cart::with('product')
             ->when($customerId, fn($q) => $q->where('customer_id', $customerId))
             ->when(!$customerId, fn($q) => $q->where('session_id', $sessionId))
@@ -104,7 +105,6 @@ class CheckoutController extends Controller
         $discount = 0;
         $total = $subtotal - $discount;
 
-        // Create Order
         $order = Order::create([
             'customer_id' => $customerId,
             'order_number' => 'ORD-' . strtoupper(Str::random(8)),
@@ -121,12 +121,13 @@ class CheckoutController extends Controller
             'total' => $total,
             'payment_method' => $request->payment_method,
             'status' => 'pending',
-            'payment_status' => $request->payment_method === 'cod' ? 'pending' : 'pending', // card will update after CyberSource callback
+            'payment_status' => 'pending', // card will update after CyberSource callback
         ]);
 
-        // Create Order Items & Reduce stock
-        foreach($cartItems as $item){
-            OrderItem::create(array_merge([
+        foreach ($cartItems as $item) {
+            $vendorData = $this->buildVendorItemData($item);
+
+            $orderItem = OrderItem::create(array_merge([
                 'order_id' => $order->id,
                 'product_id' => $item->product_id,
                 'quantity' => $item->quantity,
@@ -134,33 +135,31 @@ class CheckoutController extends Controller
                 'subtotal' => $item->quantity * $item->price,
                 'status' => 'pending',
                 'payment_status' => 'pending',
-            ], $this->buildVendorItemData($item)));
+            ], $vendorData));
+
+            $this->createVendorLedgerEntries($order, $orderItem, $vendorData);
 
             if ($item->product) {
                 $item->product->decrement('stock_quantity', $item->quantity);
             }
         }
 
-        // Clear cart
         if ($customerId) {
             Cart::where('customer_id', $customerId)->delete();
         } else {
             Cart::where('session_id', $sessionId)->delete();
         }
 
-        // Send emails for COD only
         if ($request->payment_method === 'cod') {
             Mail::to($order->email)->send(new OrderPlaced($order));
-            Mail::to('kasthurid1234@gmail.com')->send(new OrderPlaced($order, true));
-            return redirect()->route('Frontend.checkout.cod_success', ['order_id'=>$order->id]);
+            Mail::to('ruwindi2819@gmail.com')->send(new OrderPlaced($order, true));
+            return redirect()->route('Frontend.checkout.cod_success', ['order_id' => $order->id]);
         }
 
-        // If card payment, redirect to CyberSource
         if ($request->payment_method === 'card') {
             return $this->redirectToCyberSource($order);
         }
     }
-
 
     private function buildVendorItemData($item): array
     {
@@ -176,6 +175,36 @@ class CheckoutController extends Controller
             'vendor_commission_amount' => $commission,
             'vendor_earning_amount' => $earning,
         ];
+    }
+
+ 
+    private function createVendorLedgerEntries(Order $order, OrderItem $orderItem, array $vendorData): void
+    {
+        if (empty($vendorData['vendor_id'])) {
+            return; // no vendor attached to this product, nothing to ledger
+        }
+
+        $isCard = $order->payment_method === 'card';
+
+        VendorCommission::create([
+            'order_id' => $order->id,
+            'order_item_id' => $orderItem->id,
+            'vendor_id' => $vendorData['vendor_id'],
+            'product_id' => $orderItem->product_id,
+            'payment_method' => $order->payment_method,
+            'commission_amount' => $vendorData['vendor_commission_amount'],
+            'status' => 'pending',
+        ]);
+
+        VendorEarning::create([
+            'order_id' => $order->id,
+            'order_item_id' => $orderItem->id,
+            'vendor_id' => $vendorData['vendor_id'],
+            'product_id' => $orderItem->product_id,
+            'payment_method' => $order->payment_method,
+            'earning_amount' => $vendorData['vendor_earning_amount'],
+            'status' => 'pending',
+        ]);
     }
 
     private function redirectToCyberSource($order)
@@ -231,10 +260,8 @@ class CheckoutController extends Controller
     {
         $order = Order::with('items.product')->findOrFail($order_id);
 
-        // Check if this is a card payment return from CyberSource
         if ($order->payment_method === 'card') {
 
-            // CyberSource returns 'decision' and other parameters
             $decision = $request->input('decision'); // 'ACCEPT', 'REJECT', 'ERROR'
 
             if ($decision === 'ACCEPT') {
@@ -247,12 +274,11 @@ class CheckoutController extends Controller
                     'payment_status' => 'paid',
                 ]);
 
-                // Send emails now that payment is successful
                 Mail::to($order->email)->send(new OrderPlaced($order));
-                Mail::to('kasthurid1234@gmail.com')->send(new OrderPlaced($order, true));
+                Mail::to('ruwindi2819@gmail.com')->send(new OrderPlaced($order, true));
 
             } else {
-                // Payment failed
+                // Payment failed — release stock, fail the order, and cancel the ledger
                 $order->payment_status = 'failed';
                 $order->status = 'failed';
                 $order->save();
@@ -261,6 +287,10 @@ class CheckoutController extends Controller
                     'status' => 'failed',
                     'payment_status' => 'failed',
                 ]);
+
+                // ✅ Cancel both ledger entries — no money ever changed hands
+                VendorCommission::where('order_id', $order->id)->update(['status' => 'cancelled']);
+                VendorEarning::where('order_id', $order->id)->update(['status' => 'cancelled']);
 
                 return view('Frontend.checkout_failed', compact('order', 'request'));
             }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
@@ -10,13 +10,12 @@ use App\Mail\OrderInTransitMail;
 use App\Mail\OrderConfirmedMail;
 use Illuminate\Support\Facades\Mail;
 
-class OrderController extends Controller
+class VendorOrderController extends Controller
 {
-    // INDEX — only orders that contain at least one item belonging to this vendor
+   
     public function index(Request $request)
     {
-        $vendorId = 1;
-
+        $vendorId = session('vendor_id');
         $query = Order::with(['customer', 'items' => function ($q) use ($vendorId) {
                 $q->where('vendor_id', $vendorId);
             }])
@@ -50,23 +49,27 @@ class OrderController extends Controller
 
         $orders = $query->get();
 
-        return view('AdminDashboard.Orders.index', compact('orders'));
+        return view('VendorDashboard.Orders.index', compact('orders'));
     }
 
-    // SHOW — display all items, but flag which ones this vendor can edit
+
+  
     public function show($id)
     {
-        $vendorId = 1;
+        $vendorId = session('vendor_id');
 
-        $order = Order::with('customer', 'items.product', 'items.vendor')->findOrFail($id);
+        $order = Order::with(['customer', 'items' => function ($q) use ($vendorId) {
+                $q->where('vendor_id', $vendorId);
+            }, 'items.product'])
+            ->findOrFail($id);
 
-        $order->items->each(function ($item) use ($vendorId) {
-            $item->is_editable = $item->vendor_id == $vendorId;
-        });
+        // Guard: if somehow this vendor has no items on this order, don't show it at all
+        if ($order->items->isEmpty()) {
+            abort(404);
+        }
 
-        return view('AdminDashboard.Orders.show', compact('order'));
+        return view('VendorDashboard.Orders.show', compact('order'));
     }
-
 
     
     public function updateItemStatus(Request $request, $itemId)
@@ -77,7 +80,7 @@ class OrderController extends Controller
             'tracking_no'    => 'nullable|string|max:255',
         ]);
 
-        $vendorId = 1;
+        $vendorId = session('vendor_id');
 
         $item = OrderItem::with(['order', 'product'])->findOrFail($itemId);
 
@@ -120,7 +123,6 @@ class OrderController extends Controller
         if ($statusChangedToInTransit) {
             Mail::to($order->email)->send(new OrderInTransitMail($order, $item));
         }
-
         return redirect()->back()->with('success', 'Item updated successfully.');
     }
 }
