@@ -58,9 +58,7 @@
                         <th>Customer Name</th>
                         <th>Email</th>
                         <th>Total</th>
-                        <th>Status</th>
                         <th>Payment Method</th>
-                        <th>Payment Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -73,29 +71,9 @@
                             <td>{{ $order->first_name }} {{ $order->last_name }}</td>
                             <td>{{ $order->email }}</td>
                             <td>Rs. {{ number_format($order->total, 2) }}</td>
-                            <td>
-                                @if($order->status === 'pending')
-                                    <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-warning-focus text-warning-main">Pending</span>
-                                @elseif($order->status === 'delivered')
-                                    <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-success-focus text-success-main">Delivered</span>
-                                @elseif($order->status === 'cancelled')
-                                    <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-danger-focus text-danger-main">Cancelled</span>
-                                @elseif($order->status === 'in_transit')
-                                    <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-info-focus text-info-main">In Transit</span>
-                                @elseif($order->status === 'confirmed')
-                                    <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-info-focus text-info-main">Confirmed</span>
-                                @endif
-                            </td>
+                            
                             <td>{{ ucfirst($order->payment_method) }}</td>
-                            <td>
-                                @if($order->payment_status === 'pending')
-                                    <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-warning-focus text-warning-main">Pending</span>
-                                @elseif($order->payment_status === 'paid')
-                                    <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-success-focus text-success-main">Paid</span>
-                                @elseif($order->payment_status === 'failed')
-                                    <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-danger-focus text-danger-main">Failed</span>
-                                @endif
-                            </td>
+                           
                             <td>
                                 <a href="{{ route('admin.orders.show', $order->id) }}" 
                                    class="w-32-px h-32-px bg-info-focus text-info-main rounded-circle d-inline-flex align-items-center justify-content-center" 

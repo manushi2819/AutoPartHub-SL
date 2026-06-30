@@ -20,6 +20,7 @@ class VendorCommissionSubmitController extends Controller
             ->where('vendor_id', $vendorId)
             ->where('payment_method', 'cod')
             ->where('status', 'pending')
+            ->whereHas('orderItem', fn($q) => $q->where('status', 'delivered'))
             ->orderBy('created_at')
             ->get();
 
@@ -48,11 +49,12 @@ class VendorCommissionSubmitController extends Controller
         $commissions = VendorCommission::where('vendor_id', $vendorId)
             ->where('payment_method', 'cod')
             ->where('status', 'pending')
+            ->whereHas('orderItem', fn($q) => $q->where('status', 'delivered'))
             ->whereIn('id', $request->commission_ids)
             ->get();
 
         if ($commissions->isEmpty()) {
-            return back()->with('error', 'No valid pending commissions selected.');
+            return back()->with('error', 'No valid pending commissions selected. Items must be delivered before settlement.');
         }
 
         $slipName = time() . '_cod_slip.' . $request->file('payment_slip')->getClientOriginalExtension();

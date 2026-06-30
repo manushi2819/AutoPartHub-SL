@@ -164,6 +164,7 @@
                                 <th class="text-end">Amount</th>
                                 <th>Status</th>
                                 <th>Submitted On</th>
+                                <th>Slip</th>
                                 <th>Note</th>
                             </tr>
                         </thead>
@@ -178,6 +179,12 @@
                                         </span>
                                     </td>
                                     <td>{{ $settlement->submitted_at?->format('M d, Y') }}</td>
+                                    <td>  @if($settlement->payment_slip)
+                                            <a href="{{ asset($settlement->payment_slip) }}" target="_blank" class="text-primary">
+                                                <i class="fa-solid fa-receipt me-1"></i> View Payment Slip
+                                            </a>
+                                        @endif
+                                    </td>
                                     <td>
                                         @if($settlement->status === 'rejected')
                                             <span class="text-danger small">{{ $settlement->rejection_reason }}</span>

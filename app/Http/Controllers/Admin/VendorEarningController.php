@@ -16,8 +16,14 @@ class VendorEarningController extends Controller
     public function index(Request $request)
     {
         $vendors = Vendor::where('id', '!=', 1)
-            ->whereHas('earnings', fn($q) => $q->where('status', 'pending'))
-            ->withSum(['earnings as pending_total' => fn($q) => $q->where('status', 'pending')], 'earning_amount')
+            ->whereHas('earnings', function ($q) {
+                $q->where('status', 'pending')
+                ->whereHas('orderItem', fn($q2) => $q2->where('status', 'delivered'));
+            })
+            ->withSum(['earnings as pending_total' => function ($q) {
+                $q->where('status', 'pending')
+                ->whereHas('orderItem', fn($q2) => $q2->where('status', 'delivered'));
+            }], 'earning_amount')
             ->get();
 
         $settlements = VendorEarningSettlement::with('vendor')
@@ -30,12 +36,14 @@ class VendorEarningController extends Controller
         return view('AdminDashboard.VendorPayments.earnings_index', compact('vendors', 'settlements', 'tab'));
     }
 
+
     // Show pending earning rows for one vendor, selectable before settling
     public function showVendor(Vendor $vendor)
     {
         $earnings = VendorEarning::with('order', 'product')
             ->where('vendor_id', $vendor->id)
             ->where('status', 'pending')
+            ->whereHas('orderItem', fn($q) => $q->where('status', 'delivered'))
             ->orderBy('created_at')
             ->get();
 
@@ -56,13 +64,16 @@ class VendorEarningController extends Controller
             'notes' => 'nullable|string',
         ]);
 
+        // ✅ Re-check delivered status server-side — never trust the selected IDs blindly,
+        // since the displayed list could be stale by the time the form is submitted.
         $earnings = VendorEarning::where('vendor_id', $vendor->id)
             ->where('status', 'pending')
+            ->whereHas('orderItem', fn($q) => $q->where('status', 'delivered'))
             ->whereIn('id', $request->earning_ids)
             ->get();
 
         if ($earnings->isEmpty()) {
-            return back()->with('error', 'No valid pending earnings selected.');
+            return back()->with('error', 'No valid pending earnings selected. Items must be delivered before settlement.');
         }
 
         $slipName = time() . '_slip.' . $request->file('payment_slip')->getClientOriginalExtension();

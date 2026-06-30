@@ -1,22 +1,19 @@
-
 @extends('VendorDashboard.master')
 @section('title', 'Vendor Dashboard')
 
 @section('content')
 
-
 <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
     <h6 class="fw-semibold mb-0">Dashboard</h6>
     <ul class="d-flex align-items-center gap-2">
         <li class="fw-medium">
-        <a href="{{ route('admin.dashboard') }}" class="d-flex align-items-center gap-1 hover-text-primary">
+        <a href="{{ route('vendor.dashboard') }}" class="d-flex align-items-center gap-1 hover-text-primary">
             <iconify-icon icon="solar:home-smile-angle-outline" class="icon text-lg"></iconify-icon>
             Dashboard
         </a>
         </li>
     </ul>
-    </div>
-
+</div>
 
 <div class="row row-cols-lg-3 row-cols-sm-2 row-cols-1 gy-4">
 
@@ -34,23 +31,6 @@
 </div>
 </div>
 </div>
-
-<!-- Total Categories -->
-<div class="col">
-<div class="card shadow-none border bg-gradient-start-2 h-100">
-<div class="card-body p-20 d-flex justify-content-between align-items-center">
-<div>
-<p class="fw-medium text-primary-light mb-1">Total Categories</p>
-<h6 class="mb-0">{{ number_format($totalCategories ?? 0) }}</h6>
-</div>
-<div class="w-50-px h-50-px bg-purple rounded-circle d-flex justify-content-center align-items-center">
-<iconify-icon icon="mdi:shape-outline" class="text-white text-2xl"></iconify-icon>
-</div>
-</div>
-</div>
-</div>
-
-
 
 <!-- Total Orders -->
 <div class="col">
@@ -89,6 +69,7 @@
 <div>
 <p class="fw-medium text-primary-light mb-1">Total Income</p>
 <h6 class="mb-0">Rs. {{ number_format($totalIncome ?? 0,2) }}</h6>
+<small class="text-muted">After commission</small>
 </div>
 <div class="w-50-px h-50-px bg-danger rounded-circle d-flex justify-content-center align-items-center">
 <iconify-icon icon="mdi:cash" class="text-white text-2xl"></iconify-icon>
@@ -114,6 +95,73 @@
 
 </div>
 
+<!-- ================= My Payments Overview ================= -->
+<div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mt-5 mb-16">
+    <h6 class="fw-semibold mb-0">My Payments Overview</h6>
+</div>
+
+<div class="row row-cols-lg-3 row-cols-sm-2 row-cols-1 gy-4">
+
+    <!-- Pending Earnings -->
+    <div class="col">
+            <div class="card shadow-none border h-100" style="border-left: 4px solid #487FFF !important;">
+                <a href="{{ route('vendor.earnings.index', ['tab' => 'pending']) }}" class="text-decoration-none">
+                <div class="card-body p-20 d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="fw-medium text-primary-light mb-1">Pending Earnings</p>
+                        <h6 class="mb-0">Rs. {{ number_format($pendingEarnings ?? 0, 2) }}</h6>
+                        <small class="text-muted">Awaiting bank transfer from admin</small>
+                    </div>
+                    <div class="w-50-px h-50-px rounded-circle d-flex justify-content-center align-items-center" style="background:#487FFF;">
+                        <iconify-icon icon="mdi:bank-transfer-in" class="text-white text-2xl"></iconify-icon>
+                    </div>
+                </div>
+                </a>
+            </div>
+    </div>
+
+    <!-- Pending COD Commission -->
+    <div class="col">
+            <div class="card shadow-none border h-100" style="border-left: 4px solid #FF9F29 !important;">
+                 <a href="{{ route('vendor.commissions.index', ['tab' => 'pending']) }}" class="text-decoration-none">
+                <div class="card-body p-20 d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="fw-medium text-primary-light mb-1">COD Commission Due</p>
+                        <h6 class="mb-0">
+                            Rs. {{ number_format($pendingCodCommissions ?? 0, 2) }}
+                            @if(($codSettlementsAwaitingReview ?? 0) > 0)
+                                <span class="badge bg-info ms-1" style="font-size: 0.65rem;">{{ $codSettlementsAwaitingReview }} under review</span>
+                            @endif
+                        </h6>
+                        <small class="text-muted">You owe admin — submit your slip</small>
+                    </div>
+                    <div class="w-50-px h-50-px rounded-circle d-flex justify-content-center align-items-center" style="background:#FF9F29;">
+                        <iconify-icon icon="mdi:cash-clock" class="text-white text-2xl"></iconify-icon>
+                    </div>
+                </div>
+                 </a>
+            </div>
+    </div>
+
+    <!-- Pending Card Commission -->
+    <div class="col">
+            <div class="card shadow-none border h-100" style="border-left: 4px solid #16A34A !important;">
+                 <a href="{{ route('vendor.commissions-card.index', ['tab' => 'pending']) }}" class="text-decoration-none">
+                <div class="card-body p-20 d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="fw-medium text-primary-light mb-1">Card Commission</p>
+                        <h6 class="mb-0">Rs. {{ number_format($pendingCardCommissions ?? 0, 2) }}</h6>
+                        <small class="text-muted">Already deducted — for reference</small>
+                    </div>
+                    <div class="w-50-px h-50-px rounded-circle d-flex justify-content-center align-items-center" style="background:#16A34A;">
+                        <iconify-icon icon="mdi:credit-card-check-outline" class="text-white text-2xl"></iconify-icon>
+                    </div>
+                </div>
+                 </a>
+            </div>
+    </div>
+
+</div>
 
 <!-- ================= Sales & Earnings Charts ================= -->
 <div class="row gy-4 mt-4">
@@ -242,15 +290,15 @@ var optionsEarnings = {
         width: 3
     },
     markers: {
-        size: 4,                     // size of marker
-        colors: ['#FF9F29'],         // marker color
-        strokeColors: '#fff',        // border around marker
+        size: 4,
+        colors: ['#FF9F29'],
+        strokeColors: '#fff',
         strokeWidth: 2,
         hover: {
-            size: 6,                 // size when hovering
+            size: 6,
             sizeOffset: 0,
-            fillColor: '#FF9F29',    // fill on hover
-            strokeColor: '#fff'      // border on hover
+            fillColor: '#FF9F29',
+            strokeColor: '#fff'
         }
     },
     dataLabels: { enabled: false },
@@ -258,7 +306,7 @@ var optionsEarnings = {
         enabled: true,
         marker: {
             show: true,
-            fillColors: ['#FF9F29'], // tooltip marker color matches line
+            fillColors: ['#FF9F29'],
             strokeColors: '#fff',
         },
         x: { show: true },
@@ -290,6 +338,5 @@ var optionsEarnings = {
 var earningsChart = new ApexCharts(document.querySelector("#earningsChart"), optionsEarnings);
 earningsChart.render();
 </script>
-
 
 @endsection

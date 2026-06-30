@@ -16,8 +16,14 @@ class VendorCommissionCardController extends Controller
     public function index(Request $request)
     {
         $vendors = Vendor::where('id', '!=', 1)
-            ->whereHas('commissions', fn($q) => $q->where('payment_method', 'card')->where('status', 'pending'))
-            ->withSum(['commissions as pending_total' => fn($q) => $q->where('payment_method', 'card')->where('status', 'pending')], 'commission_amount')
+            ->whereHas('commissions', function ($q) {
+                $q->where('payment_method', 'card')->where('status', 'pending')
+                ->whereHas('orderItem', fn($q2) => $q2->where('status', 'delivered'));
+            })
+            ->withSum(['commissions as pending_total' => function ($q) {
+                $q->where('payment_method', 'card')->where('status', 'pending')
+                ->whereHas('orderItem', fn($q2) => $q2->where('status', 'delivered'));
+            }], 'commission_amount')
             ->get();
 
         $settlements = VendorCommissionSettlement::with('vendor')
@@ -37,6 +43,7 @@ class VendorCommissionCardController extends Controller
             ->where('vendor_id', $vendor->id)
             ->where('payment_method', 'card')
             ->where('status', 'pending')
+            ->whereHas('orderItem', fn($q) => $q->where('status', 'delivered'))
             ->orderBy('created_at')
             ->get();
 
@@ -58,11 +65,12 @@ class VendorCommissionCardController extends Controller
         $commissions = VendorCommission::where('vendor_id', $vendor->id)
             ->where('payment_method', 'card')
             ->where('status', 'pending')
+            ->whereHas('orderItem', fn($q) => $q->where('status', 'delivered'))
             ->whereIn('id', $request->commission_ids)
             ->get();
 
         if ($commissions->isEmpty()) {
-            return back()->with('error', 'No valid pending commissions selected.');
+            return back()->with('error', 'No valid pending commissions selected. Items must be delivered before settlement.');
         }
 
         DB::transaction(function () use ($commissions, $vendor, $request) {
