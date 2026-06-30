@@ -64,6 +64,28 @@
             </li>
 
 
+    
+            <li class="dropdown">
+                <a href="javascript:void(0)">
+                    <iconify-icon icon="mdi:wallet-plus-outline" class="menu-icon"></iconify-icon>
+                <span>My Payments</span> 
+                </a>
+                <ul class="sidebar-submenu">
+                    <li>
+                        <a href="{{ route('vendor.earnings.index') }}">
+                            <i class="ri-circle-fill circle-icon text-success-600 w-auto"></i> My Earnings</a>
+                    </li>
+                     <li>
+                        <a href="{{ route('vendor.commissions-card.index') }}">
+                            <i class="ri-circle-fill circle-icon text-warning-600 w-auto"></i>Commissions (Card)</a>
+                    </li>
+                      <li>
+                        <a href="{{ route('vendor.commissions.index') }}">
+                            <i class="ri-circle-fill circle-icon text-danger-600 w-auto"></i> Commissions (COD)</a>
+                    </li>
+                </ul>
+            </li>
+
             <li>
                 <a href="{{ route('vendor.reviews.index') }}">
                 <iconify-icon icon="mdi:star-outline" class="menu-icon"></iconify-icon>
@@ -71,7 +93,6 @@
                 </a>
     
             </li>
-
 
 
         </ul>

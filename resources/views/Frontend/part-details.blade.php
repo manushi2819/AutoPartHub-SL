@@ -253,6 +253,156 @@ h3:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     transform: scale(1.05);
 }
+
+
+/*vendor*/
+
+/* Card */
+.shop-card{
+    background: var(--surface);
+    border-radius: var(--card-radius);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    padding: 26px 26px 24px;
+    display:flex;
+    flex-direction:column;
+}
+
+.shop-logo-fallback{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #eaeaea, #8c8c8c);
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.shop-card:hover{
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-soft);
+}
+
+/* Top row: logo + heading */
+.shop-top{
+    display:flex;
+    align-items:flex-start;
+    gap:16px;
+    margin-bottom:18px;
+}
+
+.shop-logo{
+    width:72px;
+    height:72px;
+    border-radius:16px;
+    overflow:hidden;
+    flex-shrink:0;
+    background: var(--primary-black);
+}
+
+.shop-logo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.shop-heading{
+    flex:1;
+    min-width:0;
+}
+
+.since-text{
+    margin:0;
+    font-size:.8rem;
+    color: var(--primary-gray);
+}
+
+.shop-heading h4{
+    margin:2px 0 8px;
+    font-weight:700;
+    color: var(--primary-black);
+}
+
+.products-badge{
+    display:inline-block;
+    background: rgba(194,13,13,0.08);
+    color: var(--primary-red-dark);
+    font-size:.78rem;
+    font-weight:600;
+    padding:4px 12px;
+    border-radius:50px;
+}
+
+
+.shop-divider{
+    border-top:1px solid rgba(0,0,0,.06);
+    margin-bottom:18px;
+}
+
+/* Info list */
+.shop-info{
+    list-style:none;
+    padding:0;
+    margin:0 0 22px;
+    flex:1;
+}
+
+.shop-info li{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:5px;
+}
+
+.shop-info li:last-child{
+    margin-bottom:0;
+}
+
+.shop-info i{
+    width:18px;
+    margin-top:3px;
+    color: var(--primary-red);
+    font-size:.95rem;
+}
+
+.info-label{
+    display:block;
+    font-size:.78rem;
+    color: var(--primary-gray);
+    margin-bottom:2px;
+}
+
+.info-value{
+    display:block;
+    font-size:.9rem;
+    color: var(--primary-black);
+    word-break:break-word;
+}
+
+/* CTA button */
+.btn-visit{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: var(--primary-black);
+    color:#fff;
+    font-weight:600;
+    padding:8px 0;
+    border-radius:50px;
+    text-decoration:none;
+    transition: var(--transition);
+}
+
+.btn-visit:hover{
+    background: var(--primary-red);
+    color:#fff;
+}
+
+
 </style>
 
 <!-- Page Title -->
@@ -275,7 +425,7 @@ h3:hover {
                <div class="product-details-content mb_0">
                    <div class="row clearfix">
                     <!-- Images -->
-                        <div class="col-lg-7 col-md-12 col-sm-12 image-column">
+                        <div class="col-lg-4 col-md-12 col-sm-12 image-column">
                             <div class="bxslider ">
                                 @foreach($product->images as $index => $image)
                                     <div class="slider-content ">
@@ -334,7 +484,7 @@ h3:hover {
 
                         <!-- Product Info -->
                         <div class="col-lg-5 col-md-12 col-sm-12 content-column">
-                            <div class="content-box ml_20 card1" style="background-color: #f4f4f4; ">
+                            <div class="content-box card1" style="background-color: #f4f4f4; ">
                                 <h2 style="font-size: 22px; line-height: 25px">{{ $product->name }}</h2>
                                 <h3 style="font-size: 24px; ">LKR {{ number_format($product->price, 2) }}</h3>
 
@@ -366,8 +516,7 @@ h3:hover {
                                            <i class="icon-39" style="color:red"></i> <span style="color:red">Out of Stock</span>
                                         @endif
                                     </li>
-                                    <li><strong>Vendor :</strong> {{ $product->vendor->shop_name ?? '-' }} -
-                                    {{ $product->vendor->address ?? '-' }}, {{ $product->vendor->district ?? '-' }}</li>
+                          
                                 </ul>
 
 
@@ -428,10 +577,65 @@ h3:hover {
 
                             </div>
                         </div>
+
+                        <div class="col-lg-3 col-md-12 col-sm-12" >
+                            <div class="content-box card1" style="background-color: #f4f4f4; position:sticky !important; 
+                            top:20px !important; z-index:100!important;">
+                                    <div class="shop-top">
+                                        <div class="shop-logo">
+                                            @if($product->vendor->logo)
+                                                <img src="{{ asset($product->vendor->logo) }}" alt="{{ $product->vendor->shop_name }}">
+                                            @else
+                                                <div class="shop-logo-fallback" aria-label="{{ $product->vendor->shop_name }}">
+                                                    {{ strtoupper(substr($product->vendor->shop_name ?? 'S', 0, 1)) }}
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        <div class="shop-heading">
+                                            <h5>{{ $product->vendor->shop_name }}</h5>
+                                            <span class="products-badge">
+                                               {{ \App\Models\Product::where('vendor_id', $product->vendor_id)->count() }} Products
+                                            </span>
+                                        </div>
+                                       
+                                    </div>
+                                      <p>{{ $product->vendor->description }}</p>
+
+
+                                    <div class="shop-divider"></div>
+                                    <ul class="shop-info">
+                                        <li>
+                                            <i class="fa fa-map-marker-alt"></i>
+                                            <div>
+                                                <span class="info-value">Address : {{ $product->vendor->address }}, {{ $product->vendor->district }}</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-phone"></i>
+                                            <div>
+                                                <span class="info-value">Contact : {{ $product->vendor->phone }}</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-envelope"></i>
+                                            <div>
+                                                <span class="info-value">Email : {{ $product->vendor->email }}</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <a href="{{ route('Frontend.shop', ['vendor_slug' => $product->vendor->slug]) }}"
+                                    class="btn-visit w-100">
+                                        Visit Store
+                                        <i class="fa fa-arrow-right ms-2"></i>
+                                    </a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 
-                <div class="product-discription mb_70 card1 mt-5">
+                <div class="col-md-12 product-discription mb_70 card1 mt-5">
                     <div class="tabs-box">
                         <div class="tab-btn-box">
                             <ul class="tab-btns tab-buttons clearfix">
@@ -557,7 +761,7 @@ h3:hover {
 
                                                     <textarea name="message"
                                                             required
-                                                            style="width:100%; min-height:120px; padding:10px; border:1px solid #ddd; border-radius:5px;"></textarea>
+                                                            style="width:100%; min-height:50px; padding:10px; border:1px solid #ddd; border-radius:5px;"></textarea>
                                                 </div>
 
                                                 {{-- Photos --}}

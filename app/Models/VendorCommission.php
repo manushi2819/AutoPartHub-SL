@@ -41,4 +41,10 @@ class VendorCommission extends Model
     {
         return $query->where('status', 'pending');
     }
+
+    public function settlements()
+    {
+        return $this->belongsToMany(VendorCommissionSettlement::class, 'vendor_commission_settlement_items', 'vendor_commission_id', 'settlement_id');
+    }
+
 }

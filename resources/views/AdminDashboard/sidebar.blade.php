@@ -77,7 +77,28 @@
                 <iconify-icon icon="mdi:cart-outline" class="menu-icon"></iconify-icon>
                     <span>Orders</span>
                 </a>
-    
+            </li>
+
+
+            <li class="dropdown">
+                <a href="javascript:void(0)">
+                    <iconify-icon icon="mdi:wallet-plus-outline" class="menu-icon"></iconify-icon>
+                <span>Vendor Payments</span> 
+                </a>
+                <ul class="sidebar-submenu">
+                    <li>
+                        <a href="{{ route('admin.vendor-earnings.index') }}">
+                            <i class="ri-circle-fill circle-icon text-success-600 w-auto"></i> Vendor Earnings</a>
+                    </li>
+                     <li>
+                        <a href="{{ route('admin.vendor-commissions-card.index') }}">
+                            <i class="ri-circle-fill circle-icon text-warning-600 w-auto"></i>Vendor Commissions (Card)</a>
+                    </li>
+                      <li>
+                        <a href="{{ route('admin.vendor-commissions-cod.index') }}">
+                            <i class="ri-circle-fill circle-icon text-danger-600 w-auto"></i> Vendor Commissions (COD)</a>
+                    </li>
+                </ul>
             </li>
 
 
@@ -134,6 +155,10 @@
                     <li>
                         <a href="{{ route('admin.users.index') }}">
                             <i class="ri-circle-fill circle-icon text-success-600 w-auto"></i> Admin Users</a>
+                    </li>
+                     <li>
+                        <a href="{{ route('admin.bank-accounts.index') }}">
+                            <i class="ri-circle-fill circle-icon text-warning-600 w-auto"></i>Bank Accounts</a>
                     </li>
                 </ul>
             </li>

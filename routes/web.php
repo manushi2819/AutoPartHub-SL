@@ -84,6 +84,16 @@ Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'
 
 
 
+
+
+
+
+
+
+
+
+
+
 //vendors
 use App\Http\Controllers\Frontend\FrontendVendorController;
 
@@ -101,6 +111,9 @@ use App\Http\Controllers\Vendor\VendorDashboardController;
 use App\Http\Controllers\Vendor\VendorProductController;
 use App\Http\Controllers\Vendor\VendorReviewController;
 use App\Http\Controllers\Vendor\VendorOrderController;
+use App\Http\Controllers\Vendor\VendorCommissionCardViewController;
+use App\Http\Controllers\Vendor\VendorEarningViewController;
+use App\Http\Controllers\Vendor\VendorCommissionSubmitController;
 use App\Http\Middleware\VendorAuth;
 
 Route::prefix('vendor')->name('vendor.')->middleware([VendorAuth::class])->group(function () {
@@ -125,7 +138,20 @@ Route::prefix('vendor')->name('vendor.')->middleware([VendorAuth::class])->group
     Route::get('/orders', [VendorOrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [VendorOrderController::class, 'show'])->name('orders.show');
     Route::patch('/order-items/{item}/status', [VendorOrderController::class, 'updateItemStatus'])->name('orderitems.updateStatus');
-   
+     
+    Route::prefix('/commissions')->name('commissions.')->group(function () {
+        Route::get('/', [VendorCommissionSubmitController::class, 'index'])->name('index');
+        Route::post('/submit', [VendorCommissionSubmitController::class, 'submit'])->name('submit');
+    });
+
+    Route::prefix('/earnings')->name('earnings.')->group(function () {
+        Route::get('/', [VendorEarningViewController::class, 'index'])->name('index');
+        Route::get('/settlement/{settlement}', [VendorEarningViewController::class, 'settlementShow'])->name('settlement.show');
+    });
+    
+    Route::prefix('/commissions-card')->name('commissions-card.')->group(function () {
+        Route::get('/', [VendorCommissionCardViewController::class, 'index'])->name('index');
+    });
 }); 
 
 
@@ -175,9 +201,13 @@ use App\Http\Controllers\Admin\VehicleTypeController;
 use App\Http\Controllers\Admin\AuctionBidController;
 use App\Http\Controllers\Admin\AuctionWinnerController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminBankController;
 use App\Http\Controllers\Admin\AdminVendorController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\AdminReviewController;
+use App\Http\Controllers\Admin\VendorCommissionCodController;
+use App\Http\Controllers\Admin\VendorCommissionCardController;
+use App\Http\Controllers\Admin\VendorEarningController;
 
 use App\Http\Middleware\AdminAuth;
 
@@ -260,6 +290,13 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
     Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
 
+    // admin bank
+    Route::get('/bank-accounts', [AdminBankController::class, 'index'])->name('bank-accounts.index');
+    Route::post('/bank-accounts', [AdminBankController::class, 'store'])->name('bank-accounts.store');
+    Route::put('/bank-accounts/{id}', [AdminBankController::class, 'update'])->name('bank-accounts.update');
+    Route::delete('/bank-accounts/{id}', [AdminBankController::class, 'destroy'])->name('bank-accounts.destroy');
+
+
     // vendors
     Route::get('/vendors', [AdminVendorController::class, 'index'])->name('vendors.index');
     Route::post('/vendors/status/{vendor}', [AdminVendorController::class, 'updateStatus'])->name('vendors.status');
@@ -268,5 +305,28 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
     Route::get('/profile', [AdminProfileController::class, 'profile'])->name('profile');
     Route::post('/profile/update', [AdminProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/password', [AdminProfileController::class, 'updatePassword'])->name('profile.password');
+    
+
+    Route::prefix('/vendor-earnings')->name('vendor-earnings.')->group(function () {
+        Route::get('/', [VendorEarningController::class, 'index'])->name('index');
+        Route::get('/{vendor}', [VendorEarningController::class, 'showVendor'])->name('vendor');
+        Route::post('/{vendor}/settle', [VendorEarningController::class, 'settle'])->name('settle');
+        Route::get('/settlement/{settlement}', [VendorEarningController::class, 'settlementShow'])->name('settlement.show');
+    });
+
+    Route::prefix('/vendor-commissions-card')->name('vendor-commissions-card.')->group(function () {
+        Route::get('/', [VendorCommissionCardController::class, 'index'])->name('index');
+        Route::get('/{vendor}', [VendorCommissionCardController::class, 'showVendor'])->name('vendor');
+        Route::post('/{vendor}/settle', [VendorCommissionCardController::class, 'settle'])->name('settle');
+    });
+
+    Route::prefix('/vendor-commissions-cod')->name('vendor-commissions-cod.')->group(function () {
+        Route::get('/', [VendorCommissionCodController::class, 'index'])->name('index');
+        Route::get('/{settlement}', [VendorCommissionCodController::class, 'show'])->name('show');
+        Route::post('/{settlement}/approve', [VendorCommissionCodController::class, 'approve'])->name('approve');
+        Route::post('/{settlement}/reject', [VendorCommissionCodController::class, 'reject'])->name('reject');
+    });
+
+  
 
 });

@@ -41,4 +41,10 @@ class VendorEarning extends Model
     {
         return $query->where('status', 'pending');
     }
+
+    public function settlements()
+    {
+        return $this->belongsToMany(VendorEarningSettlement::class, 'vendor_earning_settlement_items', 'vendor_earning_id', 'settlement_id');
+    }
+
 }

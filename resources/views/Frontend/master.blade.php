@@ -294,7 +294,7 @@ body {
   background: #fff;
   border-radius: 5px;
   box-shadow: 0px 24px 50px 0px rgba(0, 0, 0, 0.05);
-  padding: 21px 30px 40px 30px;
+  padding: 21px 30px 21px 30px;
 }
 
 .theme-btn{
