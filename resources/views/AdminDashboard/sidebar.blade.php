@@ -123,12 +123,39 @@
                 </ul>
             </li>
 
+            
+
             <li>
                 <a href="{{ route('admin.reviews.index') }}">
                 <iconify-icon icon="mdi:star-outline" class="menu-icon"></iconify-icon>
                     <span>Reviews</span>
                 </a>
     
+            </li>
+
+            <li class="dropdown">
+               <a href="javascript:void(0)">
+               <iconify-icon icon="heroicons:document" class="menu-icon"></iconify-icon>
+                    <span>Reports</span>
+                </a>
+                 <ul class="sidebar-submenu">
+                    <li>
+                        <a href="{{ route('admin.reports.income') }}">
+                            <i class="ri-circle-fill circle-icon text-success-600 w-auto"></i> Income Report</a>
+                    </li>
+                     <li>
+                        <a href="{{ route('admin.reports.cod-commission') }}">
+                            <i class="ri-circle-fill circle-icon text-warning-600 w-auto"></i>COD Commission Report</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.reports.vendors') }}">
+                            <i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i>Vendors </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.reports.vendor-performance') }}">
+                            <i class="ri-circle-fill circle-icon text-danger-600 w-auto"></i>Vendor Performance </a>
+                    </li>
+                </ul>
             </li>
 
             

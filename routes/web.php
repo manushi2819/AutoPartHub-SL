@@ -208,6 +208,7 @@ use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\VendorCommissionCodController;
 use App\Http\Controllers\Admin\VendorCommissionCardController;
 use App\Http\Controllers\Admin\VendorEarningController;
+use App\Http\Controllers\Admin\AdminReportController;
 
 use App\Http\Middleware\AdminAuth;
 
@@ -327,6 +328,20 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
         Route::post('/{settlement}/reject', [VendorCommissionCodController::class, 'reject'])->name('reject');
     });
 
-  
+    Route::prefix('/reports')->name('reports.')->group(function () {
+        Route::get('/income', [AdminReportController::class, 'income'])->name('income');
+        Route::get('/income/pdf', [AdminReportController::class, 'incomePdf'])->name('income.pdf');
+
+        Route::get('/pending-commission', [AdminReportController::class, 'codCommission'])->name('cod-commission');
+        Route::get('/pending-commission/pdf', [AdminReportController::class, 'codCommissionPdf'])->name('cod-commission.pdf');
+
+        Route::get('/vendor-performance', [AdminReportController::class, 'vendorPerformance'])->name('vendor-performance');
+        Route::get('/vendor-performance/pdf', [AdminReportController::class, 'vendorPerformancePdf'])->name('vendor-performance.pdf');
+
+        Route::get('/vendor-sales', [AdminReportController::class, 'vendors'])->name('vendors');
+        Route::get('/vendor-sales/pdf', [AdminReportController::class, 'vendorsPdf'])->name('vendors.pdf');
+    });
+
+    
 
 });
