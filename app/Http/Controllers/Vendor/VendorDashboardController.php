@@ -74,7 +74,6 @@ class VendorDashboardController extends Controller
 
         $pendingCardCommissions = VendorCommission::where('vendor_id', $vendorId)
             ->where('payment_method', 'card')
-            ->where('status', 'pending')
             ->whereHas('orderItem', function ($q) {
                 $q->where('status', '!=', 'pending');
             })
