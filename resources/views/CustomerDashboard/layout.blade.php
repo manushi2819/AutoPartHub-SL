@@ -225,12 +225,12 @@ form textarea {
                                    Orders
                                 </a>
                             </li>
-                             <li>
+                            <!-- <li>
                                 <a href="{{ route('customer.auctionbids') }}"
                                    class="{{ request()->routeIs('customer.auctionbids') ? 'active' : '' }}">
                                    Auction Bids
                                 </a>
-                            </li>
+                            </li>-->
                             <li>
                                 <a href="{{ route('customer.password') }}"
                                    class="{{ request()->routeIs('customer.password') ? 'active' : '' }}">
@@ -250,10 +250,10 @@ form textarea {
     </section>
 
 
+    <!--
 @if($recommendedProducts->count())
 <div class="recommended-section">
     <div class="auto-container">
-        <!-- Section Header -->
         <div class="section-header text-center mb-5">
             <span class="section-badge">Personalized Picks</span>
             <h2 class="section-title">Recommended Parts For You</h2>
@@ -266,7 +266,6 @@ form textarea {
           
         </div>
 
-        <!-- Products Grid -->
         <div class="row g-4">
             @foreach($recommendedProducts as $product)
                 @php
@@ -275,7 +274,7 @@ form textarea {
 
                 <div class="col-lg-3 col-md-4 col-6">
                     <div class="product-card">
-                        <!-- Product Image -->
+                       
                         <div class="product-image-wrapper">
                             <a href="{{ route('Frontend.parts-details', $product->id) }}" class="product-link">
                                 <img src="{{ $mainImage ? asset('uploads/'.$mainImage->image_url) : asset('no-image.png') }}" 
@@ -284,7 +283,7 @@ form textarea {
                             </a>
                         </div>
 
-                        <!-- Product Content -->
+                       
                         <div class="product-content">
                             <h3 class="product-title">
                                 <a href="{{ route('Frontend.parts-details', $product->id) }}">
@@ -355,7 +354,8 @@ form textarea {
         </div>
     </div>
 </div>
-@endif
+@endif-->
+
 
 
 

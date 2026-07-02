@@ -26,7 +26,7 @@
                             <div class="inner-box">
                                 <div class="icon-box"><i class="icon-48"></i></div>
                                 <h4>Email Address</h4>
-                                <p><a href="mailto:ruwindi2819@gmail.com">ruwindi2819@gmail.com</a><br />
+                                <p><a href="mailto:kasthurid1234@gmail.com">kasthurid1234@gmail.com</a><br />
                             </div>
                         </div>
                     </div>

@@ -435,7 +435,7 @@
         </section>
         <!-- shop-style-two end -->
 
-       <!-- feature-section  -->
+       <!-- feature-section  
 <section class="feature-section pb_70">
     <div class="auto-container">
         <div class="row clearfix">
@@ -474,7 +474,7 @@
             </div>
         </div>
     </div>
-</section>
+</section>-->
 
 
 
@@ -859,9 +859,9 @@
 </style>
 
 
-<!-- Recently Viewed Parts -->
+<!-- Recently Viewed Parts
 @if(auth('customer')->check() && $recentlyViewedProducts->count() > 0)
-<!-- shop-style-two -->
+
 <section class="shop-style-two pb_100">
     <div class="auto-container">
         <div class="sec-title mb_35">
@@ -908,15 +908,15 @@
         </div>
     </div>
 </section>
-<!-- shop-style-two end -->
+ shop-style-two end -->
 @endif
 
 
 
-<!-- Recommended For You -->
+<!-- Recommended For You 
 @if(auth('customer')->check() && $recommendedProducts->count() > 0)
 
-<!-- shop-section -->
+
 <section class="shop-section pb_100">
     <div class="auto-container">
         <div class="inner-container">
@@ -982,7 +982,7 @@
         </div>
     </div>
 </section>
-<!-- shop-section end -->
+shop-section end -->
 
 @endif
 

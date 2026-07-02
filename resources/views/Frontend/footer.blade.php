@@ -81,7 +81,7 @@
                                 <div class="widget-content">
                                     <p>Location: Ridigama, Kurunegala</p>
                                     <ul class="info mb_25 clearfix">
-                                        <li><a href="mailto:ruwindi2819@gmail.com">ruwindi2819@gmail.com</a></li>
+                                        <li><a href="mailto:kasthurid1234@gmail.com">kasthurid1234@gmail.com</a></li>
                                         <li><a href="tel:+94716316143">+94 71 631 6143</a></li>
                                     </ul>
                                     <ul class="social-links">

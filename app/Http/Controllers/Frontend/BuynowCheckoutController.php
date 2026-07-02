@@ -104,7 +104,7 @@ class BuynowCheckoutController extends Controller
     // Send emails for COD only
     if ($request->payment_method === 'cod') {
         Mail::to($order->email)->send(new OrderPlaced($order));
-        Mail::to('ruwindi2819@gmail.com')->send(new OrderPlaced($order, true));
+        Mail::to('kasthurid1234@gmail.com')->send(new OrderPlaced($order, true));
     }
 
     // Redirect to CyberSource if card payment

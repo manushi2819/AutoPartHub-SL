@@ -86,7 +86,10 @@ class AdminReportService
     public function codCommissionReport(?Carbon $start, ?Carbon $end, ?string $status = null)
     {
         $query = VendorCommission::where('vendor_id', '!=', 1)
-            ->where('payment_method', 'cod');
+            ->where('payment_method', 'cod')
+            ->whereHas('orderItem', function ($q) {
+                $q->where('status', '!=', 'pending');
+            });;
 
         if ($status) {
             $query->where('status', $status);
@@ -128,6 +131,7 @@ class AdminReportService
     public function vendorPerformanceReport(?Carbon $start, ?Carbon $end): Collection
     {
         $itemQuery = fn() => OrderItem::where('vendor_id', '!=', 1)
+            ->where('status', '!=', 'pending')
             ->when($start && $end, fn($q) => $q->whereBetween('created_at', [
                 $start->copy()->startOfDay(), $end->copy()->endOfDay()
             ]));

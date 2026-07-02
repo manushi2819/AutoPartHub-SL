@@ -425,7 +425,7 @@ h3:hover {
                <div class="product-details-content mb_0">
                    <div class="row clearfix">
                     <!-- Images -->
-                        <div class="col-lg-4 col-md-12 col-sm-12 image-column">
+                        <div class="col-lg-5 col-md-12 col-sm-12 image-column">
                             <div class="bxslider ">
                                 @foreach($product->images as $index => $image)
                                     <div class="slider-content ">
@@ -483,7 +483,7 @@ h3:hover {
 
 
                         <!-- Product Info -->
-                        <div class="col-lg-5 col-md-12 col-sm-12 content-column">
+                        <div class="col-lg-4 col-md-12 col-sm-12 content-column">
                             <div class="content-box card1" style="background-color: #f4f4f4; ">
                                 <h2 style="font-size: 22px; line-height: 25px">{{ $product->name }}</h2>
                                 <h3 style="font-size: 24px; ">LKR {{ number_format($product->price, 2) }}</h3>
@@ -891,6 +891,7 @@ h3:hover {
             </div>
 
 
+            <!--
           @if($relatedProducts->count() > 0)
             <div class="auto-container mb-5">
                 <div class="related-product">
@@ -945,11 +946,11 @@ h3:hover {
                     </div>
                 </div>
             </div>
-            @endif
+            @endif-->
 
             
         </section>
-        <!-- shop-details end -->
+
 
 <style>
 

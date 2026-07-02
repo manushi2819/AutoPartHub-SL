@@ -65,7 +65,7 @@ class ContactController extends Controller
         ]));
 
         // Get company email from .env
-        $companyEmail = env('COMPANY_EMAIL', 'ruwindi2819@gmail.com'); 
+        $companyEmail = env('COMPANY_EMAIL', 'kasthurid1234@gmail.com'); 
 
         // Send email if company email exists
         if ($companyEmail) {

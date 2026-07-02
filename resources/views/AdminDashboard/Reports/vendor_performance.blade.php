@@ -40,10 +40,11 @@
                             <th class="text-end">Orders</th>
                             <th class="text-end">Total Sales</th>
                             <th class="text-end">Commission Generated</th>
-                            <th class="text-end">Earnings Paid</th>
-                            <th class="text-end">Earnings Pending</th>
                             <th class="text-end">Commission Collected</th>
                             <th class="text-end">Commission Pending</th>
+                            <th class="text-end">Earnings Paid</th>
+                            <th class="text-end">Earnings Pending</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -53,10 +54,12 @@
                                 <td class="text-end">{{ $row->order_count }}</td>
                                 <td class="text-end">Rs. {{ number_format($row->total_sales, 2) }}</td>
                                 <td class="text-end">Rs. {{ number_format($row->total_commission_generated, 2) }}</td>
-                                <td class="text-end text-success">Rs. {{ number_format($row->earnings_paid, 2) }}</td>
-                                <td class="text-end text-warning">Rs. {{ number_format($row->earnings_pending, 2) }}</td>
                                 <td class="text-end text-success">Rs. {{ number_format($row->commission_paid, 2) }}</td>
                                 <td class="text-end text-warning">Rs. {{ number_format($row->commission_pending, 2) }}</td>
+                                <td class="text-end text-success">Rs. {{ number_format($row->earnings_paid, 2) }}</td>
+                                <td class="text-end text-warning">Rs. {{ number_format($row->earnings_pending, 2) }}</td>
+
+                                
                             </tr>
                         @endforeach
                     </tbody>

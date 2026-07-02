@@ -152,7 +152,7 @@ class CheckoutController extends Controller
 
         if ($request->payment_method === 'cod') {
             Mail::to($order->email)->send(new OrderPlaced($order));
-            Mail::to('ruwindi2819@gmail.com')->send(new OrderPlaced($order, true));
+            Mail::to('kasthurid1234@gmail.com')->send(new OrderPlaced($order, true));
             return redirect()->route('Frontend.checkout.cod_success', ['order_id' => $order->id]);
         }
 
@@ -275,7 +275,7 @@ class CheckoutController extends Controller
                 ]);
 
                 Mail::to($order->email)->send(new OrderPlaced($order));
-                Mail::to('ruwindi2819@gmail.com')->send(new OrderPlaced($order, true));
+                Mail::to('kasthurid1234@gmail.com')->send(new OrderPlaced($order, true));
 
             } else {
                 // Payment failed — release stock, fail the order, and cancel the ledger

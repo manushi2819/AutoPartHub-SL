@@ -57,7 +57,6 @@
                         <th>Order Number</th>
                         <th>Customer Name</th>
                         <th>Email</th>
-                        <th>Total</th>
                         <th>Payment Method</th>
                         <th>Action</th>
                     </tr>
@@ -70,7 +69,6 @@
                             <td>{{ $order->order_number }}</td>
                             <td>{{ $order->first_name }} {{ $order->last_name }}</td>
                             <td>{{ $order->email }}</td>
-                            <td>Rs. {{ number_format($order->total, 2) }}</td>
                             <td>{{ ucfirst($order->payment_method) }}</td>
                             <td>
                                 <a href="{{ route('vendor.orders.show', $order->id) }}" 

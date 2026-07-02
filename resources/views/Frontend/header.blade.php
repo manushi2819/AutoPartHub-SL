@@ -350,7 +350,7 @@
                                             <a href="{{ route('Frontend.vehicles') }}">Vehicles</a>
                                         </li> 
 
-                                      <li class="dropdown {{ request()->routeIs('Frontend.auctions') ? 'current' : '' }}">
+                                      <!--<li class="dropdown {{ request()->routeIs('Frontend.auctions') ? 'current' : '' }}">
                                             <a href="{{ route('Frontend.auctions', ['status' => 'active']) }}"
                                             class="d-flex align-items-center">
                                                 Auctions
@@ -373,7 +373,7 @@
                                                     </a>
                                                 </li>
                                             </ul>
-                                        </li>
+                                        </li>-->
 
                                         <li class="{{ request()->routeIs('Frontend.about') ? 'current' : '' }}">
                                             <a href="{{ route('Frontend.about') }}">About</a>
@@ -493,7 +493,7 @@
                     <ul>
                         <li>Ridigama, Kurunegala</li>
                         <li><a href="tel:+94 71 631 6143">+94 71 631 6143</a></li>
-                        <li><a href="mailto:ruwindi2819@gmail.com">ruwindi2819@gmail.com</a></li>
+                        <li><a href="mailto:kasthurid1234@gmail.com">kasthurid1234@gmail.com</a></li>
                     </ul>
                 </div>
                 <div class="social-links">
