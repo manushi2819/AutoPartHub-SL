@@ -110,7 +110,7 @@
                     <div>
                         <p class="fw-medium text-primary-light mb-1">Pending Earnings</p>
                         <h6 class="mb-0">Rs. {{ number_format($pendingEarnings ?? 0, 2) }}</h6>
-                        <small class="text-muted">Awaiting bank transfer from admin</small>
+                        <small class="text-muted">Awaiting bank transfer from admin or COD orders</small>
                     </div>
                     <div class="w-50-px h-50-px rounded-circle d-flex justify-content-center align-items-center" style="background:#487FFF;">
                         <iconify-icon icon="mdi:bank-transfer-in" class="text-white text-2xl"></iconify-icon>

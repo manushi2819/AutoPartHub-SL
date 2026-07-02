@@ -114,6 +114,7 @@ use App\Http\Controllers\Vendor\VendorOrderController;
 use App\Http\Controllers\Vendor\VendorCommissionCardViewController;
 use App\Http\Controllers\Vendor\VendorEarningViewController;
 use App\Http\Controllers\Vendor\VendorCommissionSubmitController;
+use App\Http\Controllers\Vendor\VendorReportController;
 use App\Http\Middleware\VendorAuth;
 
 Route::prefix('vendor')->name('vendor.')->middleware([VendorAuth::class])->group(function () {
@@ -147,10 +148,25 @@ Route::prefix('vendor')->name('vendor.')->middleware([VendorAuth::class])->group
     Route::prefix('/earnings')->name('earnings.')->group(function () {
         Route::get('/', [VendorEarningViewController::class, 'index'])->name('index');
         Route::get('/settlement/{settlement}', [VendorEarningViewController::class, 'settlementShow'])->name('settlement.show');
+         Route::get('/cod', [VendorEarningViewController::class, 'codindex'])->name('cod.index');
     });
     
     Route::prefix('/commissions-card')->name('commissions-card.')->group(function () {
         Route::get('/', [VendorCommissionCardViewController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('/reports')->name('reports.')->group(function () {
+        Route::get('/earnings', [VendorReportController::class, 'earnings'])->name('earnings');
+        Route::get('/earnings/pdf', [VendorReportController::class, 'earningsPdf'])->name('earnings.pdf');
+
+        Route::get('/commission', [VendorReportController::class, 'commission'])->name('commission');
+        Route::get('/commission/pdf', [VendorReportController::class, 'commissionPdf'])->name('commission.pdf');
+
+        Route::get('/sales-summary', [VendorReportController::class, 'salesSummary'])->name('sales-summary');
+        Route::get('/sales-summary/pdf', [VendorReportController::class, 'salesSummaryPdf'])->name('sales-summary.pdf');
+
+        Route::get('/settlement-report', [VendorReportController::class, 'settlementReport'])->name('settlement-report');
+        Route::get('/settlement-report/pdf', [VendorReportController::class, 'settlementReportPdf'])->name('settlement-report.pdf');
     });
 }); 
 

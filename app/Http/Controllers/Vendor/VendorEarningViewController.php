@@ -15,6 +15,7 @@ class VendorEarningViewController extends Controller
 
         $pending = VendorEarning::with('order', 'product')
             ->where('vendor_id', $vendorId)
+            ->where('payment_method', 'card')
             ->where('status', 'pending')
             ->orderBy('created_at')
             ->get();
@@ -34,5 +35,32 @@ class VendorEarningViewController extends Controller
         $vendorId = session('vendor_id');
         $settlement->load('earnings.product', 'earnings.order');
         return view('VendorDashboard.Earnings.settlement_show', compact('settlement'));
+    }
+
+
+     public function codindex(Request $request)
+    {
+        $vendorId = session('vendor_id');
+
+        $pending = VendorEarning::with('order', 'product')
+            ->where('vendor_id', $vendorId)
+            ->where('payment_method', 'cod')
+            ->where('status', 'pending')
+            ->whereHas('orderItem', function ($q) {
+                $q->where('status', '!=', 'pending');
+            })
+            ->orderBy('created_at')
+            ->get();
+
+        $paid = VendorEarning::with('order', 'product')
+            ->where('vendor_id', $vendorId)
+            ->where('payment_method', 'cod')
+            ->where('status', 'paid')
+            ->orderBy('created_at')
+            ->get();
+
+        $tab = $request->get('tab', 'pending');
+
+        return view('VendorDashboard.Earnings.cod-index', compact('pending', 'paid', 'tab'));
     }
 }

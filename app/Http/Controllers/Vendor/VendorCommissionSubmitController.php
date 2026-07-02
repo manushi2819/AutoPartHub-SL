@@ -20,7 +20,7 @@ class VendorCommissionSubmitController extends Controller
             ->where('vendor_id', $vendorId)
             ->where('payment_method', 'cod')
             ->where('status', 'pending')
-            ->whereHas('orderItem', fn($q) => $q->where('status', 'delivered'))
+            ->whereHas('orderItem', fn($q) => $q->where('status',  '!=', 'pending'))
             ->orderBy('created_at')
             ->get();
 

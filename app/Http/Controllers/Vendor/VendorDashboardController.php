@@ -67,21 +67,33 @@ class VendorDashboardController extends Controller
         // =========================
         $pendingEarnings = VendorEarning::where('vendor_id', $vendorId)
             ->where('status', 'pending')
+            ->whereHas('orderItem', function ($q) {
+                $q->where('status', '!=', 'pending');
+            })
             ->sum('earning_amount');
 
         $pendingCardCommissions = VendorCommission::where('vendor_id', $vendorId)
             ->where('payment_method', 'card')
             ->where('status', 'pending')
+            ->whereHas('orderItem', function ($q) {
+                $q->where('status', '!=', 'pending');
+            })
             ->sum('commission_amount');
 
         $pendingCodCommissions = VendorCommission::where('vendor_id', $vendorId)
             ->where('payment_method', 'cod')
             ->where('status', 'pending')
+            ->whereHas('orderItem', function ($q) {
+                $q->where('status', '!=', 'pending');
+            })
             ->sum('commission_amount');
 
         $codSettlementsAwaitingReview = VendorCommissionSettlement::where('vendor_id', $vendorId)
             ->where('payment_method', 'cod')
             ->where('status', 'submitted')
+            ->whereHas('commissions.orderItem', function ($q) {
+                $q->where('status', '!=', 'pending');
+            })
             ->count();
 
         return view('VendorDashboard.index', compact(

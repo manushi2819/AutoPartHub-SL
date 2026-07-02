@@ -73,7 +73,11 @@
                 <ul class="sidebar-submenu">
                     <li>
                         <a href="{{ route('vendor.earnings.index') }}">
-                            <i class="ri-circle-fill circle-icon text-success-600 w-auto"></i> My Earnings</a>
+                            <i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> My Earnings (Card)</a>
+                    </li>
+                     <li>
+                        <a href="{{ route('vendor.earnings.cod.index') }}">
+                            <i class="ri-circle-fill circle-icon text-success-600 w-auto"></i> My Earnings (COD)</a>
                     </li>
                      <li>
                         <a href="{{ route('vendor.commissions-card.index') }}">
@@ -82,6 +86,31 @@
                       <li>
                         <a href="{{ route('vendor.commissions.index') }}">
                             <i class="ri-circle-fill circle-icon text-danger-600 w-auto"></i> Commissions (COD)</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="javascript:void(0)">
+                    <iconify-icon icon="heroicons:document" class="menu-icon"></iconify-icon>
+                <span>Reports</span> 
+                </a>
+                <ul class="sidebar-submenu">
+                    <li>
+                        <a href="{{ route('vendor.reports.earnings') }}">
+                            <i class="ri-circle-fill circle-icon text-success-600 w-auto"></i> Earnings Report</a>
+                    </li>
+                     <li>
+                        <a href="{{ route('vendor.reports.commission') }}">
+                            <i class="ri-circle-fill circle-icon text-warning-600 w-auto"></i>Commission Report</a>
+                    </li>
+                      <li>
+                        <a href="{{ route('vendor.reports.sales-summary') }}">
+                            <i class="ri-circle-fill circle-icon text-danger-600 w-auto"></i> Sales Report</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('vendor.reports.settlement-report') }}">
+                            <i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Payout History</a>
                     </li>
                 </ul>
             </li>
