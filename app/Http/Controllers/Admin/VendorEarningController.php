@@ -18,11 +18,13 @@ class VendorEarningController extends Controller
         $vendors = Vendor::where('id', '!=', 1)
             ->whereHas('earnings', function ($q) {
                 $q->where('status', 'pending')
-                ->whereHas('orderItem', fn($q2) => $q2->where('status', 'delivered'));
+                    ->where('payment_method', 'card')
+                    ->whereHas('orderItem', fn($q2) => $q2->where('status', 'delivered'));
             })
             ->withSum(['earnings as pending_total' => function ($q) {
                 $q->where('status', 'pending')
-                ->whereHas('orderItem', fn($q2) => $q2->where('status', 'delivered'));
+                    ->where('payment_method', 'card')
+                    ->whereHas('orderItem', fn($q2) => $q2->where('status', 'delivered'));
             }], 'earning_amount')
             ->get();
 

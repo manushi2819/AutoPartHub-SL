@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        body { font-family: 'DejaVu Sans', sans-serif; font-size: 10px; color: #222; margin:0px;padding:0px }
+        body { font-family: 'DejaVu Sans', sans-serif; font-size: 11px; color: #222; margin:0px;padding:0px }
         h2 { margin-bottom: 2px; }
         .subtitle { color: #666; margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #ddd; padding: 5px 6px; text-align: left; }
-        th { background: #f0f0f0; }
+        th { background: #f0f0f0; padding: 5px 6px; font-size:11px}
         .text-end { text-align: right; }
         .positive { color: #1a7a3c; }
         .pending { color: #b3791d; }

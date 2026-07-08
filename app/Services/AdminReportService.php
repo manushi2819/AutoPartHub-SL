@@ -19,9 +19,14 @@ class AdminReportService
      */
     public function incomeReport(?Carbon $start, ?Carbon $end): array
     {
-        $itemQuery = OrderItem::query();
+        $itemQuery = OrderItem::query()
+            ->where('payment_status', 'paid');
+
         if ($start && $end) {
-            $itemQuery->whereBetween('created_at', [$start->copy()->startOfDay(), $end->copy()->endOfDay()]);
+            $itemQuery->whereBetween('created_at', [
+                $start->copy()->startOfDay(),
+                $end->copy()->endOfDay()
+            ]);
         }
 
         $ownStoreEarnings = (clone $itemQuery)->where('vendor_id', 1)->sum('vendor_earning_amount');
@@ -51,19 +56,23 @@ class AdminReportService
             ->where('vendor_id', 1)
             ->first();
 
-        $cardCommissionAll = (clone $itemQuery)->whereHas('order', fn($q) => $q->where('payment_method', 'card'))
-            ->sum('vendor_commission_amount');
+        $cardCommissionAll = VendorCommission::where('payment_method', 'card')
+            ->where('status', 'paid')
+            ->sum('commission_amount');
 
-        $codCommissionAll = (clone $itemQuery)->whereHas('order', fn($q) => $q->where('payment_method', 'cod'))
-            ->sum('vendor_commission_amount');
+        $codCommissionAll = VendorCommission::where('payment_method', 'cod')
+            ->where('status', 'paid')
+            ->sum('commission_amount');
 
-        $cardOwnStore = (clone $itemQuery)->where('vendor_id', 1)
-            ->whereHas('order', fn($q) => $q->where('payment_method', 'card'))
-            ->sum('vendor_earning_amount');
+        $cardOwnStore = VendorEarning::where('vendor_id', 1)
+            ->where('payment_method', 'card')
+            ->where('status', 'paid')
+            ->sum('earning_amount');
 
-        $codOwnStore = (clone $itemQuery)->where('vendor_id', 1)
-            ->whereHas('order', fn($q) => $q->where('payment_method', 'cod'))
-            ->sum('vendor_earning_amount');
+        $codOwnStore = VendorEarning::where('vendor_id', 1)
+            ->where('payment_method', 'cod')
+            ->where('status', 'paid')
+            ->sum('earning_amount');
 
         return [
             'period_start' => $start,
@@ -142,27 +151,87 @@ class AdminReportService
             ->get()
             ->keyBy('vendor_id');
 
-        $earningsPaid = VendorEarning::where('vendor_id', '!=', 1)->where('status', 'paid')
-            ->when($start && $end, fn($q) => $q->whereBetween('paid_at', [$start, $end]))
-            ->selectRaw('vendor_id, SUM(earning_amount) as total')->groupBy('vendor_id')->get()->keyBy('vendor_id');
+        $earningsPaid = VendorEarning::where('vendor_id', '!=', 1)
+            ->where('status', 'paid')
+            ->where('payment_method', 'card')
+            ->when($start && $end, function ($q) use ($start, $end) {
+                $q->whereBetween('created_at', [
+                    $start->copy()->startOfDay(),
+                    $end->copy()->endOfDay()
+                ]);
+            })
+            ->selectRaw('vendor_id, SUM(earning_amount) as total')
+            ->groupBy('vendor_id')
+            ->get()
+            ->keyBy('vendor_id');
 
-        $earningsPending = VendorEarning::where('vendor_id', '!=', 1)->where('status', 'pending')
-            ->selectRaw('vendor_id, SUM(earning_amount) as total')->groupBy('vendor_id')->get()->keyBy('vendor_id');
+        $codEarnings = VendorEarning::where('vendor_id', '!=', 1)
+            ->where('payment_method', 'cod')
+            ->when($start && $end, function ($q) use ($start, $end) {
+                $q->whereBetween('created_at', [
+                    $start->copy()->startOfDay(),
+                    $end->copy()->endOfDay()
+                ]);
+            })
+            ->selectRaw('vendor_id, SUM(earning_amount) as total')
+            ->groupBy('vendor_id')
+            ->get()
+            ->keyBy('vendor_id');
 
-        $commissionPaid = VendorCommission::where('vendor_id', '!=', 1)->where('status', 'paid')
-            ->selectRaw('vendor_id, SUM(commission_amount) as total')->groupBy('vendor_id')->get()->keyBy('vendor_id');
 
-        $commissionPending = VendorCommission::where('vendor_id', '!=', 1)->where('status', 'pending')
-            ->selectRaw('vendor_id, SUM(commission_amount) as total')->groupBy('vendor_id')->get()->keyBy('vendor_id');
+        $earningsPending = VendorEarning::where('vendor_id', '!=', 1)
+            ->where('status', 'pending')
+            ->where('payment_method', 'card')
+            ->when($start && $end, function ($q) use ($start, $end) {
+                $q->whereBetween('created_at', [
+                    $start->copy()->startOfDay(),
+                    $end->copy()->endOfDay()
+                ]);
+            })
+            ->selectRaw('vendor_id, SUM(earning_amount) as total')
+            ->groupBy('vendor_id')
+            ->get()
+            ->keyBy('vendor_id');
+
+
+        $commissionPaid = VendorCommission::where('vendor_id', '!=', 1)
+            ->where('status', 'paid')
+            ->when($start && $end, function ($q) use ($start, $end) {
+                $q->whereBetween('created_at', [
+                    $start->copy()->startOfDay(),
+                    $end->copy()->endOfDay()
+                ]);
+            })
+            ->selectRaw('vendor_id, SUM(commission_amount) as total')
+            ->groupBy('vendor_id')
+            ->get()
+            ->keyBy('vendor_id');
+
+
+        $commissionPending = VendorCommission::where('vendor_id', '!=', 1)
+            ->where('status', 'pending')
+            ->when($start && $end, function ($q) use ($start, $end) {
+                $q->whereBetween('created_at', [
+                    $start->copy()->startOfDay(),
+                    $end->copy()->endOfDay()
+                ]);
+            })
+            ->selectRaw('vendor_id, SUM(commission_amount) as total')
+            ->groupBy('vendor_id')
+            ->get()
+            ->keyBy('vendor_id');
 
         $vendorIds = $sales->keys()
-            ->merge($earningsPaid->keys())->merge($earningsPending->keys())
-            ->merge($commissionPaid->keys())->merge($commissionPending->keys())
+            ->merge($earningsPaid->keys())
+            ->merge($earningsPending->keys())
+            ->merge($codEarnings->keys())
+            ->merge($commissionPaid->keys())
+            ->merge($commissionPending->keys())
             ->unique();
 
         $vendors = Vendor::whereIn('id', $vendorIds)->get()->keyBy('id');
 
-        return $vendorIds->map(function ($vendorId) use ($sales, $earningsPaid, $earningsPending, $commissionPaid, $commissionPending, $vendors) {
+        return $vendorIds->map(function ($vendorId) use ($sales, $earningsPaid, $earningsPending, $codEarnings, $commissionPaid, $commissionPending, $vendors) {
             $vendor = $vendors->get($vendorId);
             return (object) [
                 'vendor' => $vendor,
@@ -171,6 +240,7 @@ class AdminReportService
                 'total_commission_generated' => $sales->get($vendorId)?->total_commission_generated ?? 0,
                 'earnings_paid' => $earningsPaid->get($vendorId)?->total ?? 0,
                 'earnings_pending' => $earningsPending->get($vendorId)?->total ?? 0,
+                'cod_earnings' => $codEarnings->get($vendorId)?->total ?? 0,
                 'commission_paid' => $commissionPaid->get($vendorId)?->total ?? 0,
                 'commission_pending' => $commissionPending->get($vendorId)?->total ?? 0,
             ];

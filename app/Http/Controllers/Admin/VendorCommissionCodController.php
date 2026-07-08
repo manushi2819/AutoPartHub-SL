@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\VendorCommissionSettlement;
+use App\Models\VendorCommission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,20 +13,55 @@ class VendorCommissionCodController extends Controller
     
     public function index(Request $request)
     {
+        // 1. Pending commissions (not submitted by vendor)
+        $pendingCommissions = VendorCommission::with([
+            'vendor',
+            'order',
+            'orderItem.product'
+        ])
+        ->where('vendor_id', '!=', 1)
+        ->where('payment_method', 'cod')
+        ->where('status', 'pending')
+        ->whereHas('orderItem', function ($q) {
+            $q->where('status', '!=', 'pending');
+        })
+        ->latest()
+        ->get();
+
+
+        // 2. Submitted settlements waiting for admin
         $pending = VendorCommissionSettlement::with('vendor')
             ->where('vendor_id', '!=', 1)
-            ->cod()->where('status', 'submitted')
-            ->latest('submitted_at')->get();
+            ->cod()
+            ->where('status', 'submitted')
+            ->latest('submitted_at')
+            ->get();
 
+
+        // 3. Paid / rejected history
         $history = VendorCommissionSettlement::with('vendor')
             ->where('vendor_id', '!=', 1)
-            ->cod()->whereIn('status', ['paid', 'rejected'])
-            ->latest('reviewed_at')->paginate(20);
+            ->cod()
+            ->whereIn('status', ['paid', 'rejected'])
+            ->latest('reviewed_at')
+            ->paginate(20);
 
-        $tab = $request->get('tab', 'pending');
 
-        return view('AdminDashboard.VendorPayments.commissions_cod_index', compact('pending', 'history', 'tab'));
+        $tab = $request->get('tab', 'pending_commissions');
+
+
+        return view(
+            'AdminDashboard.VendorPayments.commissions_cod_index',
+            compact(
+                'pendingCommissions',
+                'pending',
+                'history',
+                'tab'
+            )
+        );
     }
+
+
 
     public function show(VendorCommissionSettlement $settlement)
     {

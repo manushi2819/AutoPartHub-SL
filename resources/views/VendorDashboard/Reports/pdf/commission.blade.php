@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        body { font-family: 'DejaVu Sans', sans-serif; font-size: 11px; color: #222; padding: 0px; }
+        body { font-family: 'DejaVu Sans', sans-serif; font-size: 10px; color: #222; padding: 0px; }
         .header { border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 16px; }
         .header h2 { margin: 0 0 4px 0; font-size: 18px; color: #007bff; }
         .header p { margin: 0; color: #666; }

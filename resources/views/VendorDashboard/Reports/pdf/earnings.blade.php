@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        body { font-family: 'DejaVu Sans', sans-serif; font-size: 11px; color: #222; margin: 0; padding: 0px; }
+        body { font-family: 'DejaVu Sans', sans-serif; font-size: 10px; color: #222; margin: 0; padding: 0px; }
         .header { border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 16px; }
         .header h2 { margin: 0 0 4px 0; font-size: 18px; color: #007bff; }
         .header p { margin: 0; color: #666; font-size: 11px; }
@@ -13,7 +13,7 @@
         .summary-value { font-weight: bold; text-align: right; }
         .highlight { background: #f0f6ff; border-left: 3px solid #007bff; }
         table.data { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        table.data th, table.data td { border: 1px solid #ddd; padding: 5px 7px; }
+        table.data th, table.data td { border: 1px solid #ddd; padding: 5px 6px; }
         table.data th { background: #f0f0f0; font-size: 10px; }
         .text-end { text-align: right; }
         .text-center { text-align: center; }

@@ -29,7 +29,7 @@
         width: 100%;
         height: 80px;
         object-fit: cover !important;
-        border-radius: 0px;
+        border-radius: 10px;
         cursor: pointer;
         border: 2px solid transparent;
         transition: all 0.3s ease;
@@ -53,7 +53,7 @@
         width: 100%;
         height: 450px;
         object-fit: cover;
-        border-radius: 0px;
+        border-radius: 10px;
         box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     }
 
@@ -104,7 +104,7 @@
     .contact-card {
         background: var(--light-gray);
         padding: 20px;
-        border-radius: 0px;
+        border-radius: 10px;
         box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     }
 
@@ -129,7 +129,7 @@
     .description-box {
         background: #ffffff;
         border: 1px solid #f0f0f0;
-        border-radius: 0px;
+        border-radius: 10px;
         padding: 25px;
         margin-top: 30px;
         line-height: 1.8;
@@ -151,7 +151,7 @@
     .inquiry-box {
         background: #ffffff;
         border: 1px solid #f0f0f0;
-        border-radius: 0px;
+        border-radius: 10px;
         padding: 25px;
         box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     }
@@ -169,7 +169,7 @@
     /* Form Styles */
     .form-control, select.form-control {
         border: 2px solid #e0e0e0;
-        border-radius: 0px;
+        border-radius: 10px;
         padding: 10px 12px;
         transition: all 0.3s ease;
         font-size: 14px;
@@ -185,7 +185,7 @@
     .btn-dark {
         background: var(--primary-black);
         border: none;
-        border-radius: 0px;
+        border-radius: 10px;
         padding: 12px 24px;
         font-weight: 600;
         transition: all 0.3s ease;
@@ -201,7 +201,7 @@
     .vehicle-card {
         background: #ffffff;
         border: none;
-        border-radius: 0px;
+        border-radius: 10px;
         overflow: hidden;
         transition: all 0.3s ease;
         box-shadow: 0 3px 10px rgba(0,0,0,0.08);
@@ -422,13 +422,27 @@
                     </div>
 
                     <ul class="details-list">
+                        @if($vehicle->year)
                         <li><i class="fas fa-calendar-alt"></i> <strong>Year:</strong> {{ $vehicle->year }}</li>
+                        @endif
+                        @if($vehicle->condition)
                         <li><i class="fas fa-info-circle"></i> <strong>Condition:</strong> {{ $vehicle->condition }}</li>
+                        @endif
+                        @if($vehicle->fuel_type)
                         <li><i class="fas fa-gas-pump"></i> <strong>Fuel:</strong> {{ $vehicle->fuel_type }}</li>
+                        @endif
+                        @if($vehicle->transmission)
                         <li><i class="fas fa-cogs"></i> <strong>Transmission:</strong> {{ $vehicle->transmission }}</li>
+                        @endif
+                        @if($vehicle->mileage)
                         <li><i class="fas fa-road"></i> <strong>Mileage:</strong> {{ number_format($vehicle->mileage) }} km</li>
+                        @endif
+                        @if($vehicle->engine_cc)
                         <li><i class="fas fa-car-battery"></i> <strong>Engine:</strong> {{ $vehicle->engine_cc }} cc</li>
+                        @endif
+                        @if($vehicle->district && $vehicle->city)
                         <li><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> {{ $vehicle->district }} - {{ $vehicle->city }}</li>
+                        @endif
                     </ul>
                 </div>
                 {{-- CONTACT SELLER --}}

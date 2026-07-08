@@ -108,10 +108,10 @@
                         <a href="{{ route('vendor.reports.sales-summary') }}">
                             <i class="ri-circle-fill circle-icon text-danger-600 w-auto"></i> Sales Report</a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="{{ route('vendor.reports.settlement-report') }}">
                             <i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Payout History</a>
-                    </li>
+                    </li>-->
                 </ul>
             </li>
 

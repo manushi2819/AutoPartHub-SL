@@ -8,7 +8,7 @@
         .subtitle { color: #666; margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         th, td { border: 1px solid #ddd; padding: 6px 8px; text-align: left; }
-        th { background: #f0f0f0; }
+        th { background: #f0f0f0; padding: 5px 6px; font-size:10px }
         .text-end { text-align: right; }
         .summary-table td { border: none; padding: 4px 8px; }
         .summary-label { color: #666; }

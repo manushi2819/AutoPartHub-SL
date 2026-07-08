@@ -66,6 +66,7 @@ class AdminDashboardController extends Controller
         // -----------------------
         $pendingVendorEarnings = VendorEarning::where('vendor_id', '!=', 1)
             ->where('status', 'pending')
+            ->where('payment_method', 'card')
             ->sum('earning_amount');
 
         $pendingCardCommissions = VendorCommission::where('vendor_id', '!=', 1)
@@ -112,17 +113,23 @@ class AdminDashboardController extends Controller
      */
     private function calculateIncome(?Carbon $start = null, ?Carbon $end = null): float
     {
-        $ownStoreQuery = OrderItem::where('vendor_id', 1);
-        $commissionQuery = OrderItem::query();
-
+        $ownStoreQuery = OrderItem::where('vendor_id', 1)
+            ->where('payment_status', 'paid');
+        $commissionQuery = OrderItem::query()
+            ->where('payment_status', 'paid');
         if ($start && $end) {
-            $ownStoreQuery->whereBetween('created_at', [$start->copy()->startOfDay(), $end->copy()->endOfDay()]);
-            $commissionQuery->whereBetween('created_at', [$start->copy()->startOfDay(), $end->copy()->endOfDay()]);
-        }
+            $ownStoreQuery->whereBetween('created_at', [
+                $start->copy()->startOfDay(),
+                $end->copy()->endOfDay()
+            ]);
 
+            $commissionQuery->whereBetween('created_at', [
+                $start->copy()->startOfDay(),
+                $end->copy()->endOfDay()
+            ]);
+        }
         $ownStoreEarnings = $ownStoreQuery->sum('vendor_earning_amount');
         $allVendorCommissions = $commissionQuery->sum('vendor_commission_amount');
-
         return (float) ($ownStoreEarnings + $allVendorCommissions);
     }
 }

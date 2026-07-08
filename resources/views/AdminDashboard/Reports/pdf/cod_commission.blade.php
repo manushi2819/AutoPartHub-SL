@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        body { font-family: DejaVu Sans; font-size: 12px; }
+        body { font-family: DejaVu Sans; font-size: 11px; }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         th, td { border: 1px solid #ddd; padding: 6px; }
-        th { background: #f0f0f0; }
+        th { background: #f0f0f0;padding: 5px 6px; font-size:11px }
         .text-end { text-align: right; }
     </style>
 </head>

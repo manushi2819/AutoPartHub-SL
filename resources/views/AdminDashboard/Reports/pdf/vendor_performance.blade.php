@@ -8,8 +8,9 @@
         .subtitle { color: #666; margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #ddd; padding: 5px 6px; text-align: left; }
-        th { background: #f0f0f0; }
+        th { background: #f0f0f0; padding: 5px 6px; font-size:9.5px }
         .text-end { text-align: right; }
+        .text-center { text-align: center; }
         .positive { color: #1a7a3c; }
         .pending { color: #b3791d; }
     </style>
@@ -25,13 +26,14 @@
         <thead>
             <tr>
                 <th>Vendor</th>
-                <th class="text-end">Orders</th>
-                <th class="text-end">Total Sales</th>
-                <th class="text-end">Commission Generated</th>
-                <th class="text-end">Earnings Paid</th>
-                <th class="text-end">Earnings Pending</th>
-                <th class="text-end">Commission Collected</th>
-                <th class="text-end">Commission Pending</th>
+                <th class="text-center">Orders</th>
+                <th class="text-center">Total Card Earnings</th>
+                <th class="text-center">Total COD Earnings</th>
+                <th class="text-center">Commission Generated</th>
+                <th class="text-center">Card Earnings Paid</th>
+                <th class="text-center">Card Earnings Pending</th>
+                <th class="text-center">Commission Collected</th>
+                <th class="text-center">Commission Pending</th>
             </tr>
         </thead>
         <tbody>
@@ -39,7 +41,8 @@
                 <tr>
                     <td>{{ $row->vendor->shop_name ?? $row->vendor->name ?? 'Vendor #' . $row->vendor->id }}</td>
                     <td class="text-end">{{ $row->order_count }}</td>
-                    <td class="text-end">Rs. {{ number_format($row->total_sales, 2) }}</td>
+                    <td class="text-end">Rs. {{ number_format($row->earnings_paid + $row->earnings_pending, 2) }}</td>
+                    <td class="text-end">Rs. {{ number_format($row->cod_earnings, 2) }}</td>
                     <td class="text-end">Rs. {{ number_format($row->total_commission_generated, 2) }}</td>
                     <td class="text-end positive">Rs. {{ number_format($row->earnings_paid, 2) }}</td>
                     <td class="text-end pending">Rs. {{ number_format($row->earnings_pending, 2) }}</td>
