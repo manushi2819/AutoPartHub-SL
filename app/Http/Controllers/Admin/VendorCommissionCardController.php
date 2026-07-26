@@ -43,7 +43,7 @@ class VendorCommissionCardController extends Controller
             ->where('vendor_id', $vendor->id)
             ->where('payment_method', 'card')
             ->where('status', 'pending')
-            ->whereHas('orderItem', fn($q) => $q->where('status', 'delivered'))
+            ->whereHas('orderItem', fn($q) => $q->where('status', '!=', 'pending'))
             ->orderBy('created_at')
             ->get();
 
