@@ -365,34 +365,7 @@
                             </h6>
                             
                             <div class="vehicle-details">
-                                @if(!empty($vehicle->year))
-                                    <div class="vehicle-detail-item">
-                                        <i class="fas fa-calendar"></i>
-                                        <span>Year: {{ $vehicle->year }}</span>
-                                    </div>
-                                @endif
-
-                                @if(!empty($vehicle->fuel_type))
-                                    <div class="vehicle-detail-item">
-                                        <i class="fas fa-gas-pump"></i>
-                                        <span>Fuel: {{ $vehicle->fuel_type }}</span>
-                                    </div>
-                                @endif
-
-                                @if(!empty($vehicle->mileage))
-                                    <div class="vehicle-detail-item">
-                                        <i class="fas fa-road"></i>
-                                        <span>Mileage: {{ number_format($vehicle->mileage) }} km</span>
-                                    </div>
-                                @endif
-
-                                @if(!empty($vehicle->transmission))
-                                    <div class="vehicle-detail-item">
-                                        <i class="fas fa-cogs"></i>
-                                        <span>Transmission: {{ $vehicle->transmission }}</span>
-                                    </div>
-                                @endif
-
+                             
                                 @if(!empty($vehicle->district))
                                     <div class="vehicle-detail-item">
                                         <i class="fas fa-map-marker-alt"></i>

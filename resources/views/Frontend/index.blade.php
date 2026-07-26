@@ -517,35 +517,6 @@
                             LKR {{ number_format($vehicle->price, 0) }}
                         </div>
                         
-                        <div class="vehicle-specs">
-                            @if(!empty($vehicle->year))
-                                <div class="vehicle-detail-item">
-                                    <i class="fas fa-calendar"></i>
-                                    <span>Year: {{ $vehicle->year }}</span>
-                                </div>
-                            @endif
-
-                            @if(!empty($vehicle->fuel_type))
-                                <div class="spec-item">
-                                    <i class="fas fa-gas-pump"></i>
-                                    <span>{{ $vehicle->fuel_type }}</span>
-                                </div>
-                            @endif
-
-                            @if(!empty($vehicle->transmission))
-                                <div class="spec-item">
-                                    <i class="fas fa-cogs"></i>
-                                    <span>{{ $vehicle->transmission }}</span>
-                                </div>
-                            @endif
-
-                            @if(!empty($vehicle->body_type))
-                                <div class="spec-item">
-                                    <i class="fas fa-car"></i>
-                                    <span>{{ $vehicle->body_type }}</span>
-                                </div>
-                            @endif
-                        </div>
                         
                         <div class="vehicle-location">
                             <i class="fas fa-map-marker-alt"></i>
