@@ -35,7 +35,7 @@ class AdminLoginController extends Controller
         | Hardcoded Super Admin Login
         |--------------------------------------------------------------------------
         */
-        $hardcodedAdminEmail    = 'admin@example.com';
+        $hardcodedAdminEmail    = 'kasthurid1234@gmail.com';
         $hardcodedAdminPassword = '12345678';
 
         if (
