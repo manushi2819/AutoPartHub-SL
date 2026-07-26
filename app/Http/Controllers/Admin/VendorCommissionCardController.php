@@ -18,11 +18,11 @@ class VendorCommissionCardController extends Controller
         $vendors = Vendor::where('id', '!=', 1)
             ->whereHas('commissions', function ($q) {
                 $q->where('payment_method', 'card')->where('status', 'pending')
-                ->whereHas('orderItem', fn($q2) => $q2->where('status', 'delivered'));
+                ->whereHas('orderItem', fn($q2) => $q2->where('status', '!=', 'pending'));
             })
             ->withSum(['commissions as pending_total' => function ($q) {
                 $q->where('payment_method', 'card')->where('status', 'pending')
-                ->whereHas('orderItem', fn($q2) => $q2->where('status', 'delivered'));
+                ->whereHas('orderItem', fn($q2) => $q2->where('status', '!=', 'pending'));
             }], 'commission_amount')
             ->get();
 
