@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Jul 02, 2026 at 02:58 PM
+-- Generation Time: Jul 26, 2026 at 10:09 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -221,7 +221,8 @@ INSERT INTO `brands` (`id`, `name`, `image`, `status`, `created_at`, `updated_at
 (15, 'Yamaha', '1776874304_png-clipart-yamaha-motor-company-yamaha-corporation-motorcycle-logo-motorcycle-emblem-trademark-thumbnail.png', 1, '2026-04-22 16:11:44', '2026-04-22 16:11:44'),
 (16, 'Bajaj', '1776874363_Bajaj-Logo.png', 1, '2026-04-22 16:12:43', '2026-04-22 16:12:43'),
 (17, 'TVS', '1776874395_TVS-Motor-logo.png', 1, '2026-04-22 16:13:15', '2026-04-22 16:13:15'),
-(18, 'Hero', '1776874413_images.png', 1, '2026-04-22 16:13:33', '2026-04-22 16:13:33');
+(18, 'Hero', '1776874413_images.png', 1, '2026-04-22 16:13:33', '2026-04-22 16:13:33'),
+(19, 'Universal', NULL, 1, '2026-07-02 16:00:31', '2026-07-02 16:00:31');
 
 -- --------------------------------------------------------
 
@@ -432,7 +433,23 @@ INSERT INTO `customer_activities` (`id`, `customer_id`, `activity_type`, `refere
 (30, 1, 'product_view', 2, NULL, '2026-06-29 11:50:19', '2026-06-29 11:50:19'),
 (31, 1, 'product_view', 12, NULL, '2026-06-29 12:08:45', '2026-06-29 12:08:45'),
 (32, 2, 'product_view', 24, NULL, '2026-07-02 12:11:04', '2026-07-02 12:11:04'),
-(33, 2, 'product_view', 23, NULL, '2026-07-02 12:11:10', '2026-07-02 12:11:10');
+(33, 2, 'product_view', 23, NULL, '2026-07-02 12:11:10', '2026-07-02 12:11:10'),
+(34, 2, 'product_view', 20, NULL, '2026-07-02 15:54:04', '2026-07-02 15:54:04'),
+(35, 2, 'vehicle_view', 4, NULL, '2026-07-02 15:55:14', '2026-07-02 15:55:14'),
+(36, 2, 'vehicle_view', 6, NULL, '2026-07-26 07:52:51', '2026-07-26 07:52:51'),
+(37, 2, 'vehicle_view', 7, NULL, '2026-07-26 07:53:02', '2026-07-26 07:53:02'),
+(38, 2, 'vehicle_view', 5, NULL, '2026-07-26 07:53:06', '2026-07-26 07:53:06'),
+(39, 2, 'vehicle_view', 5, NULL, '2026-07-26 07:53:26', '2026-07-26 07:53:26'),
+(40, 2, 'vehicle_view', 6, NULL, '2026-07-26 07:53:31', '2026-07-26 07:53:31'),
+(41, 2, 'vehicle_view', 6, NULL, '2026-07-26 07:53:44', '2026-07-26 07:53:44'),
+(42, 2, 'vehicle_view', 6, NULL, '2026-07-26 07:53:58', '2026-07-26 07:53:58'),
+(43, 2, 'vehicle_view', 6, NULL, '2026-07-26 07:54:11', '2026-07-26 07:54:11'),
+(44, 2, 'vehicle_view', 6, NULL, '2026-07-26 07:54:35', '2026-07-26 07:54:35'),
+(45, 2, 'vehicle_view', 7, NULL, '2026-07-26 07:54:52', '2026-07-26 07:54:52'),
+(46, 2, 'vehicle_view', 6, NULL, '2026-07-26 07:55:48', '2026-07-26 07:55:48'),
+(47, 2, 'vehicle_view', 7, NULL, '2026-07-26 07:55:53', '2026-07-26 07:55:53'),
+(48, 2, 'product_view', 12, NULL, '2026-07-26 07:58:57', '2026-07-26 07:58:57'),
+(49, 2, 'vehicle_view', 7, NULL, '2026-07-26 08:00:06', '2026-07-26 08:00:06');
 
 -- --------------------------------------------------------
 
@@ -608,7 +625,8 @@ CREATE TABLE `orders` (
 INSERT INTO `orders` (`id`, `customer_id`, `order_number`, `tracking_no`, `first_name`, `last_name`, `email`, `phone`, `address`, `city`, `zip`, `country`, `subtotal`, `discount`, `total`, `payment_method`, `status`, `payment_status`, `created_at`, `updated_at`) VALUES
 (1, 1, 'ORD-VJCWYBPW', NULL, 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Kurunegala', '60040', 'Sri Lanka', 2500.00, 0.00, 2500.00, 'card', 'confirmed', 'paid', '2026-06-29 12:06:15', '2026-06-29 12:06:51'),
 (2, 1, 'ORD-XZFZ5BXH', NULL, 'Manushi', 'Weerasinghe', 'manuw2819@gmail.com', '0716280393', 'No.124, Ridigama, Kurunegala', 'Kurunegala', '60040', 'Sri Lanka', 40470.00, 0.00, 40470.00, 'cod', 'pending', 'pending', '2026-06-29 12:10:07', '2026-06-29 12:10:07'),
-(3, 2, 'ORD-NADZXUFZ', NULL, 'Kasthurii', 'Dhananjaya', 'kasthurid1234@gmail.com', '0716316143', 'No.124', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 6205.00, 0.00, 6205.00, 'cod', 'pending', 'pending', '2026-07-02 12:11:52', '2026-07-02 12:11:52');
+(3, 2, 'ORD-NADZXUFZ', NULL, 'Kasthurii', 'Dhananjaya', 'kasthurid1234@gmail.com', '0716316143', 'No.124', 'Ridigama, Kurunegala', '60040', 'Sri Lanka', 6205.00, 0.00, 6205.00, 'cod', 'pending', 'pending', '2026-07-02 12:11:52', '2026-07-02 12:11:52'),
+(4, 2, 'ORD-BICIFHY3', NULL, 'Kasthurii', 'Dhananjaya', 'kasthurid1234@gmail.com', '0716316143', 'Ridigama', 'kurunegala', '60040', 'Sri Lanka', 8500.00, 0.00, 8500.00, 'card', 'confirmed', 'paid', '2026-07-26 08:03:00', '2026-07-26 08:04:14');
 
 -- --------------------------------------------------------
 
@@ -640,10 +658,11 @@ CREATE TABLE `order_items` (
 
 INSERT INTO `order_items` (`id`, `order_id`, `tracking_no`, `product_id`, `vendor_id`, `vendor_percentage`, `vendor_commission_amount`, `vendor_earning_amount`, `quantity`, `price`, `subtotal`, `status`, `payment_status`, `created_at`, `updated_at`) VALUES
 (1, 1, NULL, 24, 2, 8.00, 200.00, 2300.00, 1, 2500.00, 2500.00, 'confirmed', 'paid', '2026-06-29 12:06:15', '2026-06-29 12:06:51'),
-(2, 2, NULL, 12, 1, 0.00, 0.00, 38000.00, 1, 38000.00, 38000.00, 'pending', 'pending', '2026-06-29 12:10:07', '2026-06-29 12:10:07'),
+(2, 2, '46638656', 12, 1, 0.00, 0.00, 38000.00, 1, 38000.00, 38000.00, 'delivered', 'paid', '2026-06-29 12:10:07', '2026-07-08 15:05:22'),
 (3, 2, '12345678', 23, 2, 3.00, 74.10, 2395.90, 2, 1235.00, 2470.00, 'delivered', 'paid', '2026-06-29 12:10:08', '2026-06-30 11:06:53'),
 (4, 3, '1234545', 24, 2, 8.00, 200.00, 2300.00, 1, 2500.00, 2500.00, 'confirmed', 'pending', '2026-07-02 12:11:52', '2026-07-02 12:31:36'),
-(5, 3, '5654845', 23, 2, 3.00, 111.15, 3593.85, 3, 1235.00, 3705.00, 'confirmed', 'pending', '2026-07-02 12:11:52', '2026-07-02 12:31:53');
+(5, 3, '5654845', 23, 2, 3.00, 111.15, 3593.85, 3, 1235.00, 3705.00, 'confirmed', 'pending', '2026-07-02 12:11:52', '2026-07-02 12:31:53'),
+(6, 4, NULL, 24, 2, 9.00, 765.00, 7735.00, 1, 8500.00, 8500.00, 'confirmed', 'paid', '2026-07-26 08:03:00', '2026-07-26 08:04:14');
 
 -- --------------------------------------------------------
 
@@ -711,8 +730,8 @@ INSERT INTO `products` (`id`, `vendor_id`, `category_id`, `name`, `sku`, `brand_
 (20, 1, 14, 'Yamaha R25 (250) - Starter Motor Unit', 'ENG-MOTO-0001', 15, '[\"2\"]', 8500.00, NULL, NULL, NULL, '<p>Yamaha R25 (250) - Starter Motor Unit</p>', NULL, 4, 1, NULL, '2026-04-27 09:14:28', '2026-06-28 18:00:12'),
 (21, 1, 5, 'FREE FRONT FORK COVER REFLECTOR SET DAN GERAH TEPI COVER BATTERY', 'BRA-CAR-0001', 1, '[\"1\"]', 35000.00, NULL, NULL, NULL, '<p>jytrjrtjtrj</p>', 'htrhtrj', 4, 1, 'Used', '2026-05-27 08:19:48', '2026-05-27 08:30:31'),
 (22, 1, 1, 'new', 'AIR-CAR-0002', 1, '[\"1\"]', 55855.00, NULL, NULL, 5252.00, '<p>htjtj</p>', 'grht', 2, 1, 'Brand New', '2026-06-27 10:27:40', '2026-06-27 10:28:05'),
-(23, 2, 29, 'new vendor part', 'AIR-CAR-0003', 2, '[\"1\"]', 1235.00, 3.00, 37.05, 5656.00, '<p>hthyhyhh</p>', 'htrjhty', 2, 1, 'Brand New', '2026-06-27 10:33:43', '2026-07-02 12:11:52'),
-(24, 2, 1, 'Part Vendor', 'AIR-CAR-0004', 2, '[\"1\"]', 2500.00, 8.00, 200.00, NULL, '<p><br></p>', NULL, 4, 1, 'Brand New', '2026-06-27 17:52:21', '2026-07-02 12:11:52');
+(23, 2, 18, 'MOMO JDM Racing Foot Pedals', 'AIR-CAR-0003', 19, '[\"1\"]', 3500.00, 5.00, 175.00, 5656.00, '<p>Pads - Rubber Non-Slip for </p><p>⭕️Automatic &amp; Manual&nbsp;</p><p><br></p>', NULL, 10, 1, 'Brand New', '2026-06-27 10:33:43', '2026-07-02 16:05:33'),
+(24, 2, 20, 'TOMEI Adjustable Fuel Pressure Regulator with Gauge', 'AIR-CAR-0004', 19, '[\"1\"]', 8500.00, 9.00, 765.00, NULL, '<p>✅ Can be used with most cars.</p><p><strong>Features:</strong></p><p>• Increases engine fuel pressure</p><p>• Improves fuel spray (atomization)</p><p>• Helps fuel burn better</p><p>• Increases horsepower and torque</p><p>• Helps improve overall engine performance</p>', NULL, 9, 1, 'Brand New', '2026-06-27 17:52:21', '2026-07-26 08:03:00');
 
 -- --------------------------------------------------------
 
@@ -772,7 +791,11 @@ INSERT INTO `product_images` (`id`, `product_id`, `image_url`, `is_main`, `creat
 (36, 20, '1777281292_69ef290cd4d53.jpeg', 0, '2026-04-27 09:14:52', '2026-04-27 09:14:52'),
 (37, 21, '1779870012_6a16a93c09a9e.jpg', 1, '2026-05-27 08:20:12', '2026-05-27 08:20:12'),
 (38, 23, '1782556438_6a3fa71617a48.png', 1, '2026-06-27 10:33:58', '2026-06-27 10:33:58'),
-(39, 23, '1782556438_6a3fa71618dc7.png', 0, '2026-06-27 10:33:58', '2026-06-27 10:33:58');
+(39, 23, '1782556438_6a3fa71618dc7.png', 0, '2026-06-27 10:33:58', '2026-06-27 10:33:58'),
+(40, 24, '1783008140_6a468b8c12ffc.jpeg', 1, '2026-07-02 16:02:20', '2026-07-02 16:02:20'),
+(41, 24, '1783008140_6a468b8c14375.jpeg', 0, '2026-07-02 16:02:20', '2026-07-02 16:02:20'),
+(42, 24, '1783008140_6a468b8c14ea9.jpeg', 0, '2026-07-02 16:02:20', '2026-07-02 16:02:20'),
+(43, 24, '1783008140_6a468b8c1597c.jpeg', 0, '2026-07-02 16:02:20', '2026-07-02 16:02:20');
 
 -- --------------------------------------------------------
 
@@ -822,8 +845,8 @@ INSERT INTO `product_vehicle_compatibilities` (`id`, `product_id`, `brand`, `mod
 (20, 20, 'Yamaha', 'R25', NULL, NULL, NULL, NULL, NULL, NULL, '2026-04-27 09:14:28', '2026-04-27 09:14:48'),
 (21, 21, 'Toyota', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-05-27 08:19:48', '2026-05-27 08:19:48'),
 (22, 22, 'Toyota', 'Lancer', 222, NULL, NULL, NULL, NULL, NULL, '2026-06-27 10:27:40', '2026-06-27 10:27:40'),
-(23, 23, 'Honda', 'Civic', 2021, NULL, NULL, NULL, NULL, NULL, '2026-06-27 10:33:43', '2026-06-27 10:33:43'),
-(24, 24, 'Honda', 'Lancer', 2008, NULL, NULL, NULL, NULL, NULL, '2026-06-27 17:52:21', '2026-06-27 17:52:21');
+(23, 23, 'Universal', 'Fits most cars', NULL, NULL, NULL, NULL, NULL, NULL, '2026-06-27 10:33:43', '2026-07-02 16:05:33'),
+(24, 24, 'Universal', 'Universal / All compatible fuel-injected vehicles', NULL, NULL, NULL, NULL, NULL, NULL, '2026-06-27 17:52:21', '2026-07-02 16:01:31');
 
 -- --------------------------------------------------------
 
@@ -944,7 +967,10 @@ CREATE TABLE `vehicles` (
 --
 
 INSERT INTO `vehicles` (`id`, `brand_id`, `model`, `year`, `price`, `mileage`, `condition`, `fuel_type`, `transmission`, `engine_cc`, `body_type`, `color`, `district`, `city`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(4, 14, 'Lancer Box 1400', NULL, 1075000.00, NULL, 'used', 'Petrol', NULL, 1398, NULL, 'Red', 'Kurunegala', 'Rideegama', '<p>#Lancer Box 1400 ♥️</p><p>Original Book📕&nbsp;</p><p>Documents clear 💯✔️</p><p>License insurance updated&nbsp;</p><p>All A/C parts have</p><p>&nbsp;&nbsp;&nbsp;&nbsp;📌Engine &amp; Running 💯</p><p>&nbsp;&nbsp;&nbsp; 📌Paint condition 💯&nbsp;</p><p>&nbsp;&nbsp;&nbsp; 📌Good body condition&nbsp;</p><p>No tinkering&nbsp;</p><p>Good tyre condition ☑️</p><p>All lights working perfectly&nbsp;</p><p>1L to -15 km ⛽️</p><p>Price- 10.75negotiable&nbsp;</p><p>Location- Kurunegala,Rideegama&nbsp;</p><p>Tp- 0716316143 ( call 📞 or WhatsApp)</p><p>0️⃣7️⃣1️⃣6️⃣3️⃣1️⃣6️⃣1️⃣4️⃣3️⃣☎️</p>', 1, '2026-06-23 16:05:22', '2026-06-23 16:05:22');
+(4, 14, 'Lancer Box 1400', NULL, 1075000.00, NULL, 'used', 'Petrol', NULL, 1398, NULL, 'Red', 'Kurunegala', 'Rideegama', '<p>#Lancer Box 1400 ♥️</p><p>Original Book📕&nbsp;</p><p>Documents clear 💯✔️</p><p>License insurance updated&nbsp;</p><p>All A/C parts have</p><p>&nbsp;&nbsp;&nbsp;&nbsp;📌Engine &amp; Running 💯</p><p>&nbsp;&nbsp;&nbsp; 📌Paint condition 💯&nbsp;</p><p>&nbsp;&nbsp;&nbsp; 📌Good body condition&nbsp;</p><p>No tinkering&nbsp;</p><p>Good tyre condition ☑️</p><p>All lights working perfectly&nbsp;</p><p>1L to -15 km ⛽️</p><p>Price- 10.75negotiable&nbsp;</p><p>Location- Kurunegala,Rideegama&nbsp;</p><p>Tp- 0716316143 ( call 📞 or WhatsApp)</p><p>0️⃣7️⃣1️⃣6️⃣3️⃣1️⃣6️⃣1️⃣4️⃣3️⃣☎️</p>', 1, '2026-06-23 16:05:22', '2026-06-23 16:05:22'),
+(5, 2, 'Starlet', '1998', 2500000.00, 128000, 'Used', 'Petrol', 'Automatic', 1300, 'Hatchback', 'White', 'Kurunegala', 'Ridigama', 'Well-maintained Toyota Starlet with good fuel economy. Clean interior and smooth engine condition.', 1, '2026-07-26 07:43:45', '2026-07-26 07:43:45'),
+(6, 2, 'Civic EK3', '1997', 2850000.00, 165000, 'Used', 'Petrol', 'Automatic', 1500, 'Sedan', 'Red', 'Kurunegala', 'Ridigama', 'Honda Civic EK3 in excellent running condition. Original interior with AC and power options.', 1, '2026-07-26 07:43:45', '2026-07-26 07:43:45'),
+(7, 2, 'Civic EG8', '1995', 3000000.00, 182000, 'Used', 'Petrol', 'Manual', 1500, 'Sedan', 'Blue', 'Kurunegala', 'Ridigama', 'Honda Civic EG8 with manual transmission. Well looked after and ideal for daily driving.', 1, '2026-07-26 07:43:45', '2026-07-26 07:43:45');
 
 -- --------------------------------------------------------
 
@@ -969,7 +995,16 @@ INSERT INTO `vehicle_images` (`id`, `vehicle_id`, `image_url`, `is_main`, `creat
 (9, 4, '1782230730_6a3aaecad7c38.jpeg', 1, '2026-06-23 16:05:30', '2026-06-23 16:05:30'),
 (10, 4, '1782230730_6a3aaecad9a72.jpeg', 0, '2026-06-23 16:05:30', '2026-06-23 16:05:30'),
 (11, 4, '1782230730_6a3aaecada58a.jpeg', 0, '2026-06-23 16:05:30', '2026-06-23 16:05:30'),
-(12, 4, '1782230730_6a3aaecadb473.jpeg', 0, '2026-06-23 16:05:30', '2026-06-23 16:05:30');
+(12, 4, '1782230730_6a3aaecadb473.jpeg', 0, '2026-06-23 16:05:30', '2026-06-23 16:05:30'),
+(13, 5, '1785052297_6a65bc8999ff2.jpg', 1, '2026-07-26 07:51:37', '2026-07-26 07:51:37'),
+(14, 5, '1785052297_6a65bc89a732f.jpg', 0, '2026-07-26 07:51:37', '2026-07-26 07:51:37'),
+(15, 5, '1785052297_6a65bc89a84e5.jpg', 0, '2026-07-26 07:51:37', '2026-07-26 07:51:37'),
+(16, 6, '1785052310_6a65bc96cf22f.jpg', 1, '2026-07-26 07:51:50', '2026-07-26 07:51:50'),
+(17, 6, '1785052310_6a65bc96d13e5.jpg', 0, '2026-07-26 07:51:50', '2026-07-26 07:51:50'),
+(18, 6, '1785052310_6a65bc96d20e6.jpg', 0, '2026-07-26 07:51:50', '2026-07-26 07:51:50'),
+(19, 7, '1785052321_6a65bca1a6f48.jpg', 1, '2026-07-26 07:52:01', '2026-07-26 07:52:01'),
+(20, 7, '1785052321_6a65bca1a8ce3.jpg', 0, '2026-07-26 07:52:01', '2026-07-26 07:52:01'),
+(21, 7, '1785052321_6a65bca1a9ba1.jpg', 0, '2026-07-26 07:52:01', '2026-07-26 07:52:01');
 
 -- --------------------------------------------------------
 
@@ -1068,7 +1103,8 @@ INSERT INTO `vendor_commissions` (`id`, `order_id`, `order_item_id`, `vendor_id`
 (2, 2, 2, 1, 12, 'cod', 0.00, 'pending', NULL, NULL, NULL, '2026-06-29 12:10:08', '2026-06-29 12:10:08'),
 (3, 2, 3, 2, 23, 'cod', 74.10, 'paid', NULL, NULL, NULL, '2026-06-29 12:10:08', '2026-06-30 09:32:19'),
 (4, 3, 4, 2, 24, 'cod', 200.00, 'pending', NULL, NULL, NULL, '2026-07-02 12:11:52', '2026-07-02 12:11:52'),
-(5, 3, 5, 2, 23, 'cod', 111.15, 'pending', NULL, NULL, NULL, '2026-07-02 12:11:52', '2026-07-02 12:11:52');
+(5, 3, 5, 2, 23, 'cod', 111.15, 'pending', NULL, NULL, NULL, '2026-07-02 12:11:52', '2026-07-02 12:11:52'),
+(6, 4, 6, 2, 24, 'card', 765.00, 'pending', NULL, NULL, NULL, '2026-07-26 08:03:00', '2026-07-26 08:03:00');
 
 -- --------------------------------------------------------
 
@@ -1156,7 +1192,8 @@ INSERT INTO `vendor_earnings` (`id`, `order_id`, `order_item_id`, `vendor_id`, `
 (2, 2, 2, 1, 12, 'cod', 38000.00, 'pending', NULL, NULL, NULL, '2026-06-29 12:10:08', '2026-06-29 12:10:08'),
 (3, 2, 3, 2, 23, 'cod', 2395.90, 'pending', NULL, NULL, NULL, '2026-06-29 12:10:08', '2026-06-29 12:10:08'),
 (4, 3, 4, 2, 24, 'cod', 2300.00, 'pending', NULL, NULL, NULL, '2026-07-02 12:11:52', '2026-07-02 12:11:52'),
-(5, 3, 5, 2, 23, 'cod', 3593.85, 'pending', NULL, NULL, NULL, '2026-07-02 12:11:52', '2026-07-02 12:11:52');
+(5, 3, 5, 2, 23, 'cod', 3593.85, 'pending', NULL, NULL, NULL, '2026-07-02 12:11:52', '2026-07-02 12:11:52'),
+(6, 4, 6, 2, 24, 'card', 7735.00, 'pending', NULL, NULL, NULL, '2026-07-26 08:03:00', '2026-07-26 08:03:00');
 
 -- --------------------------------------------------------
 
@@ -1561,13 +1598,13 @@ ALTER TABLE `auction_winners`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1591,7 +1628,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `customer_activities`
 --
 ALTER TABLE `customer_activities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1615,13 +1652,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -1633,7 +1670,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `product_vehicle_compatibilities`
@@ -1663,13 +1700,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `vehicles`
 --
 ALTER TABLE `vehicles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `vehicle_images`
 --
 ALTER TABLE `vehicle_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `vehicle_types`
@@ -1687,7 +1724,7 @@ ALTER TABLE `vendors`
 -- AUTO_INCREMENT for table `vendor_commissions`
 --
 ALTER TABLE `vendor_commissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `vendor_commission_settlements`
@@ -1705,7 +1742,7 @@ ALTER TABLE `vendor_commission_settlement_items`
 -- AUTO_INCREMENT for table `vendor_earnings`
 --
 ALTER TABLE `vendor_earnings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `vendor_earning_settlements`
