@@ -28,6 +28,7 @@ class ReviewController extends Controller
             'email' => $request->email,
             'message' => $request->message,
             'rating' => $request->rating,
+            'status' => 'approved'
         ]);
 
         // Upload Images

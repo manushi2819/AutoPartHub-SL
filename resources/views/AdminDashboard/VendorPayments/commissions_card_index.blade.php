@@ -13,8 +13,11 @@
     <h6>Vendor Commissions — Card Orders</h6>
 </div>
 
+
+<div class="card basic-data-table shadow-sm border-0 mb-3">
+    <div class="card-body">
 {{-- TABS --}}
-<ul class="nav focus-tab nav-pills mb-16" id="pills-tab-two" role="tablist">
+<ul class="nav focus-tab nav-pills" id="pills-tab-two" role="tablist">
     <li class="nav-item" role="presentation">
         <a href="{{ route('admin.vendor-commissions-card.index', ['tab' => 'pending']) }}"
             class="nav-link fw-semibold text-primary-light radius-4 px-16 py-10 {{ $tab == 'pending' ? 'active' : '' }}">
@@ -29,6 +32,8 @@
         </a>
     </li>
 </ul>
+</div>
+</div>
 
 @if($tab == 'pending')
     <div class="card basic-data-table shadow-sm border-0 mb-3">

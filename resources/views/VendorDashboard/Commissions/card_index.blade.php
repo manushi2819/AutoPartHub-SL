@@ -20,9 +20,6 @@
             These amounts are already retained by admin from card payments — no action needed from you. This is for your reference only.
         </p>
 
-        @if($commissions->isEmpty())
-            <p class="text-muted mb-0">No card commission records yet.</p>
-        @else
             <div class="table-responsive">
                 <table class="table basic-border-table mb-0" id="dataTable" data-page-length='10'>
                     <thead class="table-light">
@@ -52,10 +49,6 @@
                 </table>
             </div>
 
-            <div class="mt-3">
-                {{ $commissions->links() }}
-            </div>
-        @endif
     </div>
 </div>
 @endsection

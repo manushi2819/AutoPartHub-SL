@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\VendorCommissionSettlement;
+use App\Models\VendorCommissionSettlementItem;
+use App\Models\Vendor;
 use App\Models\VendorCommission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -106,5 +108,83 @@ class VendorCommissionCodController extends Controller
         ]);
 
         return back()->with('success', 'Settlement rejected. Vendor can resubmit.');
+    }
+
+
+    // Show manual settlement form for a suspended vendor (admin uploads slip on vendor's behalf)
+    public function settleManualForm(Vendor $vendor)
+    {
+        $commissions = VendorCommission::with('order', 'orderItem.product')
+            ->where('vendor_id', $vendor->id)
+            ->where('payment_method', 'cod')
+            ->where('status', 'pending')
+            ->whereHas('orderItem', fn($q) => $q->where('status', '!=', 'pending'))
+            ->orderBy('created_at')
+            ->get();
+
+        $periodStart = $commissions->min('created_at');
+        $periodEnd = $commissions->max('created_at');
+
+        return view('AdminDashboard.VendorPayments.commissions_cod_settle_manual', compact('vendor', 'commissions', 'periodStart', 'periodEnd'));
+    }
+
+    // Process manual settlement + reactivate vendor
+    public function settleManualStore(Request $request, Vendor $vendor)
+    {
+        $request->validate([
+            'commission_ids' => 'required|array|min:1',
+            'commission_ids.*' => 'exists:vendor_commissions,id',
+            'transfer_reference' => 'nullable|string|max:255',
+            'payment_slip' => 'required|file|mimes:jpg,jpeg,png,pdf|max:5120',
+            'notes' => 'nullable|string',
+        ]);
+
+        $commissions = VendorCommission::where('vendor_id', $vendor->id)
+            ->where('payment_method', 'cod')
+            ->where('status', 'pending')
+            ->whereIn('id', $request->commission_ids)
+            ->get();
+
+        if ($commissions->isEmpty()) {
+            return back()->with('error', 'No valid pending commissions selected.');
+        }
+
+        $slipName = time() . '_manual_slip.' . $request->file('payment_slip')->getClientOriginalExtension();
+        $request->file('payment_slip')->move(public_path('uploads/vendor-commissions'), $slipName);
+
+        DB::transaction(function () use ($commissions, $vendor, $request, $slipName) {
+            $settlement = VendorCommissionSettlement::create([
+                'vendor_id' => $vendor->id,
+                'payment_method' => 'cod',
+                'total_amount' => $commissions->sum('commission_amount'),
+                'transfer_reference' => $request->transfer_reference,
+                'payment_slip' => 'uploads/vendor-commissions/' . $slipName,
+                'period_start' => $commissions->min('created_at')->toDateString(),
+                'period_end' => $commissions->max('created_at')->toDateString(),
+                'status' => 'paid', // admin-confirmed, so mark directly as paid — skips 'submitted' review step
+                'reviewed_by' => session('admin_id', 1),
+                'reviewed_at' => now(),
+                'submitted_at' => now(),
+                'notes' => ($request->notes ? $request->notes . ' | ' : '') . 'Settled manually by admin (offline payment).',
+            ]);
+
+            foreach ($commissions as $commission) {
+                VendorCommissionSettlementItem::create([
+                    'settlement_id' => $settlement->id,
+                    'vendor_commission_id' => $commission->id,
+                ]);
+
+                $commission->update([
+                    'status' => 'paid',
+                    'paid_at' => now(),
+                ]);
+            }
+
+            // ✅ Reactivate the vendor since they've cleared their dues
+            $vendor->update(['status' => 'Approved']);
+        });
+
+        return redirect()->route('admin.vendor-commissions-cod.index')
+            ->with('success', 'Commissions settled manually and vendor account reactivated.');
     }
 }

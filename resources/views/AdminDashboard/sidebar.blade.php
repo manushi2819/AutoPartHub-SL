@@ -72,14 +72,6 @@
             </li>
 
 
-            <li>
-                <a href="{{ route('admin.orders.index') }}">
-                <iconify-icon icon="mdi:cart-outline" class="menu-icon"></iconify-icon>
-                    <span>Orders</span>
-                </a>
-            </li>
-
-
             <li class="dropdown">
                 <a href="javascript:void(0)">
                     <iconify-icon icon="mdi:wallet-plus-outline" class="menu-icon"></iconify-icon>
@@ -102,6 +94,13 @@
             </li>
 
 
+            <li>
+                <a href="{{ route('admin.orders.index') }}">
+                <iconify-icon icon="mdi:cart-outline" class="menu-icon"></iconify-icon>
+                    <span>Orders</span>
+                </a>
+            </li>
+            
             <!--<li class="dropdown">
                 <a href="javascript:void(0)">
                    <iconify-icon icon="mdi:gavel" class="menu-icon"></iconify-icon>

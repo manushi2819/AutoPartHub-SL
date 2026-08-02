@@ -14,6 +14,21 @@
     <h6>Admin Commissions — COD Orders</h6>
 </div>
 
+@if(!$commissions->isEmpty())
+    @if($daysRemaining < 0)
+        <div class="alert alert-danger" style="font-size:14px !important">
+            <i class="fa-solid fa-triangle-exclamation me-1"></i>
+            <strong>Overdue:</strong> Your commission settlement deadline has passed. Your account may be suspended at any time until payment is submitted.
+        </div>
+    @elseif($daysRemaining <= 2)
+        <div class="alert alert-danger" style="font-size:14px !important">
+            <i class="fa-solid fa-triangle-exclamation me-1"></i>
+            <strong>Action required:</strong> Settle your pending commissions within {{ $daysRemaining == 0 ? 'today' : $daysRemaining . ' day(s)' }}
+            (deadline: {{ $deadline->format('M d, Y') }}) or your account will be suspended.
+        </div>
+    @endif
+@endif
+
 {{-- TABS --}}
 <ul class="nav focus-tab nav-pills mb-16" id="pills-tab-two" role="tablist">
     <li class="nav-item" role="presentation">

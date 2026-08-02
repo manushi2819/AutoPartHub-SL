@@ -116,9 +116,9 @@ use App\Http\Controllers\Vendor\VendorEarningViewController;
 use App\Http\Controllers\Vendor\VendorCommissionSubmitController;
 use App\Http\Controllers\Vendor\VendorReportController;
 use App\Http\Middleware\VendorAuth;
+use App\Http\Middleware\CheckVendorStatus;
 
-Route::prefix('vendor')->name('vendor.')->middleware([VendorAuth::class])->group(function () {
-
+Route::prefix('vendor')->name('vendor.')->middleware([VendorAuth::class, CheckVendorStatus::class])->group(function () {
     Route::get('/', [VendorDashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [VendorProfileController::class, 'profile'])->name('profile');
     Route::post('/profile/update', [VendorProfileController::class, 'update'])->name('profile.update');
@@ -168,6 +168,8 @@ Route::prefix('vendor')->name('vendor.')->middleware([VendorAuth::class])->group
         Route::get('/settlement-report', [VendorReportController::class, 'settlementReport'])->name('settlement-report');
         Route::get('/settlement-report/pdf', [VendorReportController::class, 'settlementReportPdf'])->name('settlement-report.pdf');
     });
+
+    
 }); 
 
 
@@ -358,6 +360,10 @@ Route::prefix('admin')->name('admin.')->middleware([AdminAuth::class])->group(fu
         Route::get('/vendor-sales/pdf', [AdminReportController::class, 'vendorsPdf'])->name('vendors.pdf');
     });
 
-    
+    Route::get('vendor-commissions-cod/{vendor}/settle-manual', [VendorCommissionCodController::class, 'settleManualForm'])
+    ->name('vendor-commissions-cod.settle-manual');
+
+    Route::post('vendor-commissions-cod/{vendor}/settle-manual', [VendorCommissionCodController::class, 'settleManualStore'])
+        ->name('vendor-commissions-cod.settle-manual.store');
 
 });

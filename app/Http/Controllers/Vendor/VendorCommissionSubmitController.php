@@ -15,25 +15,40 @@ class VendorCommissionSubmitController extends Controller
     public function index(Request $request)
     {
         $vendorId = session('vendor_id');
-
         $commissions = VendorCommission::with('order', 'product')
             ->where('vendor_id', $vendorId)
             ->where('payment_method', 'cod')
             ->where('status', 'pending')
-            ->whereHas('orderItem', fn($q) => $q->where('status',  '!=', 'pending'))
+            ->whereHas('orderItem', fn($q) => $q->where('status', '!=', 'pending'))
             ->orderBy('created_at')
             ->get();
 
-        $periodStart = $commissions->min('created_at');
-        $periodEnd = $commissions->max('created_at');
+        // Period start = last settlement's period_end + 1 day, or earliest pending commission if none yet
+        $lastSettlement = VendorCommissionSettlement::where('vendor_id', $vendorId)
+            ->cod()
+            ->orderBy('period_end', 'desc')
+            ->first();
+
+        $periodStart = $lastSettlement
+            ? \Carbon\Carbon::parse($lastSettlement->period_end)->addDay()->startOfDay()
+            : ($commissions->min('created_at') ?? now());
+
+        $periodEnd = now()->endOfDay();
+
+        // Deadline = periodStart + 7 days
+        $deadline = \Carbon\Carbon::parse($periodStart)->addDays(7)->endOfDay();
+        $daysRemaining = now()->diffInDays($deadline, false); // negative if overdue
 
         $history = VendorCommissionSettlement::where('vendor_id', $vendorId)
             ->cod()->latest('created_at')->paginate(15);
 
         $tab = $request->get('tab', 'pending');
 
-        return view('VendorDashboard.Commissions.submit', compact('commissions', 'periodStart', 'periodEnd', 'history', 'tab'));
+        return view('VendorDashboard.Commissions.submit', compact(
+            'commissions', 'periodStart', 'periodEnd', 'history', 'tab', 'deadline', 'daysRemaining'
+        ));
     }
+
 
     public function submit(Request $request)
     {

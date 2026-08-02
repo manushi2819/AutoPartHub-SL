@@ -22,8 +22,8 @@
                             <th>Product</th>
                             <th>Rating</th>
                             <th>Images</th>
-                            <th>Approved</th>
-                            <th>Action</th>
+                            <!--<th>Approved</th>
+                            <th>Action</th>-->
                         </tr>
                     </thead>
                    <tbody>
@@ -47,7 +47,7 @@
                                     <span>No Images</span>
                                 @endif
                             </td>
-                            <td>
+                            <!--<td>
                                 @if($review->status === 'approved')
                                     <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-success-focus text-success-main">Approved</span>
                                 @elseif($review->status === 'rejected')
@@ -55,11 +55,11 @@
                                 @else
                                     <span class="px-24 py-4 rounded-pill fw-medium text-sm bg-warning-focus text-warning-main">Pending</span>
                                 @endif
-                            </td>
+                            </td>-->
 
-                            <td>
+                            <!--<td>
                                 <div class="d-flex gap-2">
-                                    <!-- Approve button -->
+                                    
                                     @if($review->status !== 'approved')
                                     <form action="{{ route('admin.reviews.approve', $review->id) }}" method="POST">
                                         @csrf
@@ -69,7 +69,7 @@
                                     </form>
                                     @endif
 
-                                    <!-- Reject button -->
+                                    
                                     @if($review->status !== 'rejected')
                                     <form action="{{ route('admin.reviews.reject', $review->id) }}" method="POST">
                                         @csrf
@@ -79,13 +79,13 @@
                                     </form>
                                     @endif
 
-                                    <!-- Delete button -->
+                                   
                                     <button type="button" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center open-delete-modal" 
                                             data-url="{{ route('admin.reviews.destroy', $review->id) }}" title="Delete">
                                         <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
                                     </button>
                                 </div>
-                            </td>
+                            </td>-->
                         </tr>
                    
                         @endforeach

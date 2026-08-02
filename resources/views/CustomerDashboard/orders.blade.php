@@ -303,15 +303,7 @@
                 Rs {{ number_format($order->total,2) }}
             </div>
             <div class="order-info">
-                <div>
-                    <span class="order-status status-{{ $order->status }}">
-                        @if($order->status == 'pending') ⏳ Pending
-                        @elseif($order->status == 'confirmed') ✅ Confirmed
-                        @elseif($order->status == 'in_transit') 🚚 In Transit
-                        @elseif($order->status == 'cancelled') ❌ Cancelled
-                        @endif
-                    </span>
-                </div>
+                
                 <a href="{{ route('customer.order.track', $order->id) }}" class="track-btn">
                      Track Order
                 </a>

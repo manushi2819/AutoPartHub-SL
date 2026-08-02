@@ -37,6 +37,13 @@
                 Rejected
             </a>
         </li>
+
+         <li class="nav-item" role="presentation">
+            <a href="{{ route('admin.vendors.index', ['status' => 'Suspended']) }}"
+                class="nav-link fw-semibold text-primary-light radius-4 px-16 py-10 {{ request('status')=='Suspended' ? 'active' : '' }}">
+                Suspended
+            </a>
+        </li>
     </ul>
 
     </ul>

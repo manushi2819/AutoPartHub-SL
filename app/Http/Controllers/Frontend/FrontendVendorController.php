@@ -105,8 +105,8 @@ class FrontendVendorController extends Controller
                 return back()->with('error', 'Your application has been rejected.');
             }
 
-            if ($status === 'suspended') {
-                return back()->with('error', 'Your account has been suspended.');
+            if ($vendor->status === 'Suspended') {
+                 return back()->with('error', 'Your account has been suspended due to overdue commission payments. Please contact admin to settle your dues.');
             }
 
             return back()->withErrors(['email' => 'Account not active.']);

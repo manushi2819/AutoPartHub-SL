@@ -19,12 +19,12 @@ class VendorEarningController extends Controller
             ->whereHas('earnings', function ($q) {
                 $q->where('status', 'pending')
                     ->where('payment_method', 'card')
-                    ->whereHas('orderItem', fn($q2) => $q2->where('status', 'delivered'));
+                    ->whereHas('orderItem', fn($q2) => $q2->where('status', '!=', 'pending'));
             })
             ->withSum(['earnings as pending_total' => function ($q) {
                 $q->where('status', 'pending')
                     ->where('payment_method', 'card')
-                    ->whereHas('orderItem', fn($q2) => $q2->where('status', 'delivered'));
+                    ->whereHas('orderItem', fn($q2) => $q2->where('status', '!=', 'pending'));
             }], 'earning_amount')
             ->get();
 
@@ -42,15 +42,25 @@ class VendorEarningController extends Controller
     // Show pending earning rows for one vendor, selectable before settling
     public function showVendor(Vendor $vendor)
     {
-        $earnings = VendorEarning::with('order', 'product')
+        $lastSettlement = VendorEarningSettlement::where('vendor_id', $vendor->id)
+            ->orderBy('period_end', 'desc')
+            ->first();
+
+        $periodStart = $lastSettlement 
+            ? \Carbon\Carbon::parse($lastSettlement->period_end)->addDay()->startOfDay()
+            : null;
+
+        $periodEnd = now()->endOfDay();
+
+        $earnings = VendorEarning::with('order', 'product', 'orderItem')
             ->where('vendor_id', $vendor->id)
             ->where('status', 'pending')
-            ->whereHas('orderItem', fn($q) => $q->where('status', 'delivered'))
+            ->where('payment_method', 'card') // ✅ match index: field is on the earning itself
+            ->whereHas('orderItem', fn($q2) => $q2->where('status', '!=', 'pending')) // ✅ match index condition exactly
+            ->when($periodStart, fn($q) => $q->where('created_at', '>=', $periodStart))
+            ->where('created_at', '<=', $periodEnd)
             ->orderBy('created_at')
             ->get();
-
-        $periodStart = $earnings->min('created_at');
-        $periodEnd = $earnings->max('created_at');
 
         return view('AdminDashboard.VendorPayments.earnings_settle', compact('vendor', 'earnings', 'periodStart', 'periodEnd'));
     }

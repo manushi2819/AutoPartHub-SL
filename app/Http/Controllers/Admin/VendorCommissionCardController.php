@@ -47,8 +47,16 @@ class VendorCommissionCardController extends Controller
             ->orderBy('created_at')
             ->get();
 
-        $periodStart = $commissions->min('created_at');
-        $periodEnd = $commissions->max('created_at');
+        // Find the last settlement for this vendor's card commissions
+        $lastSettlement = VendorCommissionSettlement::where('vendor_id', $vendor->id)
+            ->orderBy('period_end', 'desc')
+            ->first();
+
+        $periodStart = $lastSettlement 
+            ? \Carbon\Carbon::parse($lastSettlement->period_end)->addDay()->startOfDay()
+            : ($commissions->min('created_at') ?? now()); // fallback for first-ever settlement
+
+        $periodEnd = now()->endOfDay();
 
         return view('AdminDashboard.VendorPayments.commissions_card_settle', compact('vendor', 'commissions', 'periodStart', 'periodEnd'));
     }

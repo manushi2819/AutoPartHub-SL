@@ -15,37 +15,40 @@
     <h6>Vendor Commissions — COD Orders</h6>
 </div>
 
-{{-- TABS --}}
-<ul class="nav focus-tab nav-pills mb-16">
+<div class="card basic-data-table shadow-sm border-0 mb-3">
+    <div class="card-body">
+        {{-- TABS --}}
+        <ul class="nav focus-tab nav-pills">
 
-    <li class="nav-item">
-        <a href="{{ route('admin.vendor-commissions-cod.index',['tab'=>'pending_commissions']) }}"
-           class="nav-link fw-semibold text-primary-light radius-4 px-16 py-10 
-           {{ $tab == 'pending_commissions' ? 'active' : '' }}">
-            Pending Commissions ({{ $pendingCommissions->count() }})
-        </a>
-    </li>
-
-
-    <li class="nav-item">
-        <a href="{{ route('admin.vendor-commissions-cod.index',['tab'=>'pending']) }}"
-           class="nav-link fw-semibold text-primary-light radius-4 px-16 py-10 
-           {{ $tab == 'pending' ? 'active' : '' }}">
-            Pending Review ({{ $pending->count() }})
-        </a>
-    </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.vendor-commissions-cod.index',['tab'=>'pending_commissions']) }}"
+                class="nav-link fw-semibold text-primary-light radius-4 px-16 py-10 
+                {{ $tab == 'pending_commissions' ? 'active' : '' }}">
+                    Pending Commissions ({{ $pendingCommissions->count() }})
+                </a>
+            </li>
 
 
-    <li class="nav-item">
-        <a href="{{ route('admin.vendor-commissions-cod.index',['tab'=>'history']) }}"
-           class="nav-link fw-semibold text-primary-light radius-4 px-16 py-10 
-           {{ $tab == 'history' ? 'active' : '' }}">
-            Payment History
-        </a>
-    </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.vendor-commissions-cod.index',['tab'=>'pending']) }}"
+                class="nav-link fw-semibold text-primary-light radius-4 px-16 py-10 
+                {{ $tab == 'pending' ? 'active' : '' }}">
+                    Pending Review ({{ $pending->count() }})
+                </a>
+            </li>
 
-</ul>
 
+            <li class="nav-item">
+                <a href="{{ route('admin.vendor-commissions-cod.index',['tab'=>'history']) }}"
+                class="nav-link fw-semibold text-primary-light radius-4 px-16 py-10 
+                {{ $tab == 'history' ? 'active' : '' }}">
+                    Payment History
+                </a>
+            </li>
+
+        </ul>
+        </div>
+</div>
 
 @if($tab == 'pending_commissions')
 <div class="card basic-data-table shadow-sm border-0 mb-3">
@@ -60,6 +63,7 @@
                         <th>Product</th>
                         <th class="text-end">Commission Amount</th>
                         <th>Status</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,6 +94,16 @@
                             <span class="status-pill status-pending">
                                 Pending
                             </span>
+                        </td>
+                        <td class="text-center">
+                            @if(strtolower($commission->vendor->status ?? '') === 'suspended')
+                                <a href="{{ route('admin.vendor-commissions-cod.settle-manual', $commission->vendor_id) }}"
+                                class="btn btn-sm btn-warning">
+                                    Settle Manually
+                                </a>
+                            @else
+                                <span class="text-muted small">Awaiting vendor submission</span>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

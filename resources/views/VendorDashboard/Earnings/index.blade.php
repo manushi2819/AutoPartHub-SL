@@ -14,6 +14,7 @@
 </div>
 
 
+
 {{-- TABS --}}
 <ul class="nav focus-tab nav-pills mb-16" id="pills-tab-two" role="tablist">
     <li class="nav-item" role="presentation">
@@ -37,7 +38,7 @@
     <div class="card basic-data-table shadow-sm border-0 mb-3">
         <div class="card-body">
                   <p class="text-danger" style="font-size:12px">**
-                    These earnings will be transferred to your bank account by admin during the next weekly settlement.
+                    These earnings will be transferred to your bank account by admin during the weekly settlement.
                 </p>
                 <div class="table-responsive">
                     <table class="table basic-border-table mb-0" id="dataTable" data-page-length='10'>
