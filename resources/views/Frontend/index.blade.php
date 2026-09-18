@@ -830,7 +830,7 @@
 </style>
 
 
-<!-- Recently Viewed Parts
+<!-- Recently Viewed Parts -->
 @if(auth('customer')->check() && $recentlyViewedProducts->count() > 0)
 
 <section class="shop-style-two pb_100">
@@ -879,12 +879,12 @@
         </div>
     </div>
 </section>
- shop-style-two end -->
+<!-- shop-style-two end -->
 @endif
 
 
 
-<!-- Recommended For You 
+<!-- Recommended For You -->
 @if(auth('customer')->check() && $recommendedProducts->count() > 0)
 
 
@@ -953,7 +953,7 @@
         </div>
     </div>
 </section>
-shop-section end -->
+<!-- shop-section end -->
 
 @endif
 

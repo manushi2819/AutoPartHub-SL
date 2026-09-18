@@ -100,16 +100,16 @@
             }
         }
 
-        /* ========== CARD GRID: 3 COLUMNS ========== */
+        /* ========== CARD GRID: 2 COLUMNS ON DESKTOP ========== */
         .auctions-grid {
             display: grid;
-            grid-template-columns: repeat(1, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 28px;
         }
 
         @media (max-width: 992px) {
             .auctions-grid {
-                grid-template-columns: repeat(1, 1fr);
+                grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 24px;
             }
         }
@@ -128,9 +128,9 @@
             box-shadow: var(--shadow-sm);
             transition: var(--transition-smooth);
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             height: auto;
-            min-height: 220px;
+            min-height: 0;
             border: 1px solid rgba(0, 0, 0, 0.04);
             position: relative;
             animation: riseUp 0.5s ease-out backwards;
@@ -332,6 +332,37 @@
             }
         }
 
+        @media (min-width: 769px) {
+            .active-auction-card .auction-img {
+                width: 100%;
+                min-width: 0;
+                aspect-ratio: 16 / 9;
+                padding: 10px 10px 0;
+            }
+
+            .active-auction-card .auction-content {
+                padding: 14px 16px 16px;
+            }
+
+            .active-auction-card .item-title {
+                font-size: 1rem;
+                margin-bottom: 8px;
+            }
+
+            .active-auction-card .bid-info {
+                padding: 10px 12px;
+            }
+
+            .active-auction-card .current-bid-label,
+            .active-auction-card .starting-bid {
+                font-size: 0.68rem;
+            }
+
+            .active-auction-card .current-bid-amount {
+                font-size: 0.9rem;
+            }
+        }
+
         /* For tablets - slightly smaller image */
         @media (min-width: 769px) and (max-width: 1024px) {
             .auction-img {
@@ -473,9 +504,9 @@
     box-shadow: var(--shadow-sm);
     transition: var(--transition-smooth);
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     height: auto;
-    min-height: 220px;
+    min-height: 0;
     border: 1px solid rgba(0, 0, 0, 0.04);
     position: relative;
     animation: riseUp 0.5s ease-out backwards;
@@ -561,9 +592,9 @@
     box-shadow: var(--shadow-sm);
     transition: var(--transition-smooth);
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     height: auto;
-    min-height: 220px;
+    min-height: 0;
     border: 1px solid rgba(0, 0, 0, 0.04);
     position: relative;
     animation: riseUp 0.5s ease-out backwards;
@@ -904,17 +935,18 @@
 .ended-info-grid {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin: 12px 0 0;
+    gap: 8px;
+    margin: 10px 0 0;
 }
 
 .ended-info-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 12px;
+    padding: 8px 10px;
     border-radius: 10px;
     transition: all 0.2s ease;
+    gap: 10px;
 }
 
 .ended-info-item.final-price {
@@ -933,7 +965,7 @@
 }
 
 .info-label {
-    font-size: 0.7rem;
+    font-size: 0.62rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -941,68 +973,104 @@
 }
 
 .info-value {
-    font-size: 0.9rem;
+    font-size: 0.74rem;
     font-weight: 700;
     color: #2d3748;
+    line-height: 1.4;
+    text-align: right;
 }
 
 .final-price .info-value {
-    font-size: 1rem;
+    font-size: 0.82rem;
     font-weight: 800;
     color: #1a202c;
 }
 
 .time-sm {
-    font-size: 0.7rem;
+    font-size: 0.62rem;
     font-weight: 500;
     color: #718096;
     margin-left: 4px;
 }
 
-/* Alternative: Horizontal layout for larger screens */
 @media (min-width: 769px) {
-    .ended-info-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
+    .auction-card.ended-card .auction-body,
+    .auction-card.upcoming-card .auction-body,
+    .active-auction-card .auction-content {
+        padding: 14px 16px 16px;
     }
-    
-    .ended-info-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-        padding: 12px;
+
+    .auction-card.ended-card .auction-img,
+    .auction-card.upcoming-card .auction-img,
+    .active-auction-card .auction-img {
+        width: 100%;
+        min-width: 0;
+        aspect-ratio: 16 / 9;
+        padding: 10px 10px 0;
     }
-    
-    .info-label {
-        font-size: 0.65rem;
+
+    .auction-card.ended-card .auction-title,
+    .auction-card.upcoming-card .auction-title,
+    .active-auction-card .item-title {
+        font-size: 1rem;
+        margin-bottom: 4px;
     }
-    
-    .info-value {
-        font-size: 0.85rem;
+
+    .auction-card.ended-card .auction-subtitle,
+    .auction-card.upcoming-card .auction-subtitle {
+        font-size: 0.7rem;
+        margin-bottom: 10px;
     }
-    
-    .final-price .info-value {
-        font-size: 0.95rem;
+
+    .auction-card.ended-card .ended-info-grid {
+        gap: 7px;
+    }
+
+    .auction-card.ended-card .ended-info-item {
+        padding: 7px 10px;
+    }
+
+    .auction-card.ended-card .info-label,
+    .auction-card.upcoming-card .meta-item,
+    .auction-card.upcoming-card .time-value,
+    .auction-card.upcoming-card .time-label,
+    .active-auction-card .current-bid-label,
+    .active-auction-card .starting-bid {
+        font-size: 0.58rem;
+    }
+
+    .auction-card.ended-card .info-value,
+    .auction-card.upcoming-card .meta-item strong,
+    .auction-card.upcoming-card .time-value,
+    .active-auction-card .current-bid-amount {
+        font-size: 0.72rem;
+    }
+
+    .auction-card.ended-card .final-price .info-value {
+        font-size: 0.8rem;
+    }
+
+    .auction-card.upcoming-card .bid-info-wrap,
+    .active-auction-card .bid-info {
+        margin-top: 6px;
     }
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .ended-info-item {
-        padding: 10px 12px;
+        padding: 8px 10px;
     }
     
     .info-label {
-        font-size: 0.65rem;
+        font-size: 0.58rem;
     }
     
     .info-value {
-        font-size: 0.85rem;
+        font-size: 0.72rem;
     }
     
     .final-price .info-value {
-        font-size: 0.9rem;
+        font-size: 0.78rem;
     }
 }
     </style>
@@ -1013,11 +1081,11 @@
         <!-- TOP BAR: Tabs + Sidebar info aligned (sidebar starts at same level) -->
         <div class="top-bar-wrapper">
             <div class="auction-tabs">
-                <button class="tab-btn active" data-tab="vehicles">
-                    <i class="fas fa-car"></i> Vehicle Auctions
-                </button>
-                <button class="tab-btn" data-tab="parts">
+                <button class="tab-btn active" data-tab="parts">
                     <i class="fas fa-microchip"></i> Parts Auctions
+                </button>
+                <button class="tab-btn" data-tab="vehicles">
+                    <i class="fas fa-car"></i> Vehicle Auctions
                 </button>
             </div>
         </div>
@@ -1026,7 +1094,7 @@
             <!-- LEFT COLUMN: TAB CONTENT -->
             <div>
                 <!-- VEHICLES TAB PANE -->
-               <div id="vehicles-pane" class="tab-pane active-pane">
+               <div id="vehicles-pane" class="tab-pane">
                     <div class="auctions-grid">
                         @forelse($vehicleAuctions as $auction)
                             @if($status == 'active')
@@ -1045,7 +1113,7 @@
                 </div>
 
                 <!-- PARTS TAB PANE -->
-                <div id="parts-pane" class="tab-pane">
+                <div id="parts-pane" class="tab-pane active-pane">
                     <div class="auctions-grid">
                         @forelse($partAuctions as $auction)
 

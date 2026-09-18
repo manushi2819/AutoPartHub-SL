@@ -891,7 +891,7 @@ h3:hover {
             </div>
 
 
-            <!--
+            
           @if($relatedProducts->count() > 0)
             <div class="auto-container mb-5">
                 <div class="related-product">
@@ -946,7 +946,7 @@ h3:hover {
                     </div>
                 </div>
             </div>
-            @endif-->
+            @endif
 
             
         </section>

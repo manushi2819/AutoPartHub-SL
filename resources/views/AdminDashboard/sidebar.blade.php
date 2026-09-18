@@ -101,7 +101,7 @@
                 </a>
             </li>
             
-            <!--<li class="dropdown">
+            <li class="dropdown">
                 <a href="javascript:void(0)">
                    <iconify-icon icon="mdi:gavel" class="menu-icon"></iconify-icon>
                 <span>Auction Module</span> 
@@ -120,7 +120,7 @@
                             <i class="ri-circle-fill circle-icon text-danger-600 w-auto"></i> Auction Winners</a>
                     </li>
                 </ul>
-            </li>-->
+            </li>
 
             
 

@@ -225,12 +225,12 @@ form textarea {
                                    Orders
                                 </a>
                             </li>
-                            <!-- <li>
+                            <li>
                                 <a href="{{ route('customer.auctionbids') }}"
                                    class="{{ request()->routeIs('customer.auctionbids') ? 'active' : '' }}">
                                    Auction Bids
                                 </a>
-                            </li>-->
+                            </li>
                             <li>
                                 <a href="{{ route('customer.password') }}"
                                    class="{{ request()->routeIs('customer.password') ? 'active' : '' }}">
@@ -250,7 +250,7 @@ form textarea {
     </section>
 
 
-    <!--
+  
 @if($recommendedProducts->count())
 <div class="recommended-section">
     <div class="auto-container">
@@ -354,7 +354,7 @@ form textarea {
         </div>
     </div>
 </div>
-@endif-->
+@endif
 
 
 

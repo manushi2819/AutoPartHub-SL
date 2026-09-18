@@ -68,7 +68,7 @@
     color: #fff;
     font-size: 11px;
     font-weight: 600;
-    padding: 6px 6px;
+    padding: 4px 6px;
     border-radius: 20px;
     margin-left: 6px;
     line-height: 1;
@@ -350,16 +350,15 @@
                                             <a href="{{ route('Frontend.vehicles') }}">Vehicles</a>
                                         </li> 
 
-                                      <!--<li class="dropdown {{ request()->routeIs('Frontend.auctions') ? 'current' : '' }}">
+                                      <li class="dropdown {{ request()->routeIs('Frontend.auctions') ? 'current' : '' }}">
                                             <a href="{{ route('Frontend.auctions', ['status' => 'active']) }}"
                                             class="d-flex align-items-center">
                                                 Auctions
-                                                <span class="live-badge">LIVE</span>
                                             </a>
                                             <ul>
                                                 <li>
                                                     <a href="{{ route('Frontend.auctions', ['status' => 'active']) }}">
-                                                        Active Auctions
+                                                        Active Auctions <span class="live-badge">LIVE</span>
                                                     </a>
                                                 </li>
                                                 <li>
@@ -373,7 +372,7 @@
                                                     </a>
                                                 </li>
                                             </ul>
-                                        </li>-->
+                                        </li>
 
                                         <li class="{{ request()->routeIs('Frontend.about') ? 'current' : '' }}">
                                             <a href="{{ route('Frontend.about') }}">About</a>
