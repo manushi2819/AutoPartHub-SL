@@ -812,9 +812,9 @@
                                         $topBoostedIds = $boostedProducts->take(5)->pluck('id')->toArray();
                                     @endphp
 
-                                    {{-- PRODUCT GRID (BOOSTED ORDERED) --}}
+                                    {{-- PRODUCT GRID --}}
                                     <div class="products-grid">
-                                                @foreach($boostedProducts as $product)
+                                                @foreach($products as $product)
                                                 <div class="product-card" style="position:relative;">
                                             @php
                                         $viewCount = $views[$product->id] ?? 0;

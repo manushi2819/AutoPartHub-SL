@@ -21,6 +21,7 @@
                     <th>Name</th>
                     <th>SKU</th>
                     <th>Category</th>
+                    <th>Brand</th>
                     <th>Price</th>
                     <th>Stock</th>
                     <th>Status</th>
@@ -36,6 +37,7 @@
                         <td>{{ \Illuminate\Support\Str::limit($product->name, 30) }}</td>
                         <td>{{ $product->sku }}</td>
                         <td>{{ $product->category->name ?? 'N/A' }}</td>
+                        <td>{{ $product->brand->name ?? 'N/A' }}</td>
                         <td>{{ number_format($product->price, 2) }}</td>
                         <td>{{ $product->stock_quantity }}</td>
                         <td>

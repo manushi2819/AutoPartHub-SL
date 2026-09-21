@@ -175,19 +175,9 @@ class PartShopController extends Controller
         }
 
         // -------------------------
-        // Pagination
         // -------------------------
-        $products = $products->with(['images', 'category', 'reviews'])
-            ->latest()
-            ->paginate(16);
-
-        // -------------------------
-        // Categories for sidebar
-        // -------------------------
-        $categories = Category::whereNull('parent_id')->with('children')->get();
-
-        // -------------------------
-        // Popular / Boosted products — now uses the SAME filters as $products
+        // Popular / Boosted products — compute scores and use ordering to prioritize them
+        // This runs BEFORE pagination so we can order the main query to show boosted items first
         // -------------------------
         $views = [];
 
@@ -199,8 +189,8 @@ class PartShopController extends Controller
         $productsBase = $baseQuery->get();
 
         if ($productsBase->isEmpty()) {
-            // No results under current filters — nothing to boost/score
             $boostedProducts = collect();
+            $orderedIds = [];
         } else {
             $views = CustomerActivity::where('activity_type', 'product_view')
                 ->whereIn('reference_id', $productsBase->pluck('id'))
@@ -234,6 +224,26 @@ class PartShopController extends Controller
                 ->get()
                 ->sortBy(fn($p) => -($scored[$p->id] ?? 0));
         }
+
+        // -------------------------
+        // Pagination — apply boosted ordering to the main products query so boosted items appear first
+        // -------------------------
+        if (!empty($orderedIds)) {
+            $idsList = implode(',', $orderedIds);
+            $products = $products->with(['images', 'category', 'reviews'])
+                ->orderByRaw("(FIELD(id, $idsList) = 0), FIELD(id, $idsList)")
+                ->latest()
+                ->paginate(16);
+        } else {
+            $products = $products->with(['images', 'category', 'reviews'])
+                ->latest()
+                ->paginate(16);
+        }
+
+        // -------------------------
+        // Categories for sidebar
+        // -------------------------
+        $categories = Category::whereNull('parent_id')->with('children')->get();
 
         return view('Frontend.shop', compact(
             'products',
