@@ -170,12 +170,12 @@
         margin-top: 1rem;
     }
 
-    .row {
+    /*.row {
         display: flex;
         flex-wrap: wrap;
         gap: 1.5rem;
     }
-
+*/
     .coupon-column {
         flex: 2;
         min-width: 250px;
