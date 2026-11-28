@@ -22,7 +22,7 @@
                     <th>Name</th>
                     <th>Image</th>
                     <th>Level</th>
-                    <th>Commission</th>
+                    <th>Vendor Commission</th>
                     <th>Status</th>
                     <th width="150">Action</th>
                 </tr>

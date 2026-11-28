@@ -330,7 +330,7 @@
                          <div class="col-lg-2 col-md-4 col-sm-12 brand-block">
                             <div class="brand-block-one">
                                 <div class="inner-box text-center">
-                                <a href="{{ route('Frontend.shop', ['brand' => $brand->name]) }}">
+                                <a href="{{ route('Frontend.shop', ['brand_id' => $brand->id]) }}">
                                     <figure class="image">
                                         <img src="{{ asset($brand->image ? 'uploads/' . $brand->image : 'assets/images/brands/brands-1.png') }}" 
                                             alt="{{ $brand->name }}"

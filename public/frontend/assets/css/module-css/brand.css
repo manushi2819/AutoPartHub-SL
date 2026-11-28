@@ -16,6 +16,10 @@
   margin: 0px 5px;
 }
 
+.brand-section .pattern-layer{
+  pointer-events: none;
+}
+
 .brand-section .brand-block{
   padding: 0px 10px;
 }

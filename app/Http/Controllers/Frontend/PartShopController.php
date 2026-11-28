@@ -71,6 +71,10 @@ class PartShopController extends Controller
                 $q->whereHas('compatibility', fn($q2) => $q2->where('brand', $request->brand));
             });
 
+            $query->when($request->filled('brand_id'), function ($q) use ($request) {
+                $q->where('brand_id', $request->brand_id);
+            });
+
             $query->when($request->filled('model'), function ($q) use ($request) {
                 $q->whereHas('compatibility', fn($q2) => $q2->where('model', 'like', '%' . $request->model . '%'));
             });

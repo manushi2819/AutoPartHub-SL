@@ -67,9 +67,10 @@ class FrontendAuctionController extends Controller
         $auction = Auction::findOrFail($request->auction_id);
 
         $currentHighest = optional($auction->highestBid)->bid_amount ?? $auction->starting_price;
+        $minimumBid = $currentHighest + $auction->bid_increment;
 
-        if ($request->bid_amount <= $currentHighest) {
-            return back()->with('error', 'Bid must be higher than current highest bid');
+        if ($request->bid_amount < $minimumBid) {
+            return back()->with('error', 'Bid must be at least LKR ' . number_format($minimumBid, 2));
         }
 
         $bid = AuctionBid::create([

@@ -169,7 +169,8 @@ class ProductController extends Controller
         if (
             $request->filled('compatibility_model') ||
             $request->filled('compatibility_year_from') ||
-            $request->filled('compatibility_year_to')
+            $request->filled('compatibility_year_to') ||
+            ($request->has('brand_id') && $product->compatibility()->exists())
         ) {
             $brand = \App\Models\Brand::find($request->brand_id);
 

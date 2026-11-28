@@ -673,6 +673,7 @@
                             <input type="number" name="bid_amount" class="form-control bid-input"
                                 value="{{ $nextBid }}"
                                 min="{{ $nextBid }}"
+                                step="{{ $auction->bid_increment }}"
                                 required>
                             <small class="text-muted mt-1 d-block">
                                 Minimum bid: LKR {{ number_format($nextBid) }}
